@@ -150,7 +150,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="sound.cpp" />
-    <ClCompile Include="Source\Actor\Task_TestChara.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
@@ -194,7 +193,6 @@
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sound.h" />
-    <ClInclude Include="Source\Actor\Task_TestChara.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />

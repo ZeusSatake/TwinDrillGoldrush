@@ -8,7 +8,6 @@
 #include  "../../sound.h"
 
 #include  "Task_Ending.h"
-#include  "../../Source/Actor/Task_TestChara.h"
 
 #include  "../System/Task_BackGround.h"
 
@@ -52,12 +51,6 @@ namespace  Game
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
 
 		//★タスクの生成
-		auto test=Test::Object::Create(true);
-		if (test == nullptr)
-		{
-			ge->GameOverFlag=true;
-		}
-		test->pos_ = { 100,100 };
 
 
 		{//背景タスク生成
