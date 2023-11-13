@@ -1,0 +1,40 @@
+#pragma once
+#pragma warning(disable:4996)
+#pragma once
+//-----------------------------------------------------------------------------
+//ゲーム内オブジェクト基底クラス
+//-----------------------------------------------------------------------------
+#include "GameObject.h"
+#include "Source/Components/BoxCollisionComponent.h"
+#include "Source/Components/HP.h"
+
+
+class Actor : public GameObject
+{
+public:
+	typedef shared_ptr<Actor> SP;
+	typedef weak_ptr<Actor>	WP;
+public:
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+	ML::Vec2    pos_;		//キャラクタ位置
+	int			moveCnt_;	//行動カウンタ
+	//向き（2D視点）
+	float angle_;
+protected:
+	//コンポーネント
+	shared_ptr<BoxCollisionComponent> box_;
+
+public:
+	Actor();
+	virtual  ~Actor() {}
+
+
+public:
+	bool OutOfScreen() const;
+
+
+	//あたり判定
+	bool CheckHit(const ML::Box2D& hit) const;
+
+
+};
