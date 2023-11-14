@@ -3,7 +3,7 @@
 #include "randomLib.h"
 #include "sound.h"
 #define MYDEBUG
-#define	REFRESHRATE  60
+
 
 #include "Source/Scene/Task_Title.h"
 
