@@ -76,7 +76,7 @@ namespace ML
 		result.y = (float)-sin(degree_ * D3DX_PI / 180.f);
 		return result;
 	}
-	const float Vec2::DotProduct(Vec2 a, Vec2 b)
+	const float Vec2::DotProduct(const Vec2& a, const Vec2& b)
 	{
 		float result = a.x * b.x + a.y * b.y;
 		if (result == 0.0f)
@@ -261,6 +261,101 @@ namespace ML
 		Vec3  w;
 		D3DXVec3TransformNormal(&w, &v_, this);
 		return  w;
+	}
+
+	//パーセンテージ
+	const float Percentage::percentLimit_ = 100.0f;
+	Percentage::Percentage(const float min, const float max, const float value)
+		:
+		min_(min < max ? min : max),
+		max_(max > min ? max : min),
+		nowValue_(value),
+		percent_(CalcPercentage(min_, max_, nowValue_))
+	{
+	}
+	Percentage::Percentage(const float percent)
+		:
+		Percentage(0.0f, percentLimit_, percent)
+	{
+	}
+	Percentage::Percentage()
+		:
+		Percentage(0.0f, percentLimit_, 0.0f)
+	{
+	}
+
+	float Percentage::Get() const
+	{
+		return percent_;
+	}
+
+	void Percentage::Set(const float percent)
+	{
+		float collectPercent = percent;
+
+		if (percent < 0.0f)
+			collectPercent = 0.0f;
+
+		if (percent > percentLimit_)
+			collectPercent = percentLimit_;
+
+		percent_ = collectPercent;
+
+		//パーセントを直に変更した場合はパーセント計算に使用する数値も補正
+		CollectNowValue();
+	}
+
+	void Percentage::AddPercent(const float percent)
+	{
+		Set(percent_ + percent);
+	}
+	void Percentage::SubPercent(const float percent)
+	{
+		Set(percent_ - percent);
+	}
+
+	void Percentage::AddValue(const float add)
+	{
+		nowValue_ += add;
+		CalcPercentage();
+	}
+	void Percentage::SubValue(const float sub)
+	{
+		nowValue_ -= sub;
+		CalcPercentage();
+	}
+
+	float Percentage::CalcPercentage(const float min, const float max, const float nowValue)
+	{
+		if (max == min)
+			return percentLimit_;
+
+		float collectMax = max;
+		float collectMin = min;
+
+		if (max < min)
+		{
+			collectMax = min;
+			collectMin = max;
+		}
+
+		if (nowValue > collectMax)
+			return Percentage::percentLimit_;
+
+		if (nowValue < collectMin)
+			return 0.0f;
+
+		return nowValue / (collectMax - collectMin) * Percentage::percentLimit_;
+	}
+
+	void Percentage::CalcPercentage()
+	{
+		percent_ = CalcPercentage(min_, max_, nowValue_);
+	}
+
+	void Percentage::CollectNowValue()
+	{
+		nowValue_ = ((max_ - min_) / percentLimit_) * percent_;
 	}
 }
 

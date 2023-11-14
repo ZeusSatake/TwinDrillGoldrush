@@ -52,7 +52,7 @@ namespace ML
 		static const Vec2 Left();
 		static const Vec2 Right();
 		static const Vec2 ComputeDirection_FromDegree(const float degree_);
-		static const float DotProduct(Vec2 a, Vec2 b);
+		static const float DotProduct(const Vec2& a, const Vec2& b);
 		const Vec2 operator*(const float mul);
 	};
 	class Vec3 : public  D3DXVECTOR3
@@ -159,6 +159,35 @@ namespace ML
 		bool  operator!=(const  Color&  obj){
 			return	  !((*this) == obj );
 		}
+	};
+
+	//パーセント 百分率で値を管理
+	class Percentage
+	{
+		float percent_;
+		static const float percentLimit_; //100分率のため100
+		float min_;
+		float max_;
+		float nowValue_; //制限かけない
+	public:
+		Percentage(const float min, const float max, const float now);
+		Percentage(const float percent);
+		Percentage();
+
+		float Get() const;
+		void Set(const float percent);
+
+		void AddPercent(const float percent);
+		void SubPercent(const float percent);
+
+		void AddValue(const float value);
+		void SubValue(const float value);
+
+		static float CalcPercentage(const float min, const float max, const float now);
+
+	private:
+		void CalcPercentage();
+		void CollectNowValue();
 	};
 
 	//┌───────────────────────────────────────────┐
