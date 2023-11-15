@@ -42,7 +42,7 @@
       <UniqueIdentifier>{6953b0aa-5f5e-4c2f-82b5-a6a098217010}</UniqueIdentifier>
     </Filter>
     <Filter Include="MyPG\Task\Actors">
-      <UniqueIdentifier>{ee72c404-fbe9-40d9-9f28-915ca2d10360}</UniqueIdentifier>
+      <UniqueIdentifier>{2c79baeb-8fd3-4731-ab4b-039d59db4669}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,11 +172,23 @@
     <ClCompile Include="NPC.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
-    <ClCompile Include="AIMoveComponent.cpp">
+    <ClCompile Include="Source\Components\AIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
-    <ClCompile Include="AIComponent.cpp">
+    <ClCompile Include="Source\Components\AIMoveComponent.cpp">
       <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Debtor.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\DebtorAIComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -301,11 +313,23 @@
     <ClInclude Include="NPC.h">
       <Filter>MyPG</Filter>
     </ClInclude>
-    <ClInclude Include="AIMoveComponent.h">
+    <ClInclude Include="Source\Components\AIComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
-    <ClInclude Include="AIComponent.h">
+    <ClInclude Include="Source\Components\AIMoveComponent.h">
       <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Debtor.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\DebtorAIComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_EtoHaiji.h">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

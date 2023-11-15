@@ -127,10 +127,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AIComponent.cpp" />
-    <ClCompile Include="AIMoveComponent.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Debtor.cpp" />
     <ClCompile Include="DG2014\DG2014_DGObject.cpp" />
     <ClCompile Include="DG2014\DG2014_Effect.cpp" />
     <ClCompile Include="DG2014\DG2014_Font.cpp" />
@@ -145,6 +144,7 @@
     <ClCompile Include="DG2014\DG2014_VertexContainer.cpp" />
     <ClCompile Include="Dm2008_Ver1_4.cpp" />
     <ClCompile Include="easing.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="fpscounter.cpp" />
     <ClCompile Include="GameEngine_Ver3_83.cpp" />
     <ClCompile Include="myLib.cpp" />
@@ -153,10 +153,14 @@
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
+    <ClCompile Include="Source\Components\AIComponent.cpp" />
+    <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
+    <ClCompile Include="Source\Components\DebtorAIComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
@@ -173,10 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="AIComponent.h" />
-    <ClInclude Include="AIMoveComponent.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Debtor.h" />
     <ClInclude Include="DG2014\DG2014_DGObject.h" />
     <ClInclude Include="DG2014\DG2014_Effect.h" />
     <ClInclude Include="DG2014\DG2014_Font.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="DG2014\DG2014_VertexContainer.h" />
     <ClInclude Include="Dm2008_Ver1_4.h" />
     <ClInclude Include="easing.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="fpscounter.h" />
     <ClInclude Include="GameEngine_Ver3_83.h" />
     <ClInclude Include="myLib.h" />
@@ -199,10 +203,14 @@
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="Source\Actors\Task_EtoHaiji.h" />
+    <ClInclude Include="Source\Components\AIComponent.h" />
+    <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
+    <ClInclude Include="Source\Components\DebtorAIComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\Timer.h" />

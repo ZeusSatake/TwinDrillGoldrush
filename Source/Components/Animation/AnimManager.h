@@ -2,6 +2,7 @@
 
 #include "../../../GameEngine_Ver3_83.h"
 #include "AnimInfo.h"
+#include "../../../Component.h"
 
 //アニメーションを管理するクラス
 /*
@@ -35,7 +36,7 @@
 		img->Draw(draw, di.GetSrc());
 */
 
-class AnimManager
+class AnimManager : public Component
 {
 	map<int, AnimInfo> drawInfos_;
 	static const int nullId_;
@@ -44,7 +45,7 @@ class AnimManager
 	int defalutAnimId_;
 	AnimInfo& GetAnim(const int animId);
 public:
-	AnimManager(const int defalutAnimId);
+	AnimManager(class Actor* owner,const int defalutAnimId);
 	void AddAnim(const int animId, const AnimInfo& drawInfo);
 	AnimInfo Play(const int animId);
 	void AllClear();

@@ -3,8 +3,8 @@
 
 const int AnimManager::nullId_ = -10000;
 
-AnimManager::AnimManager(const int defalutAnimId)
-	:
+AnimManager::AnimManager(Actor* owner,const int defalutAnimId)
+	:Component(owner),
 	animCount_(0),
 	preId_(nullId_),
 	defalutAnimId_(defalutAnimId)

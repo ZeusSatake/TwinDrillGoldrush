@@ -1,5 +1,10 @@
 #include "GameObject.h"
 
+GameObject::GameObject()
+	:BTask()
+{
+
+}
 void GameObject::AddComponent(shared_ptr<Component> component)
 {
 	components_.push_back(component);

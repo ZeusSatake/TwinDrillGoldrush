@@ -17,7 +17,7 @@ protected:
 	std::vector<class shared_ptr<Component>> components_;
 
 public:
-	GameObject() {}
+	GameObject();
 	virtual  ~GameObject() {}
 
 	void AddComponent(class shared_ptr<Component> component);
