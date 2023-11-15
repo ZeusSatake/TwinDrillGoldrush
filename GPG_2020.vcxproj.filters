@@ -169,6 +169,15 @@
     <ClCompile Include="Character.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="AIMoveComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -288,6 +297,15 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="AIMoveComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

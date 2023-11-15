@@ -21,10 +21,5 @@ protected:
 public:
 	Character();
 	virtual  ~Character() {}
-
-
-	std::unique_ptr<AnimManager> anim;
-
-
 };
 

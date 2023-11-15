@@ -127,6 +127,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="AIComponent.cpp" />
+    <ClCompile Include="AIMoveComponent.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DG2014\DG2014_DGObject.cpp" />
@@ -148,6 +150,7 @@
     <ClCompile Include="myLib.cpp" />
     <ClCompile Include="MyPG.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="NPC.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
@@ -170,6 +173,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AIComponent.h" />
+    <ClInclude Include="AIMoveComponent.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DG2014\DG2014_DGObject.h" />
@@ -190,6 +195,7 @@
     <ClInclude Include="myLib.h" />
     <ClInclude Include="MyPG.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="NPC.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sound.h" />
