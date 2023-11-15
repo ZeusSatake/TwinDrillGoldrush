@@ -161,6 +161,7 @@
     <ClCompile Include="Source\Components\Timer.cpp" />
     <ClCompile Include="Source\Scene\Task_Ending.cpp" />
     <ClCompile Include="Source\Scene\Task_Game.cpp" />
+    <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\Task_Title.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
     <ClCompile Include="Source\System\Task_DrawGauge.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Source\Components\Timer.h" />
     <ClInclude Include="Source\Scene\Task_Ending.h" />
     <ClInclude Include="Source\Scene\Task_Game.h" />
+    <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\Task_Title.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />
     <ClInclude Include="Source\System\Task_DrawGauge.h" />

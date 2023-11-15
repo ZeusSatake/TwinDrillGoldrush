@@ -172,6 +172,9 @@
     <ClCompile Include="Character.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
+	<ClCompile Include="Source\Scene\Task_Map.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClCompile>
     <ClCompile Include="BBlocks.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -298,6 +301,9 @@
     <ClInclude Include="Character.h">
       <Filter>MyPG</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene\Task_Map.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClInclude>
     <ClInclude Include="BBlocks.h">
       <Filter>MyPG</Filter>
     </ClInclude>
