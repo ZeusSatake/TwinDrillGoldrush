@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="BBlocks.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debtor.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
+    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp" />
@@ -166,6 +168,7 @@
     <ClCompile Include="Source\Components\Timer.cpp" />
     <ClCompile Include="Source\Scene\Task_Ending.cpp" />
     <ClCompile Include="Source\Scene\Task_Game.cpp" />
+    <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\Task_Title.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
     <ClCompile Include="Source\System\Task_DrawGauge.cpp" />
@@ -177,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="BBlocks.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debtor.h" />
@@ -208,6 +212,7 @@
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
+    <ClInclude Include="Source\Components\Blocks\Task_Stone.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
     <ClInclude Include="Source\Components\DebtorAIComponent.h" />
@@ -216,6 +221,7 @@
     <ClInclude Include="Source\Components\Timer.h" />
     <ClInclude Include="Source\Scene\Task_Ending.h" />
     <ClInclude Include="Source\Scene\Task_Game.h" />
+    <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\Task_Title.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />
     <ClInclude Include="Source\System\Task_DrawGauge.h" />

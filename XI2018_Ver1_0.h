@@ -176,7 +176,7 @@ namespace XI
 	};
 	//GamePad----------------------------------------------------------------
 	class  GamePad {
-	protected:
+	public:
 		enum  class  ButtonState : BYTE {
 			Err,
 			On,		//押している間中
@@ -184,6 +184,7 @@ namespace XI
 			Down,	//押した直後（１フレームのみ反応）
 			Up,		//離した直後（１フレームのみ反応）
 		};
+	protected:
 		struct  Stick{
 			ML::Vec2             axis;		//軸毎の量-1.0f～+1.0f
 			ButtonState			 BL;

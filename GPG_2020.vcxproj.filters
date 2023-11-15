@@ -44,6 +44,9 @@
     <Filter Include="MyPG\Task\Actors">
       <UniqueIdentifier>{2c79baeb-8fd3-4731-ab4b-039d59db4669}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Actors\Blocks">
+      <UniqueIdentifier>{e37c5cf5-fecf-4597-808d-4b135dbb7cca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -190,6 +193,15 @@
     <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+	  <ClCompile Include="Source\Scene\Task_Map.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	  </ClCompile>
+    <ClCompile Include="BBlocks.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -330,6 +342,15 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_EtoHaiji.h">
       <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Task_Map.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClInclude>
+    <ClInclude Include="BBlocks.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@
 #include  "Task_Ending.h"
 
 #include  "../System/Task_BackGround.h"
+#include  "Task_Map.h"
 
 namespace  Game
 {
@@ -64,7 +65,8 @@ namespace  Game
 						BackGround::Object::RenderSize::FullScreen,
 						sprit);
 		}
-
+		auto map = Map::Object::Create(true);
+		map->Load("map");
 		return  true;
 	}
 	//-------------------------------------------------------------------
