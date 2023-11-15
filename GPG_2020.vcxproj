@@ -127,8 +127,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AIComponent.cpp" />
-    <ClCompile Include="AIMoveComponent.cpp" />
     <ClCompile Include="BBlocks.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -185,8 +183,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="AIComponent.h" />
-    <ClInclude Include="AIMoveComponent.h" />
     <ClInclude Include="BBlocks.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
