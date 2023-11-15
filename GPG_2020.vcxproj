@@ -161,6 +161,7 @@
     <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
+    <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
     <ClCompile Include="Source\Scene\Task_Ending.cpp" />
     <ClCompile Include="Source\Scene\Task_Game.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Source\Components\ControllerInputComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
     <ClInclude Include="Source\Components\Movement.h" />
+    <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
     <ClInclude Include="Source\Scene\Task_Ending.h" />
     <ClInclude Include="Source\Scene\Task_Game.h" />

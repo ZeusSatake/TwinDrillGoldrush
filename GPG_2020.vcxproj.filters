@@ -184,6 +184,9 @@
     <ClCompile Include="Source\Components\ControllerInputComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Components\StateComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -317,6 +320,9 @@
       <Filter>MyPG</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\ControllerInputComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\StateComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>
