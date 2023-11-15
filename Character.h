@@ -8,6 +8,7 @@
 #include "Source/Components/Movement.h"
 class Character : public Actor
 {
+	std::string personalName_;
 public:
 	typedef shared_ptr<Character> SP;
 	typedef weak_ptr<Character> WP;
@@ -29,6 +30,9 @@ public:
 
 	shared_ptr<HP> GetHP() const;
 	shared_ptr<Movement> GetMovement() const;
+
+	std::string GetPersonalName()const;
+	void SetPersonalName(const char* name);
 
 };
 
