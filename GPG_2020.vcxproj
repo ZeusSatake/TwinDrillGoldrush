@@ -152,6 +152,7 @@
     <ClCompile Include="MyPG.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
@@ -162,9 +163,11 @@
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
+    <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
+    <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
     <ClCompile Include="Source\Scene\Task_Ending.cpp" />
     <ClCompile Include="Source\Scene\Task_Game.cpp" />
@@ -204,6 +207,7 @@
     <ClInclude Include="MyPG.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sound.h" />
@@ -215,9 +219,11 @@
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
+    <ClInclude Include="Source\Components\ControllerInputComponent.h" />
     <ClInclude Include="Source\Components\DebtorAIComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
     <ClInclude Include="Source\Components\Movement.h" />
+    <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
     <ClInclude Include="Source\Scene\Task_Ending.h" />
     <ClInclude Include="Source\Scene\Task_Game.h" />
