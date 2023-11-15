@@ -5,6 +5,7 @@
 #include  "MyPG.h"
 
 Actor::Actor()
+	:GameObject()
 {
 	AddComponent(box_ = shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
 }

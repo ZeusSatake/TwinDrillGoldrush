@@ -14,17 +14,21 @@ public:
 protected:
 	//-----------------------------------------------------------------------------
 	//コンポーネント
-	class shared_ptr<HP> hp;
-	class shared_ptr<Movement> movement;
-	class shared_ptr<AnimManager> animManager;
+	class shared_ptr<HP> hp_;
+	class shared_ptr<Movement> movement_;
+	class shared_ptr<AnimManager> animManager_;
 	//-----------------------------------------------------------------------------
 public:
 	Character();
 	virtual  ~Character() {}
 
+	//思考
+	virtual void Think();
+	//動作
+	virtual void Move();
 
-	std::unique_ptr<AnimManager> anim;
-
+	shared_ptr<HP> GetHP() const;
+	shared_ptr<Movement> GetMovement() const;
 
 };
 
