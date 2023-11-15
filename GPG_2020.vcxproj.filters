@@ -178,6 +178,12 @@
     <ClCompile Include="AIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\ControllerInputComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -305,6 +311,12 @@
       <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="AIComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\ControllerInputComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>

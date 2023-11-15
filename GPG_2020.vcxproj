@@ -151,12 +151,14 @@
     <ClCompile Include="MyPG.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
+    <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
@@ -196,6 +198,7 @@
     <ClInclude Include="MyPG.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sound.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
+    <ClInclude Include="Source\Components\ControllerInputComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\Timer.h" />
