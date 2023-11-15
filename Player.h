@@ -6,5 +6,5 @@ class Player :public Character
 	class std::shared_ptr<ControllerInputComponent> Controller;
 public:
 	Player();
-	virtual ~Player();
+	virtual ~Player() {};
 };
