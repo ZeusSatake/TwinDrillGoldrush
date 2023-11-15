@@ -175,6 +175,21 @@
     <ClCompile Include="NPC.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
+    <ClCompile Include="AIMoveComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AIComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\ControllerInputComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\StateComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Components\AIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
@@ -324,6 +339,21 @@
     </ClInclude>
     <ClInclude Include="NPC.h">
       <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="AIMoveComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="AIComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\ControllerInputComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\StateComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\AIComponent.h">
       <Filter>MyPG\Components</Filter>

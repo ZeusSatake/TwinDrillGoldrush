@@ -3,7 +3,8 @@
 Character::Character()
 	:Actor()
 {
-	//ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
+	//Æ’RÆ’â€œÆ’|Â[Æ’lÆ’â€œÆ’gâ€šÃŒâ€™Ã‡â€°Ã
+
 	AddComponent(hp_ = shared_ptr<HP>(new HP(this)));
 	AddComponent(movement_ = shared_ptr<Movement>(new Movement(this)));
 	AddComponent(animManager_ = shared_ptr<AnimManager>(new AnimManager(this,0)));
