@@ -44,6 +44,9 @@
     <Filter Include="MyPG\Task\Actors">
       <UniqueIdentifier>{ee72c404-fbe9-40d9-9f28-915ca2d10360}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Actors\Blocks">
+      <UniqueIdentifier>{e37c5cf5-fecf-4597-808d-4b135dbb7cca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -169,6 +172,12 @@
     <ClCompile Include="Character.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
+    <ClCompile Include="BBlocks.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -288,6 +297,12 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="BBlocks.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
