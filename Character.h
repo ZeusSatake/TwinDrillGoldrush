@@ -1,6 +1,6 @@
 #pragma once
 //-----------------------------------------------------------------------------
-//ƒLƒƒƒ‰ƒNƒ^[—pŠî’êƒNƒ‰ƒX
+//ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ç”¨åŸºåº•ã‚¯ãƒ©ã‚¹
 //-----------------------------------------------------------------------------
 #include "Actor.h"
 #include "source/Components/HP.h"
@@ -13,13 +13,24 @@ public:
 	typedef weak_ptr<Character> WP;
 protected:
 	//-----------------------------------------------------------------------------
-	//ƒRƒ“ƒ|[ƒlƒ“ƒg
-	class shared_ptr<HP> hp;
-	class shared_ptr<Movement> movement;
-	class shared_ptr<AnimManager> animManager;
+	//ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+	class shared_ptr<HP> hp_;
+	class shared_ptr<Movement> movement_;
+	class shared_ptr<AnimManager> animManager_;
 	//-----------------------------------------------------------------------------
 public:
 	Character();
 	virtual  ~Character() {}
+
+
+
+	//æ€è€ƒ
+	virtual void Think();
+	//å‹•ä½œ
+	virtual void Move();
+
+	shared_ptr<HP> GetHP() const;
+	shared_ptr<Movement> GetMovement() const;
+
 };
 

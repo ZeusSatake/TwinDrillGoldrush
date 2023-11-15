@@ -9,8 +9,8 @@
 namespace  Ending
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("エンディング");	//グループ名
-	const  string  defName("NoName");	//タスク名
+	const  string  defGroupName("Scene");	//グループ名
+	const  string  defName("Ending");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{

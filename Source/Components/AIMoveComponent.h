@@ -1,34 +1,16 @@
 #pragma once
-#include "Component.h"
-#include "myLib.h"
-#include "Actor.h"
+
+#include "../../Component.h"
+#include "../../myLib.h"
+#include "../../Character.h"
 class AIMoveComponent : public Component
 {
+public:
 	ML::Vec2 moveVec_;
 	float moveSpeed_;
-
-
-	enum class AIState
-	{
-		Idle,
-		Patrol,
-		Attack,
-		Jump,
-		Dead
-	};
-
-	AIState state_;
-
-	virtual void UpdatePatrol();
-
-	virtual void UpdateAttack();
-
-	virtual void UpdateJump();
-
-	virtual void UpdateDead();
 public:
-	AIMoveComponent(class Actor* owner);
-
+	AIMoveComponent(class Character* owner,ML::Vec2 moveVec,float moveSpeed);
+	AIMoveComponent(class Character* owner);
 	virtual ~AIMoveComponent() {};
 
 	void Update() override;
