@@ -67,8 +67,43 @@ namespace player
 			this->res->playerImg->Draw(draw, src);
 		}
 	}
-	
-	
+
+	void Object::Move()
+	{
+		this->PState = this->state_->GetNowState();
+		switch (PState)
+		{
+		case StateComponent::State::Non:
+			break;
+		case StateComponent::State::Idle:
+			break;
+		case StateComponent::State::Walk:
+			break;
+		case StateComponent::State::Attack:
+			break;
+		case StateComponent::State::SpinAttack:
+			break;
+		case StateComponent::State::Damage:
+			break;
+		case StateComponent::State::KnockBack:
+			break;
+		case StateComponent::State::Dead:
+			break;
+		case StateComponent::State::Jump:
+			break;
+		case StateComponent::State::Fall:
+			break;
+		case StateComponent::State::Dash:
+			break;
+		case StateComponent::State::DrillDash:
+			break;
+		case StateComponent::State::Mining:
+			break;
+		case StateComponent::State::Appeal:
+			break;
+
+		}
+	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
