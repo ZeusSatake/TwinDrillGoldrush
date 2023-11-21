@@ -2,11 +2,10 @@
 #include "../../Component.h"
 #include "../../myLib.h"
 #include "../../Character.h"
-class AIMoveComponent : public Component
+class AIMoveComponent : public Movement
 {
 public:
 	ML::Vec2 moveVec_;
-	float moveSpeed_;
 public:
 	AIMoveComponent(class Character* owner,ML::Vec2 moveVec,float moveSpeed);
 	AIMoveComponent(class Character* owner);

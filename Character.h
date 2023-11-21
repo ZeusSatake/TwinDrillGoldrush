@@ -32,7 +32,7 @@ public:
 	shared_ptr<Movement> GetMovement() const;
 
 	std::string GetPersonalName()const;
-	void SetPersonalName(const char* name);
+	void SetPersonalName(const std::string name);
 
 };
 
