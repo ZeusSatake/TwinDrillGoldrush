@@ -42,7 +42,7 @@ namespace  Map
 				this->arr[y][x] = 0;
 			}
 		}
-		for (int i = 0; i < 16; ++i)
+		for (int i = 0; i < 31; ++i)
 		{
 			int x = i % 8;
 			int y = i / 8;
@@ -176,7 +176,7 @@ namespace  Map
 		{
 			for (int x = sx; x <= ex; ++x)
 			{
-				if (8 <= this->arr[y][x])
+				if (1 <= this->arr[y][x])
 				{
 					return true;
 				}
