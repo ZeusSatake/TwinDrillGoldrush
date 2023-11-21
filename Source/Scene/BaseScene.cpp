@@ -2,9 +2,9 @@
 //
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "ShopScene.h"
+#include  "BaseScene.h"
 
-namespace ShopScene
+namespace BaseScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------

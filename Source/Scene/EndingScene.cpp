@@ -1,22 +1,34 @@
 //-------------------------------------------------------------------
-//
+//エンディング
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "ShopScene.h"
+#include  "EndingScene.h"
+#include  "TitleScene.h"
+#include  "../../randomLib.h"
+#include  "../../sound.h"
 
-namespace ShopScene
+#include  "../System/Task_FlashDraw.h"
+#include  "../System/Task_BackGround.h"
+
+namespace  EndingScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		resultImg = DG::Image::Create("./data/image/result.png");
+		rankImg = DG::Image::Create("./data/image/rank.png");
+		font = DG::Font::Create("ＭＳ ゴシック", 32, 64);
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		resultImg.reset();
+		rankImg.reset();
+		font.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -29,9 +41,33 @@ namespace ShopScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
-		//★タスクの生成
+		frameCount = 0;
 
+		//★タスクの生成
+		{//画像フォント(スコア
+			int digit = 4;
+			ML::Box2D draw(0, 0, 48, 64);
+			ML::Box2D src(0, 0, 24, 32);
+			ML::Vec2 pos = ge->screenCenterPos;
+			pos.x -= draw.w * 0.5f * digit;
+			pos.y -= draw.h * 0.5f - 50;
+			drawScore = DrawNumFont::Object::Create(true);
+			drawScore->SetUp("./data/image/notext.png", src, draw, digit, pos);
+		}
+
+		{//背景タスク生成
+			ML::Point imgSize;
+			imgSize.x = 800;
+			imgSize.y = 600;
+
+			ML::Point drawSize;
+			drawSize.x = (int)ge->screenWidth;
+			drawSize.y = (int)ge->screenHeight;
+
+			auto backGround = BackGround::Object::Create(true);
+			backGround->SetUp("./data/image/back.png", imgSize, drawSize);
+		}
+		
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -39,10 +75,12 @@ namespace ShopScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		ge->KillAll_G("背景");
+		ge->KillAll_G("システム");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			auto  nextTask = TitleScene::Object::Create(true);
 		}
 
 		return  true;
@@ -51,11 +89,43 @@ namespace ShopScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		auto inp = ge->in1->GetState();
+
+		if (inp.SE.down) {
+			ge->StartCounter("test", 45); //フェードは90フレームなので半分の45で切り替え
+			ge->CreateEffect(99, ML::Vec2(0, 0));
+		}
+		if (ge->getCounterFlag("test") == ge->LIMIT) {
+			this->Kill();
+		}
+
+		++frameCount;
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		{//リザルト
+			ML::Box2D draw(0, 0, 512, 124);
+			draw.x = (int)ge->screenCenterPos.x - 140;
+			draw.y = (int)ge->screenCenterPos.y - 150;
+			ML::Box2D src(0, 0, 256, 64);
+			this->res->resultImg->Draw(draw, src);
+		}
+		
+		drawScore->SetDrawValue(ge->score);
+
+		//PressStartKey
+		if (frameCount == 60) {
+			auto PressStartKey = FlashDraw::Object::Create(true);
+			MyPG::MyGameEngine::DrawInfo drawInfo{
+				DG::Image::Create("./data/image/click.png"),
+				ML::Box2D(-143, -32, 286, 64),
+				ML::Box2D(0, 0, 286, 64),
+				ML::Vec2(ge->screenCenterPos.x, ge->screenHeight - 160.0f)
+			};
+			PressStartKey->SetUp(drawInfo, 30, 0.3f);
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -70,7 +140,6 @@ namespace ShopScene
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill
