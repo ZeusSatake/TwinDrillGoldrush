@@ -47,11 +47,11 @@ namespace  Map
 	private:
 		//追加したい変数・メソッドはここに追加する
 		DG::Image::SP img;
-		int  arr[45][80];//yx
+		int  arr[160][160];//yx
 		int					sizeY, sizeX;
 		int chipSize;
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
-		ML::Box2D  chip[16];
+		ML::Box2D  chip[32];
 	public:
 		bool  Load(const  string& fileName);//マップ読み込み
 		bool  CheckHit(const  ML::Box2D& hit);//あたり判定

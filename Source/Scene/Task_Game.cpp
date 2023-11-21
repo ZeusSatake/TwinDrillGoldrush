@@ -65,8 +65,16 @@ namespace  Game
 						BackGround::Object::RenderSize::FullScreen,
 						sprit);
 		}
-		auto map = Map::Object::Create(true);
-		map->Load("map");
+		
+		{//Î zÎ
+			auto map = Map::Object::Create(true);
+			map->Load("map_stone");
+		}
+		{//•óÎ
+			auto mapore = Map::Object::Create(true);
+			mapore->Load("map_jewelry");
+			mapore->render2D_Priority[1] = 0.85f;
+		}
 		return  true;
 	}
 	//-------------------------------------------------------------------
