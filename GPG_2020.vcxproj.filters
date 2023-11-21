@@ -47,6 +47,12 @@
     <Filter Include="MyPG\Task\Actors\Blocks">
       <UniqueIdentifier>{e37c5cf5-fecf-4597-808d-4b135dbb7cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Scene\Shop">
+      <UniqueIdentifier>{2c9e80b7-7fdd-4918-b9c5-36282b9fe530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyPG\Task\Actors\UI">
+      <UniqueIdentifier>{b8f4df0d-f654-4eee-afe0-576826d42a0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -217,6 +223,16 @@
     <ClCompile Include="BPlayer.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
+    <ClCompile Include="ToggleButton.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Source\Scene\ShopScene.cpp">
+      <Filter>MyPG\Task\Scene\Shop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -381,6 +397,16 @@
     </ClInclude>
     <ClInclude Include="BPlayer.h">
       <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleButton.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\UI\SceneChangeButton.h">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Source\Scene\ShopScene.h">
+      <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

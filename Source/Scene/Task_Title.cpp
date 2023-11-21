@@ -13,6 +13,8 @@
 #include  "../System/Task_BackGround.h"
 #include  "../System/Task_FlashDraw.h"
 
+#include  "../Actors/UI/SceneChangeButton.h"
+
 namespace  Title
 {
 	Resource::WP  Resource::instance;
@@ -83,12 +85,15 @@ namespace  Title
 
 		frameCnt = 0;
 
+		SetNextScene(Scene::Kind::Base);
+
 		//★タスクの生成
 		auto backGound = BackGround::Object::Create(true);
 		backGound->SetUp(
 			"./data/image/titleback.png",
 			ML::Point{ 1920, 1200 },
 			ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -99,9 +104,9 @@ namespace  Title
 		ge->KillAll_G("背景");
 		//bgm::Stop("bgm1");
 		ge->KillAll_G("システム");
-
+		ge->KillAll_G("UI");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
-			Game::Object::Create(true);
+			CreateNextScene();
 		}
 
 		return  true;
@@ -110,41 +115,18 @@ namespace  Title
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		++frameCnt;
+		Scene::UpDate();
+
 		auto inp = ge->in1->GetState();
-
-		if (inp.SE.down) {
-			ge->StartCounter("test", 45); //フェードは90フレームなので半分の45で切り替え
-			ge->CreateEffect(98, ML::Vec2(0, 0));
-			//se::Play("ok");
-		}
-		if (ge->getCounterFlag("test") == ge->LIMIT) {
-			this->Kill();
-		}
-
-		easing::UpDate();
-		this->logoY = easing::GetPos("titleY");
-		this->logoX = easing::GetPos("titleX");
-
-		if (frameCnt == 150) {
-			auto PressStartKey = FlashDraw::Object::Create(true);
-			MyPG::MyGameEngine::DrawInfo drawInfo{
-				DG::Image::Create("./data/image/click.png"),
-				ML::Box2D(-143, -32, 286, 64),
-				ML::Box2D(0, 0, 286, 64),
-				ML::Vec2(ge->screenCenterPos.x, ge->screenHeight - 160.0f)
-			};
-			PressStartKey->SetUp(drawInfo, 30, 0.3f);
+		if (inp.SE.down)
+		{
+			Kill();
 		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D src(0, 0, 792, 89);
-		ML::Box2D draw((int)(-src.w * 0.5f), 0, src.w, src.h);
-		draw.Offset(ML::Vec2(logoX, logoY));
-		res->TitleLogo01->Draw(draw, src);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

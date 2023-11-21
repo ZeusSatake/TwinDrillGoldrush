@@ -5,6 +5,7 @@
 //-------------------------------------------------------------------
 #include  "../../GameEngine_Ver3_83.h"
 #include  "../System/Task_DrawNumFont.h"
+#include  "../../Scene.h"
 
 namespace  Ending
 {
@@ -29,7 +30,7 @@ namespace  Ending
 		DG::Font::SP font;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  Scene
 	{
 	//•ÏX•s‰ÂŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸ
 	public:
