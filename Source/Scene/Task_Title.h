@@ -4,6 +4,7 @@
 //タイトル画面
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
+#include "../../Scene.h"
 
 namespace  Title
 {
@@ -29,7 +30,7 @@ namespace  Title
 		DG::Image::SP	StartLogo;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  Scene
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
