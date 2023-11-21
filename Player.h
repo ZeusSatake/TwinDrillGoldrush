@@ -1,10 +1,14 @@
 #pragma once
-#include "Character.h"
-#include "Source/Components/ControllerInputComponent.h"
-class Player :public Character
+#include "BPlayer.h"
+
+class Player :public BPlayer 
 {
-	class std::shared_ptr<ControllerInputComponent> Controller;
+
 public:
 	Player();
-	virtual ~Player() {};
+	virtual ~Player() {}; 
+	
+	void PlayerMove(ML::Vec2 vec);//ベクトルを入れるとその分プレイヤーを動かす
+
+	void Move() override;
 };

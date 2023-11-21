@@ -217,6 +217,12 @@
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Player.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="BPlayer.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
     <ClCompile Include="ToggleButton.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -385,6 +391,12 @@
     </ClInclude>
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Player.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="BPlayer.h">
+      <Filter>MyPG</Filter>
     </ClInclude>
     <ClInclude Include="ToggleButton.h">
       <Filter>MyPG</Filter>

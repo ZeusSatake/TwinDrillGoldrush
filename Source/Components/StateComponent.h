@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 class StateComponent : public Component
 {
+public:
 	enum class State
 	{
 		Non,        //–³‚µ
@@ -22,6 +23,7 @@ class StateComponent : public Component
 		Mining,     //ÌŒ@
 		Appeal      //ƒAƒs[ƒ‹
 	};
+private:
 	State nowState;
 	State preState;
 public:
