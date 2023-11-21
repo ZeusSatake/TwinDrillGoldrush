@@ -2,9 +2,9 @@
 //
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "ShopScene.h"
+#include  "MartialFightScene.h"
 
-namespace ShopScene
+namespace MartialFightScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------

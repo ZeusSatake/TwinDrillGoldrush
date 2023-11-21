@@ -7,7 +7,7 @@
 #include  "../System/Task_DrawNumFont.h"
 #include  "../../Scene.h"
 
-namespace  Ending
+namespace  EndingScene
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("Scene");	//グループ名
