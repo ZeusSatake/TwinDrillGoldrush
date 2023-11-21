@@ -1,8 +1,8 @@
 #include "Scene.h"
 #include "ToggleButton.h"
 
-#include "Source/Scene/Task_Title.h"
-#include "Source/Scene/Task_Ending.h"
+#include "Source/Scene/TitleScene.h"
+#include "Source/Scene/EndingScene.h"
 #include "Source/Scene/Task_Game.h"
 #include "Source/Scene/ShopScene.h"
 
@@ -22,7 +22,7 @@ void Scene::CreateNextScene()
 	{
 	
 	case Kind::Title:
-		Title::Object::Create(true);
+		TitleScene::Object::Create(true);
 		break;
 
 	case Kind::Base:
@@ -30,7 +30,7 @@ void Scene::CreateNextScene()
 		break;
 
 	case Kind::Shop:
-		Shop::Object::Create(true);
+		ShopScene::Object::Create(true);
 		break;
 
 	case Kind::Mining:
@@ -40,7 +40,7 @@ void Scene::CreateNextScene()
 		break;
 
 	case Kind::Ending:
-		Ending::Object::Create(true);
+		EndingScene::Object::Create(true);
 		break;
 
 	default:

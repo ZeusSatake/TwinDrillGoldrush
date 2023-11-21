@@ -1,16 +1,15 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//
+//拠点
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
-#include "../../Scene.h"
 
-namespace ShopScene
+namespace BaseScene
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("Scene");	//グループ名
-	const  string  defName("Shop");	//タスク名
+	const  string  defName("Base");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -23,10 +22,11 @@ namespace ShopScene
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-
+		//共有する変数はここに追加する
+		
 	};
 	//-------------------------------------------------------------------
-	class  Object : public Scene
+	class  Object : public  BTask
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
@@ -44,8 +44,9 @@ namespace ShopScene
 		void  UpDate()			override;//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
-	
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	public:
-
+		//追加したい変数・メソッドはここに追加する
+		
 	};
 }
