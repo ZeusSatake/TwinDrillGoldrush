@@ -1,5 +1,17 @@
 #include "Player.h"
 Player::Player()
 {
-	AddComponent(std::shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
+
+}
+
+void Player::PlayerMove(ML::Vec2 vec)
+{
+	this->pos_ += vec;
+}
+
+void Player::Move()
+{
+	
+
+
 }

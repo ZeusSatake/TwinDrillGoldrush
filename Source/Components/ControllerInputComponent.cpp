@@ -1,12 +1,12 @@
 #include "ControllerInputComponent.h"
 #include "../../XI2018_Ver1_0.h"
 
-ControllerInputComponent::ControllerInputComponent(Actor* owner)
+ControllerInputComponent::ControllerInputComponent(class Actor* owner)
 	:
-	Component(owner),
+	Component((Actor*)owner),
 	controller_(ge->in1)
 {
-	owner_ = owner;
+	owner = owner_;
 }
 
 void ControllerInputComponent::SetGamePadId(XI::GamePad::SP contoroller)

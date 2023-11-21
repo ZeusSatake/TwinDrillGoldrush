@@ -211,6 +211,12 @@
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Player.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="BPlayer.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -369,6 +375,12 @@
     </ClInclude>
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Player.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="BPlayer.h">
+      <Filter>MyPG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

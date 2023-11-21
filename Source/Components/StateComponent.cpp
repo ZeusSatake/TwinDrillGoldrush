@@ -2,8 +2,8 @@
 StateComponent::StateComponent(Actor* owner)
 	:
 	Component(owner),
-	nowState(State::Non),
-	preState(State::Non)
+	nowState(State::Idle),
+	preState(State::Idle)
 {
 	owner_ = owner;
 }
