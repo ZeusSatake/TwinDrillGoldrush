@@ -154,7 +154,9 @@
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="randomLib.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Components\AIComponent.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
@@ -169,6 +171,7 @@
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
+    <ClCompile Include="Source\Scene\ShopScene.cpp" />
     <ClCompile Include="Source\Scene\Task_Ending.cpp" />
     <ClCompile Include="Source\Scene\Task_Game.cpp" />
     <ClCompile Include="Source\Scene\Task_Map.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
+    <ClCompile Include="ToggleButton.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="XI2018_Ver1_0.cpp" />
   </ItemGroup>
@@ -210,7 +214,9 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Components\AIComponent.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
@@ -225,6 +231,7 @@
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
+    <ClInclude Include="Source\Scene\ShopScene.h" />
     <ClInclude Include="Source\Scene\Task_Ending.h" />
     <ClInclude Include="Source\Scene\Task_Game.h" />
     <ClInclude Include="Source\Scene\Task_Map.h" />
@@ -234,6 +241,7 @@
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
     <ClInclude Include="Task_Effect00.h" />
+    <ClInclude Include="ToggleButton.h" />
     <ClInclude Include="XI2018_Ver1_0.h" />
   </ItemGroup>
   <ItemGroup>
