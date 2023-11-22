@@ -3,8 +3,10 @@
 
 #include "Source/Scene/TitleScene.h"
 #include "Source/Scene/EndingScene.h"
-#include "Source/Scene/Task_Game.h"
+#include "Source/Scene/GameScene.h"
 #include "Source/Scene/ShopScene.h"
+#include "Source/Scene/BaseScene.h"
+#include "Source/Scene/MartialFightScene.h"
 
 void Scene::SetNextScene(const Kind nextScene)
 {
@@ -26,7 +28,7 @@ void Scene::CreateNextScene()
 		break;
 
 	case Kind::Base:
-		Game::Object::Create(true);
+		BaseScene::Object::Create(true);
 		break;
 
 	case Kind::Shop:
@@ -34,9 +36,11 @@ void Scene::CreateNextScene()
 		break;
 
 	case Kind::Mining:
+		Game::Object::Create(true);
 		break;
 
 	case Kind::MartialFight:
+		MartialFightScene::Object::Create(true);
 		break;
 
 	case Kind::Ending:
