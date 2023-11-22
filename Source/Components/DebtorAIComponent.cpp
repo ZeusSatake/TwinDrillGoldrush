@@ -14,11 +14,14 @@ void DebtorAIComponent::Think()
 			nowState_ = AIState::Patrol;
 		break;
 	case AIState::Patrol:
-		if (distance_ > fov_)
+		if (distance_ <= fov_)
 			nowState_ = AIState::Approach;
 		break;
 	case AIState::Approach:
-		
+		if (distance_ <= static_cast<Enemy*>(owner_)->range_)
+		{
+
+		}
 		break;
 	}
 }
@@ -55,6 +58,7 @@ void DebtorAIComponent::Update()
 
 void DebtorAIComponent::UpdatePatrol()
 {
+	//
 	ML::Vec2 toTarget = target_->pos_ - owner_->pos_;
 	distance_ = toTarget.Length();
 

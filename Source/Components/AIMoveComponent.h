@@ -3,12 +3,14 @@
 #include "../../Component.h"
 #include "../../myLib.h"
 #include "../../Character.h"
-class AIMoveComponent : public Movement
+#include "../../Player.h"
+class AIMoveComponent : public Component
 {
 public:
 	ML::Vec2 moveVec_;
+	shared_ptr<Player> pl;
 public:
-	AIMoveComponent(class Character* owner,ML::Vec2 moveVec,float moveSpeed);
+	AIMoveComponent(class Character* owner,float moveSpeed);
 	AIMoveComponent(class Character* owner);
 	virtual ~AIMoveComponent() {};
 

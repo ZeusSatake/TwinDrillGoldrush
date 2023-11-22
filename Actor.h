@@ -20,6 +20,12 @@ public:
 	int			moveCnt_;	//行動カウンタ
 	//向き（2D視点）
 	float angle_;
+
+	enum class Angle_LR
+	{
+		Left,Right
+	};
+	Angle_LR angle_LR;
 protected:
 	//コンポーネント
 	shared_ptr<BoxCollisionComponent> box_;
