@@ -56,6 +56,7 @@ namespace  Map
 		bool  Load(const  string& fileName);//マップ読み込み
 		bool  CheckHit(const  ML::Box2D& hit);//あたり判定
 		void AdjustCameraPos();//マップ外を見せないようにカメラを位置調整する
+		void  Search(const ML::Point& pos_);//対象ブロック検索
 	};
 }
 		

@@ -5,11 +5,11 @@
 //-------------------------------------------------------------------
 #include	"../../../BBlocks.h"
 
-namespace	Stone
+namespace	Manager
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName(	"Blocks");	//グループ名
-	const  string  defName(			"Stone");		//タスク名
+	const  string  defName(			"BManager");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -22,8 +22,8 @@ namespace	Stone
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//共有する変数はここに追加する
+		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+			//共有する変数はここに追加する
 	};
 	//-------------------------------------------------------------------
 	class  Object : public	BBlocks
@@ -46,8 +46,9 @@ namespace	Stone
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	public:
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+			//追加したい変数・メソッドはここに追加する
+			//BCharaに含まれないモノのみここに追加する
+		static int CreatBlocks(const int inp);
 	};
 }
