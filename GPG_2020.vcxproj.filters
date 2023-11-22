@@ -267,7 +267,6 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
->>>>>>> main
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -466,7 +465,6 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\TitleScene.h">
       <Filter>MyPG\Task\Scene\title</Filter>
->>>>>>> main
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

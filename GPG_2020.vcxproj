@@ -158,14 +158,11 @@
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
-=======
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
->>>>>>> main
     <ClCompile Include="Source\Components\AIComponent.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
@@ -230,14 +227,11 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
-<<<<<<< HEAD
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
-=======
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
->>>>>>> main
     <ClInclude Include="Source\Components\AIComponent.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
