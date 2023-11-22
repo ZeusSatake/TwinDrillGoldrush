@@ -4,6 +4,7 @@
 #include  "../../MyPG.h"
 #include  "MartialFightScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "Task_Map.h"
 
 namespace MartialFightScene
 {
@@ -32,12 +33,19 @@ namespace MartialFightScene
 		//★データ初期化
 		
 		//★タスクの生成
-		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-		gotoBaseButton->SetEnterButton(XI::VGP::ST);
-		gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoBaseButton->SetScene(this, Scene::Kind::Base);
-		gotoBaseButton->SetText("拠点へ");
-		AddSceneChangeButton(gotoBaseButton);
+		{//武闘会
+			auto map = Map::Object::Create(true);
+			map->Load("MartialFight");
+		}
+		
+		{//拠点に戻るボタン
+			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
+			gotoBaseButton->SetEnterButton(XI::VGP::ST);
+			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+			gotoBaseButton->SetScene(this, Scene::Kind::Base);
+			gotoBaseButton->SetText("拠点へ");
+			AddSceneChangeButton(gotoBaseButton);
+		}
 
 		return  true;
 	}
@@ -46,6 +54,7 @@ namespace MartialFightScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
+		ge->KillAll_G("本編");
 		ge->KillAll_G(SceneChangeButton::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
