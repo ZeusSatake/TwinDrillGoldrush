@@ -36,16 +36,25 @@ namespace BaseScene
 		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
 		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
 		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);
+		gotoShopSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoShopSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
+		gotoShopSceneButton->SetText("ƒVƒ‡ƒbƒv‚Ö");
 		AddSceneChangeButton(gotoShopSceneButton);
 
 		auto gotoMartialFightSceneButton = SceneChangeButton::Object::Create(true);
 		gotoMartialFightSceneButton->SetScene(this, Scene::Kind::MartialFight);
 		gotoMartialFightSceneButton->SetEnterButton(XI::VGP::B2);
+		gotoMartialFightSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoMartialFightSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
+		gotoMartialFightSceneButton->SetText("•“¬‰ï‚Ö");
 		AddSceneChangeButton(gotoMartialFightSceneButton);
 
 		auto gotoMiningSceneButton = SceneChangeButton::Object::Create(true);
 		gotoMiningSceneButton->SetScene(this, Scene::Kind::Mining);
 		gotoMiningSceneButton->SetEnterButton(XI::VGP::B3);
+		gotoMiningSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoMiningSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
+		gotoMiningSceneButton->SetText("ÌŒ@ê‚Ö");
 		AddSceneChangeButton(gotoMiningSceneButton);
 
 		return  true;
