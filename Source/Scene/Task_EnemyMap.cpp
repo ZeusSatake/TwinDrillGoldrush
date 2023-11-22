@@ -1,21 +1,13 @@
 //-------------------------------------------------------------------
-//ゲーム本編
+//
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "GameScene.h"
-
-#include  "../../randomLib.h"
-#include  "../../sound.h"
-
-#include  "EndingScene.h"
-
-#include  "../System/Task_BackGround.h"
-#include  "Task_Map.h"
 #include  "Task_EnemyMap.h"
+#include  "../Components/Blocks/Task_Stone.h"
+#include  "../Components/Blocks/BlockManager.h"
 
-#include  "../Actors/UI/SceneChangeButton.h"
 
-namespace  GameScene
+namespace  EnemyMap
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -40,58 +32,21 @@ namespace  GameScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->render2D_Priority[1] = 0.0f;
-		ge->debugRectLoad();
-
-		ge->GameOverFlag = false;
-		ge->GameClearFlag = false;
-		ge->gameScreenWidth = ge->screenWidth;
+		this->render2D_Priority[1] = 0.8f;
+		//arrの要素数分(*32)のマップサイズ
+		this->sizeX = sizeof(this->arr[0]) / sizeof(this->arr[0][0]);
+		this->sizeY = sizeof(this->arr) / sizeof(this->arr[0]);
+		this->chipSize = 16;//1マスの大きさ
+		for (int y = 0; y < this->sizeY; ++y)
+		{
+			for (int x = 0; x < this->sizeX; ++x)
+			{
+				this->arr[y][x] = 0;
+			}
+		}
 		
-		fontImg.img = DG::Image::Create("./data/image/font_number.png");
-		fontImg.size = ML::Point{ 20, 32 };
-		ge->score = 0;
-		
-		//デバッグ用フォントの準備
-		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
-
 		//★タスクの生成
-
-
-		{//背景タスク生成
-			ML::Point imgSize = { 960, 500 };
-			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
-			int sprit = 1;
-			auto back = BackGround::Object::Create(true);
-			back->SetUp("./data/image/gameback.png",
-						imgSize,
-						drawSize,
-						BackGround::Object::RenderSize::FullScreen,
-						sprit);
-		}
-		
-		{//石 鉱石
-			auto map = Map::Object::Create(true);
-			map->Load("MapStone");
-		}
-		{//宝石
-			auto mapore = Map::Object::Create(true);
-			mapore->Load("MapJewelry");
-			mapore->render2D_Priority[1] = 0.85f;
-		}
-		//{//敵
-		//	auto enemymap = EnemyMap::Object::Create(true);
-		//	enemymap->Load("MapEnemy");
-		//	enemymap->SetEnemy();
-		//}
-
-		{//拠点に戻るボタン(デバッグ用
-			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-			gotoBaseButton->SetEnterButton(XI::VGP::ST);
-			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("拠点へ");
-			AddSceneChangeButton(gotoBaseButton);
-		}
+		Manager::Object::Create(true);
 
 		return  true;
 	}
@@ -101,15 +56,9 @@ namespace  GameScene
 	{
 		//★データ＆タスク解放
 
-		ge->KillAll_G("本編");
-		ge->KillAll_G("システム");
-		ge->KillAll_G(SceneChangeButton::defGroupName);
-
-		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			CreateNextScene();
 		}
 
 		return  true;
@@ -118,20 +67,61 @@ namespace  GameScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Scene::UpDate();
-
-		auto inp = ge->in1->GetState();
-		if (inp.SE.down) {
-			this->Kill();
-		}
-		if (ge->GameOverFlag) {
-			this->Kill();
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+	}
+	//-------------------------------------------------------------------
+	bool Object::Load(const  string& fileName)
+	{
+		//ファイル名の作成
+		string filePath = "./data/Map/" + fileName + ".csv";
+		//ファイルの読み込み
+		ifstream ifs(filePath);
+		if (!ifs) { return false; }
+		this->hitBase = ML::Box2D(0, 0, this->sizeX * chipSize, this->sizeY * chipSize);
+		for (int y = 0; y < this->sizeY; ++y)
+		{
+			//改行までの文字列を取得
+			string lineText;
+			getline(ifs, lineText);
+
+			istringstream ss_lt(lineText);
+			for (int x = 0; x < this->sizeX; ++x)
+			{
+				//カンマまでの文字列を取得
+				string text;
+				getline(ss_lt, text, ',');
+				stringstream ss;
+				ss << text;
+				ss >> this->arr[y][x];
+			}
+		}
+		ifs.close();
+		return true;
+	}
+	//-------------------------------------------------------------------
+	void Object::SetEnemy()
+	{
+		for (int y = 0; y < this->sizeY; ++y) {
+			for (int x = 0; x < this->sizeX; ++x) {
+				// チップの番号によって生成する敵を変える
+				switch (this->arr[y][x])
+				{
+				case 1:
+				{
+					/*auto enemy = Enemy01::Object::Create(true);
+					enemy->pos.x = x * chipSize;
+					enemy->pos.y = y * chipSize;*/
+				}
+				break;
+
+				
+				}
+			}
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -146,6 +136,7 @@ namespace  GameScene
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill
