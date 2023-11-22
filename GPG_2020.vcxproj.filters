@@ -124,15 +124,6 @@
     <ClCompile Include="easing.cpp">
       <Filter>Lib</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Game.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Ending.cpp">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Title.cpp">
-      <Filter>MyPG\Task\Scene\title</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\HP.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
@@ -233,6 +224,17 @@
     <ClCompile Include="Source\Scene\ShopScene.cpp">
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\BaseScene.cpp" />
+    <ClCompile Include="Source\Scene\EndingScene.cpp" />
+    <ClCompile Include="Source\Scene\GameScene.cpp" />
+    <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Drill.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Drill.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -299,15 +301,6 @@
       <Filter>Lib</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Source\Scene\Task_Game.h">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Task_Ending.h">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Task_Title.h">
-      <Filter>MyPG\Task\Scene\title</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\HP.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
@@ -407,6 +400,17 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Source\Scene\ShopScene.h">
       <Filter>MyPG\Task\Scene\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h" />
+    <ClInclude Include="Source\Scene\EndingScene.h" />
+    <ClInclude Include="Source\Scene\GameScene.h" />
+    <ClInclude Include="Source\Scene\MartialFightScene.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Drill.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Drill.h">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
