@@ -32,10 +32,12 @@ namespace ShopScene
 		//★データ初期化
 		
 		//★タスクの生成
-		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
-		gotoTitleButton->SetEnterButton(XI::VGP::ST);
-		gotoTitleButton->SetScene(this, Scene::Kind::Base);
-		AddSceneChangeButton(gotoTitleButton);
+		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
+		gotoBaseButton->SetEnterButton(XI::VGP::ST);
+		gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoBaseButton->SetScene(this, Scene::Kind::Base);
+		gotoBaseButton->SetText("拠点へ");
+		AddSceneChangeButton(gotoBaseButton);
 
 		return  true;
 	}
