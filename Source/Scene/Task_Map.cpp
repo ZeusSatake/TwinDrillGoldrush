@@ -3,6 +3,9 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "Task_Map.h"
+#include  "../Components/Blocks/Task_Stone.h"
+
+#include  "../Components/Blocks/BlockManager.h"
 
 namespace  Map
 {
@@ -42,13 +45,14 @@ namespace  Map
 				this->arr[y][x] = 0;
 			}
 		}
-		for (int i = 0; i < 16; ++i)
+		for (int i = 0; i < 31; ++i)
 		{
 			int x = i % 8;
 			int y = i / 8;
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
 		//★タスクの生成
+		Manager::Object::Create(true);
 
 		return  true;
 	}
@@ -69,6 +73,10 @@ namespace  Map
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		auto ms = ge->mouse->GetState();
+		if (ms.RB.down) {
+			this->Search(ms.pos);
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -176,7 +184,7 @@ namespace  Map
 		{
 			for (int x = sx; x <= ex; ++x)
 			{
-				if (8 <= this->arr[y][x])
+				if (1 <= this->arr[y][x])
 				{
 					return true;
 				}
@@ -209,6 +217,22 @@ namespace  Map
 		if (this->hitBase.w < ge->camera2D.w) { ge->camera2D.x = m.left; }
 		if (this->hitBase.h < ge->camera2D.h) { ge->camera2D.y = m.top; }
 	}
+	//-------------------------------------------------------------------
+	void Object::Search(const ML::Point& pos_)
+	{
+		ML::Point pos = pos_;
+		if (pos.x >= 0 && pos.x < chipSize * this->sizeX &&
+			pos.y >= 0 && pos.y < chipSize * this->sizeY) {
+			//
+			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
+			if (this->arr[masu.y][masu.x] != 0) {
+				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x]);
+				this->arr[masu.y][masu.x] = inp;
+			}
+		}
+	}
+	
+
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

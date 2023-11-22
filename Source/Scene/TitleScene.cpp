@@ -1,24 +1,35 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//タイトル画面
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../MyPG.h"
+#include  "../../randomLib.h"
+#include  "../../Task_Effect00.h"
+#include  "../../sound.h"
+#include  "../../easing.h"
 
+#include  "TitleScene.h"
+#include  "GameScene.h"
 
-namespace	Stone
+#include  "../System/Task_BackGround.h"
+#include  "../System/Task_FlashDraw.h"
+
+#include  "../Actors/UI/SceneChangeButton.h"
+
+namespace  TitleScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		TitleLogo01 = DG::Image::Create("./data/image/title.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		TitleLogo01.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,8 +42,57 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		this->controller = ge->in1;
+		this->render2D_Priority[1] = 0.5f;
+		int RenderTime = 0;
+
+		ge->stage = 1;
+
+		//デバッグ用フォントの準備
+		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
+
+		//音楽ファイルの読み込み
+		//BGM
+		// BGMの利用するファイルは曲の長さによってサイズが変わります。
+		// 一般的にWavは中身が波形データと呼ばれるサイズが大きなデータにります。
+		// 一方mp3はネットなどでの扱いを想定した圧縮形式です。
+		// BGMを用いる場合はmp3形式のファイルを利用しましょう。
+		// ちなみにこのサンプルのファイルは
+		// 再生時間1：30ほぼの曲で
+		// mp3 = 4.3MB wav = 19MBです。
+		//bgm::LoadFile("bgm1", "./data/sound/TitleBGM.mp3");
+		//bgm::Play("bgm1");
+
+		//se
+		// seは効果音です。
+		// bgmとの最大の違いはひとつの音楽ファイルの同時再生に対応していることです。
+		// seはwavファイルしか扱うことが出来ません。mp3はエラーになります。
+		// 同時再生の必要がないものはBGM
+		// 同時再生が必要なものはseと使い分けてください。
+	  // またこのサンプルのような日本語ファイル名はやめた方が良いです。
+		// 読み込みエラーの元になります。
+		//se::LoadFile("se1","./data/sound/se/「すごいすごい」.wav");
+
+//		se::LoadFile("se2", "./data/sound/se/「頑張ったね」.mp3");これはエラー wavじゃないとダメ
+		//se::LoadFile("se2", "./data/sound/se/「頑張ったね」.wav");
+
+		//se::LoadFile("ok", "./data/sound/ok.wav");
+
+		easing::Set("titleX", easing::CIRCOUT, -200, (float)ge->screenCenterPos.x, 120);
+		easing::Start("titleX");
+		easing::Set("titleY", easing::BOUNCEOUT, -200, (float)ge->screenCenterPos.y, 120);
+		easing::Start("titleY");
+
+		frameCnt = 0;
+
+		SetNextScene(Scene::Kind::Base);
+
 		//★タスクの生成
+		auto backGound = BackGround::Object::Create(true);
+		backGound->SetUp(
+			"./data/image/titleback.png",
+			ML::Point{ 1920, 1200 },
+			ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
 
 		return  true;
 	}
@@ -41,10 +101,12 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
-
+		ge->KillAll_G("背景");
+		//bgm::Stop("bgm1");
+		ge->KillAll_G("システム");
+		ge->KillAll_G("UI");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
-			//★引き継ぎタスクの生成
+			CreateNextScene();
 		}
 
 		return  true;
@@ -53,13 +115,19 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		Scene::UpDate();
+
+		auto inp = ge->in1->GetState();
+		if (inp.SE.down)
+		{
+			Kill();
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "タイトル");
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -74,7 +142,6 @@ namespace	Stone
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

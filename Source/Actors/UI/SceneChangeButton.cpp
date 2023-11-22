@@ -1,12 +1,15 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../../MyPG.h"
+#include  "SceneChangeButton.h"
 
+#include  "../../Scene/TitleScene.h"
+#include  "../../Scene/GameScene.h"
+#include  "../../Scene/ShopScene.h"
+#include  "../../Scene/EndingScene.h"
 
-namespace	Stone
+namespace SceneChangeButton
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,7 +34,11 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		
+		SetEnterButton(XI::VGP::B1);
+		SetRecieveInputEnable(true);
+		SetSelected(true);
+		
 		//★タスクの生成
 
 		return  true;
@@ -41,7 +48,7 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -53,13 +60,27 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		ToggleButton::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(0, 0, 600, 600), debugText, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+	}
+	void Object::OnEvent()
+	{
+		nowScene_->SetNextScene(nextScene_);
+		debugText = "ON";
+	}
+	void Object::OffEvent()
+	{
+		debugText = "OFF";
+	}
+	void Object::SetScene(Scene* nowScene, const Scene::Kind& nextScene)
+	{
+		nowScene_ = nowScene;
+		nextScene_ = nextScene;
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

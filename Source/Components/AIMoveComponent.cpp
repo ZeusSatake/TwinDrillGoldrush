@@ -1,5 +1,6 @@
 #include "AIMoveComponent.h"
 
+
 AIMoveComponent::AIMoveComponent(class Character* owner)
 	: Movement(owner)
 	,moveVec_(owner->GetMovement()->GetVelocity())
@@ -14,7 +15,7 @@ AIMoveComponent::AIMoveComponent(class Character* owner,ML::Vec2 moveVec,float m
 
 void AIMoveComponent::Update()
 {
-	
+
 }
 
 void AIMoveComponent::MoveTo(class Actor* target)
@@ -36,9 +37,11 @@ void AIMoveComponent::Patroll(class Actor* target)
 void AIMoveComponent::Jump()
 {
 
+
 }
 
 void AIMoveComponent::KnockBack()
 {
+
 
 }

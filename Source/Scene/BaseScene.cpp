@@ -1,12 +1,12 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../MyPG.h"
+#include  "BaseScene.h"
 
+#include  "../Actors/UI/SceneChangeButton.h"
 
-namespace	Stone
+namespace BaseScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,8 +31,22 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		
 		//★タスクの生成
+		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
+		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
+		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);
+		AddSceneChangeButton(gotoShopSceneButton);
+
+		auto gotoMartialFightSceneButton = SceneChangeButton::Object::Create(true);
+		gotoMartialFightSceneButton->SetScene(this, Scene::Kind::MartialFight);
+		gotoMartialFightSceneButton->SetEnterButton(XI::VGP::B2);
+		AddSceneChangeButton(gotoMartialFightSceneButton);
+
+		auto gotoMiningSceneButton = SceneChangeButton::Object::Create(true);
+		gotoMiningSceneButton->SetScene(this, Scene::Kind::Mining);
+		gotoMiningSceneButton->SetEnterButton(XI::VGP::B3);
+		AddSceneChangeButton(gotoMiningSceneButton);
 
 		return  true;
 	}
@@ -41,10 +55,11 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+		ge->KillAll_G(SceneChangeButton::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			CreateNextScene();
 		}
 
 		return  true;
@@ -53,13 +68,13 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		Scene::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "拠点");
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

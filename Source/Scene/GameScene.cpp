@@ -1,12 +1,20 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//ゲーム本編
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../MyPG.h"
+#include  "GameScene.h"
 
+#include  "../../randomLib.h"
+#include  "../../sound.h"
 
-namespace	Stone
+#include  "EndingScene.h"
+
+#include  "../System/Task_BackGround.h"
+#include  "Task_Map.h"
+
+#include  "../Actors/UI/SceneChangeButton.h"
+
+namespace  GameScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,8 +39,51 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		this->render2D_Priority[1] = 0.0f;
+		ge->debugRectLoad();
+
+		ge->GameOverFlag = false;
+		ge->GameClearFlag = false;
+		ge->gameScreenWidth = ge->screenWidth;
+		
+		fontImg.img = DG::Image::Create("./data/image/font_number.png");
+		fontImg.size = ML::Point{ 20, 32 };
+		ge->score = 0;
+		
+		//デバッグ用フォントの準備
+		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
+
 		//★タスクの生成
+
+
+		{//背景タスク生成
+			ML::Point imgSize = { 960, 500 };
+			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
+			int sprit = 1;
+			auto back = BackGround::Object::Create(true);
+			back->SetUp("./data/image/gameback.png",
+						imgSize,
+						drawSize,
+						BackGround::Object::RenderSize::FullScreen,
+						sprit);
+		}
+		
+		{//石 鉱石
+			auto map = Map::Object::Create(true);
+			map->Load("MapStone");
+		}
+		{//宝石
+			auto mapore = Map::Object::Create(true);
+			mapore->Load("MapJewelry");
+			mapore->render2D_Priority[1] = 0.85f;
+		}
+
+		{//タイトルに戻るボタン(デバッグ用
+			auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+			gotoTitleButton->SetEnterButton(XI::VGP::ST);
+			gotoTitleButton->SetScene(this, Scene::Kind::Base);
+			AddSceneChangeButton(gotoTitleButton);
+		}
 
 		return  true;
 	}
@@ -41,10 +92,16 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+
+		ge->KillAll_G("本編");
+		ge->KillAll_G("システム");
+		ge->KillAll_G(SceneChangeButton::defGroupName);
+
+		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			CreateNextScene();
 		}
 
 		return  true;
@@ -53,8 +110,15 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		Scene::UpDate();
+
+		auto inp = ge->in1->GetState();
+		if (inp.SE.down) {
+			this->Kill();
+		}
+		if (ge->GameOverFlag) {
+			this->Kill();
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -74,7 +138,6 @@ namespace	Stone
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

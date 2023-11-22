@@ -1,12 +1,11 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../MyPG.h"
+#include  "ShopScene.h"
+#include  "../Actors/UI/SceneChangeButton.h"
 
-
-namespace	Stone
+namespace ShopScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,8 +30,12 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		
 		//★タスクの生成
+		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+		gotoTitleButton->SetEnterButton(XI::VGP::ST);
+		gotoTitleButton->SetScene(this, Scene::Kind::Base);
+		AddSceneChangeButton(gotoTitleButton);
 
 		return  true;
 	}
@@ -41,10 +44,11 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+		ge->KillAll_G(SceneChangeButton::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			CreateNextScene();
 		}
 
 		return  true;
@@ -53,13 +57,13 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		Scene::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "ショップ");
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

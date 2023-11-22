@@ -1,20 +1,21 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//破壊可能：石
+//タイトル画面
 //-------------------------------------------------------------------
-#include	"../../../BBlocks.h"
+#include "../../GameEngine_Ver3_83.h"
+#include "../../Scene.h"
 
-namespace	Stone
+namespace  TitleScene
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName(	"Blocks");	//グループ名
-	const  string  defName(			"Stone");		//タスク名
+	const  string  defGroupName("Scene");	//グループ名
+	const  string  defName("Title");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
-		bool  Initialize()		override;
-		bool  Finalize()		override;
+		bool  Initialize()	override;
+		bool  Finalize()	override;
 		Resource();
 	public:
 		~Resource();
@@ -22,32 +23,49 @@ namespace	Stone
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//共有する変数はここに追加する
+		DG::Image::SP	TitleLogo01;
+		DG::Image::SP	TitleLogo02;
+		DG::Image::SP	TitleLogo03;
+		DG::Image::SP	StartLogo;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public	BBlocks
+	class  Object : public  Scene
 	{
+	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
 		virtual  ~Object();
 		typedef  shared_ptr<Object>		SP;
 		typedef  weak_ptr<Object>		WP;
-		typedef  shared_ptr<vector<Object::SP>> SPV;
 		//生成窓口 引数はtrueでタスクシステムへ自動登録
 		static  Object::SP  Create(bool flagGameEnginePushBack_);
 		Resource::SP	res;
 	private:
-
 		Object();
 		bool  B_Initialize();
 		bool  B_Finalize();
 		bool  Initialize();	//「初期化」タスク生成時に１回だけ行う処理
-		void  UpDate()		override;	//「実行」１フレーム毎に行う処理
-		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
-		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
-	public:
+		void  UpDate()			override;	//「実行」１フレーム毎に行う処理
+		void  Render2D_AF()		override;	//「2D描画」１フレーム毎に行う処理
+		bool  Finalize();	//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+	public:
 		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+		XI::GamePad::SP controller;
+
+		float bgmSpeed = 1.f;
+		int bgmVol = 100;
+
+		int seSpeed = 100;
+		int seVol = 100;
+
+		long tVol = 100;
+
+		DG::Font::SP TestFont;
+
+		float logoY;
+		float logoX;
+
+		int frameCnt;
 	};
 }

@@ -1,12 +1,14 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//ブロックマネージャー
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
+#include	"BlockManager.h"
+#include	"../../Scene/Task_Map.h"
+
 #include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include	"Task_Bedrock .h"
 
-
-namespace	Stone
+namespace	Manager
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,7 +33,7 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+
 		//★タスクの生成
 
 		return  true;
@@ -41,7 +43,7 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -53,13 +55,31 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+	}
+	//-------------------------------------------------------------------
+	int Object::CreatBlocks(const int inp)
+	{
+		switch (inp)
+		{
+		case 2:
+			return 0;
+		case 6:
+			Stone::Object::Create(true);
+			return 0;
+			break;
+		case 7:
+			Bedrock::Object::Create(true);
+			return 7;
+			break;
+		default:
+			return 0;
+			break;
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -74,7 +94,7 @@ namespace	Stone
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

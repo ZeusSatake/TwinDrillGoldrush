@@ -1,15 +1,15 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//破壊可能：石
+//
 //-------------------------------------------------------------------
-#include	"../../../BBlocks.h"
+#include "../../Player.h"
 
-namespace	Stone
+namespace player
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName(	"Blocks");	//グループ名
-	const  string  defName(			"Stone");		//タスク名
+	const  string  defGroupName("");	//グループ名
+	const  string  defName("");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -24,9 +24,10 @@ namespace	Stone
 		static  Resource::SP  Create();
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//共有する変数はここに追加する
+		DG::Image::SP playerImg;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public	BBlocks
+	class  Object : public  Player
 	{
 	public:
 		virtual  ~Object();
@@ -48,6 +49,6 @@ namespace	Stone
 	public:
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+
 	};
 }

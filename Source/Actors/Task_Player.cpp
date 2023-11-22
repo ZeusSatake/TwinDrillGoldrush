@@ -1,24 +1,24 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//
 //-------------------------------------------------------------------
-#include	"../../../MyPG.h"
-#include	"Task_Stone.h"
-#include	"../../../sound.h"
+#include  "../../Player.h"
+#include  "Task_Player.h"
 
-
-namespace	Stone
+namespace player
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		this->playerImg = DG::Image::Create("./data/image/oyasiro.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		this->playerImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,7 +31,8 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		this->box_->setHitBase(ML::Box2D{ -150,-210,300,420 });
+		this->pos_ = ML::Vec2{ 0,0 };
 		//★タスクの生成
 
 		return  true;
@@ -41,7 +42,7 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -53,15 +54,21 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
-		this->Kill();
+		this->pState = this->state_->GetNowState();
+		this->Think();
+		this->Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		//プレイヤキャラの描画
+		{
+			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
+			ML::Box2D src{ 0,0,300,420 };
+			this->res->playerImg->Draw(draw, src);
+		}
 	}
-
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -117,4 +124,5 @@ namespace	Stone
 	Resource::Resource() {}
 	//-------------------------------------------------------------------
 	Resource::~Resource() { this->Finalize(); }
+
 }

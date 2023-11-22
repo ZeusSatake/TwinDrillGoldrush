@@ -1,15 +1,16 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//破壊可能：石
+//シーンを切り替えるボタン
 //-------------------------------------------------------------------
-#include	"../../../BBlocks.h"
+#include "../../../ToggleButton.h"
+#include "../../../Scene.h"
 
-namespace	Stone
+namespace SceneChangeButton
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName(	"Blocks");	//グループ名
-	const  string  defName(			"Stone");		//タスク名
+	const  string  defGroupName("UI");					//グループ名
+	const  string  defName("SceneChangeButton");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -22,11 +23,9 @@ namespace	Stone
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//共有する変数はここに追加する
 	};
 	//-------------------------------------------------------------------
-	class  Object : public	BBlocks
+	class  Object : public  ToggleButton
 	{
 	public:
 		virtual  ~Object();
@@ -36,6 +35,7 @@ namespace	Stone
 		//生成窓口 引数はtrueでタスクシステムへ自動登録
 		static  Object::SP  Create(bool flagGameEnginePushBack_);
 		Resource::SP	res;
+
 	private:
 
 		Object();
@@ -45,9 +45,18 @@ namespace	Stone
 		void  UpDate()		override;	//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
+
+	private:
+
+		Scene* nowScene_;
+		Scene::Kind nextScene_;
+
 	public:
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+		void SetScene(Scene* nowScene, const Scene::Kind& nextScene);
+
+		void OnEvent() override;
+		void OffEvent() override;
+
+		string debugText = "NON";
 	};
 }
