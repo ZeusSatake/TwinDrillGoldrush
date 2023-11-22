@@ -33,6 +33,13 @@ namespace BaseScene
 		//★データ初期化
 		
 		//★タスクの生成
+		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+		gotoTitleButton->SetEnterButton(XI::VGP::ST);
+		gotoTitleButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoTitleButton->SetScene(this, Scene::Kind::Title);
+		gotoTitleButton->SetText("タイトルへ");
+		AddSceneChangeButton(gotoTitleButton);
+
 		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
 		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
 		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);

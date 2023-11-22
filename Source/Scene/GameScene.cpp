@@ -78,11 +78,13 @@ namespace  GameScene
 			mapore->render2D_Priority[1] = 0.85f;
 		}
 
-		{//タイトルに戻るボタン(デバッグ用
-			auto gotoTitleButton = SceneChangeButton::Object::Create(true);
-			gotoTitleButton->SetEnterButton(XI::VGP::ST);
-			gotoTitleButton->SetScene(this, Scene::Kind::Base);
-			AddSceneChangeButton(gotoTitleButton);
+		{//拠点に戻るボタン(デバッグ用
+			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
+			gotoBaseButton->SetEnterButton(XI::VGP::ST);
+			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+			gotoBaseButton->SetScene(this, Scene::Kind::Base);
+			gotoBaseButton->SetText("拠点へ");
+			AddSceneChangeButton(gotoBaseButton);
 		}
 
 		return  true;
