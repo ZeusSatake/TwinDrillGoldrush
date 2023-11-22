@@ -276,7 +276,7 @@ namespace XI
 		ButtonInfo	  B5;
 	};
 	class Mouse {
-	public://ボタンを変数にして状態を取れるようにprotectedからpublicへ
+	protected:
 		enum  class  ButtonState : BYTE {
 			Err,
 			On,		//押している間中
@@ -303,9 +303,8 @@ namespace XI
 		using SP = shared_ptr<Mouse>;
 		using WP = weak_ptr<Mouse>;
 
-		//ボタンを変数にして状態を取れるようにprivateからpublicへ
-		ButtonState     CheckBT(MB  mb_);
 	private:
+		ButtonState     CheckBT(MB  mb_);
 		Mouse();
 		ButtonInfo  ConvertKS(ButtonState  ks_);
 	public:

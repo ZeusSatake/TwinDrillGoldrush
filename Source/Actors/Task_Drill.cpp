@@ -2,23 +2,23 @@
 //
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "BaseScene.h"
+#include  "Task_Drill.h"
 
-#include  "../Actors/UI/SceneChangeButton.h"
-
-namespace BaseScene
+namespace  drill
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		this->img = DG::Image::Create("./data/image/preDrill.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		this->img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -33,20 +33,6 @@ namespace BaseScene
 		//★データ初期化
 		
 		//★タスクの生成
-		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
-		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
-		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);
-		AddSceneChangeButton(gotoShopSceneButton);
-
-		auto gotoMartialFightSceneButton = SceneChangeButton::Object::Create(true);
-		gotoMartialFightSceneButton->SetScene(this, Scene::Kind::MartialFight);
-		gotoMartialFightSceneButton->SetEnterButton(XI::VGP::B2);
-		AddSceneChangeButton(gotoMartialFightSceneButton);
-
-		auto gotoMiningSceneButton = SceneChangeButton::Object::Create(true);
-		gotoMiningSceneButton->SetScene(this, Scene::Kind::Mining);
-		gotoMiningSceneButton->SetEnterButton(XI::VGP::B3);
-		AddSceneChangeButton(gotoMiningSceneButton);
 
 		return  true;
 	}
@@ -55,11 +41,10 @@ namespace BaseScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			CreateNextScene();
 		}
 
 		return  true;
@@ -68,13 +53,12 @@ namespace BaseScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Scene::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "拠点");
+
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

@@ -145,6 +145,7 @@
     <ClCompile Include="DG2014\DG2014_VertexBuffer.cpp" />
     <ClCompile Include="DG2014\DG2014_VertexContainer.cpp" />
     <ClCompile Include="Dm2008_Ver1_4.cpp" />
+    <ClCompile Include="Drill.cpp" />
     <ClCompile Include="easing.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="fpscounter.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
@@ -210,6 +212,7 @@
     <ClInclude Include="DG2014\DG2014_VertexBuffer.h" />
     <ClInclude Include="DG2014\DG2014_VertexContainer.h" />
     <ClInclude Include="Dm2008_Ver1_4.h" />
+    <ClInclude Include="Drill.h" />
     <ClInclude Include="easing.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="fpscounter.h" />
@@ -223,6 +226,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
