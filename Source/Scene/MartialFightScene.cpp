@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "MartialFightScene.h"
+#include  "../Actors/UI/SceneChangeButton.h"
 
 namespace MartialFightScene
 {
@@ -31,6 +32,10 @@ namespace MartialFightScene
 		//★データ初期化
 		
 		//★タスクの生成
+		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+		gotoTitleButton->SetEnterButton(XI::VGP::ST);
+		gotoTitleButton->SetScene(this, Scene::Kind::Base);
+		AddSceneChangeButton(gotoTitleButton);
 
 		return  true;
 	}
@@ -39,10 +44,11 @@ namespace MartialFightScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		ge->KillAll_G(SceneChangeButton::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			CreateNextScene();
 		}
 
 		return  true;
@@ -51,11 +57,13 @@ namespace MartialFightScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Scene::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "武闘会");
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
