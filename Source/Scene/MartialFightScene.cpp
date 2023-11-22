@@ -39,6 +39,7 @@ namespace MartialFightScene
 		}
 		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
 		gotoTitleButton->SetEnterButton(XI::VGP::ST);
+		gotoTitleButton->SetEnterButton(XI::Mouse::MB::LB);
 		gotoTitleButton->SetScene(this, Scene::Kind::Base);
 		AddSceneChangeButton(gotoTitleButton);
 
