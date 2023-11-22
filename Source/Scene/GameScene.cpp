@@ -1,15 +1,18 @@
 //-------------------------------------------------------------------
-//
+//ゲーム本編
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "SceneChangeButton.h"
+#include  "../../MyPG.h"
+#include  "GameScene.h"
 
-#include  "../../Scene/TitleScene.h"
-#include  "../../Scene/Task_Game.h"
-#include  "../../Scene/ShopScene.h"
-#include  "../../Scene/EndingScene.h"
+#include  "../../randomLib.h"
+#include  "../../sound.h"
 
-namespace SceneChangeButton
+#include  "EndingScene.h"
+
+#include  "../System/Task_BackGround.h"
+#include  "Task_Map.h"
+
+namespace  Game
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -34,13 +37,36 @@ namespace SceneChangeButton
 		this->res = Resource::Create();
 
 		//★データ初期化
+		this->render2D_Priority[1] = 0.0f;
+		ge->debugRectLoad();
+
+		ge->GameOverFlag = false;
+		ge->GameClearFlag = false;
+		ge->gameScreenWidth = ge->screenWidth;
 		
-		SetEnterButton(XI::VGP::B1);
-		SetRecieveInputEnable(true);
-		SetSelected(true);
+		fontImg.img = DG::Image::Create("./data/image/font_number.png");
+		fontImg.size = ML::Point{ 20, 32 };
+		ge->score = 0;
 		
+		//デバッグ用フォントの準備
+		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
+
 		//★タスクの生成
 
+
+		{//背景タスク生成
+			ML::Point imgSize = { 800, 600 };
+			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
+			int sprit = 1;
+			auto back = BackGround::Object::Create(true);
+			back->SetUp("./data/image/back.png",
+						imgSize,
+						drawSize,
+						BackGround::Object::RenderSize::FullScreen,
+						sprit);
+		}
+		auto map = Map::Object::Create(true);
+		map->Load("map");
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -49,9 +75,14 @@ namespace SceneChangeButton
 	{
 		//★データ＆タスク解放
 
+		ge->KillAll_G("本編");
+		ge->KillAll_G("システム");
+
+		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
+			auto next = EndingScene::Object::Create(true);
 		}
 
 		return  true;
@@ -60,27 +91,18 @@ namespace SceneChangeButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		ToggleButton::UpDate();
+		auto inp = ge->in1->GetState();
+		if (inp.SE.down) {
+			this->Kill();
+		}
+		if (ge->GameOverFlag) {
+			this->Kill();
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(0, 0, 600, 600), debugText, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
-	}
-	void Object::OnEvent()
-	{
-		nowScene_->SetNextScene(nextScene_);
-		debugText = "ON";
-	}
-	void Object::OffEvent()
-	{
-		debugText = "OFF";
-	}
-	void Object::SetScene(Scene* nowScene, const Scene::Kind& nextScene)
-	{
-		nowScene_ = nowScene;
-		nextScene_ = nextScene;
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -95,7 +117,6 @@ namespace SceneChangeButton
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill
