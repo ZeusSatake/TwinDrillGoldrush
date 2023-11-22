@@ -57,11 +57,11 @@ namespace  GameScene
 
 
 		{//”wŒiƒ^ƒXƒN¶¬
-			ML::Point imgSize = { 800, 600 };
+			ML::Point imgSize = { 960, 500 };
 			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
 			int sprit = 1;
 			auto back = BackGround::Object::Create(true);
-			back->SetUp("./data/image/back.png",
+			back->SetUp("./data/image/gameback.png",
 						imgSize,
 						drawSize,
 						BackGround::Object::RenderSize::FullScreen,
@@ -70,11 +70,11 @@ namespace  GameScene
 		
 		{//Î zÎ
 			auto map = Map::Object::Create(true);
-			map->Load("map_stone");
+			map->Load("MapStone");
 		}
 		{//•óÎ
 			auto mapore = Map::Object::Create(true);
-			mapore->Load("map_jewelry");
+			mapore->Load("MapJewelry");
 			mapore->render2D_Priority[1] = 0.85f;
 		}
 
