@@ -4,11 +4,13 @@
 #include "AIMoveComponent.h"
 class AIComponent : public Component
 {
-	Actor* target_;
 public:
 	class shared_ptr<AIMoveComponent> move_;
 	AIComponent(class Character* owner);
 	virtual ~AIComponent() {};
+
+	float fov_;//‹–ì
+	float distance_;//ƒvƒŒƒCƒ„[‚Æ©g‚Ì‹——£
 
 	enum class AIState
 	{
@@ -19,9 +21,11 @@ public:
 		Attack,//UŒ‚
 		Guard,//–hŒä
 		Dodge,//‰ñ”ğ
+		Damage,//”íŒ‚
 		Dead,//€–S
 	};
-	AIState state_;
+	AIState preState_;
+	AIState nowState_;
 public:
 	virtual void Update() override;
 	virtual void UpdatePatrol();
@@ -30,11 +34,14 @@ public:
 	virtual void UpdateAttack();
 	virtual void UpdateGuard();
 	virtual void UpdateDodge();
+	virtual void UpdateDamage();
 	virtual void UpdateDead();
 
 	virtual void Think();
 	virtual void Move();
-
+protected:
+	Actor* target_;
+public:
 	Actor* GetTarget();
 	void SetTarget(Actor* target);
 

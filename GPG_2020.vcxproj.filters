@@ -47,6 +47,9 @@
     <Filter Include="MyPG\Task\Actors\Blocks">
       <UniqueIdentifier>{e37c5cf5-fecf-4597-808d-4b135dbb7cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Actors\Enemys">
+      <UniqueIdentifier>{80bded40-7342-4213-aea7-6e6874b9cc29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -190,17 +193,17 @@
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClCompile>
-	  <ClCompile Include="Source\Scene\Task_Map.cpp">
+    <ClCompile Include="Source\Scene\Task_Map.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
-	  </ClCompile>
+    </ClCompile>
     <ClCompile Include="BBlocks.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,17 +343,17 @@
     <ClInclude Include="Source\Components\DebtorAIComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Actors\Task_EtoHaiji.h">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\Task_Map.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="BBlocks.h">
       <Filter>MyPG</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
