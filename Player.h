@@ -13,8 +13,9 @@ public:
 	virtual ~Player() {}; 
 	
 	void PlayerMove(ML::Vec2 vec);//ベクトルを入れるとその分プレイヤーを動かす
-	StateComponent::State pState;
 
+	StateComponent::State pState;
+	
 	void Think()override;
 	void Move()override;
 	

@@ -4,33 +4,33 @@
 ControllerInputComponent::ControllerInputComponent(class Actor* owner)
 	:
 	Component((Actor*)owner),
-	controller_(ge->in1)
+	gamePad_(ge->in1)
 {
 	owner = owner_;
 }
 
 void ControllerInputComponent::SetGamePadId(XI::GamePad::SP contoroller)
 {
-	this->controller_ = contoroller;
+	this->gamePad_ = contoroller;
 }
 
 
 float ControllerInputComponent::GetAngleLStick()
 {
-	auto inp = this->controller_->GetState();
+	auto inp = this->gamePad_->GetState();
 	return inp.LStick.angleDYP;
 }
 
 float ControllerInputComponent::GetAngleRStick()
 {
-	auto inp = this->controller_->GetState();
+	auto inp = this->gamePad_->GetState();
 	return inp.RStick.angleDYP;
 }
 
 
 ML::Vec2 ControllerInputComponent::GetLStickVec()
 {
-	auto inp = this->controller_->GetState();
+	auto inp = this->gamePad_->GetState();
 	float angle;
 	if (inp.LStick.angleDYP >= 0.0f)
 	{
@@ -42,7 +42,7 @@ ML::Vec2 ControllerInputComponent::GetLStickVec()
 
 ML::Vec2 ControllerInputComponent::GetRStickVec()
 {
-	auto inp = this->controller_->GetState();
+	auto inp = this->gamePad_->GetState();
 	float angle;
 	if (inp.RStick.angleDYP >= 0.0f)
 	{
