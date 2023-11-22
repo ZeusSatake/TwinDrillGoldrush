@@ -1,12 +1,11 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//破壊不可：岩盤
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
-#include	"Task_Stone.h"
+#include	"Task_Bedrock .h"
 #include	"../../../sound.h"
 
-
-namespace	Stone
+namespace	Bedrock
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,7 +30,7 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		se::LoadFile("repelled", "./data/sound/repelled.wav");
 		//★タスクの生成
 
 		return  true;
@@ -41,7 +40,7 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -53,7 +52,7 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		se::Play("crush");
+		se::Play("repelled");
 		this->Kill();
 	}
 	//-------------------------------------------------------------------

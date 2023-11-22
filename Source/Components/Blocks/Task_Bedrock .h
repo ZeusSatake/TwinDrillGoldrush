@@ -1,15 +1,15 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//破壊可能：石
+//破壊不可：岩盤
 //-------------------------------------------------------------------
 #include	"../../../BBlocks.h"
 
-namespace	Stone
+namespace	Bedrock
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName(	"Blocks");	//グループ名
-	const  string  defName(			"Stone");		//タスク名
+	const  string  defGroupName(	"blocks");	//グループ名
+	const  string  defName(			"Bedrock");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
