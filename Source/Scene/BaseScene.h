@@ -4,6 +4,7 @@
 //‹’“_
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
+#include "../../Scene.h"
 
 namespace BaseScene
 {
@@ -26,7 +27,7 @@ namespace BaseScene
 		
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  Scene
 	{
 	//•ÏX•s‰ÂŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸ
 	public:
