@@ -14,6 +14,7 @@ public:
 	void SetAngle(float angle);
 
 	int GetAttackPoint();
+	float GetNowAngle();
 	ML::Vec2 GetDrillPoint();
 	void UpdateDrill();
 };

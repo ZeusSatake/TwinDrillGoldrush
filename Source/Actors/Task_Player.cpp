@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------
 #include  "../../Player.h"
 #include  "Task_Player.h"
+#include "Task_Drill.h"
 
 namespace player
 {
@@ -11,7 +12,7 @@ namespace player
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->playerImg = DG::Image::Create("./data/image/oyasiro.png");
+		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,9 +32,10 @@ namespace player
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -150,-210,300,420 });
+		this->box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
 		this->pos_ = ML::Vec2{ 0,0 };
 		//★タスクの生成
+		auto Dl = drill::Object::Create(true);
 
 		return  true;
 	}
@@ -54,6 +56,7 @@ namespace player
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+
 		this->pState = this->state_->GetNowState();
 		this->Think();
 		this->Move();
@@ -65,7 +68,7 @@ namespace player
 		//プレイヤキャラの描画
 		{
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
-			ML::Box2D src{ 0,0,300,420 };
+			ML::Box2D src{ 0,0,32,64};
 			this->res->playerImg->Draw(draw, src);
 		}
 	}
