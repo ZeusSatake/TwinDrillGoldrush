@@ -36,7 +36,7 @@ void Scene::CreateNextScene()
 		break;
 
 	case Kind::Mining:
-		Game::Object::Create(true);
+		GameScene::Object::Create(true);
 		break;
 
 	case Kind::MartialFight:
