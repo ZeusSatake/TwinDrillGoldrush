@@ -161,7 +161,6 @@
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
-    <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Components\AIComponent.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
@@ -231,7 +230,6 @@
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
-    <ClInclude Include="Source\Actors\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
     <ClInclude Include="Source\Components\AIComponent.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />

@@ -49,7 +49,7 @@
     </Filter>
     <Filter Include="MyPG\Task\Actors\Enemys">
       <UniqueIdentifier>{80bded40-7342-4213-aea7-6e6874b9cc29}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="MyPG\Task\Scene\Shop">
       <UniqueIdentifier>{2c9e80b7-7fdd-4918-b9c5-36282b9fe530}</UniqueIdentifier>
     </Filter>
@@ -205,9 +205,6 @@
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Actors\Task_EtoHaiji.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\Task_Map.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClCompile>
@@ -219,7 +216,7 @@
     </ClCompile>
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\Actors\Task_Player.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
@@ -236,11 +233,6 @@
     <ClCompile Include="Source\Scene\ShopScene.cpp">
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\BaseScene.cpp" />
-    <ClCompile Include="Source\Scene\EndingScene.cpp" />
-    <ClCompile Include="Source\Scene\GameScene.cpp" />
-    <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
-    <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Drill.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -268,6 +260,21 @@
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\TitleScene.cpp">
+      <Filter>MyPG\Task\Scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\BaseScene.cpp">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\EndingScene.cpp">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameScene.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\MartialFightScene.cpp">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
     <ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
@@ -420,7 +427,7 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Actors\Task_Player.h">
       <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
@@ -437,17 +444,12 @@
     <ClInclude Include="Source\Scene\ShopScene.h">
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene\BaseScene.h" />
-    <ClInclude Include="Source\Scene\EndingScene.h" />
-    <ClInclude Include="Source\Scene\GameScene.h" />
-    <ClInclude Include="Source\Scene\MartialFightScene.h" />
-    <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Drill.h">
       <Filter>MyPG</Filter>
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_Drill.h">
       <Filter>MyPG\Task\Actors</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Components\Blocks\BlockManager.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
@@ -468,6 +470,21 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\TitleScene.h">
       <Filter>MyPG\Task\Scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\TitleScene.h">
+      <Filter>MyPG\Task\Scene\title</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\EndingScene.h">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameScene.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\MartialFightScene.h">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\Blocks\Task_IronOre.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
