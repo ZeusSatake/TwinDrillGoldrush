@@ -438,6 +438,7 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_Drill.h">
       <Filter>MyPG\Task\Actors</Filter>
+	</ClInclude>
     <ClInclude Include="Source\Components\Blocks\BlockManager.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
