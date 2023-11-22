@@ -166,6 +166,8 @@
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
+    <ClCompile Include="Source\Components\Blocks\BlockManager.cpp" />
+    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp" />
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
@@ -232,6 +234,8 @@
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
+    <ClInclude Include="Source\Components\Blocks\BlockManager.h" />
+    <ClInclude Include="Source\Components\Blocks\Task_Bedrock .h" />
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />

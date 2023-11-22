@@ -53,6 +53,12 @@
     <Filter Include="MyPG\Task\Actors\UI">
       <UniqueIdentifier>{b8f4df0d-f654-4eee-afe0-576826d42a0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Scene\Base">
+      <UniqueIdentifier>{1323a7ab-333f-4d3f-9966-f2e2b04c5c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyPG\Task\Scene\MartialFight">
+      <UniqueIdentifier>{edfc49d1-5694-4181-80b2-58d49b590fda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -235,6 +241,27 @@
     <ClCompile Include="Source\Actors\Task_Drill.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\TitleScene.cpp">
+      <Filter>MyPG\Task\Scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\EndingScene.cpp">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\BaseScene.cpp">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameScene.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\MartialFightScene.cpp">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -411,6 +438,26 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_Drill.h">
       <Filter>MyPG\Task\Actors</Filter>
+    <ClInclude Include="Source\Components\Blocks\BlockManager.h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Blocks\Task_Bedrock .h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\EndingScene.h">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameScene.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\MartialFightScene.h">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\TitleScene.h">
+      <Filter>MyPG\Task\Scene\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
