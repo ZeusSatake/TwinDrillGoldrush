@@ -5,6 +5,13 @@
 //-------------------------------------------------------------------
 #include	"MyPG.h"
 #include	"BBlocks.h"
+#include	"sound.h"
+
+void BBlocks::LoadSe()
+{
+	se::LoadFile("crush", "./data/sound/crush.wav");
+	se::LoadFile("repelled", "./data/sound/repelled.wav");
+}
 
 //ƒuƒƒbƒN‚»‚ê‚¼‚ê‚Ìˆ—
 void BBlocks::Received(BBlocks* object)

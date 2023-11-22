@@ -52,7 +52,8 @@ namespace  Map
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
 		//šƒ^ƒXƒN‚Ì¶¬
-		Manager::Object::Create(true);
+		auto Bm = Manager::Object::Create(true);
+		Bm->LoadSe();
 
 		return  true;
 	}
@@ -226,7 +227,7 @@ namespace  Map
 			//
 			ML::Point masu = { pos.x / 16,pos.y / 16 };
 			if (this->arr[masu.y][masu.x] != 0) {
-				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x]);
+				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x], pos_);
 				this->arr[masu.y][masu.x] = inp;
 			}
 		}
