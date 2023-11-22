@@ -274,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -482,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\MartialFightScene.h">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Blocks\Task_IronOre.h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
