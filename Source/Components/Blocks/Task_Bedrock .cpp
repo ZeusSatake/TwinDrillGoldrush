@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------
-//破壊不可：岩盤
+//破壊不可：岩盤：7
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
 #include	"Task_Bedrock .h"
@@ -30,7 +30,7 @@ namespace	Bedrock
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("repelled", "./data/sound/repelled.wav");
+		
 		//★タスクの生成
 
 		return  true;

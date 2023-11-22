@@ -1,5 +1,5 @@
 //-------------------------------------------------------------------
-//破壊可能：石
+//破壊可能：石：6
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
 #include	"Task_Stone.h"
@@ -31,7 +31,7 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		se::LoadFile("crush", "./data/sound/crush.wav");
+		
 		//★タスクの生成
 
 		return  true;
@@ -53,6 +53,8 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+
+		ge->CreateEffect(11, this->pos);
 		se::Play("crush");
 		this->Kill();
 	}

@@ -235,6 +235,35 @@ namespace MyPG
 			}
 			break;
 
+		case 11://粉砕エフェクト
+			for (int i = 0; i < 3; i++) {
+				if (auto e = Effect00::Object::Create(true)) {
+					e->filename = "data/image/crushEffect.png";
+					//e->filename = "data/image/effect/bomb.png";
+
+					e->resSizeX = e->resSizeY = 32;
+					e->drawSizeX = e->drawSizeY = 32;
+					//元リソースの１コマのサイズ
+					//e->resSizeX = e->resSizeY = 800;
+					//描画サイズ
+					//e->drawSizeX = e->drawSizeY = 50;
+
+					e->pos.x = pos.x;
+					e->pos.y = pos.y;
+					e->scale = 0.3f;
+					e->angle = GetRandom(30, 330);
+					e->addAngle = GetRandom(10, 30);
+
+					e->moveVec.x = GetRandom(-1.0f, 1.0f);
+					e->moveVec.y = GetRandom(-3.0f, 3.0f);
+
+					e->addAlpha = -0.005f;
+					e->countMax = GetRandom(50, 100);
+					e->graVec = ML::Vec2(0.f, 0.1f);
+				}
+			}
+			break;
+
 		case 99://フェードアウトしてからフェードイン 90フレーム
 			if (auto e = Effect00::Object::Create(true)) {
 				e->filename = "data/image/effect/black.png";
