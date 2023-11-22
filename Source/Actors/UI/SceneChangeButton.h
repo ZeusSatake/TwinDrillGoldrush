@@ -56,7 +56,5 @@ namespace SceneChangeButton
 
 		void OnEvent() override;
 		void OffEvent() override;
-
-		string debugText = "NON";
 	};
 }

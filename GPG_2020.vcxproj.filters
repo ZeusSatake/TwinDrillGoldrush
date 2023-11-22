@@ -230,17 +230,6 @@
     <ClCompile Include="Source\Scene\ShopScene.cpp">
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene\BaseScene.cpp" />
-    <ClCompile Include="Source\Scene\EndingScene.cpp" />
-    <ClCompile Include="Source\Scene\GameScene.cpp" />
-    <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
-    <ClCompile Include="Source\Scene\TitleScene.cpp" />
-    <ClCompile Include="Drill.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\Task_Drill.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
@@ -429,10 +418,20 @@
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\BaseScene.h" />
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Scene\EndingScene.h" />
+      <Filter>MyPG\Task\Scene\Ending</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Scene\GameScene.h" />
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Scene\MartialFightScene.h" />
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Scene\TitleScene.h" />
+      <Filter>MyPG\Task\Scene\Title</Filter>
+    </ClInclude>
     <ClInclude Include="Drill.h">
       <Filter>MyPG</Filter>
     </ClInclude>

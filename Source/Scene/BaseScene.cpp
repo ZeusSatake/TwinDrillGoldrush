@@ -33,19 +33,35 @@ namespace BaseScene
 		//★データ初期化
 		
 		//★タスクの生成
+		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+		gotoTitleButton->SetEnterButton(XI::VGP::ST);
+		gotoTitleButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoTitleButton->SetScene(this, Scene::Kind::Title);
+		gotoTitleButton->SetText("タイトルへ");
+		AddSceneChangeButton(gotoTitleButton);
+
 		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
 		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
 		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);
+		gotoShopSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoShopSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
+		gotoShopSceneButton->SetText("ショップへ");
 		AddSceneChangeButton(gotoShopSceneButton);
 
 		auto gotoMartialFightSceneButton = SceneChangeButton::Object::Create(true);
 		gotoMartialFightSceneButton->SetScene(this, Scene::Kind::MartialFight);
 		gotoMartialFightSceneButton->SetEnterButton(XI::VGP::B2);
+		gotoMartialFightSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoMartialFightSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
+		gotoMartialFightSceneButton->SetText("武闘会へ");
 		AddSceneChangeButton(gotoMartialFightSceneButton);
 
 		auto gotoMiningSceneButton = SceneChangeButton::Object::Create(true);
 		gotoMiningSceneButton->SetScene(this, Scene::Kind::Mining);
 		gotoMiningSceneButton->SetEnterButton(XI::VGP::B3);
+		gotoMiningSceneButton->SetEnterButton(XI::Mouse::MB::LB);
+		gotoMiningSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
+		gotoMiningSceneButton->SetText("採掘場へ");
 		AddSceneChangeButton(gotoMiningSceneButton);
 
 		return  true;
