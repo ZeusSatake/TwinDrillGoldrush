@@ -105,6 +105,8 @@ namespace  EndingScene
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
 	{
+		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "End");
+
 		{//ƒŠƒUƒ‹ƒg
 			ML::Box2D draw(0, 0, 512, 124);
 			draw.x = (int)ge->screenCenterPos.x - 140;

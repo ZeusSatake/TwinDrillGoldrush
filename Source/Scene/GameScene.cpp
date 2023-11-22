@@ -12,6 +12,8 @@
 #include  "../System/Task_BackGround.h"
 #include  "Task_Map.h"
 
+#include  "../Actors/UI/SceneChangeButton.h"
+
 namespace  GameScene
 {
 	Resource::WP  Resource::instance;
@@ -75,6 +77,14 @@ namespace  GameScene
 			mapore->Load("map_jewelry");
 			mapore->render2D_Priority[1] = 0.85f;
 		}
+
+		{//タイトルに戻るボタン(デバッグ用
+			auto gotoTitleButton = SceneChangeButton::Object::Create(true);
+			gotoTitleButton->SetEnterButton(XI::VGP::ST);
+			gotoTitleButton->SetScene(this, Scene::Kind::Base);
+			AddSceneChangeButton(gotoTitleButton);
+		}
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -85,12 +95,13 @@ namespace  GameScene
 
 		ge->KillAll_G("本編");
 		ge->KillAll_G("システム");
+		ge->KillAll_G(SceneChangeButton::defGroupName);
 
 		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			auto next = EndingScene::Object::Create(true);
+			CreateNextScene();
 		}
 
 		return  true;
@@ -99,6 +110,8 @@ namespace  GameScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Scene::UpDate();
+
 		auto inp = ge->in1->GetState();
 		if (inp.SE.down) {
 			this->Kill();
