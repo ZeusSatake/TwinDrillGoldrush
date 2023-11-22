@@ -2,9 +2,7 @@
 
 ToggleButton::ToggleButton()
 	:
-	buttonState_(0),
-	text_(""),
-	enterButton_()
+	buttonState_(0)
 {
 }
 
@@ -47,30 +45,9 @@ bool ToggleButton::GetButtonState(const int bit) const
 	return (buttonState_ & bit) == bit;
 }
 
-void ToggleButton::SetStateText()
-{
-	stateText_ = "";
-	
-	stateText_ += IsPressed() ?
-		"Pressed" :
-		"NoPressed";
-
-	stateText_ += "\n";
-
-	stateText_ += IsSelected() ?
-		"Select" :
-		"NoSelect";
-
-	stateText_ += "\n";
-	
-	stateText_ += GetButtonState((int)ButtonState::RecieveInput) ?
-		"Recieve" :
-		"NoRecieve";
-}
-
 void ToggleButton::SetRecieveInputEnable(const bool inputRecieve)
 {
-	SetButtonState((int)ButtonState::RecieveInput, inputRecieve);
+	SetButtonState((int)ButtonState::ReceiveInput, inputRecieve);
 }
 void ToggleButton::SetSelected(const bool selected)
 {
@@ -94,33 +71,12 @@ void ToggleButton::SetEnterButton(const XI::VGP enterButton)
 {
 	enterButton_ = enterButton;
 }
-void ToggleButton::SetEnterButton(const XI::Mouse::MB enterButton)
-{
-	mouseEnterButton_ = enterButton;
-}
-
-void ToggleButton::SetText(const string& text)
-{
-	text_ = text;
-}
-
-void ToggleButton::Drawtext(const DG::Font::SP& font, const bool drawState)
-{
-	string msg = text_;
-	msg += drawState ?
-		"\n" + stateText_ :
-		"";
-	font->Draw(ML::Box2D(pos_.x, pos_.y, 600, 600), msg, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
-}
 
 void ToggleButton::UpDate()
 {
-	SetStateText();
-
-	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput))
+	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::ReceiveInput))
 	{
-		if (ge->in1->CheckBT(enterButton_) == XI::GamePad::ButtonState::Down ||
-			ge->mouse->CheckBT(mouseEnterButton_) == XI::Mouse::ButtonState::Down)
+		if (ge->in1->CheckBT(enterButton_) == XI::GamePad::ButtonState::Down)
 		{
 			ToggleEvent();
 		}

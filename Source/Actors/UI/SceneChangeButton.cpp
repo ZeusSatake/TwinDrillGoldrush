@@ -34,11 +34,10 @@ namespace SceneChangeButton
 		this->res = Resource::Create();
 
 		//★データ初期化
-		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
 		
 		SetEnterButton(XI::VGP::B1);
 		SetRecieveInputEnable(true);
-		SetSelected(false);
+		SetSelected(true);
 		
 		//★タスクの生成
 
@@ -61,25 +60,22 @@ namespace SceneChangeButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		auto mouse = ge->mouse->GetState();
-		SetSelected(box_->CheckHit(ML::Box2D(mouse.pos.x, mouse.pos.y, 1, 1)));
-
 		ToggleButton::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, true);
-		//ge->debugFont->Draw(ML::Box2D(pos_.x, pos_.y, 600, 600), debugText, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+		ge->debugFont->Draw(ML::Box2D(0, 0, 600, 600), debugText, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 	}
-
 	void Object::OnEvent()
 	{
 		nowScene_->SetNextScene(nextScene_);
+		debugText = "ON";
 	}
 	void Object::OffEvent()
 	{
+		debugText = "OFF";
 	}
 	void Object::SetScene(Scene* nowScene, const Scene::Kind& nextScene)
 	{
