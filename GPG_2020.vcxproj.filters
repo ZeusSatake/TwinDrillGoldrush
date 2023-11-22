@@ -417,6 +417,27 @@
     <ClInclude Include="Source\Scene\ShopScene.h">
       <Filter>MyPG\Task\Scene\Shop</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h" />
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\EndingScene.h" />
+      <Filter>MyPG\Task\Scene\Ending</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameScene.h" />
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\MartialFightScene.h" />
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\TitleScene.h" />
+      <Filter>MyPG\Task\Scene\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Drill.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Drill.h">
+      <Filter>MyPG\Task\Actors</Filter>
+	</ClInclude>
     <ClInclude Include="Source\Components\Blocks\BlockManager.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
