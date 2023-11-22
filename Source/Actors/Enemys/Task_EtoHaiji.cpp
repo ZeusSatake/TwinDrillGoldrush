@@ -1,7 +1,7 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
+#include  "../../../MyPG.h"
 #include  "Task_EtoHaiji.h"
 
 namespace EtoHaiji
@@ -11,6 +11,7 @@ namespace EtoHaiji
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		img = DG::Image::Create("./data/image/EtoHaiji.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -29,7 +30,8 @@ namespace EtoHaiji
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		pos_ = ML::Vec2{ 50,50 };
+		box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
 		//★タスクの生成
 
 		return  true;
@@ -51,13 +53,24 @@ namespace EtoHaiji
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		AI_->Update();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(pos_);
+		ML::Box2D src(0, 0, 960, 895);
+		res->img->Draw(draw, src);
 	}
-
+	//-------------------------------------------------------------------
+	void Object::Think()
+	{
+	}
+	//-------------------------------------------------------------------
+	void Object::Move()
+	{
+	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

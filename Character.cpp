@@ -29,3 +29,13 @@ shared_ptr<Movement> Character::GetMovement() const
 {
 	return movement_;
 }
+
+std::string Character::GetPersonalName() const
+{
+	return personalName_;
+}
+
+void Character::SetPersonalName(const std::string name)
+{
+	personalName_ = name;
+}
