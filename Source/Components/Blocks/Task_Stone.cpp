@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
 #include	"Task_Stone.h"
+#include	"../../../sound.h"
+
 
 namespace	Stone
 {
@@ -29,7 +31,7 @@ namespace	Stone
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		se::LoadFile("crush", "./data/sound/crush.wav");
 		//★タスクの生成
 
 		return  true;
@@ -39,7 +41,7 @@ namespace	Stone
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -51,6 +53,8 @@ namespace	Stone
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		se::Play("crush");
+		this->Kill();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

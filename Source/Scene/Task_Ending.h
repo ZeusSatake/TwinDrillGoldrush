@@ -5,8 +5,9 @@
 //-------------------------------------------------------------------
 #include  "../../GameEngine_Ver3_83.h"
 #include  "../System/Task_DrawNumFont.h"
+#include  "../../Scene.h"
 
-namespace  Ending
+namespace  EndingScene
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("Scene");	//グループ名
@@ -29,7 +30,7 @@ namespace  Ending
 		DG::Font::SP font;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  Scene
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:

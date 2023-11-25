@@ -3,7 +3,7 @@
 Character::Character()
 	:Actor()
 {
-	//ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
+	//コンポーネントを追加
 
 	AddComponent(hp_ = shared_ptr<HP>(new HP(this)));
 	AddComponent(movement_ = shared_ptr<Movement>(new Movement(this)));
@@ -28,4 +28,14 @@ shared_ptr<HP> Character::GetHP() const
 shared_ptr<Movement> Character::GetMovement() const
 {
 	return movement_;
+}
+
+std::string Character::GetPersonalName() const
+{
+	return personalName_;
+}
+
+void Character::SetPersonalName(const std::string name)
+{
+	personalName_ = name;
 }

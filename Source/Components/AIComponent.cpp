@@ -1,20 +1,17 @@
 #include "AIComponent.h"
 AIComponent::AIComponent(Character* owner)
 	:Component((Actor*)owner)
-	,state_(AIState::Idle)
+	,preState_(AIState::Idle)
+	,nowState_(AIState::Idle)
 {
 	move_ = shared_ptr<AIMoveComponent>(new AIMoveComponent(owner));
 }
 
 void AIComponent::Update()
 {
-	switch(state_)
+	switch(nowState_)
 	{
 	case AIComponent::AIState::Idle:
-		if (!owner_->OutOfScreen())
-		{
-
-		}
 		break;
 	case AIComponent::AIState::Patrol:
 		break;
@@ -61,6 +58,11 @@ void AIComponent::UpdateGuard()
 }
 
 void AIComponent::UpdateDodge()
+{
+
+}
+
+void AIComponent::UpdateDamage()
 {
 
 }

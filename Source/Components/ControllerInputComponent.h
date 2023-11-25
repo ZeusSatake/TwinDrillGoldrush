@@ -6,7 +6,7 @@
 class ControllerInputComponent :public Component //コントローラーの入力情報関係
 {
 public:
-	XI::GamePad::SP controller_;
+	XI::GamePad::SP gamePad_;
 	ControllerInputComponent(class Actor* actor);
 
 	void SetGamePadId(XI::GamePad::SP controller_);//どのコントローラーを持つか決めるセッター

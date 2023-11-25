@@ -47,6 +47,21 @@
     <Filter Include="MyPG\Task\Actors\Blocks">
       <UniqueIdentifier>{e37c5cf5-fecf-4597-808d-4b135dbb7cca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Actors\Enemys">
+      <UniqueIdentifier>{80bded40-7342-4213-aea7-6e6874b9cc29}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="MyPG\Task\Scene\Shop">
+      <UniqueIdentifier>{2c9e80b7-7fdd-4918-b9c5-36282b9fe530}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyPG\Task\Actors\UI">
+      <UniqueIdentifier>{b8f4df0d-f654-4eee-afe0-576826d42a0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyPG\Task\Scene\Base">
+      <UniqueIdentifier>{1323a7ab-333f-4d3f-9966-f2e2b04c5c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MyPG\Task\Scene\MartialFight">
+      <UniqueIdentifier>{edfc49d1-5694-4181-80b2-58d49b590fda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -117,15 +132,6 @@
     </ClCompile>
     <ClCompile Include="easing.cpp">
       <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Game.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Ending.cpp">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Title.cpp">
-      <Filter>MyPG\Task\Scene\title</Filter>
     </ClCompile>
     <ClCompile Include="Source\Components\HP.cpp">
       <Filter>MyPG\Components</Filter>
@@ -211,6 +217,57 @@
     <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+	</ClCompile>
+    <ClCompile Include="Source\Actors\Task_Player.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="BPlayer.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="ToggleButton.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Source\Scene\ShopScene.cpp">
+      <Filter>MyPG\Task\Scene\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\BaseScene.cpp" />
+    <ClCompile Include="Source\Scene\EndingScene.cpp" />
+    <ClCompile Include="Source\Scene\GameScene.cpp" />
+    <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
+    <ClCompile Include="Source\Scene\TitleScene.cpp" />
+    <ClCompile Include="Drill.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Drill.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\TitleScene.cpp">
+      <Filter>MyPG\Task\Scene\title</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\EndingScene.cpp">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\BaseScene.cpp">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\GameScene.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\MartialFightScene.cpp">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -277,15 +334,6 @@
       <Filter>Lib</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Source\Scene\Task_Game.h">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Task_Ending.h">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene\Task_Title.h">
-      <Filter>MyPG\Task\Scene\title</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\HP.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
@@ -358,9 +406,6 @@
     <ClInclude Include="Source\Components\DebtorAIComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Actors\Task_EtoHaiji.h">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\Task_Map.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClInclude>
@@ -369,6 +414,57 @@
     </ClInclude>
     <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+	</ClInclude>
+    <ClInclude Include="Source\Actors\Task_Player.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="BPlayer.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleButton.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\UI\SceneChangeButton.h">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Source\Scene\ShopScene.h">
+      <Filter>MyPG\Task\Scene\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h" />
+    <ClInclude Include="Source\Scene\EndingScene.h" />
+    <ClInclude Include="Source\Scene\GameScene.h" />
+    <ClInclude Include="Source\Scene\MartialFightScene.h" />
+    <ClInclude Include="Source\Scene\TitleScene.h" />
+    <ClInclude Include="Drill.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Drill.h">
+      <Filter>MyPG\Task\Actors</Filter>
+	</ClInclude>
+    <ClInclude Include="Source\Components\Blocks\BlockManager.h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Blocks\Task_Bedrock .h">
+      <Filter>MyPG\Task\Actors\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\EndingScene.h">
+      <Filter>MyPG\Task\Scene\ending</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\BaseScene.h">
+      <Filter>MyPG\Task\Scene\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\GameScene.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\MartialFightScene.h">
+      <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\TitleScene.h">
+      <Filter>MyPG\Task\Scene\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -8,8 +8,8 @@
 namespace	Stone
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("");	//グループ名
-	const  string  defName("");		//タスク名
+	const  string  defGroupName(	"Blocks");	//グループ名
+	const  string  defName(			"Stone");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
