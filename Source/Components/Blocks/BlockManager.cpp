@@ -5,8 +5,10 @@
 #include	"BlockManager.h"
 #include	"../../Scene/Task_Map.h"
 
-#include	"Task_Stone.h"
-#include	"Task_Bedrock .h"
+								//*名	*num	*破壊
+#include	"Task_Stone.h"		//石		.6		.可
+#include	"Task_Bedrock .h"	//岩盤	.7		.不可
+#include	"Task_IronOre.h"	//鉄鉱石	.11		.可
 
 namespace	Manager
 {
@@ -62,20 +64,40 @@ namespace	Manager
 	{
 	}
 	//-------------------------------------------------------------------
-	int Object::CreatBlocks(const int inp)
+	int Object::CreatBlocks(const int inp, const ML::Point pos)
 	{
+		auto pos_ = ML::Vec2(pos.x, pos.y);
+		//取得番号からタスク生成
+			//破壊不可ブロックだった場合そのブロック番号のまま返す
 		switch (inp)
 		{
 		case 2:
-			return 0;
+			if (auto b = Bedrock::Object::Create(true)) {
+				b->pos = pos_;
+			}
+			return 2;
+
 		case 6:
-			Stone::Object::Create(true);
+			if (auto b = Stone::Object::Create(true)) {
+				b->pos = pos_;
+			}
 			return 0;
 			break;
+
 		case 7:
-			Bedrock::Object::Create(true);
-			return 7;
+			if (auto b = Bedrock::Object::Create(true)) {
+				b->pos = pos_;
+			}
+			return 7;	//破壊不可のため
 			break;
+
+		case 11:
+			if (auto b = IronOre::Object::Create(true)){
+				b->pos = pos_;
+			}
+			return 0;
+			break;
+
 		default:
 			return 0;
 			break;

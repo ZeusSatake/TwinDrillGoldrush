@@ -40,6 +40,7 @@ public:
 	virtual void Received(const int pow);
 	virtual bool Drilling(const string& targetGroupName);
 	virtual bool Drilling(const string& targetGroupName, const ML::Box2D& attackArea);
+	void LoadSe();
 
 
 };

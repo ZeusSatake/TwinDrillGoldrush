@@ -1,15 +1,11 @@
 //-------------------------------------------------------------------
-//
+//破壊可能：鉄鉱石：11
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "SceneChangeButton.h"
+#include	"../../../MyPG.h"
+#include	"Task_IronOre.h"
+#include	"../../../sound.h"
 
-#include  "../../Scene/TitleScene.h"
-#include  "../../Scene/GameScene.h"
-#include  "../../Scene/ShopScene.h"
-#include  "../../Scene/EndingScene.h"
-
-namespace SceneChangeButton
+namespace	IronOre
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -34,11 +30,6 @@ namespace SceneChangeButton
 		this->res = Resource::Create();
 
 		//★データ初期化
-		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
-		
-		SetEnterButton(XI::VGP::B1);
-		SetRecieveInputEnable(true);
-		SetSelected(false);
 		
 		//★タスクの生成
 
@@ -61,28 +52,14 @@ namespace SceneChangeButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		auto mouse = ge->mouse->GetState();
-		SetSelected(box_->CheckHit(ML::Box2D(mouse.pos.x, mouse.pos.y, 1, 1)));
-
-		ToggleButton::UpDate();
+		ge->CreateEffect(11, this->pos);
+		se::Play("crush");
+		this->Kill();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, true);
-	}
-	void Object::OnEvent()
-	{
-		nowScene_->SetNextScene(nextScene_);
-	}
-	void Object::OffEvent()
-	{
-	}
-	void Object::SetScene(Scene* nowScene, const Scene::Kind& nextScene)
-	{
-		nowScene_ = nowScene;
-		nextScene_ = nextScene;
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
