@@ -1,9 +1,10 @@
 #include "DebtorAIComponent.h"
 
 DebtorAIComponent::DebtorAIComponent(class Debtor* owner)
-	:AIComponent(owner)
+	:EnemyAIComponent(owner)
 {
 	fov_ = 150.f;
+	
 }
 void DebtorAIComponent::Think()
 {
@@ -28,6 +29,16 @@ void DebtorAIComponent::Think()
 
 void DebtorAIComponent::Move()
 {
+	//èdóÕâ¡ë¨
+	if (!static_cast<Character*>(owner_)->CheckFoot() || owner_->GetMoveVec().y < 0)
+	{
+		owner_->SetMoveVec(ML::Vec2(0, min(owner_->GetMoveVec().y + owner_->GetGravity(), owner_->GetMaxFallSpeed())));
+	}
+	else
+	{
+		owner_->SetMoveVec(ML::Vec2{ 0, 0 });
+	}
+
 	switch (nowState_)
 	{
 	case AIState::Idle:
@@ -59,8 +70,8 @@ void DebtorAIComponent::Update()
 void DebtorAIComponent::UpdatePatrol()
 {
 	//
-	ML::Vec2 toTarget = target_->pos_ - owner_->pos_;
-	distance_ = toTarget.Length();
+	//ML::Vec2 toTarget = target_->pos_ - owner_->pos_;
+	//distance_ = toTarget.Length();
 
 
 }

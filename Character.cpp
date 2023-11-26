@@ -1,4 +1,5 @@
 #include "Character.h"
+#include "Source/Scene/Task_Map.h"
 
 Character::Character()
 	:Actor()
@@ -18,6 +19,27 @@ void Character::Think()
 void Character::Move()
 {
 
+}
+
+bool Character::CheckFoot() const
+{
+	//当たり判定を基に足元の矩形を作成
+	ML::Box2D foot = ML::Box2D
+	{
+		box_->getHitBase().x,
+		box_->getHitBase().y + box_->getHitBase().h,
+		box_->getHitBase().w,
+		1
+	};
+	foot.Offset(pos_);
+
+	auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
+	if (map == nullptr)
+	{
+		return false;
+	}
+
+	return map->CheckHit(foot);
 }
 
 shared_ptr<HP> Character::GetHP() const

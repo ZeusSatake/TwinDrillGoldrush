@@ -30,8 +30,11 @@ namespace EtoHaiji
 		this->res = Resource::Create();
 
 		//★データ初期化
-		pos_ = ML::Vec2{ 50,50 };
 		box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
+		SetJumpPower(-5.f);
+		SetGravity(0.98f);
+		AI_->nowState_ = AIComponent::AIState::Patrol;
+
 		//★タスクの生成
 
 		return  true;

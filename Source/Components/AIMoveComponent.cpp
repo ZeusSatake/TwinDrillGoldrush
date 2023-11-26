@@ -32,6 +32,7 @@ void AIMoveComponent::MoveTo(class Actor* target)
 
 void AIMoveComponent::Patroll(class Actor* target)
 {
+	//‘«ê‚Ì’[‚É—ˆ‚½‚çÜ‚è•Ô‚·
 
 }
 

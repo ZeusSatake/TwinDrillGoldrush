@@ -57,3 +57,43 @@ bool Actor::CheckHit(const ML::Box2D& target) const
 	return me.Hit(target);
 }
 
+ML::Vec2 Actor::GetMoveVec() const
+{
+	return moveVec_;
+}
+
+void Actor::SetMoveVec(const ML::Vec2 vec)
+{
+	moveVec_ = vec;
+}
+
+float Actor::GetGravity() const
+{
+	return gravity_;
+}
+
+void Actor::SetGravity(const float gravity)
+{
+	gravity_ = gravity;
+}
+
+float Actor::GetMaxFallSpeed() const
+{
+	return maxfallSpeed_;
+}
+
+void Actor::SetMaxFallSpeed(const float maxFallSpeed)
+{
+	maxfallSpeed_ = maxFallSpeed;
+}
+
+float Actor::GetJumpPower() const
+{
+	return jumpPower_;
+}
+
+void Actor::SetJumpPower(const float jumpPower)
+{
+	jumpPower_ = jumpPower;
+}
+

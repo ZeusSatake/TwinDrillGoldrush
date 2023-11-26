@@ -1,8 +1,8 @@
 #pragma once
-#include "AIComponent.h"
+#include "EnemyAIComponent.h"
 #include "../../Debtor.h"
 //債務者AIコンポーネント
-class DebtorAIComponent : public AIComponent
+class DebtorAIComponent : public EnemyAIComponent
 {
 public:
 	DebtorAIComponent(class Debtor* owner);
