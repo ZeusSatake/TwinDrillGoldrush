@@ -32,11 +32,11 @@ namespace player
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
 		this->pos_ = ML::Vec2{ 0,0 };
 		//★タスクの生成
-		auto Dl = drill::Object::Create(true);
-
+		auto dl = drill::Object::Create(true);
+		this->drill_ = dl;
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -60,6 +60,7 @@ namespace player
 		this->pState = this->state_->GetNowState();
 		this->Think();
 		this->Move();
+		drill_->pos_ = this->pos_;
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -70,6 +71,7 @@ namespace player
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
 			ML::Box2D src{ 0,0,32,64};
 			this->res->playerImg->Draw(draw, src);
+			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(this->pos_.x));
 		}
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

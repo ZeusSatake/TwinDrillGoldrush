@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Source/Scene/Task_Map.h"
 
 Player::Player()
 {
@@ -19,7 +20,7 @@ void Player::Think()
 	case StateComponent::State::Non:
 		break;
 	case StateComponent::State::Idle:
-		if (inp.B1.down) { pState = StateComponent::State::Walk; }
+		if (true) { pState = StateComponent::State::Walk; }
 		break;
 	case StateComponent::State::Walk:
 		break;
@@ -52,17 +53,27 @@ void Player::Think()
 void Player::Move()
 {
 	ML::Vec2 preVec{0,0};
+	auto inp = this->controller_->gamePad_->GetState();
 	if (state_->GetNowState() == StateComponent::State::Fall)
 	{
 		
 	}
+
+
 	switch (state_->GetNowState())
 	{
 	case StateComponent::State::Non:
 		break;
 	case StateComponent::State::Idle:
+
 		break;
 	case StateComponent::State::Walk:
+		/*if (inp.LStick.BU.on) { preVec.y -= 3; }
+		if (inp.LStick.BD.on) { preVec.y += 3; }
+		if (inp.LStick.BR.on) { preVec.x += 3; }
+		if (inp.LStick.BL.on) { preVec.x -= 3; }*/
+		preVec+=controller_->GetLStickVec();
+		
 		break;
 	case StateComponent::State::Attack:
 		break;
@@ -89,4 +100,15 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
+	this->PlayerMove(preVec);
+}
+
+ML::Vec2 Player::GetPos()
+{
+	return this->pos_;
+}
+
+ML::Vec2 Player::Gravity()
+{
+	
 }
