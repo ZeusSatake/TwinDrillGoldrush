@@ -18,5 +18,7 @@ public:
 	
 	void Think()override;
 	void Move()override;
-	
+
+	ML::Vec2 GetPos();
+	ML::Vec2 Gravity();
 };

@@ -32,11 +32,14 @@ ML::Vec2 ControllerInputComponent::GetLStickVec()
 {
 	auto inp = this->gamePad_->GetState();
 	float angle;
-	if (inp.LStick.angleDYP >= 0.0f)
+
+	angle = inp.LStick.angleDYP;
+	
+	ML::Vec2 moveVec{ cos(angle),sin(0.0f) };
+	if (inp.LStick.volume == 0)
 	{
-		angle = inp.LStick.angleDYP;
+		moveVec = ML::Vec2{ 0,0 };
 	}
-	ML::Vec2 moveVec{ cos(angle),sin(angle) };
 	return moveVec;
 }
 
