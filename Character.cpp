@@ -3,7 +3,7 @@
 Character::Character()
 	:Actor()
 {
-	//ƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
+	//コンポーネントを追加
 
 	AddComponent(hp_ = shared_ptr<HP>(new HP(this)));
 	AddComponent(movement_ = shared_ptr<Movement>(new Movement(this)));
