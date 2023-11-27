@@ -281,10 +281,13 @@
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClCompile>
-    <ClCompile Include="PriceTagComponent.cpp">
+    <ClCompile Include="Task_Cursor.cpp">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
       <Filter>MyPG\Components\Money</Filter>
     </ClCompile>
-    <ClCompile Include="Wallet.cpp">
+    <ClCompile Include="Source\Components\Money\WalletComponent.cpp">
       <Filter>MyPG\Components\Money</Filter>
     </ClCompile>
   </ItemGroup>
@@ -498,10 +501,13 @@
     <ClInclude Include="Source\Scene\MartialFightScene.h">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClInclude>
-    <ClInclude Include="PriceTagComponent.h">
+    <ClInclude Include="Task_Cursor.h">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\Money\PriceTagComponent.h">
       <Filter>MyPG\Components\Money</Filter>
     </ClInclude>
-    <ClInclude Include="Wallet.h">
+    <ClInclude Include="Source\Components\Money\WalletComponent.h">
       <Filter>MyPG\Components\Money</Filter>
     </ClInclude>
   </ItemGroup>

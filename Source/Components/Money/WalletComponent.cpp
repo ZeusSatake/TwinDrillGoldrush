@@ -1,4 +1,4 @@
-#include "Wallet.h"
+#include "WalletComponent.h"
 #include <assert.h>
 
 WalletComponent::WalletComponent(class GameObject* owner)
