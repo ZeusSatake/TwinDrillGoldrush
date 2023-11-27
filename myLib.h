@@ -175,6 +175,8 @@ namespace ML
 		Percentage();
 
 		float Get() const;
+		//0.0~1.0‚Å³‹K‰»‚µ‚Äæ“¾
+		float GetNormalizeValue() const;
 		void Set(const float percent);
 
 		void AddPercent(const float percent);

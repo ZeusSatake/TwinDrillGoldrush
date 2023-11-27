@@ -5,15 +5,18 @@
 
 class Movement : public Component
 {
-private:
-	ML::Vec2		direction_;			//移動方向
+private:	
 	ML::Vec2		velocity_;			//速度
-	float			acceleration_;		//加速度
-	ML::Percentage	decelerationRate_;  //減速率
+
 	float			initSpeed_;			//初期の速さ
 	float			maxSpeed_;			//最大の速さ
 	float			nowSpeed_;			//現在の速さ
 	float			stopSpeed_;			//停止する速さ
+
+	float			acceleration_;		//加速度
+	ML::Percentage	decelerationRate_;  //減速率
+
+	ML::Vec2		direction_;			//移動方向
 
 	void SetMoveFromKey(int key);
 public:
@@ -28,15 +31,26 @@ public:
 	float GetSpeed() const;
 	ML::Vec2 GetDirection() const;
 	ML::Vec2 GetVelocity() const;
+	
+	//速さのセッター
+	void SetInitSpeed(const float initSpeed);
+	void SetMaxSpeed(const float maxSpeed);
+	void SetStopSpeed(const float stopSpeed);
+	void SetSpeed(const float initSpeed, const float maxSpeed, const float stopSpeed);
 
-	void SetSpeed(const float speed);
-	void SetDirection(const ML::Vec2& direction);
+	//加速減速のセッター
 	void SetDecelerationRate(const ML::Percentage& decelerationRate);
-	void LStickInputToMoveVelocity(XI::GamePad::SP controller);
+	void SetAcceleration(const float acceleration);
+
+	//向きのセッター
+	void SetDirection(const ML::Vec2& direction);
+
+	//コントローラのスティック入力から移動する
+	void LStickInputToMove(const XI::GamePad::SP& controller);
 
 	void Accel();
 	void Decel();
 private:
-	static ML::Vec2 CalcVelocity(float speed, ML::Vec2 direction);
+	static ML::Vec2 CalcVelocity(const float speed, ML::Vec2 direction);
 	void CalcVelocity();
 };
