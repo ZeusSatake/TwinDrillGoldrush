@@ -39,13 +39,44 @@ ML::Vec2 Movement::GetVelocity() const
 	return velocity_;
 }
 
-void Movement::SetSpeed(const float speed)
+void CheckSpeedSetError(const float speed, const char const* msg)
 {
-	if (nowSpeed_ == speed)
+	if (speed < 0.0f)
+		assert(!msg);
+}
+void Movement::SetInitSpeed(const float initSpeed)
+{
+	CheckSpeedSetError(initSpeed, "設定しようとしている初期の早さが0未満です。0以上にしてください。");
+
+	initSpeed_ = initSpeed;
+}
+void Movement::SetMaxSpeed(const float maxSpeed)
+{
+	CheckSpeedSetError(maxSpeed, "設定しようとしている最大の早さが0未満です。0以上にしてください。");
+	
+	if (maxSpeed_ == maxSpeed)
 		return;
-	nowSpeed_ = speed;
+
+	maxSpeed_ = maxSpeed;
 	CalcVelocity();
 }
+void Movement::SetStopSpeed(const float stopSpeed)
+{
+	CheckSpeedSetError(stopSpeed, "設定しようとしている停止する早さが0未満です。0以上にしてください。");
+
+	if (stopSpeed_ == stopSpeed)
+		return;
+
+	stopSpeed_ = stopSpeed;
+	CalcVelocity();
+}
+void Movement::SetSpeed(const float initSpeed, const float maxSpeed, const float stopSpeed)
+{
+	SetInitSpeed(initSpeed);
+	SetMaxSpeed(maxSpeed);
+	SetStopSpeed(stopSpeed);
+}
+
 void Movement::SetDirection(const ML::Vec2& direction)
 {
 	if (direction_ == direction)
@@ -57,8 +88,12 @@ void Movement::SetDecelerationRate(const ML::Percentage& decelerationRate)
 {
 	decelerationRate_ = decelerationRate;
 }
+void Movement::SetAcceleration(const float acceleration)
+{
+	acceleration_ = acceleration;
+}
 
-void Movement::LStickInputToMoveVelocity(XI::GamePad::SP controller)
+void Movement::LStickInputToMove(const XI::GamePad::SP& controller)
 {
 	auto inp = controller->GetState();
 	int key = 0;
@@ -88,14 +123,18 @@ void Movement::SetMoveFromKey(int key)
 	}
 	else
 	{
-		est.x = (float) cos(table[key] * D3DX_PI / 180.f);
+		est.x = (float)cos(table[key] * D3DX_PI / 180.f);
 		est.y = (float)-sin(table[key] * D3DX_PI / 180.f);
 	}
 
 	direction_ = est;
-	CalcVelocity();
+
+	if (direction_.Length() != 0.0f)
+		Accel();
+	else
+		Decel();
 }
-ML::Vec2 Movement::CalcVelocity(float speed, ML::Vec2 direction)
+ML::Vec2 Movement::CalcVelocity(const float speed, ML::Vec2 direction)
 {
 	return direction * speed;
 }
@@ -111,16 +150,16 @@ void Movement::Accel()
 	if (nowSpeed_ > maxSpeed_)
 		nowSpeed_ = maxSpeed_;
 
-	SetSpeed(nowSpeed_);
+	CalcVelocity();
 	owner_->pos_ += velocity_;
 }
 
 void Movement::Decel()
 {
-	nowSpeed_ *= decelerationRate_.Get() / REFRESHRATE;
+	nowSpeed_ *= decelerationRate_.GetNormalizeValue() / REFRESHRATE;
 	if (nowSpeed_ <= stopSpeed_)
 		nowSpeed_ = 0.0f;
 
-	SetSpeed(nowSpeed_);
+	CalcVelocity();
 	owner_->pos_ += velocity_;
 }
