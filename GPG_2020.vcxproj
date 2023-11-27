@@ -155,7 +155,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PriceTagComponent.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -176,6 +175,8 @@
     <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
+    <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp" />
+    <ClCompile Include="Source\Components\Money\WalletComponent.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
@@ -190,9 +191,9 @@
     <ClCompile Include="Source\System\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
+    <ClCompile Include="Task_Cursor.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
     <ClCompile Include="ToggleButton.cpp" />
-    <ClCompile Include="Wallet.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="XI2018_Ver1_0.cpp" />
   </ItemGroup>
@@ -225,7 +226,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PriceTagComponent.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
@@ -247,6 +247,8 @@
     <ClInclude Include="Source\Components\ControllerInputComponent.h" />
     <ClInclude Include="Source\Components\DebtorAIComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
+    <ClInclude Include="Source\Components\Money\PriceTagComponent.h" />
+    <ClInclude Include="Source\Components\Money\WalletComponent.h" />
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
@@ -261,9 +263,9 @@
     <ClInclude Include="Source\System\Task_DrawGauge.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
+    <ClInclude Include="Task_Cursor.h" />
     <ClInclude Include="Task_Effect00.h" />
     <ClInclude Include="ToggleButton.h" />
-    <ClInclude Include="Wallet.h" />
     <ClInclude Include="XI2018_Ver1_0.h" />
   </ItemGroup>
   <ItemGroup>

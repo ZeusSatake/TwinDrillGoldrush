@@ -1,5 +1,5 @@
 #pragma once
-#include "Component.h"
+#include "../../../Component.h"
 #include <map>
 #include <string>
 //’lŽD‚Å‚²‚´‚é
