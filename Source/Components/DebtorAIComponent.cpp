@@ -32,7 +32,7 @@ void DebtorAIComponent::Think()
 		}
 		break;
 	case AIState::Attack:
-		//ƒŒƒ“ƒW‚©‚çŠO‚ê‚½‚çÚ‹ß
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½Oï¿½ê‚½ï¿½ï¿½Ú‹ï¿½
 		if (distance_ > static_cast<Enemy*>(owner_)->range_)
 		{
 			afterState = AIState::Approach;
@@ -44,7 +44,7 @@ void DebtorAIComponent::Think()
 
 void DebtorAIComponent::Move()
 {
-	//d—Í‰Á‘¬
+	//ï¿½dï¿½Í‰ï¿½ï¿½ï¿½
 	/*if (!static_cast<Character*>(owner_)->CheckFoot() || static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().y)
 	{
 		static_cast<Character*>(owner_)->GetMovement()->SetMoveVec(ML::Vec2(owner_->GetMoveVec().x, min(owner_->GetMoveVec().y + owner_->GetGravity(), owner_->GetMaxFallSpeed())));

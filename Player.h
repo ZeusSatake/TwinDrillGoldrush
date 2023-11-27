@@ -18,5 +18,12 @@ public:
 	
 	void Think()override;
 	void Move()override;
-	
+
+	//ƒ¿”Å‚ÉŠÔ‚É‡‚í‚¹‚é‚½‚ß‚ÌÚ’n”»’è
+	bool CheckFoot();
+	bool CheckHead();
+	void CheckMove(ML::Vec2& e_);
+
+	ML::Vec2 GetPos();
+	ML::Vec2 Gravity();
 };

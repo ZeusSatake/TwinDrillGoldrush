@@ -162,6 +162,7 @@
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Components\AIComponent.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
@@ -176,6 +177,8 @@
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp" />
     <ClCompile Include="Source\Components\EnemyAIComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
+    <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp" />
+    <ClCompile Include="Source\Components\Money\WalletComponent.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
@@ -232,6 +235,7 @@
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
+    <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Components\AIComponent.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
@@ -246,6 +250,8 @@
     <ClInclude Include="Source\Components\DebtorAIComponent.h" />
     <ClInclude Include="Source\Components\EnemyAIComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
+    <ClInclude Include="Source\Components\Money\PriceTagComponent.h" />
+    <ClInclude Include="Source\Components\Money\WalletComponent.h" />
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />

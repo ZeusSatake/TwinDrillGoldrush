@@ -9,6 +9,7 @@ AIMoveComponent::AIMoveComponent(class Character* owner)
 
 AIMoveComponent::AIMoveComponent(class Character* owner,float moveSpeed)
 	: Component(owner)
+
 {
 	//static_cast<Character*>(owner_)->GetMovement()->SetSpeed(moveSpeed);
 }
@@ -20,18 +21,19 @@ void AIMoveComponent::Update()
 
 void AIMoveComponent::MoveTo(class Actor* target)
 {
-	//‘Š‘ÎÀ•W‚ğ‹‚ß‚é
+	//â€˜Å â€˜ÃÂÃ€â€¢Wâ€šÃ°â€¹Ââ€šÃŸâ€šÃ©
 	ML::Vec2 toVec = target->pos_ - owner_->pos_;
 
 	float angle = atan2(-toVec.y, toVec.x);
 	owner_->angle_ = angle;
 
 	//owner_->pos_ += static_cast<Character*>(owner_)->GetMovement()->GetDirection() * static_cast<Character*>(owner_)->GetMovement()->GetSpeed();
+
 }
 
 void AIMoveComponent::Patroll(class Actor* target)
 {
-	//‘«ê‚Ì’[‚É—ˆ‚½‚çÜ‚è•Ô‚·
+	//â€˜Â«ÂÃªâ€šÃŒâ€™[â€šÃ‰â€”Ë†â€šÂ½â€šÃ§ÂÃœâ€šÃ¨â€¢Ã”â€šÂ·
 	if (!static_cast<NPC*>(owner_)->CheckFrontFoot())
 	{
 		if (owner_->angle_LR == Actor::Angle_LR::Left)
