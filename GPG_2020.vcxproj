@@ -155,6 +155,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PriceTagComponent.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
     <ClCompile Include="ToggleButton.cpp" />
+    <ClCompile Include="Wallet.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="XI2018_Ver1_0.cpp" />
   </ItemGroup>
@@ -224,6 +226,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PriceTagComponent.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
@@ -262,6 +265,7 @@
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
     <ClInclude Include="Task_Effect00.h" />
     <ClInclude Include="ToggleButton.h" />
+    <ClInclude Include="Wallet.h" />
     <ClInclude Include="XI2018_Ver1_0.h" />
   </ItemGroup>
   <ItemGroup>
