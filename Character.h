@@ -36,5 +36,6 @@ public:
 	std::string GetPersonalName()const;
 	void SetPersonalName(const std::string name);
 
+
 };
 

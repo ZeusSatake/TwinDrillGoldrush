@@ -1,6 +1,6 @@
 #pragma once
 #include "EnemyAIComponent.h"
-#include "../../Debtor.h"
+//#include "../../Debtor.h"
 //債務者AIコンポーネント
 class DebtorAIComponent : public EnemyAIComponent
 {
@@ -20,6 +20,8 @@ public:
 
 	virtual void Think() override;
 	virtual void Move() override;
+
+	bool UpdateState(AIState nowState);
 
 };
 

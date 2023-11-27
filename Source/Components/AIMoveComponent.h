@@ -7,7 +7,6 @@
 class AIMoveComponent : public Component
 {
 public:
-	ML::Vec2 moveVec_;
 	shared_ptr<Player> pl;
 public:
 	AIMoveComponent(class Character* owner,float moveSpeed);

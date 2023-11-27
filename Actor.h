@@ -11,10 +11,8 @@
 
 class Actor : public GameObject
 {
-	ML::Vec2 moveVec_;
-	float gravity_;
-	float maxfallSpeed_;
-	float jumpPower_;
+protected:
+	
 public:
 	typedef shared_ptr<Actor> SP;
 	typedef weak_ptr<Actor>	WP;
@@ -36,17 +34,6 @@ protected:
 public:
 	Actor();
 	virtual  ~Actor() {}
-	ML::Vec2 GetMoveVec() const;
-	void SetMoveVec(const ML::Vec2 vec);
-
-	float GetGravity() const;
-	void SetGravity(const float gravity);
-
-	float GetMaxFallSpeed() const;
-	void SetMaxFallSpeed(const float maxFallSpeed);
-
-	float GetJumpPower() const;
-	void SetJumpPower(const float jumpPower);
 
 public:
 	bool OutOfScreen() const;
@@ -54,6 +41,9 @@ public:
 
 	//Ç†ÇΩÇËîªíË
 	bool CheckHit(const ML::Box2D& hit) const;
+
+	//ÇﬂÇËçûÇ‹Ç»Ç¢à⁄ìÆ
+	void CheckMove(ML::Vec2& move);
 
 
 };

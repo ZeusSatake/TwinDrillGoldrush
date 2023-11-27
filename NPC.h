@@ -6,10 +6,13 @@
 class NPC : public Character
 {
 protected:
-	class shared_ptr<AIComponent> AI_;
 	
 public:
 	NPC();
 	virtual ~NPC() {};
+
+	//‘O–Ê‚Ì”»’è
+	bool CheckFront() const;
+	bool CheckFrontFoot() const;
 };
 

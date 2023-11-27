@@ -31,9 +31,12 @@ namespace EtoHaiji
 
 		//★データ初期化
 		box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
-		SetJumpPower(-5.f);
-		SetGravity(0.98f);
+		/*SetJumpPower(-5.f);
+		SetGravity(ML::Gravity(32)*5);
+		SetMaxFallSpeed(10.0f);*/
 		AI_->nowState_ = AIComponent::AIState::Patrol;
+
+		//moveVec_ = ML::Vec2{ 0,0 };
 
 		//★タスクの生成
 
@@ -57,6 +60,8 @@ namespace EtoHaiji
 	void  Object::UpDate()
 	{
 		AI_->Update();
+		//ML::Vec2 est = moveVec_;
+		//CheckMove(est);
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
