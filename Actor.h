@@ -45,5 +45,5 @@ public:
 	//‚ß‚è‚Ü‚È‚¢ˆÚ“®
 	void CheckMove(ML::Vec2& move);
 
-
+	BoxCollisionComponent* GetBox() const;
 };

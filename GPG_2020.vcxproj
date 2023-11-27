@@ -181,6 +181,7 @@
     <ClCompile Include="Source\Components\Money\WalletComponent.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
+    <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Source\Components\Money\WalletComponent.h" />
     <ClInclude Include="Source\Components\Movement.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
+    <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />

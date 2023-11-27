@@ -127,3 +127,13 @@ bool DebtorAIComponent::UpdateState(AIState afterState)
 	}
 }
 
+bool DebtorAIComponent::HitPlayer()
+{
+	if (owner_->CheckHit(target_->GetBox()->getHitBase()))
+	{
+		
+		return true;
+	}
+	return false;
+}
+

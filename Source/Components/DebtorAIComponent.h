@@ -23,5 +23,7 @@ public:
 
 	bool UpdateState(AIState nowState);
 
+	bool HitPlayer();
+
 };
 
