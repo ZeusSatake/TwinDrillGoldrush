@@ -19,6 +19,9 @@ public:
 	void SetName(const std::string& name);
 	void Set(const std::string& name, const int price);
 
+	std::string GetName() const;
+	int GetPrice() const;
+
 	//=======¸Z=======
 
 	//’lD‚ÆŒÂ”

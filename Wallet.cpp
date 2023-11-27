@@ -34,3 +34,8 @@ bool WalletComponent::Recieve(const int price)
 	balance_ += price;
 	return true;
 }
+
+int WalletComponent::GetBalance() const
+{
+	return balance_;
+}

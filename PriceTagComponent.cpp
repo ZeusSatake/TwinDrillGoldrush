@@ -35,6 +35,15 @@ void PriceTagComponent::Set(const std::string& name, const int price)
 	SetPrice(price);
 }
 
+std::string PriceTagComponent::GetName() const
+{
+	return name_;
+}
+int PriceTagComponent::GetPrice() const
+{
+	return price_;
+}
+
 //=======ê∏éZ=======
 
 int PriceTagComponent::CalcTotalPrice(const PriceTagComponent& priceTag, const int num)
