@@ -14,4 +14,6 @@ public:
 
 	bool Payment(const int price);
 	bool Recieve(const int price);
+
+	int GetBalance() const;
 };
