@@ -119,5 +119,8 @@ void Actor::CheckMove(ML::Vec2& est)
 	}
 }
 
-
+BoxCollisionComponent* Actor::GetBox() const
+{
+	return box_.get();
+}
 
