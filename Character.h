@@ -23,18 +23,19 @@ public:
 	Character();
 	virtual  ~Character() {}
 
-
-
 	//思考
 	virtual void Think();
 	//動作
 	virtual void Move();
+	//足元判定
+	bool CheckFoot() const;
 
 	shared_ptr<HP> GetHP() const;
 	shared_ptr<Movement> GetMovement() const;
 
 	std::string GetPersonalName()const;
 	void SetPersonalName(const std::string name);
+
 
 };
 

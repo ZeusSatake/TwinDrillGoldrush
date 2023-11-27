@@ -11,11 +11,12 @@
 
 class Actor : public GameObject
 {
+protected:
+	
 public:
 	typedef shared_ptr<Actor> SP;
 	typedef weak_ptr<Actor>	WP;
 public:
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	ML::Vec2    pos_;		//キャラクタ位置
 	int			moveCnt_;	//行動カウンタ
 	//向き（2D視点）
@@ -34,13 +35,15 @@ public:
 	Actor();
 	virtual  ~Actor() {}
 
-
 public:
 	bool OutOfScreen() const;
 
 
 	//あたり判定
 	bool CheckHit(const ML::Box2D& hit) const;
+
+	//めり込まない移動
+	void CheckMove(ML::Vec2& move);
 
 
 };

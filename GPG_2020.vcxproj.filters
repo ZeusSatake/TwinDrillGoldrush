@@ -202,9 +202,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
-    <ClCompile Include="Debtor.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\DebtorAIComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
@@ -280,6 +277,12 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClCompile>
+    <ClCompile Include="Debtor.cpp">
+      <Filter>MyPG</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\EnemyAIComponent.cpp">
+      <Filter>MyPG\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
       <Filter>MyPG\Components\Money</Filter>
@@ -422,9 +425,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>MyPG</Filter>
     </ClInclude>
-    <ClInclude Include="Debtor.h">
-      <Filter>MyPG</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\DebtorAIComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
@@ -500,6 +500,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\MartialFightScene.h">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
+    </ClInclude>
+    <ClInclude Include="Debtor.h">
+      <Filter>MyPG</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\EnemyAIComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\Money\PriceTagComponent.h">
       <Filter>MyPG\Components\Money</Filter>

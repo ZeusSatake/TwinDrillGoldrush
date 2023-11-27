@@ -1,11 +1,11 @@
 #pragma once
 #include "../Components/AIComponent.h"
 
-class EnemyAIComponents : public AIComponent
+class EnemyAIComponent : public AIComponent
 {
 public:
-	EnemyAIComponents(class Enemy* owner);
-	virtual ~EnemyAIComponents() {};
+	EnemyAIComponent(class Enemy* owner);
+	virtual ~EnemyAIComponent() {};
 
 	virtual void Update() override;
 	virtual void UpdatePatrol() override;

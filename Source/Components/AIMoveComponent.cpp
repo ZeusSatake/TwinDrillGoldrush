@@ -1,17 +1,17 @@
 #include "AIMoveComponent.h"
+#include "../../NPC.h"
 
 
 AIMoveComponent::AIMoveComponent(class Character* owner)
 	: Component(owner)
-	, moveVec_(0,0)
 {
 }
 
 AIMoveComponent::AIMoveComponent(class Character* owner,float moveSpeed)
 	: Component(owner)
-	,moveVec_(0,0)
+
 {
-	static_cast<Character*>(owner_)->GetMovement()->SetSpeed(moveSpeed);
+	//static_cast<Character*>(owner_)->GetMovement()->SetSpeed(moveSpeed);
 }
 
 void AIMoveComponent::Update()
@@ -21,18 +21,33 @@ void AIMoveComponent::Update()
 
 void AIMoveComponent::MoveTo(class Actor* target)
 {
-	//���΍��W�����߂�
+	//‘Š‘ÎÀ•W‚ð‹‚ß‚é
 	ML::Vec2 toVec = target->pos_ - owner_->pos_;
 
 	float angle = atan2(-toVec.y, toVec.x);
 	owner_->angle_ = angle;
 
-	owner_->pos_ += static_cast<Character*>(owner_)->GetMovement()->GetDirection() * static_cast<Character*>(owner_)->GetMovement()->GetSpeed();
+	//owner_->pos_ += static_cast<Character*>(owner_)->GetMovement()->GetDirection() * static_cast<Character*>(owner_)->GetMovement()->GetSpeed();
+
 }
 
 void AIMoveComponent::Patroll(class Actor* target)
 {
-
+	//‘«ê‚Ì’[‚É—ˆ‚½‚çÜ‚è•Ô‚·
+	if (!static_cast<NPC*>(owner_)->CheckFrontFoot())
+	{
+		if (owner_->angle_LR == Actor::Angle_LR::Left)
+		{
+			owner_->angle_LR = Actor::Angle_LR::Right;
+			//static_cast<Character*>(owner_)->GetMovement()->SetMoveVecX(abs(static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().x));
+		}
+		else
+		{
+			owner_->angle_LR = Actor::Angle_LR::Left;
+			//static_cast<Character*>(owner_)->GetMovement()->SetMoveVecX(-abs(static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().x));
+		}
+		
+	}
 }
 
 void AIMoveComponent::Jump()
