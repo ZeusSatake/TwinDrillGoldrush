@@ -33,7 +33,7 @@ namespace player
 
 		//★データ初期化
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->pos_ = ML::Vec2{ 0,0 };
+		this->pos_ = ML::Vec2{ 50,480 };
 		//★タスクの生成
 		auto dl = drill::Object::Create(true);
 		this->drill_ = dl;
@@ -66,12 +66,13 @@ namespace player
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->pos_);
 		//プレイヤキャラの描画
 		{
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
 			ML::Box2D src{ 0,0,32,64};
 			this->res->playerImg->Draw(draw, src);
-			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(this->pos_.x));
+			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
 		}
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
