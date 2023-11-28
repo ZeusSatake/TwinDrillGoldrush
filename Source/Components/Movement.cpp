@@ -10,7 +10,8 @@ Movement::Movement(Actor* owner)
 	maxSpeed_(0.0f),
 	stopSpeed_(0.0f),
 	initSpeed_(0.0f),
-	nowSpeed_(initSpeed_)
+	nowSpeed_(initSpeed_),
+	considerationCollition_(false)
 {
 }
 Movement::Movement(class Actor* owner, float initSpeed)
@@ -22,7 +23,8 @@ Movement::Movement(class Actor* owner, float initSpeed)
 	maxSpeed_(0.0f),
 	stopSpeed_(0.0f),
 	initSpeed_(initSpeed),
-	nowSpeed_(initSpeed_)
+	nowSpeed_(initSpeed_),
+	considerationCollition_(false)
 {
 }
 
@@ -93,6 +95,15 @@ void Movement::SetAcceleration(const float acceleration)
 	acceleration_ = acceleration;
 }
 
+void Movement::SetConsiderationCollition(const bool consideration)
+{
+	considerationCollition_ = consideration;
+}
+bool Movement::IsConsiderationCollition() const
+{
+	return considerationCollition_;
+}
+
 void Movement::LStickInputToMove(const XI::GamePad::SP& controller)
 {
 	auto inp = controller->GetState();
@@ -151,7 +162,8 @@ void Movement::Accel()
 		nowSpeed_ = maxSpeed_;
 
 	CalcVelocity();
-	owner_->pos_ += velocity_;
+
+	MoveOn();
 }
 
 void Movement::Decel()
@@ -161,5 +173,19 @@ void Movement::Decel()
 		nowSpeed_ = 0.0f;
 
 	CalcVelocity();
-	owner_->pos_ += velocity_;
+	MoveOn();
+}
+
+void Movement::Stop()
+{
+	nowSpeed_ = 0.0f;
+	CalcVelocity();
+}
+
+void Movement::MoveOn()
+{
+	if (considerationCollition_)
+		owner_->CheckMove(velocity_);
+	else
+		owner_->pos_ += velocity_;
 }
