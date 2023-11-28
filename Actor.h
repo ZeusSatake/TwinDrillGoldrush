@@ -7,12 +7,10 @@
 #include "GameObject.h"
 #include "Source/Components/BoxCollisionComponent.h"
 #include "Source/Components/HP.h"
-
+#include "Source/Components/Movement.h"
 
 class Actor : public GameObject
-{
-protected:
-	
+{	
 public:
 	typedef shared_ptr<Actor> SP;
 	typedef weak_ptr<Actor>	WP;
@@ -26,10 +24,12 @@ public:
 	{
 		Left,Right
 	};
-	Angle_LR angle_LR;
+	Angle_LR angle_LR_;
 protected:
 	//コンポーネント
 	shared_ptr<BoxCollisionComponent> box_;
+	class shared_ptr<Movement> movement_;
+	class shared_ptr<Movement> gravity_;
 
 public:
 	Actor();
@@ -46,4 +46,6 @@ public:
 	void CheckMove(ML::Vec2& move);
 
 	BoxCollisionComponent* GetBox() const;
+	Movement* GetMovement() const;
+	Movement* GetGravity() const;
 };

@@ -193,17 +193,11 @@
     <ClCompile Include="Source\Components\StateComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\AIComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\AIMoveComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\DebtorAIComponent.cpp">
-      <Filter>MyPG\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Task_Map.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
@@ -216,9 +210,6 @@
     </ClCompile>
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\Task_Player.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
     <ClCompile Include="BPlayer.cpp">
       <Filter>MyPG</Filter>
@@ -281,9 +272,6 @@
     <ClCompile Include="Debtor.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\EnemyAIComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
       <Filter>MyPG\Components\Money</Filter>
     </ClCompile>
@@ -292,6 +280,9 @@
     </ClCompile>
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\StatusComponent.cpp">
+      <Filter>MyPG\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -416,17 +407,11 @@
     <ClInclude Include="Source\Components\StateComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\AIComponent.h">
-      <Filter>MyPG\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\AIMoveComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>MyPG</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Components\DebtorAIComponent.h">
-      <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Task_Map.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
@@ -504,9 +489,6 @@
     <ClInclude Include="Debtor.h">
       <Filter>MyPG</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\EnemyAIComponent.h">
-      <Filter>MyPG\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\Money\PriceTagComponent.h">
       <Filter>MyPG\Components\Money</Filter>
     </ClInclude>
@@ -515,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h">
       <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\StatusComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

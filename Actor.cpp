@@ -124,3 +124,13 @@ BoxCollisionComponent* Actor::GetBox() const
 	return box_.get();
 }
 
+Movement* Actor::GetMovement() const
+{
+	return movement_.get();
+}
+
+Movement* Actor::GetGravity() const
+{
+	return gravity_.get();
+}
+
