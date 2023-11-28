@@ -4,9 +4,10 @@
 #include "Source/Components/ControllerInputComponent.h"
 class Drill :public Character
 {
-	int attackPoint;
-	int durability;
+	int   attackPoint;
+	int   durability;
 	float nowAngle;
+	float Lenght;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -22,6 +23,9 @@ public:
 	float GetNowAngle();
 	ML::Vec2 GetDrillPoint();
 	float UpdateDrillAngle();
+
+	void Mining();
+	void DrillCheckMove(ML::Vec2 e_);
 
 	StateComponent::State dState;
 	void Think()override;

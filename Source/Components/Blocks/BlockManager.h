@@ -49,6 +49,6 @@ namespace	Manager
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 			//追加したい変数・メソッドはここに追加する
 			//BCharaに含まれないモノのみここに追加する
-		static int CreatBlocks(const int inp,const ML::Point pos);
+		static int CreatBlocks(const int inp,const ML::Vec2 pos);
 	};
 }
