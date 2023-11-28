@@ -33,7 +33,7 @@ namespace Cursor
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->pos_ = ge->screenCenterPos;
+		this->pos_ = ge->screenCenterPos.x, ge->screenCenterPos.y - 40;
 
 		AddComponent(movement_ = make_shared<Movement>(this));
 		//パラメータの設定

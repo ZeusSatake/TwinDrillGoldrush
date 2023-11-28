@@ -5,8 +5,8 @@ Debtor::Debtor()
 	,preState_(AIState::Idle)
 	,nowState_(AIState::Idle)
 {
-	movement_->SetConsiderationCollition(true);
-	gravity_->SetConsiderationCollition(true);
+	movement_->SetConsiderationCollition(false);
+	gravity_->SetConsiderationCollition(false);
 }
 
 void Debtor::Think()
@@ -49,7 +49,7 @@ void Debtor::Move()
 
 	moveVec.x++;
 	//d—Í‰Á‘¬
-	if (!CheckFoot() || GetGravity()->GetVelocity().y)
+	if (!CheckFoot()/* || GetGravity()->GetVelocity().y*/)
 	{
 		gravity_->Accel();
 	}
