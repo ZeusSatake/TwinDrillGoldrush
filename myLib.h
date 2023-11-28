@@ -164,20 +164,25 @@ namespace ML
 	//パーセント 百分率で値を管理
 	class Percentage
 	{
-		float percent_;
 		static const float percentLimit_; //100分率のため100
 		float min_;
 		float max_;
 		float nowValue_; //制限かけない
+		float percent_;
 	public:
-		Percentage(const float min, const float max, const float now);
+		Percentage(const float minValue, const float maxValue, const float now);
 		Percentage(const float percent);
 		Percentage();
 
-		float Get() const;
+		float GetPercent() const;
 		//0.0~1.0で正規化して取得
 		float GetNormalizeValue() const;
+		float GetMaxValue() const;
+		float GetMinValue() const;
+
 		void Set(const float percent);
+		void SetMaxValue(const float maxValue);
+		void SetMinValue(const float minValue);
 
 		void AddPercent(const float percent);
 		void SubPercent(const float percent);
