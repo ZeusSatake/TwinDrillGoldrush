@@ -33,9 +33,12 @@ void ToggleButton::ToggleEvent()
 bool ToggleButton::CanSelectedIsOn()
 {
 	//マウス
-	const ML::Point& mousePos = mouse_.lock()->GetState().pos;
-	if (CheckHit(ML::Box2D(mousePos.x, mousePos.y, 1, 1)))
-		return true;
+	if (XI::Mouse::SP mouseSP = mouse_.lock())
+	{
+		const ML::Point& mousePos = mouseSP->GetState().pos;
+		if (CheckHit(ML::Box2D(mousePos.x, mousePos.y, 1, 1)))
+			return true;
+	}
 
 	//選択状態を変更するアクター(カーソル等)
 	for (auto& selector : selectors_)
