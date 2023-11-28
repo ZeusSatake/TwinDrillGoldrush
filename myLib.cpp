@@ -265,13 +265,15 @@ namespace ML
 
 	//パーセンテージ
 	const float Percentage::percentLimit_ = 100.0f;
-	Percentage::Percentage(const float min, const float max, const float value)
+	Percentage::Percentage(const float minValue, const float maxValue, const float value)
 		:
-		min_(min < max ? min : max),
-		max_(max > min ? max : min),
+		min_(min(minValue, maxValue)),
+		max_(max(minValue, maxValue)),
 		nowValue_(value),
-		percent_(CalcPercentage(min_, max_, nowValue_))
+		percent_(0.0f)
 	{
+		//初期化子でやるとコンパイル順によってはバグるためここで計算
+		CalcPercentage();
 	}
 	Percentage::Percentage(const float percent)
 		:
@@ -284,7 +286,7 @@ namespace ML
 	{
 	}
 
-	float Percentage::Get() const
+	float Percentage::GetPercent() const
 	{
 		return percent_;
 	}
@@ -295,6 +297,14 @@ namespace ML
 			return 0.0f;
 
 		return percent_ / Percentage::percentLimit_;
+	}
+	float Percentage::GetMaxValue() const
+	{
+		return max_;
+	}
+	float Percentage::GetMinValue() const
+	{
+		return min_;
 	}
 
 	void Percentage::Set(const float percent)
@@ -311,6 +321,16 @@ namespace ML
 
 		//パーセントを直に変更した場合はパーセント計算に使用する数値も補正
 		CollectNowValue();
+	}
+	void Percentage::SetMaxValue(const float maxValue)
+	{
+		max_ = max<int>(maxValue, min_);
+		CalcPercentage();
+	}
+	void Percentage::SetMinValue(const float minValue)
+	{
+		min_ = min<int>(minValue, max_);
+		CalcPercentage();
 	}
 
 	void Percentage::AddPercent(const float percent)

@@ -4,12 +4,13 @@
 //ゲージ
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
+#include "../../GameObject.h"
 
 namespace DrawGauge
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("System");	//グループ名
-	const  string  defName("DrawGauge");	//タスク名
+	const  string  defGroupName("UI");	//グループ名
+	const  string  defName("HPBar");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -26,7 +27,7 @@ namespace DrawGauge
 		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  GameObject
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
@@ -46,26 +47,21 @@ namespace DrawGauge
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	private:
-		int count_;
-		int max_;
+		ML::Percentage gaugeValue_;
 
 		bool isMaxCharge;
 	public:
 		ML::Vec2 pos;
 
-		void SetUp(const int max, const string& path);
-
-		void CountUp(int add);
-		int GetCount() const;
-		void ResetCount();
+		void Set(const int max, const string& path);
+		void Set(const ML::Percentage& value);
 
 		void SetMax(const int max);
+		void SetMin(const int min);
 		int Getmax() const;
 
 		void SetImg(const string& path);
 
 		bool IsMax() const;
-
-		float Normalized() const;
 	};
 }
