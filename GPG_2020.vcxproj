@@ -161,6 +161,7 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
+    <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />

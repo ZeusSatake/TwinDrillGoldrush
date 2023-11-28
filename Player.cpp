@@ -189,3 +189,8 @@ ML::Vec2 Player::GetPos()
 {
 	return this->pos_;
 }
+
+ML::Vec2 Player::Gravity()
+{
+	return ML::Vec2{ 0,0 };
+}

@@ -5,6 +5,8 @@ Debtor::Debtor()
 	,preState_(AIState::Idle)
 	,nowState_(AIState::Idle)
 {
+	movement_->SetConsiderationCollition(true);
+	gravity_->SetConsiderationCollition(true);
 }
 
 void Debtor::Think()
@@ -54,7 +56,7 @@ void Debtor::Move()
 	else
 	{
 		moveVec.y = 0.0f;
-		//gravity_->Stop();
+		gravity_->Stop();
 	}
 
 	switch (nowState_)

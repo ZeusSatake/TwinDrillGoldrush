@@ -18,6 +18,8 @@
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
 
+#include "../Actors/Enemys/Task_EtoHaiji.h"
+
 namespace  GameScene
 {
 	Resource::WP  Resource::instance;
@@ -59,10 +61,16 @@ namespace  GameScene
 
 		//★タスクの生成
 		{
-			auto player = player::Object::Create(true);
+			/*auto player = player::Object::Create(true);
+			player->pos_ = ML::Vec2{ 50,480 };*/
+			
+
+			auto eto = EtoHaiji::Object::Create(true);
+			eto->pos_=ML::Vec2{ 50,420};
+
 			auto camera = Camera::Object::Create(true);
-			camera->pos_ = player->pos_;
-			camera->target = player;
+			camera->pos_ = eto->pos_;
+			camera->target = eto;
 		}
 		
 		{//背景タスク生成

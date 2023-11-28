@@ -4,7 +4,7 @@
 //
 //-------------------------------------------------------------------
 #include "Actor.h"
-#include  "Player.h"
+#include  "Debtor.h"
 
 namespace Camera
 {
@@ -50,6 +50,6 @@ namespace Camera
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//追加したい変数・メソッドはここに追加する
 		//BCharaに含まれないモノのみここに追加する
-		weak_ptr<Player> target;
+		weak_ptr<Debtor> target;
 	};
 }
