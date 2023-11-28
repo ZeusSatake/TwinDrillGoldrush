@@ -188,6 +188,7 @@
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
     <ClCompile Include="Source\Scene\ShopScene.cpp" />
+    <ClCompile Include="Source\Scene\Task_EnemyMap.cpp" />
     <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
@@ -262,6 +263,7 @@
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\MartialFightScene.h" />
     <ClInclude Include="Source\Scene\ShopScene.h" />
+    <ClInclude Include="Source\Scene\Task_EnemyMap.h" />
     <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />

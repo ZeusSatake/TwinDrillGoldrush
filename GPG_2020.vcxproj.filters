@@ -278,6 +278,9 @@
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClCompile>
     <ClCompile Include="Debtor.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -501,6 +504,9 @@
     <ClInclude Include="Source\Scene\MartialFightScene.h">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene\Task_EnemyMap.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClInclude>
     <ClInclude Include="Debtor.h">
       <Filter>MyPG</Filter>
     </ClInclude>
