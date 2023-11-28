@@ -1,17 +1,16 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//UIカーソル
+//
 //-------------------------------------------------------------------
-#include "../../../Actor.h"
+#include "Actor.h"
+#include  "Player.h"
 
-class Movement;
-
-namespace Cursor
+namespace Camera
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("UI");	//グループ名
-	const  string  defName("Cursor");		//タスク名
+	const  string  defGroupName("カメラ");	//グループ名
+	const  string  defName("");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -24,8 +23,8 @@ namespace Cursor
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-
-		DG::Image::SP image_;
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+		//共有する変数はここに追加する
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  Actor
@@ -47,12 +46,10 @@ namespace Cursor
 		void  UpDate()		override;	//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
-
-		shared_ptr<Movement> movement_;
-
-		XI::VGP enterButton_;
 	public:
-		void SetEnterButton(const XI::VGP enterButton);
-		XI::VGP GetEnterButton() const;
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+		//追加したい変数・メソッドはここに追加する
+		//BCharaに含まれないモノのみここに追加する
+		weak_ptr<Player> target;
 	};
 }

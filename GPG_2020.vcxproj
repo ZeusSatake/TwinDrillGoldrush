@@ -129,6 +129,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BBlocks.cpp" />
     <ClCompile Include="BPlayer.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debtor.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
@@ -184,10 +186,10 @@
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
     <ClCompile Include="Source\Scene\ShopScene.cpp" />
+    <ClCompile Include="Source\Scene\Task_EnemyMap.cpp" />
     <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
-    <ClCompile Include="Source\System\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
@@ -199,6 +201,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BBlocks.h" />
     <ClInclude Include="BPlayer.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debtor.h" />
@@ -233,6 +236,7 @@
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
+    <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
@@ -255,10 +259,10 @@
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\MartialFightScene.h" />
     <ClInclude Include="Source\Scene\ShopScene.h" />
+    <ClInclude Include="Source\Scene\Task_EnemyMap.h" />
     <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />
-    <ClInclude Include="Source\System\Task_DrawGauge.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
     <ClInclude Include="Task_Effect00.h" />

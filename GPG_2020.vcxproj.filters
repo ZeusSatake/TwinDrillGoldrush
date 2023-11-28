@@ -269,6 +269,9 @@
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClCompile>
     <ClCompile Include="Debtor.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -283,6 +286,9 @@
     </ClCompile>
     <ClCompile Include="Source\Components\StatusComponent.cpp">
       <Filter>MyPG\Components</Filter>
+	</ClCompile>	
+    <ClCompile Include="Camera.cpp">
+      <Filter>MyPG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +492,9 @@
     <ClInclude Include="Source\Scene\MartialFightScene.h">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene\Task_EnemyMap.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
     <ClInclude Include="Debtor.h">
       <Filter>MyPG</Filter>
     </ClInclude>
@@ -500,6 +509,9 @@
     </ClInclude>
     <ClInclude Include="Source\Components\StatusComponent.h">
       <Filter>MyPG\Components</Filter>
+	</ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>MyPG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

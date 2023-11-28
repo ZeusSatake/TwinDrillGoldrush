@@ -65,6 +65,8 @@ namespace  drill
 		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
 		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
 		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
+		//ƒXƒNƒ[ƒ‹‘Î‰ž
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
 	}

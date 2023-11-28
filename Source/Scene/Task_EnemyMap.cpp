@@ -1,25 +1,25 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../Player.h"
-#include  "Task_Player.h"
-#include "Task_Drill.h"
+#include  "../../MyPG.h"
+#include  "Task_EnemyMap.h"
+#include  "../Components/Blocks/Task_Stone.h"
+#include  "../Components/Blocks/BlockManager.h"
 
-namespace player
+
+namespace  EnemyMap
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		this->playerImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,11 +32,22 @@ namespace player
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->pos_ = ML::Vec2{ 50,480 };
+		this->render2D_Priority[1] = 0.8f;
+		//arrの要素数分(*32)のマップサイズ
+		this->sizeX = sizeof(this->arr[0]) / sizeof(this->arr[0][0]);
+		this->sizeY = sizeof(this->arr) / sizeof(this->arr[0]);
+		this->chipSize = 16;//1マスの大きさ
+		for (int y = 0; y < this->sizeY; ++y)
+		{
+			for (int x = 0; x < this->sizeX; ++x)
+			{
+				this->arr[y][x] = 0;
+			}
+		}
+		
 		//★タスクの生成
-		auto dl = drill::Object::Create(true);
-		this->drill_ = dl;
+		Manager::Object::Create(true);
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -56,27 +67,63 @@ namespace player
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-
-		this->pState = this->state_->GetNowState();
-		this->Think();
-		this->Move();
-		drill_->pos_ = this->pos_;
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->pos_);
-		//プレイヤキャラの描画
+	}
+	//-------------------------------------------------------------------
+	bool Object::Load(const  string& fileName)
+	{
+		//ファイル名の作成
+		string filePath = "./data/Map/" + fileName + ".csv";
+		//ファイルの読み込み
+		ifstream ifs(filePath);
+		if (!ifs) { return false; }
+		this->hitBase = ML::Box2D(0, 0, this->sizeX * chipSize, this->sizeY * chipSize);
+		for (int y = 0; y < this->sizeY; ++y)
 		{
-			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
-			ML::Box2D src{ 0,0,32,64};
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			this->res->playerImg->Draw(draw, src);
-			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+			//改行までの文字列を取得
+			string lineText;
+			getline(ifs, lineText);
+
+			istringstream ss_lt(lineText);
+			for (int x = 0; x < this->sizeX; ++x)
+			{
+				//カンマまでの文字列を取得
+				string text;
+				getline(ss_lt, text, ',');
+				stringstream ss;
+				ss << text;
+				ss >> this->arr[y][x];
+			}
+		}
+		ifs.close();
+		return true;
+	}
+	//-------------------------------------------------------------------
+	void Object::SetEnemy()
+	{
+		for (int y = 0; y < this->sizeY; ++y) {
+			for (int x = 0; x < this->sizeX; ++x) {
+				// チップの番号によって生成する敵を変える
+				switch (this->arr[y][x])
+				{
+				case 1:
+				{
+					/*auto enemy = Enemy01::Object::Create(true);
+					enemy->pos.x = x * chipSize;
+					enemy->pos.y = y * chipSize;*/
+				}
+				break;
+
+				
+				}
+			}
 		}
 	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -89,7 +136,7 @@ namespace player
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill
@@ -132,5 +179,4 @@ namespace player
 	Resource::Resource() {}
 	//-------------------------------------------------------------------
 	Resource::~Resource() { this->Finalize(); }
-
 }

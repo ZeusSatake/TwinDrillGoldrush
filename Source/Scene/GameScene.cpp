@@ -11,8 +11,12 @@
 
 #include  "../System/Task_BackGround.h"
 #include  "Task_Map.h"
+#include  "Task_EnemyMap.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
+
+#include "../Actors/Task_Player.h"
+#include "../../Camera.h"
 
 namespace  GameScene
 {
@@ -49,13 +53,18 @@ namespace  GameScene
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
 		ge->score = 0;
-		
+		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
 
 		//★タスクの生成
-
-
+		{
+			auto player = player::Object::Create(true);
+			auto camera = Camera::Object::Create(true);
+			camera->pos_ = player->pos_;
+			camera->target = player;
+		}
+		
 		{//背景タスク生成
 			ML::Point imgSize = { 960, 500 };
 			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
@@ -77,6 +86,11 @@ namespace  GameScene
 			mapore->Load("MapJewelry");
 			mapore->render2D_Priority[1] = 0.85f;
 		}
+		//{//敵
+		//	auto enemymap = EnemyMap::Object::Create(true);
+		//	enemymap->Load("MapEnemy");
+		//	enemymap->SetEnemy();
+		//}
 
 		{//拠点に戻るボタン(デバッグ用
 			auto gotoBaseButton = SceneChangeButton::Object::Create(true);

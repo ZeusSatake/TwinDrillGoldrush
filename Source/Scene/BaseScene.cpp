@@ -5,6 +5,7 @@
 #include  "BaseScene.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../Actors/UI/Task_Cursor.h"
 
 namespace BaseScene
 {
@@ -31,38 +32,54 @@ namespace BaseScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+
 		//★タスクの生成
-		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
-		gotoTitleButton->SetEnterButton(XI::VGP::ST);
-		gotoTitleButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoTitleButton->SetScene(this, Scene::Kind::Title);
-		gotoTitleButton->SetText("タイトルへ");
-		AddSceneChangeButton(gotoTitleButton);
 
-		auto gotoShopSceneButton = SceneChangeButton::Object::Create(true);
-		gotoShopSceneButton->SetScene(this, Scene::Kind::Shop);
-		gotoShopSceneButton->SetEnterButton(XI::VGP::B1);
-		gotoShopSceneButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoShopSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
-		gotoShopSceneButton->SetText("ショップへ");
-		AddSceneChangeButton(gotoShopSceneButton);
+		auto cursor = Cursor::Object::Create(true);
+		cursor->SetEnterButton(XI::VGP::ST);
 
-		auto gotoMartialFightSceneButton = SceneChangeButton::Object::Create(true);
-		gotoMartialFightSceneButton->SetScene(this, Scene::Kind::MartialFight);
-		gotoMartialFightSceneButton->SetEnterButton(XI::VGP::B2);
-		gotoMartialFightSceneButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoMartialFightSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
-		gotoMartialFightSceneButton->SetText("武闘会へ");
-		AddSceneChangeButton(gotoMartialFightSceneButton);
+		{//タイトルに遷移するボタン
+			auto button = SceneChangeButton::Object::Create(true);
+			button->SetText("タイトルへ");
+			button->SetScene(this, Scene::Kind::Title);
+			button->SetEnterButton(XI::Mouse::MB::LB);
+			button->SetSelector(cursor.get());
+			button->SetEnterButton(cursor->GetEnterButton());
+			AddSceneChangeButton(button);
+		}
 
-		auto gotoMiningSceneButton = SceneChangeButton::Object::Create(true);
-		gotoMiningSceneButton->SetScene(this, Scene::Kind::Mining);
-		gotoMiningSceneButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoMiningSceneButton->SetEnterButton(XI::VGP::B3);
-		gotoMiningSceneButton->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
-		gotoMiningSceneButton->SetText("採掘場へ");
-		AddSceneChangeButton(gotoMiningSceneButton);
+		{//ショップに遷移するボタン
+			auto button = SceneChangeButton::Object::Create(true);
+			button->SetText("ショップへ");
+			button->SetScene(this, Scene::Kind::Shop);
+			button->SetEnterButton(XI::Mouse::MB::LB);
+			button->SetSelector(cursor.get());
+			button->SetEnterButton(cursor->GetEnterButton());
+			button->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
+			AddSceneChangeButton(button);
+		}
+
+		{//武闘会に遷移するボタン
+			auto button = SceneChangeButton::Object::Create(true);
+			button->SetText("武闘会へ");
+			button->SetScene(this, Scene::Kind::MartialFight);
+			button->SetEnterButton(XI::Mouse::MB::LB);
+			button->SetSelector(cursor.get());
+			button->SetEnterButton(cursor->GetEnterButton());
+			button->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
+			AddSceneChangeButton(button);
+		}
+
+		{//採掘場に遷移するボタン
+			auto button = SceneChangeButton::Object::Create(true);
+			button->SetText("採掘場へ");
+			button->SetScene(this, Scene::Kind::Mining);
+			button->SetEnterButton(XI::Mouse::MB::LB);
+			button->SetSelector(cursor.get());
+			button->SetEnterButton(cursor->GetEnterButton());
+			button->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
+			AddSceneChangeButton(button);
+		}
 
 		return  true;
 	}
@@ -105,7 +122,7 @@ namespace BaseScene
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

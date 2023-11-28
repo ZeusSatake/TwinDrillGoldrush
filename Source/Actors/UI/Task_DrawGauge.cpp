@@ -1,25 +1,24 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../Player.h"
-#include  "Task_Player.h"
-#include "Task_Drill.h"
+#include  "../../../MyPG.h"
+#include  "Task_DrawGauge.h"
 
-namespace player
+namespace DrawGauge
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
+		img = DG::Image::Create("./data/image/bar.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		this->playerImg.reset();
+		img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,11 +31,11 @@ namespace player
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->pos_ = ML::Vec2{ 50,480 };
+		this->render2D_Priority[1] = 0.05f;
+		pos = ML::Vec2(0, 0);
+
 		//★タスクの生成
-		auto dl = drill::Object::Create(true);
-		this->drill_ = dl;
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -56,27 +55,84 @@ namespace player
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-
-		this->pState = this->state_->GetNowState();
-		this->Think();
-		this->Move();
-		drill_->pos_ = this->pos_;
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->pos_);
-		//プレイヤキャラの描画
+		if (res->img == nullptr)
+			assert(!"ゲージのimgがnullptrです");
+		
+		//背景
+		ML::Box2D backDraw(-48, -16, 96, 32);
+		ML::Box2D backSrc(0, 0, 96, 32);
+
+		res->img->Draw(backDraw.OffsetCopy(pos), backSrc);
+
+		//中身
+		ML::Box2D insideDraw(backDraw);
+		insideDraw.w *= gaugeValue_.GetNormalizeValue();
+		
+		ML::Box2D insideSrc = ML::Box2D(0, 32, 96, 32);
+		insideSrc.w *= gaugeValue_.GetNormalizeValue();
+		//最大溜めは青
+		if (isMaxCharge)
+			insideSrc.y = 64;
+
+		res->img->Draw(insideDraw.OffsetCopy(pos), insideSrc);
+	}
+
+	//===================================================================
+	//セッター
+	//===================================================================
+	void Object::Set(const int max, const string& path)
+	{
+		SetMax(max);
+		SetImg(path);
+	}
+	void Object::Set(const ML::Percentage& value)
+	{
+		if (value.GetMaxValue() == value.GetMinValue())
 		{
-			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
-			ML::Box2D src{ 0,0,32,64};
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			this->res->playerImg->Draw(draw, src);
-			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+			assert(!"maxとminが同じ値だとゲージを描画できません。");
+		}
+
+		gaugeValue_ = value;
+	}
+	void  Object::SetMax(const int max)
+	{
+		gaugeValue_.SetMaxValue(max);
+	}
+	void Object::SetMin(const int min)
+	{
+		gaugeValue_.SetMinValue(min);
+	}
+	//===================================================================
+	//ゲッター
+	//===================================================================
+	int  Object::Getmax() const
+	{
+		return gaugeValue_.GetMaxValue();
+	}
+	bool Object::IsMax() const
+	{
+		return gaugeValue_.GetPercent() == 100.0f;
+	}
+
+	//===================================================================
+	//画像
+	//===================================================================
+	void Object::SetImg(const string& path)
+	{
+		if (res->img != nullptr) {
+			res->img->ReLoad(path);
+		}
+		else {
+			res->img = DG::Image::Create(path);
 		}
 	}
+	//===================================================================
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -89,7 +145,7 @@ namespace player
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill
@@ -132,5 +188,4 @@ namespace player
 	Resource::Resource() {}
 	//-------------------------------------------------------------------
 	Resource::~Resource() { this->Finalize(); }
-
 }
