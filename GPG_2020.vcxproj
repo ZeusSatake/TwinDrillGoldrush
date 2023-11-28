@@ -129,6 +129,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="BBlocks.cpp" />
     <ClCompile Include="BPlayer.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Debtor.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="BBlocks.h" />
     <ClInclude Include="BPlayer.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Debtor.h" />

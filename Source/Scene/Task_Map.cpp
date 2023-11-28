@@ -83,37 +83,37 @@ namespace  Map
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		////カメラが完全にマップ外を指しているか調べる
-		//if (false == this->hitBase.Hit(ge->camera2D)) {
-		//	return; //完全に外に出ていたらその時点で描画処理を取りやめる
-		//}
-		////カメラとマップが重なっている範囲だけの矩形を作る
-		//ML::Rect c = {
-		//ge->camera2D.x,
-		//ge->camera2D.y,
-		//ge->camera2D.x + ge->camera2D.w,
-		//ge->camera2D.y + ge->camera2D.h };
-		//ML::Rect m = {
-		//this->hitBase.x,
-		//this->hitBase.y,
-		//this->hitBase.x + this->hitBase.w,
-		//this->hitBase.y + this->hitBase.h };
-		////２つの矩形の重なっている範囲だけの矩形を求める
-		//ML::Rect isr;
-		//isr.left = max(c.left, m.left);
-		//isr.top = max(c.top, m.top);
-		//isr.right = min(c.right, m.right);
-		//isr.bottom = min(c.bottom, m.bottom);
-		////ループ範囲を決定
-		//int sx, sy, ex, ey;
-		//sx = isr.left / chipSize;
-		//sy = isr.top / chipSize;
-		//ex = (isr.right - 1) / chipSize;
-		//ey = (isr.bottom - 1) / chipSize;
+		//カメラが完全にマップ外を指しているか調べる
+		if (false == this->hitBase.Hit(ge->camera2D)) {
+			return; //完全に外に出ていたらその時点で描画処理を取りやめる
+		}
+		//カメラとマップが重なっている範囲だけの矩形を作る
+		ML::Rect c = {
+		ge->camera2D.x,
+		ge->camera2D.y,
+		ge->camera2D.x + ge->camera2D.w,
+		ge->camera2D.y + ge->camera2D.h };
+		ML::Rect m = {
+		this->hitBase.x,
+		this->hitBase.y,
+		this->hitBase.x + this->hitBase.w,
+		this->hitBase.y + this->hitBase.h };
+		//２つの矩形の重なっている範囲だけの矩形を求める
+		ML::Rect isr;
+		isr.left = max(c.left, m.left);
+		isr.top = max(c.top, m.top);
+		isr.right = min(c.right, m.right);
+		isr.bottom = min(c.bottom, m.bottom);
+		//ループ範囲を決定
+		int sx, sy, ex, ey;
+		sx = isr.left / chipSize;
+		sy = isr.top / chipSize;
+		ex = (isr.right - 1) / chipSize;
+		ey = (isr.bottom - 1) / chipSize;
 
-		for (int y = 0; y < this->sizeY; ++y)//int y = sy; y <= ey; ++y スクロール
+		for (int y = sy; y <= ey; ++y)//int y = sy; y <= ey; ++y スクロール//int y = 0; y < this->sizeY; ++y
 		{
-			for (int x = 0; x < this->sizeX; ++x)//int x = sx; x <=ex; ++x　スクロール
+			for (int x = sx; x <= ex; ++x)//int x = sx; x <=ex; ++x　スクロール//int x = 0; x < this->sizeX; ++x
 			{
 				if (this->arr[y][x] != -1)
 				{
