@@ -5,6 +5,8 @@
 #include  "MartialFightScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "Task_Map.h"
+#include "../Actors/Task_Player.h"
+#include "../../Camera.h"
 
 namespace MartialFightScene
 {
@@ -31,11 +33,18 @@ namespace MartialFightScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		//★タスクの生成
 		{//武闘会
 			auto map = Map::Object::Create(true);
 			map->Load("MartialFight");
+		}
+		{
+			auto player = player::Object::Create(true);
+			auto camera = Camera::Object::Create(true);
+			camera->horizontalScroll=true;
+			camera->pos_ = player->pos_;
+			camera->target = player;
 		}
 		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
 		gotoTitleButton->SetEnterButton(XI::VGP::ST);
