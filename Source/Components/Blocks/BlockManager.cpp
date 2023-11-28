@@ -64,36 +64,35 @@ namespace	Manager
 	{
 	}
 	//-------------------------------------------------------------------
-	int Object::CreatBlocks(const int inp, const ML::Point pos)
+	int Object::CreatBlocks(const int inp, const ML::Vec2 pos)
 	{
-		auto pos_ = ML::Vec2(pos.x, pos.y);
 		//取得番号からタスク生成
 			//破壊不可ブロックだった場合そのブロック番号のまま返す
 		switch (inp)
 		{
 		case 2:
 			if (auto b = Bedrock::Object::Create(true)) {
-				b->pos = pos_;
+				b->pos = pos;
 			}
 			return 2;
 
 		case 6:
 			if (auto b = Stone::Object::Create(true)) {
-				b->pos = pos_;
+				b->pos = pos;
 			}
 			return 0;
 			break;
 
 		case 7:
 			if (auto b = Bedrock::Object::Create(true)) {
-				b->pos = pos_;
+				b->pos = pos;
 			}
 			return 7;	//破壊不可のため
 			break;
 
 		case 11:
 			if (auto b = IronOre::Object::Create(true)){
-				b->pos = pos_;
+				b->pos = pos;
 			}
 			return 0;
 			break;
