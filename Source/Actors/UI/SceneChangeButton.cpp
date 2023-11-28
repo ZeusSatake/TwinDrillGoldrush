@@ -39,6 +39,7 @@ namespace SceneChangeButton
 		SetEnterButton(XI::VGP::B1);
 		SetRecieveInputEnable(true);
 		SetSelected(false);
+		SetMouse(ge->mouse);
 		
 		//★タスクの生成
 
@@ -61,9 +62,6 @@ namespace SceneChangeButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		auto mouse = ge->mouse->GetState();
-		SetSelected(box_->CheckHit(ML::Box2D(mouse.pos.x, mouse.pos.y, 1, 1)));
-
 		ToggleButton::UpDate();
 	}
 	//-------------------------------------------------------------------

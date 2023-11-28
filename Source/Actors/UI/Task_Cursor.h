@@ -5,6 +5,8 @@
 //-------------------------------------------------------------------
 #include "../../../Actor.h"
 
+class Movement;
+
 namespace Cursor
 {
 	//タスクに割り当てるグループ名と固有名
@@ -22,8 +24,8 @@ namespace Cursor
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//共有する変数はここに追加する
+
+		DG::Image::SP image_;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  Actor
@@ -45,9 +47,12 @@ namespace Cursor
 		void  UpDate()		override;	//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
+
+		shared_ptr<Movement> movement_;
+
+		XI::VGP enterButton_;
 	public:
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+		void SetEnterButton(const XI::VGP enterButton);
+		XI::VGP GetEnterButton() const;
 	};
 }
