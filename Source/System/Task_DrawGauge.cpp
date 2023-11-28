@@ -32,7 +32,6 @@ namespace DrawGauge
 
 		//★データ初期化
 		this->render2D_Priority[1] = 0.05f;
-		count_ = 0;
 		pos = ML::Vec2(0, 0);
 
 		//★タスクの生成
@@ -72,10 +71,10 @@ namespace DrawGauge
 
 		//中身
 		ML::Box2D insideDraw(backDraw);
-		insideDraw.w *= Normalized();
+		insideDraw.w *= gaugeValue_.GetNormalizeValue();
 		
 		ML::Box2D insideSrc = ML::Box2D(0, 32, 96, 32);
-		insideSrc.w *= Normalized();
+		insideSrc.w *= gaugeValue_.GetNormalizeValue();
 		//最大溜めは青
 		if (isMaxCharge)
 			insideSrc.y = 64;
@@ -84,57 +83,42 @@ namespace DrawGauge
 	}
 
 	//===================================================================
-	//セットアップ
+	//セッター
 	//===================================================================
-	void Object::SetUp(const int max, const string& path)
+	void Object::Set(const int max, const string& path)
 	{
 		SetMax(max);
 		SetImg(path);
 	}
-	//===================================================================
-	//カウント
-	//===================================================================
-	void Object::CountUp(int add)
+	void Object::Set(const ML::Percentage& value)
 	{
-		count_ += add;
-
-		if (count_ > max_) {
-			count_ = max_;
-			isMaxCharge = true;
+		if (value.GetMaxValue() == value.GetMinValue())
+		{
+			assert(!"maxとminが同じ値だとゲージを描画できません。");
 		}
+
+		gaugeValue_ = value;
 	}
-	int  Object::GetCount() const
-	{
-		return count_;
-	}
-	void Object::ResetCount()
-	{
-		count_ = 0;
-		isMaxCharge = false;
-	}
-	//進行度を 0.0~1.0 で返す
-	float Object::Normalized() const
-	{
-		return (float)count_ / (float)max_;
-	}
-	//===================================================================
-	//最大カウント
-	//===================================================================
 	void  Object::SetMax(const int max)
 	{
-		if (max <= 0) {
-			assert(!"設定しようとしているゲージの最大値が0以下です");
-		}
-		this->max_ = max;
+		gaugeValue_.SetMaxValue(max);
 	}
+	void Object::SetMin(const int min)
+	{
+		gaugeValue_.SetMinValue(min);
+	}
+	//===================================================================
+	//ゲッター
+	//===================================================================
 	int  Object::Getmax() const
 	{
-		return max_;
+		return gaugeValue_.GetMaxValue();
 	}
 	bool Object::IsMax() const
 	{
-		return isMaxCharge;
+		return gaugeValue_.GetPercent() == 100.0f;
 	}
+
 	//===================================================================
 	//画像
 	//===================================================================
