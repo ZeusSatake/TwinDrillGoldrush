@@ -221,13 +221,16 @@ namespace  Map
 	//-------------------------------------------------------------------
 	void Object::Search(const ML::Point& pos_)
 	{
-		ML::Point pos = pos_;
+		//ML::Point pos = pos_;
+		ML::Point pos; 
+		pos.x = pos_.x + ge->camera2D.x;
+		pos.y = pos_.y + ge->camera2D.y;
 		if (pos.x >= 0 && pos.x < chipSize * this->sizeX &&
 			pos.y >= 0 && pos.y < chipSize * this->sizeY) {
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
 			if (this->arr[masu.y][masu.x] != 0) {
-				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x], pos_);
+				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x], pos);//pos_
 				this->arr[masu.y][masu.x] = inp;
 			}
 		}
