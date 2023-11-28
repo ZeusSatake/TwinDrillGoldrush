@@ -1,10 +1,13 @@
 #include "ToggleButton.h"
 
+#include "Source/Actors/UI/Task_Cursor.h"
+
 ToggleButton::ToggleButton()
 	:
 	buttonState_(0),
 	text_(""),
-	enterButton_()
+	enterButton_(),
+	mouseEnterButton_()
 {
 }
 
@@ -25,6 +28,26 @@ void ToggleButton::ToggleEvent()
 		OnEvent();
 	else
 		OffEvent();
+}
+
+bool ToggleButton::CanSelectedIsOn()
+{
+	//マウス
+	if (XI::Mouse::SP mouseSP = mouse_.lock())
+	{
+		const ML::Point& mousePos = mouseSP->GetState().pos;
+		if (CheckHit(ML::Box2D(mousePos.x, mousePos.y, 1, 1)))
+			return true;
+	}
+
+	//選択状態を変更するアクター(カーソル等)
+	for (auto& selector : selectors_)
+	{
+		if (selector->CheckHit(box_->getHitBase().OffsetCopy(pos_)))
+			return true;
+	}
+
+	return false;
 }
 
 void ToggleButton::Reset()
@@ -112,8 +135,19 @@ void ToggleButton::Drawtext(const DG::Font::SP& font, const bool drawState)
 	font->Draw(ML::Box2D(pos_.x, pos_.y, 600, 600), msg, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 }
 
+void ToggleButton::SetMouse(const shared_ptr<XI::Mouse> mouse)
+{
+	mouse_ = mouse;
+}
+void ToggleButton::SetSelector(const Actor* selector)
+{
+	selectors_.push_back(selector);
+}
+
 void ToggleButton::UpDate()
 {
+	SetSelected(CanSelectedIsOn());
+
 	SetStateText();
 
 	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput)) 

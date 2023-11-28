@@ -164,6 +164,7 @@
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\Components\AIComponent.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
@@ -193,7 +194,6 @@
     <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
-    <ClCompile Include="Source\System\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
@@ -240,6 +240,7 @@
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
+    <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
     <ClInclude Include="Source\Components\AIComponent.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
@@ -269,7 +270,6 @@
     <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />
-    <ClInclude Include="Source\System\Task_DrawGauge.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
     <ClInclude Include="Task_Effect00.h" />

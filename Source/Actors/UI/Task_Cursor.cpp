@@ -3,6 +3,8 @@
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
 #include  "Task_Cursor.h"
+#include  "../../Components/Movement.h"
+#include  "../../../ToggleButton.h"
 
 namespace Cursor
 {
@@ -11,12 +13,14 @@ namespace Cursor
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		image_ = DG::Image::Create("./data/image/shot.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		image_.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -29,6 +33,21 @@ namespace Cursor
 		this->res = Resource::Create();
 
 		//★データ初期化
+		this->pos_ = ge->screenCenterPos;
+
+		AddComponent(movement_ = make_shared<Movement>(this));
+		//パラメータの設定
+		movement_->SetSpeed(8.0f, 15.0f, 0.5f);
+		movement_->SetDecelerationRate(ML::Percentage(30.0f));
+		movement_->SetAcceleration(20.0f);
+
+		box_->setHitBase(ML::Box2D(-28, -28, 56, 56));
+		
+		auto buttons = ge->GetTasks<ToggleButton>("UI", "Button");
+		for (auto& button : *buttons)
+		{
+			button->SetSelector(this);
+		}
 		
 		//★タスクの生成
 
@@ -39,7 +58,7 @@ namespace Cursor
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		movement_.reset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -51,11 +70,38 @@ namespace Cursor
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		movement_->LStickInputToMove(ge->in1);
+		
+		{//ボタンとのあたり判定 重なっているものを選択状態にする
+			//auto mouse = ge->mouse->GetState();
+
+			//auto buttons = ge->GetTasks<ToggleButton>("UI", "Button");
+			//const ML::Box2D& myBox = this->box_->getHitBase().OffsetCopy(this->pos_);
+			//for (auto& button : *buttons)
+			//{
+			//	if (button->CheckHit(ML::Box2D(mouse.pos.x, mouse.pos.y, 1, 1)) ||
+			//		button->CheckHit(myBox))
+			//		button->SetSelected(true);
+			//	else
+			//		button->SetSelected(false);
+			//}
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D src(0, 0, 56, 56);
+		res->image_->Draw(box_->getHitBase().OffsetCopy(this->pos_), src);
+	}
+
+	void Object::SetEnterButton(const XI::VGP enterButton)
+	{
+		enterButton_ = enterButton;
+	}
+	XI::VGP Object::GetEnterButton() const
+	{
+		return enterButton_;
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

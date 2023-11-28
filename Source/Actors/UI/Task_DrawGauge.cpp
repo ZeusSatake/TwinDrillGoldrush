@@ -1,25 +1,24 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "BaseScene.h"
+#include  "../../../MyPG.h"
+#include  "Task_DrawGauge.h"
 
-#include  "../Actors/UI/SceneChangeButton.h"
-#include  "../Actors/UI/Task_Cursor.h"
-
-namespace BaseScene
+namespace DrawGauge
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		img = DG::Image::Create("./data/image/bar.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,54 +31,10 @@ namespace BaseScene
 		this->res = Resource::Create();
 
 		//★データ初期化
+		this->render2D_Priority[1] = 0.05f;
+		pos = ML::Vec2(0, 0);
 
 		//★タスクの生成
-
-		auto cursor = Cursor::Object::Create(true);
-		cursor->SetEnterButton(XI::VGP::ST);
-
-		{//タイトルに遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("タイトルへ");
-			button->SetScene(this, Scene::Kind::Title);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			AddSceneChangeButton(button);
-		}
-
-		{//ショップに遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("ショップへ");
-			button->SetScene(this, Scene::Kind::Shop);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
-
-		{//武闘会に遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("武闘会へ");
-			button->SetScene(this, Scene::Kind::MartialFight);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
-
-		{//採掘場に遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("採掘場へ");
-			button->SetScene(this, Scene::Kind::Mining);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
 
 		return  true;
 	}
@@ -88,11 +43,10 @@ namespace BaseScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			CreateNextScene();
 		}
 
 		return  true;
@@ -101,14 +55,83 @@ namespace BaseScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Scene::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "拠点");
+		if (res->img == nullptr)
+			assert(!"ゲージのimgがnullptrです");
+		
+		//背景
+		ML::Box2D backDraw(-48, -16, 96, 32);
+		ML::Box2D backSrc(0, 0, 96, 32);
+
+		res->img->Draw(backDraw.OffsetCopy(pos), backSrc);
+
+		//中身
+		ML::Box2D insideDraw(backDraw);
+		insideDraw.w *= gaugeValue_.GetNormalizeValue();
+		
+		ML::Box2D insideSrc = ML::Box2D(0, 32, 96, 32);
+		insideSrc.w *= gaugeValue_.GetNormalizeValue();
+		//最大溜めは青
+		if (isMaxCharge)
+			insideSrc.y = 64;
+
+		res->img->Draw(insideDraw.OffsetCopy(pos), insideSrc);
 	}
+
+	//===================================================================
+	//セッター
+	//===================================================================
+	void Object::Set(const int max, const string& path)
+	{
+		SetMax(max);
+		SetImg(path);
+	}
+	void Object::Set(const ML::Percentage& value)
+	{
+		if (value.GetMaxValue() == value.GetMinValue())
+		{
+			assert(!"maxとminが同じ値だとゲージを描画できません。");
+		}
+
+		gaugeValue_ = value;
+	}
+	void  Object::SetMax(const int max)
+	{
+		gaugeValue_.SetMaxValue(max);
+	}
+	void Object::SetMin(const int min)
+	{
+		gaugeValue_.SetMinValue(min);
+	}
+	//===================================================================
+	//ゲッター
+	//===================================================================
+	int  Object::Getmax() const
+	{
+		return gaugeValue_.GetMaxValue();
+	}
+	bool Object::IsMax() const
+	{
+		return gaugeValue_.GetPercent() == 100.0f;
+	}
+
+	//===================================================================
+	//画像
+	//===================================================================
+	void Object::SetImg(const string& path)
+	{
+		if (res->img != nullptr) {
+			res->img->ReLoad(path);
+		}
+		else {
+			res->img = DG::Image::Create(path);
+		}
+	}
+	//===================================================================
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

@@ -10,7 +10,7 @@ namespace SceneChangeButton
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("UI");					//グループ名
-	const  string  defName("SceneChangeButton");		//タスク名
+	const  string  defName("Button");					//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
