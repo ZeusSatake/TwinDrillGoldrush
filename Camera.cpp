@@ -1,25 +1,24 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../Player.h"
-#include  "Task_Player.h"
-#include "Task_Drill.h"
+#include  "MyPG.h"
+#include  "Camera.h"
+#include  "Player.h"
+#include "Source/Scene/Task_Map.h"
 
-namespace player
+namespace Camera
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		this->playerImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,11 +31,9 @@ namespace player
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->pos_ = ML::Vec2{ 50,480 };
+		
 		//★タスクの生成
-		auto dl = drill::Object::Create(true);
-		this->drill_ = dl;
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -56,27 +53,32 @@ namespace player
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		if (auto tg = this->target.lock())
+		{
+			ML::Vec2 toVec = tg->pos_ - this->pos_;
+			this->pos_ += toVec;
+		}
+		{//カメラの位置調整
+			int px = ge->camera2D.w / 2;
+			int py = ge->camera2D.h / 2;
 
-		this->pState = this->state_->GetNowState();
-		this->Think();
-		this->Move();
-		drill_->pos_ = this->pos_;
+			int cpx = int(this->pos_.x) - px;
+			int cpy = int(this->pos_.y) - py;
+
+			ge->camera2D.x = cpx;
+			ge->camera2D.y = cpy;
+			if (auto map = ge->GetTask<Map::Object>("本編","マップ"))
+			{
+				map->AdjustCameraPos();
+			}
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->pos_);
-		//プレイヤキャラの描画
-		{
-			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
-			ML::Box2D src{ 0,0,32,64};
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			this->res->playerImg->Draw(draw, src);
-			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
-		}
 	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -132,5 +134,4 @@ namespace player
 	Resource::Resource() {}
 	//-------------------------------------------------------------------
 	Resource::~Resource() { this->Finalize(); }
-
 }

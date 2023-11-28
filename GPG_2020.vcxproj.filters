@@ -280,7 +280,7 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Debtor.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
@@ -295,6 +295,10 @@
     </ClCompile>
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\StatusComponent.cpp" />
+    <ClCompile Include="Camera.cpp">
+      <Filter>MyPG</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -506,7 +510,7 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Task_EnemyMap.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Debtor.h">
       <Filter>MyPG</Filter>
     </ClInclude>
@@ -521,6 +525,10 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h">
       <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\StatusComponent.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>MyPG</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
