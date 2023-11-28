@@ -34,6 +34,8 @@ namespace player
 		//★データ初期化
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
 		this->pos_ = ML::Vec2{ 50,480 };
+
+		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
 		//★タスクの生成
 		auto dl = drill::Object::Create(true);
 		this->drill_ = dl;
