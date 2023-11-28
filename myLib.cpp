@@ -289,6 +289,14 @@ namespace ML
 		return percent_;
 	}
 
+	float Percentage::GetNormalizeValue() const
+	{
+		if (percent_ == 0.0f)
+			return 0.0f;
+
+		return percent_ / Percentage::percentLimit_;
+	}
+
 	void Percentage::Set(const float percent)
 	{
 		float collectPercent = percent;
@@ -325,19 +333,13 @@ namespace ML
 		CalcPercentage();
 	}
 
-	float Percentage::CalcPercentage(const float min, const float max, const float nowValue)
+	float Percentage::CalcPercentage(const float minValue, const float maxValue, const float nowValue)
 	{
-		if (max == min)
+		if (maxValue == minValue)
 			return percentLimit_;
 
-		float collectMax = max;
-		float collectMin = min;
-
-		if (max < min)
-		{
-			collectMax = min;
-			collectMin = max;
-		}
+		float collectMax = max(maxValue, minValue);
+		float collectMin = min(maxValue, minValue);
 
 		if (nowValue > collectMax)
 			return Percentage::percentLimit_;
@@ -345,7 +347,9 @@ namespace ML
 		if (nowValue < collectMin)
 			return 0.0f;
 
-		return nowValue / (collectMax - collectMin) * Percentage::percentLimit_;
+		float diff_MaxMin = collectMax - collectMin;
+
+		return nowValue / diff_MaxMin * Percentage::percentLimit_;
 	}
 
 	void Percentage::CalcPercentage()

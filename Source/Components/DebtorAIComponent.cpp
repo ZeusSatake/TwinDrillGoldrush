@@ -1,30 +1,59 @@
 #include "DebtorAIComponent.h"
+#include "../../Debtor.h"
 
 DebtorAIComponent::DebtorAIComponent(class Debtor* owner)
-	:AIComponent(owner)
+	:EnemyAIComponent((Enemy*)owner)
 {
 	fov_ = 150.f;
+	
 }
 void DebtorAIComponent::Think()
 {
-	switch(preState_)
+
+	AIState afterState = nowState_;
+	switch(afterState)
 	{
 	case AIState::Idle:
 		if (owner_->OutOfScreen())
-			nowState_ = AIState::Patrol;
+			afterState = AIState::Patrol;
 		break;
 	case AIState::Patrol:
-		if (distance_ > fov_)
-			nowState_ = AIState::Approach;
+		if (distance_ <= fov_)
+			afterState = AIState::Approach;
 		break;
 	case AIState::Approach:
-		
+		if (distance_ <= static_cast<Enemy*>(owner_)->range_)
+		{
+			afterState = AIState::Attack;
+		}
+		else if (distance_ > fov_)
+		{
+			afterState = AIState::Patrol;
+		}
 		break;
+	case AIState::Attack:
+		//�����W����O�ꂽ��ڋ�
+		if (distance_ > static_cast<Enemy*>(owner_)->range_)
+		{
+			afterState = AIState::Approach;
+		}
+
 	}
+	UpdateState(afterState);
 }
 
 void DebtorAIComponent::Move()
 {
+	//�d�͉���
+	/*if (!static_cast<Character*>(owner_)->CheckFoot() || static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().y)
+	{
+		static_cast<Character*>(owner_)->GetMovement()->SetMoveVec(ML::Vec2(owner_->GetMoveVec().x, min(owner_->GetMoveVec().y + owner_->GetGravity(), owner_->GetMaxFallSpeed())));
+	}
+	else
+	{
+		owner_->SetMoveVec(ML::Vec2{ owner_->GetMoveVec().x, 0 });
+	}*/
+
 	switch (nowState_)
 	{
 	case AIState::Idle:
@@ -55,10 +84,7 @@ void DebtorAIComponent::Update()
 
 void DebtorAIComponent::UpdatePatrol()
 {
-	ML::Vec2 toTarget = target_->pos_ - owner_->pos_;
-	distance_ = toTarget.Length();
-
-
+	move_->Patroll(target_);
 }
 void DebtorAIComponent::UpdateApproach()
 {
@@ -89,4 +115,25 @@ void DebtorAIComponent::UpdateGuard()
 
 }
 
+bool DebtorAIComponent::UpdateState(AIState afterState)
+{
+	if(nowState_== afterState)
+		return false;
+	else
+	{
+		preState_ = nowState_;
+		nowState_ = afterState;
+		return true;
+	}
+}
+
+bool DebtorAIComponent::HitPlayer()
+{
+	if (owner_->CheckHit(target_->GetBox()->getHitBase()))
+	{
+		
+		return true;
+	}
+	return false;
+}
 

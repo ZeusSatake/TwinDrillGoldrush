@@ -1,11 +1,16 @@
 #pragma once
-#include "Actor.h"
-class Drill :public Actor
+#include "Character.h"
+#include "Source/Components/StateComponent.h"
+#include "Source/Components/ControllerInputComponent.h"
+class Drill :public Character
 {
 	int attackPoint;
 	int durability;
 	float nowAngle;
 
+protected:
+	class shared_ptr<ControllerInputComponent> controller_;
+	class shared_ptr<StateComponent> state_;
 public:
 	Drill();
 	virtual ~Drill() { };
@@ -16,5 +21,9 @@ public:
 	int GetAttackPoint();
 	float GetNowAngle();
 	ML::Vec2 GetDrillPoint();
-	void UpdateDrill();
+	float UpdateDrillAngle();
+
+	StateComponent::State dState;
+	void Think()override;
+	void Move()override;
 };

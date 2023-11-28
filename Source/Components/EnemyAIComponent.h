@@ -1,12 +1,11 @@
 #pragma once
-#include "EnemyAIComponent.h"
-//#include "../../Debtor.h"
-//債務者AIコンポーネント
-class DebtorAIComponent : public EnemyAIComponent
+#include "../Components/AIComponent.h"
+
+class EnemyAIComponent : public AIComponent
 {
 public:
-	DebtorAIComponent(class Debtor* owner);
-	virtual ~DebtorAIComponent() {};
+	EnemyAIComponent(class Enemy* owner);
+	virtual ~EnemyAIComponent() {};
 
 	virtual void Update() override;
 	virtual void UpdatePatrol() override;
@@ -20,10 +19,4 @@ public:
 
 	virtual void Think() override;
 	virtual void Move() override;
-
-	bool UpdateState(AIState nowState);
-
-	bool HitPlayer();
-
 };
-

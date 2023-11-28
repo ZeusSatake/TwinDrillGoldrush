@@ -32,7 +32,7 @@ namespace  drill
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
+		this->box_->setHitBase(ML::Box2D{ -4,-4,8,8 });
 		//★タスクの生成
 
 		return  true;
@@ -54,9 +54,9 @@ namespace  drill
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		this->angle_ -= ML::ToRadian(1);
-		this->preVec.x =cos(this->angle_) * 100.f;
-		this->preVec.y =sin(this->angle_) * 100.0f;
+		this->angle_ = ML::ToRadian(this->UpdateDrillAngle());
+		this->pos_.x += cos(this->UpdateDrillAngle()) * 10.f;
+		this->pos_.y += sin(this->UpdateDrillAngle()) * 10.0f;
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -64,9 +64,9 @@ namespace  drill
 	{
 		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
 		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
-		draw.Offset(this->preVec);
-		this->res->img->Rotation(this->angle_,ML::Vec2{32,32});
+		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
 		this->res->img->Draw(draw, src);
+		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
