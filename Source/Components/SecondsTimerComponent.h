@@ -19,7 +19,7 @@ public:
 	void SetCountSeconds(const float countSeconds);
 
 	//現在のカウント取得
-	int  GetCount() const;
+	float  GetCount() const;
 	//カウント中
 	bool IsActive() const;
 	//カウント終了フレームのみtrue
