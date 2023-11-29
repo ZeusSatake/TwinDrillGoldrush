@@ -68,7 +68,7 @@ namespace SceneChangeButton
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, true);
+		Drawtext(ge->debugFont, false);
 	}
 	void Object::OnEvent()
 	{
