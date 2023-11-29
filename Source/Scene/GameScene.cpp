@@ -115,6 +115,7 @@ namespace  GameScene
 		ge->KillAll_G("本編");
 		ge->KillAll_G("システム");
 		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_G("プレイヤ");
 
 		ge->debugRectReset();
 
