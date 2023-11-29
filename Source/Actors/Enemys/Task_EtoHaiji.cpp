@@ -80,12 +80,6 @@ namespace EtoHaiji
 		
 		res->img->Draw(draw, src);
 
-		
-		if (angle_LR_ == Angle_LR::Left)
-		    ge->debugRect(box_->getHitBase(), 0,draw.x,draw.y);
-		else
-			ge->debugRect(box_->getHitBase(), 1, draw.x, draw.y);
-		ge->debugRectDraw();
 	}
 	//-------------------------------------------------------------------
 	//šššššššššššššššššššššššššššššššššššššššššš
