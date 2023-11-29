@@ -287,9 +287,11 @@
     <ClCompile Include="Camera.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp">
       <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
+      <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -511,7 +513,9 @@
     <ClInclude Include="Camera.h">
       <Filter>MyPG</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
+    <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h">
+      <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GPG_20201.rc">
