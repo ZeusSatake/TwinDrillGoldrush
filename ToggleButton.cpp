@@ -144,7 +144,7 @@ void ToggleButton::SetSelector(const Actor* selector)
 	selectors_.push_back(selector);
 }
 
-const shared_ptr<const BoxCollisionComponent>& ToggleButton::GetBox() const
+const shared_ptr<const BoxCollisionComponent> ToggleButton::GetBox() const
 {
 	return box_;
 }

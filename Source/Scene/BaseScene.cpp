@@ -72,7 +72,7 @@ namespace BaseScene
 				},
 				{	"ÌŒ@ê‚Ö",
 					this,
-					Scene::Kind::MartialFight,
+					Scene::Kind::Mining,
 					mouseEnterButton,
 					gamePadEnterButton,
 					cursor.get()
