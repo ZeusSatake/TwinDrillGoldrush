@@ -114,8 +114,8 @@ namespace  EnemyMap
 				case 1:
 				{
 					auto enemy = EtoHaiji::Object::Create(true);
-					enemy->pos_.x = x * chipSize;
-					enemy->pos_.y = y * chipSize;
+					enemy->SetPosX(x * chipSize);
+					enemy->SetPosY(y * chipSize);
 				}
 				break;
 
