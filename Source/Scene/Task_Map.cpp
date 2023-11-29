@@ -75,8 +75,9 @@ namespace  Map
 	void  Object::UpDate()
 	{
 		auto ms = ge->mouse->GetState();
+		auto pos = ML::Vec2(ms.pos.x, ms.pos.y);
 		if (ms.RB.down) {
-			this->Search(ms.pos);
+			this->Search(pos);
 		}
 	}
 	//-------------------------------------------------------------------
@@ -219,9 +220,9 @@ namespace  Map
 		if (this->hitBase.h < ge->camera2D.h) { ge->camera2D.y = m.top; }
 	}
 	//-------------------------------------------------------------------
-	void Object::Search(const ML::Point& pos_)
+	void Object::Search(const ML::Vec2& pos_)
 	{
-		ML::Point pos; 
+		ML::Vec2 pos; 
 		pos.x = pos_.x + ge->camera2D.x;
 		pos.y = pos_.y + ge->camera2D.y;
 		if (pos.x >= 0 && pos.x < chipSize * this->sizeX &&
