@@ -3,7 +3,6 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "Task_Map.h"
-#include  "../Components/Blocks/Task_Stone.h"
 
 #include  "../Components/Blocks/BlockManager.h"
 
@@ -230,8 +229,8 @@ namespace  Map
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
 			if (this->arr[masu.y][masu.x] != 0) {
-				int inp = Manager::Object::CreatBlocks(arr[masu.y][masu.x], pos);
-				this->arr[masu.y][masu.x] = inp;
+				auto manager = ge->GetTask<Manager::Object>("Blocks");
+				manager->Damage(masu, 1);
 			}
 		}
 	}

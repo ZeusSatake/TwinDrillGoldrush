@@ -48,15 +48,17 @@ namespace  Map
 		//追加したい変数・メソッドはここに追加する
 		DG::Image::SP img;
 		int  arr[160][160];//yx
-		int					sizeY, sizeX;
 		int chipSize;
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];
 	public:
+		int					sizeY, sizeX;
 		bool  Load(const  string& fileName);//マップ読み込み
 		bool  CheckHit(const  ML::Box2D& hit);//あたり判定
 		void AdjustCameraPos();//マップ外を見せないようにカメラを位置調整する
 		void  Search(const ML::Vec2& pos_);//対象ブロック検索
+		inline int GetMapChip(int y, int x) { return this->arr[y][x]; } 
+		inline void SetMapChip(int y, int x, int no) { arr[y][x] = no; }
 	};
 }
 		

@@ -4,6 +4,7 @@
 #include	"../../../MyPG.h"
 #include	"BlockManager.h"
 #include	"../../Scene/Task_Map.h"
+#include	"../../../sound.h"
 
 								//*名	*num	*破壊
 #include	"Task_Stone.h"		//石		.6		.可
@@ -64,45 +65,150 @@ namespace	Manager
 	{
 	}
 	//-------------------------------------------------------------------
-	int Object::CreatBlocks(const int inp, const ML::Vec2 pos)
+	//ブロックHP・特性設定
+	void Object::InitArray()
 	{
-		//取得番号からタスク生成
-			//破壊不可ブロックだった場合そのブロック番号のまま返す
-		switch (inp)
+		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		for (int y = 0; y < map->sizeY; y++)
 		{
-		case 2:
-			if (auto b = Bedrock::Object::Create(true)) {
-				b->pos = pos;
+			for (int x = 0; x < map->sizeX; x++)
+			{
+				int id = map->GetMapChip(y, x);
+				switch (id) {
+				case 0:
+					this->arr[y][x].MaxHP = 0;
+					this->arr[y][x].HP = 0;
+					break;
+				case 1:
+					this->arr[y][x].MaxHP = 1;
+					this->arr[y][x].HP = 1;
+					break;
+				case 2:
+					this->arr[y][x].MaxHP = '不';
+					this->arr[y][x].HP = '不';
+					this->arr[y][x].event = 7;
+					break;
+				case 3:
+					this->arr[y][x].MaxHP = 3;
+					this->arr[y][x].HP = 3;
+					break;
+				case 6:
+					this->arr[y][x].MaxHP = 3;
+					this->arr[y][x].HP = 3;
+					this->arr[y][x].event = 6;
+					break;
+				case 7:
+					this->arr[y][x].MaxHP = '不';
+					this->arr[y][x].HP = '不';
+					this->arr[y][x].event = 7;
+					break;
+				case 11:
+					this->arr[y][x].MaxHP = 12;
+					this->arr[y][x].HP = 12;
+					break;
+				}
 			}
-			return 2;
+		}
+	}
+	//-------------------------------------------------------------------
+	//数値からブロック破壊処理
+	void Object::Damage(const ML::Point pos_, int power)
+	{
+		int x = pos_.x;
+		int y = pos_.y;
+		if (this->arr[y][x].HP == '不')
+		{
+			this->eventSearch(y, x);
+			return;
+		}
 
+		if (this->arr[y][x].HP - power > 0) { this->arr[y][x].HP -= power; }
+		else if (this->arr[y][x].HP >= 0)
+		{
+			this->arr[y][x].HP -= power;
+
+			auto map = ge->GetTask<Map::Object>("本編", "マップ");
+			map->SetMapChip(y, x, 0);
+			this->eventSearch(y, x);
+		}
+	}
+	//-------------------------------------------------------------------
+	//
+	void Object::eventSearch(int y_, int x_)
+	{
+		//取得番号から該当処理を呼び出す
+		int eventNum = this->arr[y_][x_].event;
+		auto pos = ML::Vec2(x_ * 16, y_ * 16);
+		switch (eventNum)
+		{
+		case 0:
+			break;
 		case 6:
-			if (auto b = Stone::Object::Create(true)) {
-				b->pos = pos;
-			}
-			return 0;
+			Stone(pos);
 			break;
-
 		case 7:
-			if (auto b = Bedrock::Object::Create(true)) {
-				b->pos = pos;
-			}
-			return 7;	//破壊不可のため
+			Bedrock(pos);
 			break;
-
-		case 11:
-			if (auto b = IronOre::Object::Create(true)){
-				b->pos = pos;
-			}
-			return 0;
-			break;
-
 		default:
-			return 0;
 			break;
 		}
 	}
+	//-------------------------------------------------------------------
+	void Object::Stone(ML::Vec2 pos)
+	{
+		ge->CreateEffect(11, pos);
+		se::Play("crush");
+	}
+	void Object::Bedrock(ML::Vec2 pos)
+	{
+		se::Play("repelled");
+	}
 
+	//-------------------------------------------------------------------
+	// 過去の遺産
+	//int Object::CreatBlocks(const int inp, const ML::Vec2 pos)
+	//{
+	//	//取得番号からタスク生成
+	//		//破壊不可ブロックだった場合そのブロック番号のまま返す
+	//	switch (inp)
+	//	{
+	//	case 2:
+	//		if (auto b = Bedrock::Object::Create(true)) {
+	//			b->pos = pos;
+	//		}
+	//		return 2;
+	//
+	//	case 6:
+	//		if (auto b = Stone::Object::Create(true)) {
+	//			b->pos = pos;
+	//		}
+	//		return 0;
+	//		break;
+	//
+	//	case 7:
+	//		if (auto b = Bedrock::Object::Create(true)) {
+	//			b->pos = pos;
+	//		}
+	//		return 7;	//破壊不可のため
+	//		break;
+	//
+	//	case 10:
+	//		if ()
+	//			return 0;
+	//		break;
+	//	case 11:
+	//		if (auto b = IronOre::Object::Create(true)){
+	//			b->pos = pos;
+	//		}
+	//		return 0;
+	//		break;
+	//
+	//	default:
+	//		return 0;
+	//		break;
+	//	}
+	//}
+	
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

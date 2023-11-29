@@ -7,6 +7,13 @@
 
 namespace	Manager
 {
+	class BlockState
+	{
+	public:
+		int HP;
+		int MaxHP;
+		int event;
+	};
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName(	"Blocks");	//グループ名
 	const  string  defName(			"BManager");		//タスク名
@@ -49,6 +56,17 @@ namespace	Manager
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 			//追加したい変数・メソッドはここに追加する
 			//BCharaに含まれないモノのみここに追加する
-		static int CreatBlocks(const int inp,const ML::Vec2 pos);
+		void Damage(const ML::Point pos, int power);
+
+
+	private:
+		BlockState  arr[160][160];//yx
+
+		int* Choice[5];
+
+		void eventSearch(int y_, int x_);
+		void InitArray();
+		void Stone(ML::Vec2 pos);
+		void Bedrock(ML::Vec2 pos);
 	};
 }
