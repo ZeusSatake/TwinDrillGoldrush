@@ -182,7 +182,7 @@
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
-    <ClCompile Include="Source\Components\Timer.cpp" />
+    <ClCompile Include="Source\Components\TimerComponent.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
@@ -256,7 +256,7 @@
     <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\StatusComponent.h" />
-    <ClInclude Include="Source\Components\Timer.h" />
+    <ClInclude Include="Source\Components\TimerComponent.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />

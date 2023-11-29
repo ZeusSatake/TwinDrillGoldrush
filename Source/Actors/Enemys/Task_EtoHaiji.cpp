@@ -30,10 +30,10 @@ namespace EtoHaiji
 		this->res = Resource::Create();
 
 		//šƒf[ƒ^‰Šú‰»
-		box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
+		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32)*5);
+		gravity_->SetAcceleration(ML::Gravity(32)*10);
 
 		angle_LR_ = Angle_LR::Right;
 
