@@ -4,17 +4,14 @@
 //コンストラクタ
 //==============================================================
 SecondsTimerComponent::SecondsTimerComponent(GameObject* owner)
-	: 
-	Component((Actor*)owner),
-	nowCount_(0),
-	countSeconds_(0),
-	isActive_(false)
+	:
+	SecondsTimerComponent(owner, 0.0f)
 {
 };
-SecondsTimerComponent::SecondsTimerComponent(class GameObject* owner,const float count, const float countFrame)
+SecondsTimerComponent::SecondsTimerComponent(GameObject* owner, const float countFrame)
 	: 
 	Component((Actor*)owner),
-	nowCount_(count),
+	nowCount_(0.0f),
 	countSeconds_(countFrame)
 {
 	SetActive();
@@ -44,9 +41,7 @@ void SecondsTimerComponent::SetCountSeconds(const float countSeconds)
 	countSeconds_ = countSeconds;
 }
 
-//==============================================================
-//イベント
-//==============================================================
+//タイマー起動
 void SecondsTimerComponent::Start()
 {
 	if (countSeconds_ <= 0)
@@ -55,6 +50,7 @@ void SecondsTimerComponent::Start()
 	nowCount_ = countSeconds_;
 	isActive_ = true;
 }
+
 void SecondsTimerComponent::Update()
 {
 	if (IsActive() == false)
