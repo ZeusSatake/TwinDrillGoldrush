@@ -5,6 +5,7 @@
 
 class Player :public Character
 {
+	ML::Vec2 moveVec;
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
@@ -18,6 +19,7 @@ public:
 	
 	void Think()override;
 	void Move()override;
+	void ResetCnt();
 
 	//ƒ¿”Å‚ÉŠÔ‚É‡‚í‚¹‚é‚½‚ß‚ÌÚ’n”»’è
 	bool CheckFoot();
@@ -25,5 +27,5 @@ public:
 	void CheckMove(ML::Vec2& e_);
 
 	ML::Vec2 GetPos();
-	ML::Vec2 Gravity();
+	ML::Vec2 GetMoveVec();
 };

@@ -5,6 +5,7 @@
 #include  "Task_EnemyMap.h"
 #include  "../Components/Blocks/Task_Stone.h"
 #include  "../Components/Blocks/BlockManager.h"
+#include "../Actors/Enemys/Task_EtoHaiji.h"
 
 
 namespace  EnemyMap
@@ -112,9 +113,9 @@ namespace  EnemyMap
 				{
 				case 1:
 				{
-					/*auto enemy = Enemy01::Object::Create(true);
-					enemy->pos.x = x * chipSize;
-					enemy->pos.y = y * chipSize;*/
+					auto enemy = EtoHaiji::Object::Create(true);
+					enemy->pos_.x = x * chipSize;
+					enemy->pos_.y = y * chipSize;
 				}
 				break;
 

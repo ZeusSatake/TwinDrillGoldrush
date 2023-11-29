@@ -6,6 +6,8 @@
 #include "../../GameEngine_Ver3_83.h"
 #include "../../Scene.h"
 
+namespace player { class Object; }
+class PriceTagComponent;
 namespace ShopScene
 {
 	//タスクに割り当てるグループ名と固有名
@@ -45,6 +47,11 @@ namespace ShopScene
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	
+		shared_ptr<player::Object> player_;
+
+		shared_ptr<PriceTagComponent> priceTag_Iron;
+		shared_ptr<PriceTagComponent> priceTag_Bronze;
+		shared_ptr<PriceTagComponent> priceTag_Gold;
 	public:
 
 	};

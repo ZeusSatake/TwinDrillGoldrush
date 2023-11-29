@@ -3,6 +3,8 @@
 #include "Source/Scene/Task_Map.h"
 
 Player::Player()
+	:
+	moveVec(ML::Vec2{0,0})
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -82,6 +84,12 @@ void Player::CheckMove(ML::Vec2& e_)
 	}
 }
 
+void Player::ResetCnt()
+{
+	this->moveCnt_ = 0;
+	state_->UpdateNowState(pState);
+}
+
 void Player::Think()
 {
 	auto inp = controller_->gamePad_->GetState();
@@ -90,11 +98,12 @@ void Player::Think()
 	case StateComponent::State::Non:
 		break;
 	case StateComponent::State::Idle:
-		if (true) { pState = StateComponent::State::Walk; }
+		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
+		if (inp.B1.down) { pState = StateComponent::State::Jump; }
 		break;
 	case StateComponent::State::Walk:
 		if (inp.B1.down) { pState = StateComponent::State::Jump; }
-		if (!CheckFoot()) { pState = StateComponent::State::Fall; }
+		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
 		break;
@@ -107,7 +116,8 @@ void Player::Think()
 	case StateComponent::State::Dead:
 		break;
 	case StateComponent::State::Jump:
-		if (CheckHead()) { pState = StateComponent::State::Fall; }
+		if (this->moveVec.y > 0 || CheckHead()
+			||!CheckFoot()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Fall:
 		if (CheckFoot()) { pState = StateComponent::State::Idle; }
@@ -121,12 +131,11 @@ void Player::Think()
 	case StateComponent::State::Appeal:
 		break;
 	}
-	state_->UpdateNowState(pState);
+	this->ResetCnt();
 }
 
 void Player::Move()
 {
-	ML::Vec2 preVec{0,0};
 	auto inp = this->controller_->gamePad_->GetState();
 
 	//if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
@@ -136,7 +145,14 @@ void Player::Move()
 	//		preVec.x += 1;
 	//	}
 	//}
-
+	if (this->moveVec.y<0||!CheckHead()||!CheckFoot())
+	{
+		this->moveVec.y = min(this->moveVec.y+ML::Gravity(35)*5+(moveCnt_/10), 25.f);
+	}
+	else
+	{
+		this->moveVec.y = 0;
+	}
 
 	switch (state_->GetNowState())
 	{
@@ -150,8 +166,7 @@ void Player::Move()
 		if (inp.LStick.BD.on) { preVec.y += 3; }
 		if (inp.LStick.BR.on) { preVec.x += 3; }
 		if (inp.LStick.BL.on) { preVec.x -= 3; }*/
-		preVec+=controller_->GetLStickVec();
-		
+		moveVec.x=controller_->GetLStickVec().x;
 		break;
 	case StateComponent::State::Attack:
 		break;
@@ -164,12 +179,12 @@ void Player::Move()
 	case StateComponent::State::Dead:
 		break;
 	case StateComponent::State::Jump:
-		preVec += controller_->GetLStickVec();
-		preVec.y -= 5;
+		moveVec.x = controller_->GetLStickVec().x;
+		moveVec.y = -25.f + (this->moveCnt_/10);
 		break;
 	case StateComponent::State::Fall:
-		preVec += controller_->GetLStickVec();
-		preVec.y += 5;
+		moveVec.x = controller_->GetLStickVec().x;
+		
 		break;
 	case StateComponent::State::Dash:
 		break;
@@ -182,10 +197,15 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
-	CheckMove(preVec);
+	CheckMove(moveVec);
 }
 
 ML::Vec2 Player::GetPos()
 {
 	return this->pos_;
+}
+
+ML::Vec2 Player::GetMoveVec()
+{
+	return this->moveVec;
 }

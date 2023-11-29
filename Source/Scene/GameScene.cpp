@@ -89,11 +89,11 @@ namespace  GameScene
 			mapore->Load("MapJewelry");
 			mapore->render2D_Priority[1] = 0.85f;
 		}
-		//{//敵
-		//	auto enemymap = EnemyMap::Object::Create(true);
-		//	enemymap->Load("MapEnemy");
-		//	enemymap->SetEnemy();
-		//}
+		{//敵
+			auto enemymap = EnemyMap::Object::Create(true);
+			enemymap->Load("MapEnemy");
+			enemymap->SetEnemy();
+		}
 
 		{//拠点に戻るボタン(デバッグ用
 			auto gotoBaseButton = SceneChangeButton::Object::Create(true);

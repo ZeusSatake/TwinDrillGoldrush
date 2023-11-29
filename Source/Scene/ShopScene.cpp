@@ -4,6 +4,9 @@
 #include  "../../MyPG.h"
 #include  "ShopScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../Actors/Task_Player.h"
+#include  "../Components/Money/WalletComponent.h"
+#include  "../Components/Money/PriceTagComponent.h"
 
 namespace ShopScene
 {
@@ -39,6 +42,19 @@ namespace ShopScene
 		gotoBaseButton->SetText("拠点へ");
 		AddSceneChangeButton(gotoBaseButton);
 
+		AddComponent(priceTag_Iron = make_shared<PriceTagComponent>(this));
+		priceTag_Iron->Set("鉄鉱石", 15);
+
+		AddComponent(priceTag_Bronze = make_shared<PriceTagComponent>(this));
+		priceTag_Bronze->Set("銅鉱石", 8);
+
+		AddComponent(priceTag_Gold = make_shared<PriceTagComponent>(this));
+		priceTag_Gold->Set("金鉱石", 100);
+
+		player_ = player::Object::Create(true);
+		player_->pos_ = ML::Vec2(-200, -200);
+		//player_->wallet_->Recieve(150);
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -60,12 +76,22 @@ namespace ShopScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "ショップ");
+		//ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y, 500, 500), "残高" + to_string(player_->wallet_->GetBalance()));
+
+		{
+			string param = "";
+			param += priceTag_Iron->GetName() + "：" + to_string(priceTag_Iron->CalcTotalPrice(1)) + "\n";
+			param += priceTag_Bronze->GetName() + "：" + to_string(priceTag_Bronze->CalcTotalPrice(1)) + "\n";
+			param += priceTag_Gold->GetName() + "：" + to_string(priceTag_Gold->CalcTotalPrice(1)) + "\n";
+			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 300, ge->screenCenterPos.y, 500, 500), param);
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

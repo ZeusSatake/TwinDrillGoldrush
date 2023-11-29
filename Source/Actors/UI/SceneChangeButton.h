@@ -52,6 +52,19 @@ namespace SceneChangeButton
 		Scene::Kind nextScene_;
 
 	public:
+		struct SetInfo
+		{
+			string		  text;
+			Scene*		  nowScene;
+			Scene::Kind	  nextScene;
+			XI::Mouse::MB mouseEnterButton;
+			XI::VGP		  gamePadEnterButton;
+			const Actor* selectorPtr;
+		};
+
+		void Set(const string& text,Scene* nowScene, const Scene::Kind nextScene, const XI::Mouse::MB mouseEnterButton, const XI::VGP gamePadEnterButton, const Actor* selectorPtr);
+		void Set(const SetInfo& setInfo);
+
 		void SetScene(Scene* nowScene, const Scene::Kind& nextScene);
 
 		void OnEvent() override;
