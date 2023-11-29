@@ -10,7 +10,7 @@ StateComponent::StateComponent(Actor* owner)
 
 void StateComponent::UpdateNowState(State state)
 {
-	if (this->nowState == state)return;
+	if (this->preState == state)return;
 	this->preState = this->nowState;
 	this->nowState = state;
 }
