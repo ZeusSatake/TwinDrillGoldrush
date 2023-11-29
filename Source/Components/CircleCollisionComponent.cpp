@@ -18,7 +18,7 @@ float CircleCollisionComponent::getRadius() const
 
 const ML::Vec2& CircleCollisionComponent::getCenter() const
 {
-	return owner_->pos_;
+	return owner_->GetPos();
 }
 
 bool CircleCollisionComponent::Intersect(const CircleCollisionComponent& other) const

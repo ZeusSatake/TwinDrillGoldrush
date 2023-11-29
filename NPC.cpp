@@ -26,7 +26,7 @@ bool NPC::CheckFront() const
 		front.Offset(box_->getHitBase().w, 0);//‰E‘¤
 	}
 	//Œ»ÝˆÊ’u‚É‡‚í‚¹‚é
-	front.Offset((int)pos_.x, (int)pos_.y);
+	front.Offset((int)GetPos().x, (int)GetPos().y);
 	auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
 	if (nullptr == map) { return false; }
 	return map->CheckHit(front);
@@ -51,7 +51,7 @@ bool NPC::CheckFrontFoot() const
 		front.Offset(box_->getHitBase().w, 0);//‰E‘¤
 	}
 	//‘«Œ³‚É‡‚í‚¹‚é
-	front.Offset((int)pos_.x, (int)pos_.y + box_->getHitBase().h);
+	front.Offset((int)GetPos().x, (int)GetPos().y + box_->getHitBase().h);
 	auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
 	if (nullptr == map) { return false; }
 	return map->CheckHit(front);

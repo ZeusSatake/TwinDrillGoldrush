@@ -33,7 +33,7 @@ bool Character::CheckFoot() const
 		box_->getHitBase().w,
 		1
 	};
-	foot.Offset(pos_);
+	foot.Offset(GetPos());
 
 	auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
 	if (map == nullptr)

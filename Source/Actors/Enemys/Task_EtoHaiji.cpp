@@ -67,7 +67,7 @@ namespace EtoHaiji
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = box_->getHitBase().OffsetCopy(pos_);
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
 		ML::Box2D src;
 		if (angle_LR_ == Angle_LR::Left)
 		src=ML::Box2D(0, 0, 960, 895);

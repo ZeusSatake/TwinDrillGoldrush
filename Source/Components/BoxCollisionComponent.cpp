@@ -18,7 +18,7 @@ T* BoxCollisionComponent::CheckHitObject(const ML::Box2D& hit) const
 }
 bool BoxCollisionComponent::CheckHit(const ML::Box2D& hit) const
 {
-	ML::Box2D me = hitBase_.OffsetCopy(owner_->pos_);
+	ML::Box2D me = hitBase_.OffsetCopy(owner_->GetPos());
 	return me.Hit(hit);
 }
 ML::Box2D BoxCollisionComponent::getHitBase() const

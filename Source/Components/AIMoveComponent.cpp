@@ -21,7 +21,7 @@ void AIMoveComponent::Update()
 
 void AIMoveComponent::MoveTo(class Actor* target)
 {
-	ML::Vec2 toVec = target->pos_ - owner_->pos_;
+	ML::Vec2 toVec = target->GetPos() - owner_->GetPos();
 
 	float angle = atan2(-toVec.y, toVec.x);
 	owner_->angle_ = angle;
