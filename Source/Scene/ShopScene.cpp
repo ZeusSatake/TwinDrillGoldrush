@@ -52,7 +52,7 @@ namespace ShopScene
 		priceTag_Gold->Set("‹àzÎ", 100);
 
 		player_ = player::Object::Create(true);
-		player_->pos_ = ML::Vec2(-200, -200);
+		player_->SetPos(ML::Vec2(-200, -200));
 		//player_->wallet_->Recieve(150);
 
 		return  true;

@@ -156,7 +156,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PushButton.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="PushButton.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
