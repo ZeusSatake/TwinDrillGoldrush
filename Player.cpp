@@ -10,10 +10,6 @@ Player::Player()
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
 }
 
-void Player::PlayerMove(ML::Vec2 vec)
-{
-	this->pos_ += vec;
-}
 
 
 bool Player::CheckFoot()
@@ -26,7 +22,7 @@ bool Player::CheckFoot()
 	};
 	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
 	{
-		if (map->CheckHit(footBox.OffsetCopy(this->pos_)))
+		if (map->CheckHit(footBox.OffsetCopy(this->GetPos())))
 		{
 			return true;
 		}
@@ -44,7 +40,7 @@ bool Player::CheckHead()
 	};
 	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
 	{
-		if (map->CheckHit(headBox.OffsetCopy(this->pos_)))
+		if (map->CheckHit(headBox.OffsetCopy(this->GetPos())))
 		{
 			return true;
 		}
@@ -60,29 +56,30 @@ void Player::CheckMove(ML::Vec2& e_)
 
 	//横軸に対する移動
 	while (e_.x != 0) {
-		float  preX = this->pos_.x;
-		if (e_.x >= 1) { this->pos_.x += 1;		e_.x -= 1; }
-		else if (e_.x <= -1) { this->pos_.x -= 1;		e_.x += 1; }
-		else { this->pos_.x += e_.x;		e_.x = 0; }
-		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->pos_);
+		float  preX = this->GetPos().x;
+		if (e_.x >= 1) { this->SetPosX(1);		e_.x -= 1; }
+		else if (e_.x <= -1) { this->SetPosX(-1);		e_.x += 1; }
+		else { this->SetPosX(e_.x);		e_.x = 0; }
+		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
-			this->pos_.x = preX;		//移動をキャンセル
+			this->SetPosX(preX);		//移動をキャンセル
 			break;
 		}
 	}
 	//縦軸に対する移動
 	while (e_.y != 0) {
-		float  preY = this->pos_.y;
-		if (e_.y >= 1) { this->pos_.y += 1;		e_.y -= 1; }
-		else if (e_.y <= -1) { this->pos_.y -= 1;		e_.y += 1; }
-		else { this->pos_.y += e_.y;		e_.y = 0; }
-		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->pos_);
+		float  preY = this->GetPos().y;
+		if (e_.y >= 1) { this->SetPosY(1);		e_.y -= 1; }
+		else if (e_.y <= -1) { this->SetPosY(-1);		e_.y += 1; }
+		else { this->SetPosY(e_.y);		e_.y = 0; }
+		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
-			this->pos_.y = preY;		//移動をキャンセル
+			this->SetPosY(preY);		//移動をキャンセル
 			break;
 		}
 	}
 }
+
 
 void Player::ResetCnt()
 {
@@ -200,10 +197,6 @@ void Player::Move()
 	CheckMove(moveVec);
 }
 
-ML::Vec2 Player::GetPos()
-{
-	return this->pos_;
-}
 
 ML::Vec2 Player::GetMoveVec()
 {

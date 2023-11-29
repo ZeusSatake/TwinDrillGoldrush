@@ -13,7 +13,6 @@ public:
 	Player();
 	virtual ~Player() {}; 
 	
-	void PlayerMove(ML::Vec2 vec);//ベクトルを入れるとその分プレイヤーを動かす
 
 	StateComponent::State pState;
 	
@@ -26,6 +25,5 @@ public:
 	bool CheckHead();
 	void CheckMove(ML::Vec2& e_);
 
-	ML::Vec2 GetPos();
 	ML::Vec2 GetMoveVec();
 };

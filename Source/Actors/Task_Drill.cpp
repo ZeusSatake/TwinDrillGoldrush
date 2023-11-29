@@ -55,8 +55,8 @@ namespace  drill
 	void  Object::UpDate()
 	{
 		this->angle_ = ML::ToRadian(this->UpdateDrillAngle());
-		this->pos_.x += cos(this->UpdateDrillAngle()) * 15.f;
-		this->pos_.y += sin(this->UpdateDrillAngle()) * 15.0f;
+		this->SetPosX(this->GetPos().x+ cos(this->UpdateDrillAngle()) * 15.f);
+		this->SetPosY(this->GetPos().y + sin(this->UpdateDrillAngle()) * 15.0f);
 		this->dState = this->state_->GetNowState();
 		this->Think();
 		this->Move();
@@ -65,7 +65,7 @@ namespace  drill
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
+		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
 		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
 		//スクロール対応
