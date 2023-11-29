@@ -55,16 +55,17 @@ namespace Camera
 	{
 		if (auto tg = this->target.lock())
 		{
-			ML::Vec2 toVec = tg->pos_ - this->pos_;
-			this->pos_ += toVec;
+			ML::Vec2 toVec = tg->GetPos() - this->GetPos();
+			this->SetPos(toVec);
+			//this->pos_ += toVec;
 		}
 		if(horizontalScroll==false)
 		{//ƒJƒƒ‰‚ÌˆÊ’u’²®
 			int px = ge->camera2D.w / 2;
 			int py = ge->camera2D.h / 2;
 
-			int cpx = int(this->pos_.x) - px;
-			int cpy = int(this->pos_.y) - py;
+			int cpx = int(this->GetPos().x) - px;
+			int cpy = int(this->GetPos().y) - py;
 
 			ge->camera2D.x = cpx;
 			ge->camera2D.y = cpy;
@@ -78,7 +79,7 @@ namespace Camera
 			int px = ge->camera2D.w / 2;
 			int py = 0;
 
-			int cpx = int(this->pos_.x) - px;
+			int cpx = int(this->GetPos().x) - px;
 			int cpy = py;
 
 			ge->camera2D.x = cpx;

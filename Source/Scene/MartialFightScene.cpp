@@ -43,7 +43,7 @@ namespace MartialFightScene
 			auto player = player::Object::Create(true);
 			auto camera = Camera::Object::Create(true);
 			camera->horizontalScroll=true;
-			camera->pos_ = player->pos_;
+			camera->SetPos(player->GetPos());
 			camera->target = player;
 		}
 		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
