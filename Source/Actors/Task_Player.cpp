@@ -77,9 +77,9 @@ namespace player
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, src);
-			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+			//ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
 		}
-		if (this->CheckHead())
+		/*if (this->CheckHead())
 			ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "頭判定！");
 		if (this->CheckFoot())
 			ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "足判定！");
@@ -88,7 +88,7 @@ namespace player
 		if (StateComponent::State::Jump == this->state_->GetNowState())
 		{
 			ge->debugFont->Draw(ML::Box2D(1000, 430, 500, 500), "ジャンプ！");
-		}
+		}*/
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
