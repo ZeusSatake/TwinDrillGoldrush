@@ -156,6 +156,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PushButton.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp" />
     <ClCompile Include="Source\Components\Money\WalletComponent.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
+    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\Timer.cpp" />
@@ -228,6 +230,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PushButton.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
@@ -252,6 +255,7 @@
     <ClInclude Include="Source\Components\Money\PriceTagComponent.h" />
     <ClInclude Include="Source\Components\Money\WalletComponent.h" />
     <ClInclude Include="Source\Components\Movement.h" />
+    <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\Timer.h" />
