@@ -71,7 +71,7 @@ namespace  drill
 		//ƒXƒNƒ[ƒ‹‘Î‰ž
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
-		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
+		//ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
 		
 	}
 	//šššššššššššššššššššššššššššššššššššššššššš
