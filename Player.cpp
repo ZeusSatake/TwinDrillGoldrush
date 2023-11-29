@@ -53,31 +53,34 @@ void Player::CheckMove(ML::Vec2& e_)
 	//マップが存在するか調べてからアクセス
 	auto   map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
 	if (nullptr == map) { return; }//マップが無ければ判定しない(出来ない）
-
+	ML::Vec2 preVec{ 0,0 };
 	//横軸に対する移動
 	while (e_.x != 0) {
 		float  preX = this->GetPos().x;
-		if (e_.x >= 1) { this->SetPosX(1);		e_.x -= 1; }
-		else if (e_.x <= -1) { this->SetPosX(-1);		e_.x += 1; }
-		else { this->SetPosX(e_.x);		e_.x = 0; }
+		if (e_.x >= 1) { SetPosX(GetPos().x +1);	e_.x -= 1; }
+		else if (e_.x <= -1) { SetPosX(GetPos().x - 1);		e_.x += 1; }
+		else {SetPosX(GetPos().x + e_.x);		e_.x = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
-			this->SetPosX(preX);		//移動をキャンセル
+			SetPosX(preX);
+					//移動をキャンセル
 			break;
 		}
 	}
 	//縦軸に対する移動
 	while (e_.y != 0) {
 		float  preY = this->GetPos().y;
-		if (e_.y >= 1) { this->SetPosY(1);		e_.y -= 1; }
-		else if (e_.y <= -1) { this->SetPosY(-1);		e_.y += 1; }
-		else { this->SetPosY(e_.y);		e_.y = 0; }
+		if (e_.y >= 1) {SetPosY(GetPos().y + 1);		e_.y -= 1; }
+		else if (e_.y <= -1) { SetPosY(GetPos().y -1);		e_.y += 1; }
+		else { SetPosY( GetPos().y + e_.y);		e_.y = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
-			this->SetPosY(preY);		//移動をキャンセル
+			this->SetPosY(preY);
+					//移動をキャンセル
 			break;
 		}
 	}
+	
 }
 
 
