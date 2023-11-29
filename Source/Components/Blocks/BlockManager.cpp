@@ -80,8 +80,8 @@ namespace	Manager
 					this->arr[y][x].HP = 1;
 					break;
 				case 2:
-					this->arr[y][x].MaxHP = '不';
-					this->arr[y][x].HP = '不';
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
 				case 3:
@@ -94,8 +94,8 @@ namespace	Manager
 					this->arr[y][x].event = 6;
 					break;
 				case 7:
-					this->arr[y][x].MaxHP = '不';
-					this->arr[y][x].HP = '不';
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
 				case 10:
@@ -107,6 +107,10 @@ namespace	Manager
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					break;
+				case 27:
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
+					break;
 				}
 			}
 		}
@@ -117,7 +121,7 @@ namespace	Manager
 	{
 		int x = pos_.x;
 		int y = pos_.y;
-		if (this->arr[y][x].HP == '不')
+		if (this->arr[y][x].HP < 0)
 		{
 			this->eventSearch(y, x);
 			return;

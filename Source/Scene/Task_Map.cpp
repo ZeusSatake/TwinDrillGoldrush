@@ -151,6 +151,10 @@ namespace  Map
 			}
 		}
 		ifs.close();
+
+		auto Bm = Manager::Object::Create(true);
+		Bm->LoadSe();
+
 		return true;
 	}
 	//-----------------------------------------------------------
