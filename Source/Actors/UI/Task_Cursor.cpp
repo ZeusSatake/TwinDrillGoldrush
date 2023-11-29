@@ -33,7 +33,7 @@ namespace Cursor
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->pos_ = ge->screenCenterPos;
+		this->SetPos(ge->screenCenterPos);
 
 		AddComponent(movement_ = make_shared<Movement>(this));
 		//パラメータの設定
@@ -71,28 +71,13 @@ namespace Cursor
 	void  Object::UpDate()
 	{
 		movement_->LStickInputToMove(ge->in1);
-		
-		{//ボタンとのあたり判定 重なっているものを選択状態にする
-			//auto mouse = ge->mouse->GetState();
-
-			//auto buttons = ge->GetTasks<ToggleButton>("UI", "Button");
-			//const ML::Box2D& myBox = this->box_->getHitBase().OffsetCopy(this->pos_);
-			//for (auto& button : *buttons)
-			//{
-			//	if (button->CheckHit(ML::Box2D(mouse.pos.x, mouse.pos.y, 1, 1)) ||
-			//		button->CheckHit(myBox))
-			//		button->SetSelected(true);
-			//	else
-			//		button->SetSelected(false);
-			//}
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ML::Box2D src(0, 0, 56, 56);
-		res->image_->Draw(box_->getHitBase().OffsetCopy(this->pos_), src);
+		res->image_->Draw(box_->getHitBase().OffsetCopy(this->GetPos()), src);
 	}
 
 	void Object::SetEnterButton(const XI::VGP enterButton)

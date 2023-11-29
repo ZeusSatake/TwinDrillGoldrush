@@ -43,7 +43,7 @@ bool ToggleButton::CanSelectedIsOn()
 	//選択状態を変更するアクター(カーソル等)
 	for (auto& selector : selectors_)
 	{
-		if (selector->CheckHit(box_->getHitBase().OffsetCopy(pos_)))
+		if (selector->CheckHit(box_->getHitBase().OffsetCopy(GetPos())))
 			return true;
 	}
 
@@ -132,7 +132,7 @@ void ToggleButton::Drawtext(const DG::Font::SP& font, const bool drawState)
 	msg += drawState ?
 		"\n" + stateText_ :
 		"";
-	font->Draw(ML::Box2D(pos_.x, pos_.y, 600, 600), msg, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+	font->Draw(ML::Box2D(GetPos().x, GetPos().y, 600, 600), msg, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 }
 
 void ToggleButton::SetMouse(const shared_ptr<XI::Mouse> mouse)

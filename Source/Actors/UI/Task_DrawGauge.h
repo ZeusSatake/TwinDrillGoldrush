@@ -50,8 +50,9 @@ namespace DrawGauge
 		ML::Percentage gaugeValue_;
 
 		bool isMaxCharge;
+
+		ML::Vec2 pos_;
 	public:
-		ML::Vec2 pos;
 
 		void Set(const int max, const string& path);
 		void Set(const ML::Percentage& value);
