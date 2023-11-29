@@ -145,7 +145,8 @@ bool Debtor::HitPlayer()
 	if (CheckHit(GetTarget()->GetBox()->getHitBase()))
 	{
 		//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚Ìˆ—
-
+		static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
+		this->Kill();
 		return true;
 	}
 	return false;

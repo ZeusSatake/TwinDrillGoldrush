@@ -10,6 +10,7 @@ Character::Character()
 	AddComponent(movement_ = shared_ptr<Movement>(new Movement(this)));
 	AddComponent(gravity_ = shared_ptr<Movement>(new Movement(this)));
 	AddComponent(animManager_ = shared_ptr<AnimManager>(new AnimManager(this,0)));
+	AddComponent(unHitTimer_ = shared_ptr<Timer>(new Timer(this)));
 }
 
 void Character::Think()
