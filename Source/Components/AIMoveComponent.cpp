@@ -32,19 +32,27 @@ void AIMoveComponent::MoveTo(class Actor* target)
 
 void AIMoveComponent::Patroll(class Actor* target)
 {
-	if (!static_cast<NPC*>(owner_)->CheckFrontFoot())
+	if (static_cast<Character*>(owner_)->CheckFoot())
 	{
 		if (owner_->angle_LR_ == Actor::Angle_LR::Left)
 		{
-			owner_->angle_LR_ = Actor::Angle_LR::Right;
-			//static_cast<Character*>(owner_)->GetMovement()->SetMoveVecX(abs(static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().x));
+			owner_->SetMoveVecX(-1);
 		}
 		else
 		{
-			owner_->angle_LR_ = Actor::Angle_LR::Left;
-			//static_cast<Character*>(owner_)->GetMovement()->SetMoveVecX(-abs(static_cast<Character*>(owner_)->GetMovement()->GetMoveVec().x));
+			owner_->SetMoveVecX(1);
 		}
-		
+		if (static_cast<NPC*>(owner_)->CheckFront()||!static_cast<NPC*>(owner_)->CheckFrontFoot())
+		{
+			if (owner_->angle_LR_ == Actor::Angle_LR::Left)
+			{
+				owner_->angle_LR_ = Actor::Angle_LR::Right;
+			}
+			else
+			{
+				owner_->angle_LR_ = Actor::Angle_LR::Left;
+			}
+		}
 	}
 }
 

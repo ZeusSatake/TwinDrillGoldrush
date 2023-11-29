@@ -16,20 +16,23 @@ public:
 		Patrol, //„‰ñ
 		Approach, //Ú‹ß
 		Jump, //’µ–ô
+		Fall,//—‰º
 		Attack,//UŒ‚
 		Guard,//–hŒä
 		Dodge,//‰ñ”ğ
 		Damage,//”íŒ‚
 		Dead,//€–S
 	};
+private:
 	AIState preState_;
 	AIState nowState_;
-
+public:
 	virtual void Think();
 	virtual void Move();
 	virtual void UpDatePatrol();
 	virtual void UpDateApproach();
 	virtual void UpDateJump();
+	virtual void UpDateFall();
 	virtual void UpDateAttack();
 	virtual void UpDateGuard();
 	virtual void UpDateDodge();

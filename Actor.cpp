@@ -119,6 +119,26 @@ void Actor::CheckMove(ML::Vec2& est)
 	}
 }
 
+ML::Vec2 Actor::GetMoveVec() const
+{
+	return moveVec_;
+}
+
+void Actor::SetMoveVec(const ML::Vec2 moveVec)
+{
+	moveVec_ = moveVec;
+}
+
+void Actor::SetMoveVecX(const float moveX)
+{
+	moveVec_.x = moveX;
+}
+
+void Actor::SetMoveVecY(const float moveY)
+{
+	moveVec_.y = moveY;
+}
+
 BoxCollisionComponent* Actor::GetBox() const
 {
 	return box_.get();

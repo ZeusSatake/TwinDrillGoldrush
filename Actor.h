@@ -11,6 +11,7 @@
 
 class Actor : public GameObject
 {	
+	ML::Vec2 moveVec_;
 public:
 	typedef shared_ptr<Actor> SP;
 	typedef weak_ptr<Actor>	WP;
@@ -38,6 +39,13 @@ public:
 public:
 	bool OutOfScreen() const;
 
+	ML::Vec2 GetMoveVec() const;
+
+	void SetMoveVecX(const float moveX);
+
+	void SetMoveVecY(const float moveY);
+
+	void SetMoveVec(const ML::Vec2 moveVec);
 
 	//‚ ‚½‚è”»’è
 	bool CheckHit(const ML::Box2D& hit) const;

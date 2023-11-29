@@ -2,8 +2,8 @@
 
 Debtor::Debtor()
 	:Enemy()
-	,preState_(AIState::Idle)
-	,nowState_(AIState::Idle)
+	,preState_(AIState::Patrol)
+	,nowState_(AIState::Patrol)
 {
 	movement_->SetConsiderationCollition(true);
 	gravity_->SetConsiderationCollition(true);
@@ -15,29 +15,29 @@ void Debtor::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (OutOfScreen())
+		if (!OutOfScreen())
 			afterState = AIState::Patrol;
 		break;
-	case AIState::Patrol:
-		if (GetDistance() <= GetFov())
-			afterState = AIState::Approach;
-		break;
-	case AIState::Approach:
-		if (GetDistance() <= GetRange())
-		{
-			afterState = AIState::Attack;
-		}
-		else if (GetDistance() > GetFov())
-		{
-			afterState = AIState::Patrol;
-		}
-		break;
-	case AIState::Attack:
-		//射程外に出たら接近に切り替え
-		if (GetDistance() > GetRange())
-		{
-			afterState = AIState::Approach;
-		}
+	//case AIState::Patrol:
+	//	if (GetDistance() <= GetFov())
+	//		afterState = AIState::Approach;
+	//	break;
+	//case AIState::Approach:
+	//	if (GetDistance() <= GetRange())
+	//	{
+	//		afterState = AIState::Attack;
+	//	}
+	//	else if (GetDistance() > GetFov())
+	//	{
+	//		afterState = AIState::Patrol;
+	//	}
+	//	break;
+	//case AIState::Attack:
+	//	//射程外に出たら接近に切り替え
+	//	if (GetDistance() > GetRange())
+	//	{
+	//		afterState = AIState::Approach;
+	//	}
 
 	}
 	UpDateState(afterState);
@@ -45,9 +45,8 @@ void Debtor::Think()
 
 void Debtor::Move()
 {
-	ML::Vec2 moveVec;
+	ML::Vec2 est;
 
-	moveVec.x++;
 	//重力加速
 	if (!CheckFoot() || GetGravity()->GetVelocity().y)
 	{
@@ -56,8 +55,8 @@ void Debtor::Move()
 	}
 	else
 	{
-		moveVec.y = 0.0f;
-		gravity_->Stop();
+		SetMoveVecY(0.f);
+		//gravity_->Stop();
 	}
 
 	switch (nowState_)
@@ -80,12 +79,13 @@ void Debtor::Move()
 		UpDateDead();
 		break;
 	}
-	CheckMove(moveVec);
+	est = GetMoveVec();
+	CheckMove(est);
 }
 
 void Debtor::UpDatePatrol()
 {
-
+	AIMove_->Patroll(GetTarget());
 }
 
 void Debtor::UpDateApproach()
@@ -94,6 +94,11 @@ void Debtor::UpDateApproach()
 }
 
 void Debtor::UpDateJump()
+{
+
+}
+
+void Debtor::UpDateFall()
 {
 
 }
