@@ -31,7 +31,7 @@ namespace Camera
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		this->horizontalScroll = false;
 		//★タスクの生成
 
 		return  true;
@@ -58,6 +58,7 @@ namespace Camera
 			ML::Vec2 toVec = tg->pos_ - this->pos_;
 			this->pos_ += toVec;
 		}
+		if(horizontalScroll==false)
 		{//カメラの位置調整
 			int px = ge->camera2D.w / 2;
 			int py = ge->camera2D.h / 2;
@@ -68,6 +69,21 @@ namespace Camera
 			ge->camera2D.x = cpx;
 			ge->camera2D.y = cpy;
 			if (auto map = ge->GetTask<Map::Object>("本編","マップ"))
+			{
+				map->AdjustCameraPos();
+			}
+		}
+		else
+		{
+			int px = ge->camera2D.w / 2;
+			int py = 0;
+
+			int cpx = int(this->pos_.x) - px;
+			int cpy = py;
+
+			ge->camera2D.x = cpx;
+			ge->camera2D.y = cpy;
+			if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
 			{
 				map->AdjustCameraPos();
 			}

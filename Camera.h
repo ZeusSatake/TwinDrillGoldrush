@@ -51,5 +51,6 @@ namespace Camera
 		//追加したい変数・メソッドはここに追加する
 		//BCharaに含まれないモノのみここに追加する
 		weak_ptr<Player> target;
+		bool horizontalScroll;
 	};
 }
