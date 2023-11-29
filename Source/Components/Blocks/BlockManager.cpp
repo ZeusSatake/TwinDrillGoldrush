@@ -203,7 +203,7 @@ namespace	Manager
 		}
 
 		auto ep = ML::Vec2(x * 16, y * 16);
-		ge->CreateEffect(11, ep);
+		ge->CreateEffect(11, ep, 6);
 		se::Play("crush");
 	}
 
