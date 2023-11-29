@@ -32,7 +32,7 @@ namespace DrawGauge
 
 		//★データ初期化
 		this->render2D_Priority[1] = 0.05f;
-		pos = ML::Vec2(0, 0);
+		pos_ = ML::Vec2(0, 0);
 
 		//★タスクの生成
 
@@ -67,7 +67,7 @@ namespace DrawGauge
 		ML::Box2D backDraw(-48, -16, 96, 32);
 		ML::Box2D backSrc(0, 0, 96, 32);
 
-		res->img->Draw(backDraw.OffsetCopy(pos), backSrc);
+		res->img->Draw(backDraw.OffsetCopy(pos_), backSrc);
 
 		//中身
 		ML::Box2D insideDraw(backDraw);
@@ -79,7 +79,7 @@ namespace DrawGauge
 		if (isMaxCharge)
 			insideSrc.y = 64;
 
-		res->img->Draw(insideDraw.OffsetCopy(pos), insideSrc);
+		res->img->Draw(insideDraw.OffsetCopy(pos_), insideSrc);
 	}
 
 	//===================================================================

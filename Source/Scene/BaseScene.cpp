@@ -40,7 +40,7 @@ namespace BaseScene
 
 		{//シーン遷移ボタン, カーソル作成
 			auto cursor = Cursor::Object::Create(true);
-			cursor->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y + 80);
+			cursor->SetPos(ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y + 80));
 			cursor->SetEnterButton(XI::VGP::ST);
 
 			XI::Mouse::MB mouseEnterButton = XI::Mouse::MB::LB;
@@ -87,9 +87,10 @@ namespace BaseScene
 				button->Set(buttonInfo);
 				int buttonMargin = 10;
 				float startX = ge->screenCenterPos.x - (buttonInfos.size() * 0.5f) * (button->GetBox()->getHitBase().w + buttonMargin) + button->GetBox()->getHitBase().w * 0.5f;
-				button->pos_ = ML::Vec2(
+				button->SetPos(
+					ML::Vec2(
 					startX + ((button->GetBox()->getHitBase().w + buttonMargin) * i),
-					ge->screenCenterPos.y);
+					ge->screenCenterPos.y));
 				AddSceneChangeButton(button);
 				buttons_.push_back(button);
 			}
@@ -119,7 +120,7 @@ namespace BaseScene
 
 		for (auto& button : buttons_)
 		{
-			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->pos_));
+			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->GetPos()));
 		}
 	}
 	//-------------------------------------------------------------------

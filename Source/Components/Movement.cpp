@@ -187,5 +187,5 @@ void Movement::MoveOn()
 	if (considerationCollition_)
 		owner_->CheckMove(velocity_);
 	else
-		owner_->pos_ += velocity_;
+		owner_->SetPos(owner_->GetPos() + velocity_);
 }
