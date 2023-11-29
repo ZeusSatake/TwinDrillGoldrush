@@ -144,6 +144,11 @@ void ToggleButton::SetSelector(const Actor* selector)
 	selectors_.push_back(selector);
 }
 
+const shared_ptr<BoxCollisionComponent>& ToggleButton::GetBox() const
+{
+	return box_;
+}
+
 void ToggleButton::UpDate()
 {
 	SetSelected(CanSelectedIsOn());

@@ -51,5 +51,7 @@ public:
 	void SetMouse(const shared_ptr<XI::Mouse> mouse);
 	void SetSelector(const Actor* selector);
 
+	const shared_ptr<BoxCollisionComponent>& GetBox() const;
+
 	void UpDate() override;
 };
