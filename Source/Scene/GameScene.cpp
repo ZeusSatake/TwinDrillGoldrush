@@ -81,8 +81,6 @@ namespace  GameScene
 		{//Î zÎ
 			auto map = Map::Object::Create(true);
 			map->Load("MapStone");
-			auto Bm = Manager::Object::Create(true);
-			Bm->LoadSe();
 		}
 		{//•óÎ
 			auto mapore = Map::Object::Create(true);
