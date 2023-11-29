@@ -33,7 +33,7 @@ namespace player
 
 		//★データ初期化
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->pos_ = ML::Vec2{ 50,480 };
+		this->SetPos( ML::Vec2{ 50,480 });
 
 		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
 		//★タスクの生成
@@ -63,16 +63,16 @@ namespace player
 		this->moveCnt_++;
 		this->Think();
 		this->Move();
-		drill_->pos_ = this->pos_;
+		drill_->SetPos(this->GetPos());
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->pos_);
+		ML::Box2D pre = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		//プレイヤキャラの描画
 		{
-			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->pos_);
+			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
 			ML::Box2D src{ 0,0,32,64};
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
