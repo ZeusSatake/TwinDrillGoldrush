@@ -11,12 +11,13 @@
 
 class Actor : public GameObject
 {	
+	ML::Vec2 pos_;		//キャラクタ位置
 	ML::Vec2 moveVec_;
 public:
 	typedef shared_ptr<Actor> SP;
 	typedef weak_ptr<Actor>	WP;
 public:
-	ML::Vec2    pos_;		//キャラクタ位置
+	
 	int			moveCnt_;	//行動カウンタ
 	//向き（2D視点）
 	float angle_;
@@ -38,6 +39,14 @@ public:
 
 public:
 	bool OutOfScreen() const;
+
+	ML::Vec2 GetPos() const;
+
+	void SetPosX(const float posX);
+
+	void SetPosY(const float posY);
+
+	void SetPos(const ML::Vec2 pos);
 
 	ML::Vec2 GetMoveVec() const;
 
