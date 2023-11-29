@@ -4,7 +4,7 @@
 NPC::NPC()
 :Character()
 {
-	
+	AddComponent(AIMove_ = shared_ptr<AIMoveComponent>(new AIMoveComponent(this)));
 }
 
 bool NPC::CheckFront() const
@@ -17,7 +17,7 @@ bool NPC::CheckFront() const
 		box_->getHitBase().h
 	);
 	//キャラクタの向きにより矩形の位置を調整
-	if (this->angle_LR == Angle_LR::Left)
+	if (this->angle_LR_ == Angle_LR::Left)
 	{
 		front.Offset(-1, 0);//左側
 	}
@@ -42,7 +42,7 @@ bool NPC::CheckFrontFoot() const
 		1
 	);
 	//キャラクタの向きにより矩形の位置を調整
-	if (this->angle_LR == Angle_LR::Left)
+	if (this->angle_LR_ == Angle_LR::Left)
 	{
 		front.Offset(-1, 0);//左側
 	}
@@ -55,4 +55,34 @@ bool NPC::CheckFrontFoot() const
 	auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
 	if (nullptr == map) { return false; }
 	return map->CheckHit(front);
+}
+
+float NPC::GetFov() const
+{
+	return fov_;
+}
+
+void NPC::SetFov(const float fov)
+{
+	fov_ = fov;
+}
+
+float NPC::GetDistance() const
+{
+	return distance_;
+}
+
+void NPC::SetDistance(const float distance)
+{
+	distance_ = distance;
+}
+
+Actor* NPC::GetTarget() const
+{
+	return target_;
+}
+
+void NPC::SetTarget(Actor* target)
+{
+	target_ = target;
 }

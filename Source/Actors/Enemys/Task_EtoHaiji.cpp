@@ -31,10 +31,11 @@ namespace EtoHaiji
 
 		//★データ初期化
 		box_->setHitBase(ML::Box2D{ -16,-16,32,32 });
-		/*SetJumpPower(-5.f);
-		SetGravity(ML::Gravity(32)*5);
-		SetMaxFallSpeed(10.0f);*/
-		AI_->nowState_ = AIComponent::AIState::Patrol;
+		gravity_->SetDirection(ML::Vec2::Down());
+		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32)*5);
+
+		angle_LR_ = Angle_LR::Right;
 
 		//moveVec_ = ML::Vec2{ 0,0 };
 
@@ -59,26 +60,34 @@ namespace EtoHaiji
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		AI_->Update();
-		//ML::Vec2 est = moveVec_;
-		//CheckMove(est);
+		Think();
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ML::Box2D draw = box_->getHitBase().OffsetCopy(pos_);
-		ML::Box2D src(0, 0, 960, 895);
+		ML::Box2D src;
+		if (angle_LR_ == Angle_LR::Left)
+		src=ML::Box2D(0, 0, 960, 895);
+		else
+		{
+			src = ML::Box2D(960, 0, 960, 895);
+		}
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		
 		res->img->Draw(draw, src);
+
+		
+		if (angle_LR_ == Angle_LR::Left)
+		    ge->debugRect(box_->getHitBase(), 0,draw.x,draw.y);
+		else
+			ge->debugRect(box_->getHitBase(), 1, draw.x, draw.y);
+		ge->debugRectDraw();
 	}
 	//-------------------------------------------------------------------
-	void Object::Think()
-	{
-	}
-	//-------------------------------------------------------------------
-	void Object::Move()
-	{
-	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

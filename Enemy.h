@@ -3,7 +3,6 @@
 #include "myLib.h"
 class Enemy : public NPC
 {
-public:
 	float range_;//ŽË’ö
 public:
 	Enemy();
