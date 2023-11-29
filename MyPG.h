@@ -132,8 +132,8 @@ namespace  MyPG
 		FPSCounter* c;
 
 		int stage;
-
 		void CreateEffect(int no, ML::Vec2 pos);
+		void CreateEffect(int no, ML::Vec2 pos,int id);
 		void Dbg_ToConsole(const char* str, ...);
 		void Dbg_ToDisplay(int x, int y, const char* str, ...);
 		void Dbg_ToTitle(const char* str, ...);
