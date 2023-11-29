@@ -56,7 +56,7 @@ namespace Camera
 		if (auto tg = this->target.lock())
 		{
 			ML::Vec2 toVec = tg->GetPos() - this->GetPos();
-			this->SetPos(toVec);
+			this->SetPos(this->GetPos()+toVec);
 			//this->pos_ += toVec;
 		}
 		if(horizontalScroll==false)
