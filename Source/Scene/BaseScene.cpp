@@ -90,7 +90,6 @@ namespace BaseScene
 				button->pos_ = ML::Vec2(
 					startX + ((button->GetBox()->getHitBase().w + buttonMargin) * i),
 					ge->screenCenterPos.y);
-				button->GetBox()->setHitBase(ML::Box2D(0, 0, 0, 0));
 				AddSceneChangeButton(button);
 				buttons_.push_back(button);
 			}
