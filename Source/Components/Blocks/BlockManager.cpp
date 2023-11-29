@@ -104,8 +104,8 @@ namespace	Manager
 					this->arr[y][x].event = 10;
 					break;
 				case 11:
-					this->arr[y][x].MaxHP = 12;
-					this->arr[y][x].HP = 12;
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
 					break;
 				}
 			}
@@ -129,8 +129,8 @@ namespace	Manager
 			this->arr[y][x].HP -= power;
 
 			auto map = ge->GetTask<Map::Object>("本編", "マップ");
-			map->SetMapChip(y, x, 0);
 			this->eventSearch(y, x);
+			map->SetMapChip(y, x, 0);
 		}
 	}
 	//-------------------------------------------------------------------
@@ -150,6 +150,9 @@ namespace	Manager
 		case 7:
 			Bedrock(pos);
 			break;
+		case 10:
+			collapseBlock(x_, y_);
+			break;
 		default:
 			break;
 		}
@@ -165,10 +168,38 @@ namespace	Manager
 	{
 		se::Play("repelled");
 	}
-	void Object::collapseBlock(ML::Vec2)
+	void Object::collapseBlock(int x,int y)
 	{
+		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		int id = map->GetMapChip(y, x);
 
-		ge->CreateEffect(11, pos);
+
+		if (id != 10) { return; }
+		if (id <=  0) { return; }
+		map->SetMapChip(y, x, 0);
+
+		ML::Point m[8] = {
+			{-1,-1},{ 0,-1},{+1,-1},
+			{-1, 0},		{+1, 0},
+			{-1,+1},{ 0,+1},{+1,+1},
+		};
+		for (int i = 0; i < 8; i++) {
+			m[i].x += x;
+			m[i].y += y;
+		}
+		for (int i = 0; i < 8; i++) {
+			//範囲外チェック
+			if (m[i].x < 0) { continue; }
+			if (m[i].y < 0) { continue; }
+			if (m[i].x >= map->sizeX) { continue; }
+			if (m[i].y >= map->sizeY) { continue; }
+
+			//再帰
+			this->collapseBlock(m[i].x, m[i].y);
+		}
+
+		auto ep = ML::Vec2(x * 16, y * 16);
+		ge->CreateEffect(11, ep);
 		se::Play("crush");
 	}
 

@@ -67,9 +67,8 @@ namespace	Manager
 													//–¼			num		”j‰ó
 		void Stone			(ML::Vec2 pos);			//Î			.6		.‰Â
 		void Bedrock		(ML::Vec2 pos);			//Šâ”Õ		.7		.•s‰Â
+		void collapseBlock	(int x, int y);			//˜A½•ö‰ó	.10		.‰Â
 		void IronOre		(ML::Vec2 pos);			//“SzÎ		.11		.‰Â
-		void collapseBlock	(ML::Vec2 pos);			//˜A½•ö‰ó	.10		.‰Â
-			
 
 	};
 }
