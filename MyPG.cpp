@@ -470,7 +470,7 @@ ge->debugRect(me, DEBUGRECTMODE::RED ,- ge->camera2D.x, -ge->camera2D.y);
 			false,							//	フルスクリーンモード
 			480,							//	2D描画用解像度X(現在非対応）
 			270,							//	2D描画用解像度Y(現在非対応）
-			"2021年度 卒業制作 TwinDrillGoldRush(仮) 嗚呼...ゼウス佐竹とわんぱくデストロイヤーズfeat.カルロス根岸",	//	ウインドウタイトル
+			"2022年度 卒業制作 TwinDrillGoldRush(仮) 嗚呼...ゼウス佐竹とわんぱくデストロイヤーズfeat.カルロス根岸",	//	ウインドウタイトル
 			"GPG",							//	ウィンドウクラス名
 			1,//UpDate呼び出し頻度　↓のRender呼び出し頻度との比率で決まる１以上を指定すること
 			1 //Render呼び出し頻度　↑のUpDate呼び出し頻度との比率で決まる１以上を指定すること
