@@ -6,11 +6,6 @@
 #include	"../../Scene/Task_Map.h"
 #include	"../../../sound.h"
 
-								//*名	*num	*破壊
-#include	"Task_Stone.h"		//石		.6		.可
-#include	"Task_Bedrock .h"	//岩盤	.7		.不可
-#include	"Task_IronOre.h"	//鉄鉱石	.11		.可
-
 namespace	Manager
 {
 	Resource::WP  Resource::instance;
@@ -36,6 +31,7 @@ namespace	Manager
 		this->res = Resource::Create();
 
 		//★データ初期化
+		this->InitArray();
 
 		//★タスクの生成
 
@@ -102,6 +98,11 @@ namespace	Manager
 					this->arr[y][x].HP = '不';
 					this->arr[y][x].event = 7;
 					break;
+				case 10:
+					this->arr[y][x].MaxHP = 1;
+					this->arr[y][x].HP = 1;
+					this->arr[y][x].event = 10;
+					break;
 				case 11:
 					this->arr[y][x].MaxHP = 12;
 					this->arr[y][x].HP = 12;
@@ -154,6 +155,7 @@ namespace	Manager
 		}
 	}
 	//-------------------------------------------------------------------
+	//ブロック特性・”Task_ブロック名”は使わないようにするかも
 	void Object::Stone(ML::Vec2 pos)
 	{
 		ge->CreateEffect(11, pos);
@@ -163,6 +165,13 @@ namespace	Manager
 	{
 		se::Play("repelled");
 	}
+	void Object::collapseBlock(ML::Vec2)
+	{
+
+		ge->CreateEffect(11, pos);
+		se::Play("crush");
+	}
+
 
 	//-------------------------------------------------------------------
 	// 過去の遺産

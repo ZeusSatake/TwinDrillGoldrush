@@ -47,7 +47,7 @@ namespace  Map
 	private:
 		//追加したい変数・メソッドはここに追加する
 		DG::Image::SP img;
-		int  arr[160][160];//yx
+		int arr[160][160];//yx
 		int chipSize;
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];

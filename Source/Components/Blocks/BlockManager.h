@@ -1,7 +1,7 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//破壊可能：石
+//ブロックマネージャー
 //-------------------------------------------------------------------
 #include	"../../../BBlocks.h"
 
@@ -58,15 +58,18 @@ namespace	Manager
 			//BCharaに含まれないモノのみここに追加する
 		void Damage(const ML::Point pos, int power);
 
-
 	private:
 		BlockState  arr[160][160];//yx
 
-		int* Choice[5];
+		void InitArray();					//ブロックHPの初期化に使用
+		void eventSearch(int y_, int x_);	//ブロックのイベント(特性)を呼び出す
+		
+													//名			num		破壊
+		void Stone			(ML::Vec2 pos);			//石			.6		.可
+		void Bedrock		(ML::Vec2 pos);			//岩盤		.7		.不可
+		void IronOre		(ML::Vec2 pos);			//鉄鉱石		.11		.可
+		void collapseBlock	(ML::Vec2 pos);			//連鎖崩壊	.10		.可
+			
 
-		void eventSearch(int y_, int x_);
-		void InitArray();
-		void Stone(ML::Vec2 pos);
-		void Bedrock(ML::Vec2 pos);
 	};
 }

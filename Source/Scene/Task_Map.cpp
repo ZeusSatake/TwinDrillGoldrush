@@ -51,8 +51,6 @@ namespace  Map
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
 		//šƒ^ƒXƒN‚Ì¶¬
-		auto Bm = Manager::Object::Create(true);
-		Bm->LoadSe();
 
 		return  true;
 	}
@@ -228,7 +226,7 @@ namespace  Map
 			pos.y >= 0 && pos.y < chipSize * this->sizeY) {
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
-			if (this->arr[masu.y][masu.x] != 0) {
+			if (this->arr[masu.y][masu.x] > 0) {
 				auto manager = ge->GetTask<Manager::Object>("Blocks");
 				manager->Damage(masu, 1);
 			}
