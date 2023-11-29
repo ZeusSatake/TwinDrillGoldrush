@@ -6,6 +6,7 @@
 #include "source/Components/HP.h"
 #include "Source/Components/Animation/AnimManager.h"
 #include "Source/Components/Movement.h"
+#include "Source/Components/Timer.h"
 class Character : public Actor
 {
 	std::string personalName_;
@@ -17,6 +18,7 @@ protected:
 	//コンポーネント
 	class shared_ptr<HP> hp_;
 	class shared_ptr<AnimManager> animManager_;
+	class shared_ptr<Timer> unHitTimer_;
 	//-----------------------------------------------------------------------------
 public:
 	Character();
