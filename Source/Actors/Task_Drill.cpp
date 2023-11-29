@@ -55,8 +55,8 @@ namespace  drill
 	void  Object::UpDate()
 	{
 		this->angle_ = ML::ToRadian(this->UpdateDrillAngle());
-		this->pos_.x += cos(this->UpdateDrillAngle()) * 10.f;
-		this->pos_.y += sin(this->UpdateDrillAngle()) * 10.0f;
+		this->pos_.x += cos(this->UpdateDrillAngle()) * 15.f;
+		this->pos_.y += sin(this->UpdateDrillAngle()) * 15.0f;
 		this->dState = this->state_->GetNowState();
 		this->Think();
 		this->Move();
@@ -72,6 +72,7 @@ namespace  drill
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
+		
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

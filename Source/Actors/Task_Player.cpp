@@ -60,6 +60,7 @@ namespace player
 	{
 
 		this->pState = this->state_->GetNowState();
+		this->moveCnt_++;
 		this->Think();
 		this->Move();
 		drill_->pos_ = this->pos_;
@@ -77,6 +78,16 @@ namespace player
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, src);
 			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+		}
+		if (this->CheckHead())
+			ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "頭判定！");
+		if (this->CheckFoot())
+			ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "足判定！");
+		ge->debugFont->Draw(ML::Box2D(1000, 400, 500, 500), to_string(this->GetMoveVec().x)+to_string(this->GetMoveVec().y));
+
+		if (StateComponent::State::Jump == this->state_->GetNowState())
+		{
+			ge->debugFont->Draw(ML::Box2D(1000, 430, 500, 500), "ジャンプ！");
 		}
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
