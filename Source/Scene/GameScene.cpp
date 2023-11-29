@@ -12,7 +12,6 @@
 #include  "../System/Task_BackGround.h"
 #include  "Task_Map.h"
 #include  "Task_EnemyMap.h"
-#include  "../Components/Blocks/BlockManager.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
 
