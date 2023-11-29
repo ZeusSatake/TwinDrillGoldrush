@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "BaseScene.h"
+#include  <array>
 
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_Cursor.h"
@@ -32,55 +33,67 @@ namespace BaseScene
 		this->res = Resource::Create();
 
 		//★データ初期化
+		ge->debugRectLoad();
+		render2D_Priority[1] = 0.0f;
 
 		//★タスクの生成
 
-		auto cursor = Cursor::Object::Create(true);
-		cursor->SetEnterButton(XI::VGP::ST);
+		{//シーン遷移ボタン, カーソル作成
+			auto cursor = Cursor::Object::Create(true);
+			cursor->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y + 80);
+			cursor->SetEnterButton(XI::VGP::ST);
 
-		{//タイトルに遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("タイトルへ");
-			button->SetScene(this, Scene::Kind::Title);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			AddSceneChangeButton(button);
+			XI::Mouse::MB mouseEnterButton = XI::Mouse::MB::LB;
+			XI::VGP		  gamePadEnterButton = cursor->GetEnterButton();
+
+			std::array<SceneChangeButton::Object::SetInfo, 4> buttonInfos =
+			{
+				SceneChangeButton::Object::SetInfo{
+					"タイトルへ",
+					this,
+					Scene::Kind::Title,
+					mouseEnterButton,
+					gamePadEnterButton,
+					cursor.get()
+				},
+				{	"ショップへ",
+					this,
+					Scene::Kind::Shop,
+					mouseEnterButton,
+					gamePadEnterButton,
+					cursor.get()
+				},
+				{	"武闘会へ",
+					this,
+					Scene::Kind::MartialFight,
+					mouseEnterButton,
+					gamePadEnterButton,
+					cursor.get()
+				},
+				{	"採掘場へ",
+					this,
+					Scene::Kind::MartialFight,
+					mouseEnterButton,
+					gamePadEnterButton,
+					cursor.get()
+				}
+			};
+
+			for (int i = 0; i < buttonInfos.size(); ++i)
+			{
+				const auto& buttonInfo = buttonInfos.at(i);
+
+				auto button = SceneChangeButton::Object::Create(true);
+				button->Set(buttonInfo);
+				int buttonMargin = 10;
+				float startX = ge->screenCenterPos.x - (buttonInfos.size() * 0.5f) * (button->GetBox()->getHitBase().w + buttonMargin) + button->GetBox()->getHitBase().w * 0.5f;
+				button->pos_ = ML::Vec2(
+					startX + ((button->GetBox()->getHitBase().w + buttonMargin) * i),
+					ge->screenCenterPos.y);
+				AddSceneChangeButton(button);
+				buttons_.push_back(button);
+			}
 		}
-
-		{//ショップに遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("ショップへ");
-			button->SetScene(this, Scene::Kind::Shop);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x - 200, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
-
-		{//武闘会に遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("武闘会へ");
-			button->SetScene(this, Scene::Kind::MartialFight);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
-
-		{//採掘場に遷移するボタン
-			auto button = SceneChangeButton::Object::Create(true);
-			button->SetText("採掘場へ");
-			button->SetScene(this, Scene::Kind::Mining);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetSelector(cursor.get());
-			button->SetEnterButton(cursor->GetEnterButton());
-			button->pos_ = ML::Vec2(ge->screenCenterPos.x + 200, ge->screenCenterPos.y);
-			AddSceneChangeButton(button);
-		}
-
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -89,6 +102,7 @@ namespace BaseScene
 	{
 		//★データ＆タスク解放
 		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -102,12 +116,18 @@ namespace BaseScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+
+		for (auto& button : buttons_)
+		{
+			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->pos_));
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "拠点");
+		ge->debugRectDraw();
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

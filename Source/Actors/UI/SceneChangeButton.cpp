@@ -77,6 +77,26 @@ namespace SceneChangeButton
 	void Object::OffEvent()
 	{
 	}
+	void Object::Set(const string& text, Scene* nowScene, const Scene::Kind nextScene, const XI::Mouse::MB mouseEnterButton, const XI::VGP gamePadEnterButton, const Actor* selectorPtr)
+	{
+		SetText(text);
+		SetScene(nowScene, nextScene);
+		SetEnterButton(mouseEnterButton);
+		SetEnterButton(gamePadEnterButton);
+		if (selectorPtr != nullptr)
+			SetSelector(selectorPtr);
+	}
+	void Object::Set(const SetInfo& setInfo)
+	{
+		Set(
+			setInfo.text,
+			setInfo.nowScene,
+			setInfo.nextScene,
+			setInfo.mouseEnterButton,
+			setInfo.gamePadEnterButton,
+			setInfo.selectorPtr
+		);
+	}
 	void Object::SetScene(Scene* nowScene, const Scene::Kind& nextScene)
 	{
 		nowScene_ = nowScene;
