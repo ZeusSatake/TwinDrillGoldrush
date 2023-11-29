@@ -57,6 +57,9 @@ namespace  drill
 		this->angle_ = ML::ToRadian(this->UpdateDrillAngle());
 		this->pos_.x += cos(this->UpdateDrillAngle()) * 10.f;
 		this->pos_.y += sin(this->UpdateDrillAngle()) * 10.0f;
+		this->dState = this->state_->GetNowState();
+		this->Think();
+		this->Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -70,7 +73,6 @@ namespace  drill
 		this->res->img->Draw(draw, src);
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
 	}
-
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
