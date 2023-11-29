@@ -119,6 +119,26 @@ void Actor::CheckMove(ML::Vec2& est)
 	}
 }
 
+ML::Vec2 Actor::GetPos() const
+{
+	return pos_;
+}
+
+void Actor::SetPos(const ML::Vec2 pos)
+{
+	pos_ = pos;
+}
+
+void Actor::SetPosX(const float posX)
+{
+	pos_.x = posX;
+}
+
+void Actor::SetPosY(const float posY)
+{
+	pos_.y = posY;
+}
+
 ML::Vec2 Actor::GetMoveVec() const
 {
 	return moveVec_;
