@@ -106,6 +106,7 @@ namespace	Manager
 				case 11:
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 11;
 					break;
 				case 27:
 					this->arr[y][x].MaxHP = -1;
@@ -157,6 +158,9 @@ namespace	Manager
 		case 10:
 			collapseBlock(x_, y_);
 			break;
+		case 11:
+			IronOre(pos);
+			break;
 		default:
 			break;
 		}
@@ -165,7 +169,7 @@ namespace	Manager
 	//ブロック特性・”Task_ブロック名”は使わないようにするかも
 	void Object::Stone(ML::Vec2 pos)
 	{
-		ge->CreateEffect(11, pos);
+		ge->CreateEffect(11, pos, 6);
 		se::Play("crush");
 	}
 	void Object::Bedrock(ML::Vec2 pos)
@@ -204,6 +208,11 @@ namespace	Manager
 
 		auto ep = ML::Vec2(x * 16, y * 16);
 		ge->CreateEffect(11, ep, 6);
+		se::Play("crush");
+	}
+	void Object::IronOre(ML::Vec2 pos)
+	{
+		ge->CreateEffect(11, pos, 11);
 		se::Play("crush");
 	}
 
