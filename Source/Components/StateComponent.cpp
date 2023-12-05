@@ -3,7 +3,8 @@ StateComponent::StateComponent(Actor* owner)
 	:
 	Component(owner),
 	nowState(State::Idle),
-	preState(State::Idle)
+	preState(State::Idle),
+	moveCnt_(0)
 {
 	owner_ = owner;
 }
@@ -11,6 +12,7 @@ StateComponent::StateComponent(Actor* owner)
 void StateComponent::UpdateNowState(State state)
 {
 	if (this->preState == state)return;
+	this->moveCnt_ = 0;
 	this->preState = this->nowState;
 	this->nowState = state;
 }

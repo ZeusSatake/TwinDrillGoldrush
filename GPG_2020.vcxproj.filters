@@ -145,7 +145,7 @@
     <ClCompile Include="Source\Components\Movement.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\Timer.cpp">
+    <ClCompile Include="Source\Components\TimerComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp">
@@ -292,6 +292,9 @@
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
+
+    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
+
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
@@ -307,6 +310,7 @@
     <ClCompile Include="Source\UIBase\PushButton.cpp">
       <Filter>MyPG\UIBase</Filter>
     </ClCompile>
+
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -379,7 +383,7 @@
     <ClInclude Include="Source\Components\Movement.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\Timer.h">
+    <ClInclude Include="Source\Components\TimerComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
     <ClInclude Include="Source\System\Task_DrawNumFont.h">
@@ -526,6 +530,7 @@
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
     <ClInclude Include="Source\Components\SecondsTimerComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>

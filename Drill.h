@@ -26,6 +26,4 @@ public:
 	void DrillCheckMove(ML::Vec2 e_);
 
 	StateComponent::State dState;
-	void Think()override;
-	void Move()override;
 };
