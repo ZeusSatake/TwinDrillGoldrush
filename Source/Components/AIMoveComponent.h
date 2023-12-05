@@ -17,7 +17,7 @@ public:
 
 	void MoveTo(class Actor* target);
 
-	void Patroll(class Actor* target);
+	void Patroll();
 
 	void Jump();
 

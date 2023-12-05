@@ -65,6 +65,9 @@
     <Filter Include="MyPG\Components\Money">
       <UniqueIdentifier>{695b74c9-d253-46b6-b7b6-6899b70df6d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\EnemyClasses">
+      <UniqueIdentifier>{55f9878c-e6d0-475a-9a45-85a9035b2c01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -294,6 +297,12 @@
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
+    <ClCompile Include="Lady.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalLady.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -518,6 +527,12 @@
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
+    <ClInclude Include="Lady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalLady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GPG_20201.rc">

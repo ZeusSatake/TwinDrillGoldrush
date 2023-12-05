@@ -2,8 +2,6 @@
 
 Debtor::Debtor()
 	:Enemy()
-	,preState_(AIState::Patrol)
-	,nowState_(AIState::Patrol)
 {
 	movement_->SetConsiderationCollition(true);
 	gravity_->SetConsiderationCollition(true);
@@ -11,17 +9,17 @@ Debtor::Debtor()
 
 void Debtor::Think()
 {
-	AIState afterState = nowState_;
+	AIState afterState = GetNowState();
 	switch (afterState)
 	{
 	case AIState::Idle:
 		if (!OutOfScreen())
 			afterState = AIState::Patrol;
 		break;
-	//case AIState::Patrol:
-	//	if (GetDistance() <= GetFov())
-	//		afterState = AIState::Approach;
-	//	break;
+	/*case AIState::Patrol:
+		if (WithinSight(GetTarget()))
+			afterState = AIState::Approach;
+		break;*/
 	//case AIState::Approach:
 	//	if (GetDistance() <= GetRange())
 	//	{
@@ -59,7 +57,7 @@ void Debtor::Move()
 		//gravity_->Stop();
 	}
 
-	switch (nowState_)
+	switch (GetNowState())
 	{
 	case AIState::Idle:
 		break;
@@ -79,13 +77,14 @@ void Debtor::Move()
 		UpDateDead();
 		break;
 	}
+
 	est = GetMoveVec();
 	CheckMove(est);
 }
 
 void Debtor::UpDatePatrol()
 {
-	AIMove_->Patroll(GetTarget());
+	AIMove_->Patroll();
 }
 
 void Debtor::UpDateApproach()
@@ -95,7 +94,7 @@ void Debtor::UpDateApproach()
 
 void Debtor::UpDateJump()
 {
-
+	AIMove_->Jump();
 }
 
 void Debtor::UpDateFall()
@@ -128,17 +127,7 @@ void Debtor::UpDateDead()
 
 }
 
-bool Debtor::UpDateState(AIState afterState)
-{
-	if (nowState_ == afterState)
-		return false;
-	else
-	{
-		preState_ = nowState_;
-		nowState_ = afterState;
-		return true;
-	}
-}
+
 
 bool Debtor::HitPlayer()
 {

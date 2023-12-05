@@ -13,7 +13,7 @@ public:
 	int defenseVal_;
 	float speedVal_;
 
-	HP GetHp() const;
+	HP GetHP() const;
 
 	int GetAttackVal() const;
 
