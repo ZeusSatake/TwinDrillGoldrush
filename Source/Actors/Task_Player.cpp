@@ -60,10 +60,11 @@ namespace player
 	{
 
 		this->pState = this->state_->GetNowState();
-		this->moveCnt_++;
+		this->state_->moveCnt_++;
 		this->Think();
 		this->Move();
 		drill_->SetPos(this->GetPos());
+		drill_->dState = this->state_->GetNowState();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -77,9 +78,10 @@ namespace player
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, src);
-			//ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+			ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), to_string(pre.x));
+			ge->debugFont->Draw(ML::Box2D(100, 0, 1500, 500), "~現在の操作方法~移動:Lスティック　角度変更:Rスティック　ジャンプ:R1(Wキー)　採掘(採掘モード中):L1(Qキー)　モード変更:B2(Xキー)　ダッシュ:B1(Zキー)");
 		}
-		/*if (this->CheckHead())
+		if (this->CheckHead())
 			ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "頭判定！");
 		if (this->CheckFoot())
 			ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "足判定！");
@@ -88,7 +90,16 @@ namespace player
 		if (StateComponent::State::Jump == this->state_->GetNowState())
 		{
 			ge->debugFont->Draw(ML::Box2D(1000, 430, 500, 500), "ジャンプ！");
-		}*/
+		}
+		if (StateComponent::State::Drill == this->state_->GetNowState()||
+			StateComponent::State::Mining == this->state_->GetNowState())
+		{
+			ge->debugFont->Draw(ML::Box2D(1000, 460, 500, 500), "採掘モード");
+		}
+		else
+		{
+			ge->debugFont->Draw(ML::Box2D(1000, 490, 500, 500), "行動モード");
+		}
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

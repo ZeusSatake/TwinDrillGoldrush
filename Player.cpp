@@ -1,10 +1,12 @@
 #include "Player.h"
 #include "MyPG.h"
 #include "Source/Scene/Task_Map.h"
+#include "Drill.h"
 
 Player::Player()
 	:
-	moveVec(ML::Vec2{0,0})
+	moveVec(ML::Vec2{ 0,0 }),
+	speed(2.0f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -84,11 +86,7 @@ void Player::CheckMove(ML::Vec2& e_)
 }
 
 
-void Player::ResetCnt()
-{
-	this->moveCnt_ = 0;
-	state_->UpdateNowState(pState);
-}
+
 
 void Player::Think()
 {
@@ -99,10 +97,13 @@ void Player::Think()
 		break;
 	case StateComponent::State::Idle:
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
-		if (inp.B1.down) { pState = StateComponent::State::Jump; }
+		if (inp.R1.down) { pState = StateComponent::State::Jump; }
+		if (inp.B2.down) { pState = StateComponent::State::Drill; }
 		break;
 	case StateComponent::State::Walk:
-		if (inp.B1.down) { pState = StateComponent::State::Jump; }
+		if (inp.R1.down) { pState = StateComponent::State::Jump; }
+		if(inp.B1.down){pState = StateComponent::State::Dash;}
+		if(inp.B2.down){ pState = StateComponent::State::Drill; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
@@ -123,50 +124,53 @@ void Player::Think()
 		if (CheckFoot()) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Dash:
+		if(inp.LStick.volume ==0||this->state_->moveCnt_ >=20){pState= StateComponent::State::Idle; }
+		break;
+	case StateComponent::State::Drill:
+		if (inp.L1.on) { pState = StateComponent::State::Mining; }
+		if (inp.B2.down) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::DrillDash:
+		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
 		break;
 	case StateComponent::State::Mining:
+		if(inp.L1.off) { pState = StateComponent::State::Drill; }
 		break;
 	case StateComponent::State::Appeal:
 		break;
 	}
-	this->ResetCnt();
+	this->state_->UpdateNowState(pState);
 }
 
 void Player::Move()
 {
 	auto inp = this->controller_->gamePad_->GetState();
 
-	//if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
-	//{
-	//	if (map->CheckHit(this->box_->getHitBase().OffsetCopy(this->pos_)))
-	//	{
-	//		preVec.x += 1;
-	//	}
-	//}
 	if (this->moveVec.y<0||!CheckHead()||!CheckFoot())
 	{
-		this->moveVec.y = min(this->moveVec.y+ML::Gravity(35)*5+(moveCnt_/10), 25.f);
+		this->moveVec.y = min(this->moveVec.y+(ML::Gravity(35)+(moveCnt_))*5, 25.f);
 	}
 	else
 	{
 		this->moveVec.y = 0;
 	}
-
+	if (this->moveVec.x < 0)
+	{
+		this->moveVec.x = min(this->moveVec.x + 0.5f, 0);
+	}
+	else
+	{
+		this->moveVec.x = max(this->moveVec.x - 0.5f, 0);
+	}
 	switch (state_->GetNowState())
 	{
 	case StateComponent::State::Non:
 		break;
 	case StateComponent::State::Idle:
-
+		this->speed = 2.0f;
 		break;
 	case StateComponent::State::Walk:
-		/*if (inp.LStick.BU.on) { preVec.y -= 3; }
-		if (inp.LStick.BD.on) { preVec.y += 3; }
-		if (inp.LStick.BR.on) { preVec.x += 3; }
-		if (inp.LStick.BL.on) { preVec.x -= 3; }*/
-		moveVec.x=controller_->GetLStickVec().x;
+		moveVec.x=controller_->GetLStickVec().x*speed;
 		break;
 	case StateComponent::State::Attack:
 		break;
@@ -179,18 +183,36 @@ void Player::Move()
 	case StateComponent::State::Dead:
 		break;
 	case StateComponent::State::Jump:
-		moveVec.x = controller_->GetLStickVec().x;
+		moveVec.x = controller_->GetLStickVec().x*speed;
 		moveVec.y = -25.f + (this->moveCnt_/10);
 		break;
 	case StateComponent::State::Fall:
-		moveVec.x = controller_->GetLStickVec().x;
+		moveVec.x = controller_->GetLStickVec().x*speed;
 		
 		break;
 	case StateComponent::State::Dash:
+		this->speed = 5.0f;
+		moveVec.x = controller_->GetLStickVec().x * speed;
+
 		break;
 	case StateComponent::State::DrillDash:
 		break;
+	case StateComponent::State::Drill:
+		this->speed = 0.85f;
+		moveVec.x = controller_->GetLStickVec().x * speed;
+		if (inp.R1.down) 
+		{
+			moveVec.y = -25.f + (this->moveCnt_ / 10);
+		}
+		break;
 	case StateComponent::State::Mining:
+		this->drill_->Mining();
+		moveVec.x = controller_->GetLStickVec().x * speed;
+		if (inp.R1.down)
+		{
+			moveVec.y = -25.f + (this->moveCnt_ / 10);
+		}
+
 		break;
 	case StateComponent::State::Appeal:
 		break;
