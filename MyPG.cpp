@@ -47,6 +47,10 @@ namespace MyPG
 
 
 	void MyGameEngine::CreateEffect(int no, ML::Vec2 pos) {
+		this->CreateEffect(no, pos, 0);
+	}
+
+	void MyGameEngine::CreateEffect(int no, ML::Vec2 pos,int id) {
 		switch (no) {
 		case 0: //上から落ちてくる10個の玉
 			for (int i = 0; i < 10; i++) {
@@ -238,8 +242,7 @@ namespace MyPG
 		case 11://粉砕エフェクト
 			for (int i = 0; i < 3; i++) {
 				if (auto e = Effect00::Object::Create(true)) {
-					e->filename = "data/image/crushEffect.png";
-					//e->filename = "data/image/effect/bomb.png";
+					e->filename = "data/image/effect/Effect_Blocks/crushEffect_" + to_string(id) + ".png";
 
 					e->resSizeX = e->resSizeY = 32;
 					e->drawSizeX = e->drawSizeY = 32;

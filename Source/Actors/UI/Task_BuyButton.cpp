@@ -1,26 +1,23 @@
 //-------------------------------------------------------------------
-//UIカーソル
+//
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_Cursor.h"
-#include  "../../Components/Movement.h"
-#include  "../../UIBase/ToggleButton.h"
+#include  "Task_BuyButton.h"
+#include  "../../Components/SecondsTimerComponent.h"
 
-namespace Cursor
+namespace BuyButton
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		image_ = DG::Image::Create("./data/image/shot.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		image_.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,22 +29,14 @@ namespace Cursor
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
-		//★データ初期化
-		this->SetPos(ge->screenCenterPos);
-
-		AddComponent(movement_ = make_shared<Movement>(this));
-		//パラメータの設定
-		movement_->SetSpeed(8.0f, 15.0f, 0.5f);
-		movement_->SetDecelerationRate(ML::Percentage(30.0f));
-		movement_->SetAcceleration(20.0f);
-
-		box_->setHitBase(ML::Box2D(-28, -28, 56, 56));
+		//★データ初期化		
+		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
 		
-		auto buttons = ge->GetTasks<ToggleButton>("UI", "Button");
-		for (auto& button : *buttons)
-		{
-			button->SetSelector(this);
-		}
+		SetEnterButton(XI::VGP::B1);
+		SetRecieveInputEnable(true);
+		SetSelected(false);
+		SetMouse(ge->mouse);
+		SetResetTime(5.0f);
 		
 		//★タスクの生成
 
@@ -58,7 +47,7 @@ namespace Cursor
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		movement_.reset();
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -70,23 +59,18 @@ namespace Cursor
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		movement_->LStickInputToMove(ge->in1);
+		PushButton::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D src(0, 0, 56, 56);
-		res->image_->Draw(box_->getHitBase().OffsetCopy(this->GetPos()), src);
-	}
+		Drawtext(ge->debugFont, true);
 
-	void Object::SetEnterButton(const XI::VGP enterButton)
-	{
-		enterButton_ = enterButton;
-	}
-	XI::VGP Object::GetEnterButton() const
-	{
-		return enterButton_;
+		ge->debugFont->Draw(
+			ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y - 30, 500, 500),
+			"タイマー\nカウント：" + to_string(GetTimer()->GetCount()) + "秒\n" +
+			"アクティブ：" + to_string(GetTimer()->IsActive()));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

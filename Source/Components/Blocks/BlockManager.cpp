@@ -80,8 +80,8 @@ namespace	Manager
 					this->arr[y][x].HP = 1;
 					break;
 				case 2:
-					this->arr[y][x].MaxHP = '不';
-					this->arr[y][x].HP = '不';
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
 				case 3:
@@ -94,8 +94,8 @@ namespace	Manager
 					this->arr[y][x].event = 6;
 					break;
 				case 7:
-					this->arr[y][x].MaxHP = '不';
-					this->arr[y][x].HP = '不';
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
 				case 10:
@@ -106,6 +106,11 @@ namespace	Manager
 				case 11:
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 11;
+					break;
+				case 27:
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					break;
 				}
 			}
@@ -117,7 +122,7 @@ namespace	Manager
 	{
 		int x = pos_.x;
 		int y = pos_.y;
-		if (this->arr[y][x].HP == '不')
+		if (this->arr[y][x].HP < 0)
 		{
 			this->eventSearch(y, x);
 			return;
@@ -153,6 +158,9 @@ namespace	Manager
 		case 10:
 			collapseBlock(x_, y_);
 			break;
+		case 11:
+			IronOre(pos);
+			break;
 		default:
 			break;
 		}
@@ -161,7 +169,7 @@ namespace	Manager
 	//ブロック特性・”Task_ブロック名”は使わないようにするかも
 	void Object::Stone(ML::Vec2 pos)
 	{
-		ge->CreateEffect(11, pos);
+		ge->CreateEffect(11, pos, 6);
 		se::Play("crush");
 	}
 	void Object::Bedrock(ML::Vec2 pos)
@@ -199,7 +207,12 @@ namespace	Manager
 		}
 
 		auto ep = ML::Vec2(x * 16, y * 16);
-		ge->CreateEffect(11, ep);
+		ge->CreateEffect(11, ep, 6);
+		se::Play("crush");
+	}
+	void Object::IronOre(ML::Vec2 pos)
+	{
+		ge->CreateEffect(11, pos, 11);
 		se::Play("crush");
 	}
 

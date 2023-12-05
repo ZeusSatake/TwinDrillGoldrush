@@ -14,17 +14,19 @@ class SecondsTimerComponent : public Component
 	void SetActive();
 public:
 	SecondsTimerComponent(class GameObject* owner);
-	SecondsTimerComponent(class GameObject* ownerint, const float nowCount, const float countSeconds);
+	SecondsTimerComponent(class GameObject* ownerint, const float countSeconds);
 
 	void SetCountSeconds(const float countSeconds);
 
 	//現在のカウント取得
-	int  GetCount() const;
+	float  GetCount() const;
 	//カウント中
 	bool IsActive() const;
+	//カウント終了フレームのみtrue
 	bool IsCountEndFrame() const;
-	//無敵時間開始
+
+	//タイマー起動
 	void Start();
-	//更新
+
 	void Update() override;
 };
