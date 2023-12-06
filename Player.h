@@ -26,7 +26,7 @@ public:
 	bool CheckFoot();
 	bool CheckHead();
 	void CheckMove(ML::Vec2& e_);
-
+	void Dash(ML::Vec2 e_);
 
 	ML::Vec2 GetMoveVec();
 	shared_ptr<drill::Object> drill_;
