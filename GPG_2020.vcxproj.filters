@@ -297,10 +297,13 @@
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
-    <ClCompile Include="Lady.cpp">
+    <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\Lady.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
-    <ClCompile Include="NormalLady.cpp">
+    <ClCompile Include="Source\EnemyClasses\NormalLady.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
   </ItemGroup>
@@ -527,10 +530,13 @@
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
-    <ClInclude Include="Lady.h">
+    <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\Lady.h">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
-    <ClInclude Include="NormalLady.h">
+    <ClInclude Include="Source\EnemyClasses\NormalLady.h">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
   </ItemGroup>

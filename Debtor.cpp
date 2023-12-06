@@ -12,29 +12,29 @@ void Debtor::Think()
 	AIState afterState = GetNowState();
 	switch (afterState)
 	{
-	case AIState::Idle:
+	case Idle:
 		if (!OutOfScreen())
-			afterState = AIState::Patrol;
+			afterState = Patrol;
 		break;
-	/*case AIState::Patrol:
+	/*case Patrol:
 		if (WithinSight(GetTarget()))
-			afterState = AIState::Approach;
+			afterState = Approach;
 		break;*/
-	//case AIState::Approach:
+	//case Approach:
 	//	if (GetDistance() <= GetRange())
 	//	{
-	//		afterState = AIState::Attack;
+	//		afterState = Attack;
 	//	}
 	//	else if (GetDistance() > GetFov())
 	//	{
-	//		afterState = AIState::Patrol;
+	//		afterState = Patrol;
 	//	}
 	//	break;
-	//case AIState::Attack:
+	//case Attack:
 	//	//ŽË’öŠO‚Éo‚½‚çÚ‹ß‚ÉØ‚è‘Ö‚¦
 	//	if (GetDistance() > GetRange())
 	//	{
-	//		afterState = AIState::Approach;
+	//		afterState = Approach;
 	//	}
 
 	}
@@ -54,7 +54,6 @@ void Debtor::Move()
 	else
 	{
 		SetMoveVecY(0.f);
-		//gravity_->Stop();
 	}
 
 	switch (GetNowState())
@@ -68,6 +67,7 @@ void Debtor::Move()
 		UpDateApproach();
 		break;
 	case AIState::Attack:
+		BeginAttack();
 		UpDateAttack();
 		break;
 	case AIState::Damage:
@@ -104,7 +104,6 @@ void Debtor::UpDateFall()
 
 void Debtor::UpDateAttack()
 {
-
 }
 
 void Debtor::UpDateGuard()

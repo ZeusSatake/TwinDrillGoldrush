@@ -1,22 +1,15 @@
 #include "AIMoveComponent.h"
-#include "../../NPC.h"
+#include "../../Enemy.h"
 
 
 AIMoveComponent::AIMoveComponent(class Character* owner)
 	: Component(owner)
 {
 }
-
-AIMoveComponent::AIMoveComponent(class Character* owner,float moveSpeed)
-	: Component(owner)
-
-{
-	//static_cast<Character*>(owner_)->GetMovement()->SetSpeed(moveSpeed);
-}
+	
 
 void AIMoveComponent::Update()
 {
-
 }
 
 void AIMoveComponent::MoveTo(class Actor* target)

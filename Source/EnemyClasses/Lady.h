@@ -1,23 +1,22 @@
 #pragma once
-#include "Enemy.h"
+#include "../../Enemy.h"
 class Lady : public Enemy
 {
 public:
 	Lady();
 	virtual ~Lady() {};
 
-	enum AIState
-	{
-		Idle, //‘Ò‹@
-		Patrol, //„‰ñ
-		Approach, //Ú‹ß
-		Jump, //’µ–ô
-		Fall,//—‰º
-		Attack,//UŒ‚
-		Guard,//–hŒä
-		Dodge,//‰ñ”ğ
-		Damage,//”íŒ‚
-		Dead,//€–S
-	};
+public:
+	virtual void Think() {};
+	virtual void Move() {};
+	virtual void UpDatePatrol() {};
+	virtual void UpDateApproach() {};
+	virtual void UpDateJump() {};
+	virtual void UpDateFall() {};
+	virtual void UpDateAttack() {};
+	virtual void UpDateGuard() {};
+	virtual void UpDateDodge() {};
+	virtual void UpDateDamage() {};
+	virtual void UpDateDead() {};
 };
 
