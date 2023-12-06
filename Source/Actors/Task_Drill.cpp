@@ -4,6 +4,7 @@
 #include  "../../MyPG.h"
 #include  "Task_Drill.h"
 #include "Task_Player.h"
+#include "../../Source/Scene/Task_Map.h"
 
 namespace  drill
 {
@@ -70,6 +71,9 @@ namespace  drill
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
+		ML::Vec2 mapPoint{ (this->GetPos().x+16 + ge->camera2D.x),(this->GetPos().y+16 + ge->camera2D.x )};
+		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };
+		ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "ドリルのマス:" + to_string((int)mapPoint.x/16)+" "+to_string((int)mapPoint.y/16));
 		
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

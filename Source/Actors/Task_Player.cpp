@@ -34,6 +34,10 @@ namespace player
 		//★データ初期化
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
 		this->SetPos( ML::Vec2{ 50,480 });
+		this->movement_->SetSpeed(2.f, 5.f, 0.f);
+		gravity_->SetDirection(ML::Vec2::Down());
+		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32) * 10);
 
 		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
 		//★タスクの生成
@@ -150,6 +154,7 @@ namespace player
 		{
 			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "行動モード");
 		}
+		ge->debugFont->Draw(ML::Box2D(1000, 140, 500, 500), "moveCnt:"+to_string(this->state_->moveCnt_));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
