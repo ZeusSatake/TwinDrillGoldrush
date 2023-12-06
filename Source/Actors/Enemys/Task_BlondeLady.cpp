@@ -2,17 +2,17 @@
 //
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_EtoHaiji.h"
+#include  "Task_BlondeLady.h"
 #include  "../../Actors/Task_Player.h"
 
-namespace EtoHaiji
+namespace BlondeLady
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/EtoHaiji.png");
+		img = DG::Image::Create("./data/image/BlondeLady.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -45,6 +45,8 @@ namespace EtoHaiji
 
 		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
 		SetTarget(pl.get());
+
+		moveCnt_->SetCountFrame(60);
 		//★タスクの生成
 
 		return  true;
@@ -74,13 +76,7 @@ namespace EtoHaiji
 	void  Object::Render2D_AF()
 	{
 		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src;
-		if (angle_LR_ == Angle_LR::Left)
-		src=ML::Box2D(0, 0, 960, 895);
-		else
-		{
-			src = ML::Box2D(960, 0, 960, 895);
-		}
+		ML::Box2D src = ML::Box2D(0, 0, 500, 615);
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		
