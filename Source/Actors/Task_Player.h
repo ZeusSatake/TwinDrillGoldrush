@@ -50,5 +50,6 @@ namespace player
 	public:
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//追加したい変数・メソッドはここに追加する
+		void DebugInfo();
 	};
 }

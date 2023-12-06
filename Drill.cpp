@@ -4,8 +4,10 @@
 Drill::Drill()
 	:
 	attackPoint(0),
-	nowAngle(0.0f),
-	durability(0)
+	angle(0.0f),
+	preAngle(0.0f),
+	durability(0),
+	canRotate(true)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -15,7 +17,12 @@ Drill::Drill()
 
 void Drill::SetAngle(float angle)
 {
-	this->angle_ = angle;
+	this->angle = angle;
+}
+
+void Drill::SetCanRotate(bool check)
+{
+	this->canRotate = check;
 }
 
 int Drill::GetAttackPoint()
@@ -25,17 +32,22 @@ int Drill::GetAttackPoint()
 
 float Drill::GetNowAngle()
 {
-	return this->nowAngle;
+	return this->angle;
 }
 
 
 float Drill::UpdateDrillAngle()
 {
 	auto inp = controller_->gamePad_->GetState();
-	
-	return inp.RStick.angleDYP;
-	/*if (inp.RStick.BU.on) { return ML::ToRadian(90); }
-	else return 0;*/
+	this->preAngle =inp.RStick.angleDYP;
+	if (canRotate)
+	{
+		if (this->angle != preAngle && preAngle != 0)
+		{
+			this->angle = this->preAngle;
+		}
+	}
+	return this->angle;
 }
 
 void Drill::Mining()

@@ -86,8 +86,6 @@ void Player::CheckMove(ML::Vec2& e_)
 }
 
 
-
-
 void Player::Think()
 {
 	auto inp = controller_->gamePad_->GetState();
@@ -129,6 +127,7 @@ void Player::Think()
 	case StateComponent::State::Drill:
 		if (inp.L1.on) { pState = StateComponent::State::Mining; }
 		if (inp.B2.down) { pState = StateComponent::State::Idle; }
+		if (inp.B3.down) { pState = StateComponent::State::DrillDash; }
 		break;
 	case StateComponent::State::DrillDash:
 		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
@@ -145,10 +144,10 @@ void Player::Think()
 void Player::Move()
 {
 	auto inp = this->controller_->gamePad_->GetState();
-
+	ML::Vec2 preVec;
 	if (this->moveVec.y<0||!CheckHead()||!CheckFoot())
 	{
-		this->moveVec.y = min(this->moveVec.y+(ML::Gravity(35)+(moveCnt_))*5, 25.f);
+		this->moveVec.y = min(this->moveVec.y+(ML::Gravity(60)+(moveCnt_))*5, 30.f);
 	}
 	else
 	{
