@@ -104,6 +104,7 @@ void Debtor::UpDateFall()
 
 void Debtor::UpDateAttack()
 {
+
 }
 
 void Debtor::UpDateGuard()
@@ -125,8 +126,6 @@ void Debtor::UpDateDead()
 {
 
 }
-
-
 
 bool Debtor::HitPlayer()
 {

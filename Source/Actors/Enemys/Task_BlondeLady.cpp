@@ -47,6 +47,8 @@ namespace BlondeLady
 		SetTarget(pl.get());
 
 		moveCnt_->SetCountFrame(60);
+
+
 		//šƒ^ƒXƒN‚Ì¶¬
 
 		return  true;
