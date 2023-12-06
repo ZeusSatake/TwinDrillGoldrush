@@ -1,10 +1,12 @@
 #include "Drill.h"
 #include "MyPG.h"
 #include "Source/Scene/Task_Map.h"
+#include "Source/Components/Blocks/BlockManager.h"
 Drill::Drill()
 	:
 	attackPoint(0),
 	angle(0.0f),
+	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
 	canRotate(true)
@@ -18,6 +20,22 @@ Drill::Drill()
 void Drill::SetAngle(float angle)
 {
 	this->angle = angle;
+}
+
+bool Drill::SpinAngle(float angle)
+{
+	
+	if (ML::ToDegree(this->addAngle)< 360)
+	{
+		this->angle += angle;
+		addAngle += angle;
+	}
+	else
+	{
+		this->addAngle = 0.f;
+		return true;
+	}
+	return false;
 }
 
 void Drill::SetCanRotate(bool check)
@@ -50,17 +68,50 @@ float Drill::UpdateDrillAngle()
 	return this->angle;
 }
 
+ML::Vec2 Drill::DrillAngleVec()
+{
+	return ML::Vec2
+	{
+		cos(this->UpdateDrillAngle()),
+		sin(this->UpdateDrillAngle())
+	};
+}
+
 void Drill::Mining()
 {
 	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
 	{
 		ML::Vec2 preVec{
-			this->GetPos().x - ge->camera2D.x/*+(cos(this->UpdateDrillAngle()) * 5.f)*/,
-				this->GetPos().y - ge->camera2D.y /*+(sin(this->UpdateDrillAngle()) * 5.0f)*/
+			this->GetPos().x/*+(cos(this->UpdateDrillAngle()) * 5.f)*/,
+				this->GetPos().y /*+(sin(this->UpdateDrillAngle()) * 5.0f)*/
 		};
 		map->Search(preVec);
+		//this->SearchBrocks(preVec);
 	}
 }
+
+//void Drill::SearchBrocks(ML::Vec2 pos_)
+//{
+//	//現在のマスを出さない限りはどうしようもない
+//	ML::Vec2 pos = pos_;
+//	//ML::Point brock{ (int)pos_.x / 16,(int)pos_.y / 16 };//これで現在いるマスが取れる
+//	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName)) {
+//		if (!map->Search(pos))
+//		{
+//			if (!map->Search(ML::Vec2{ pos.x, pos.y - 16.f }))
+//			{
+//				if (!map->Search(ML::Vec2{ pos.x - 16.f,pos.y }))
+//				{
+//					if (!map->Search(ML::Vec2{ pos.x + 16.f,pos.y }))
+//					{
+//						return;
+//					}
+//				}
+//			}
+//		}
+//	}
+//}
+
 
 void Drill::DrillCheckMove(ML::Vec2 e_)
 {
