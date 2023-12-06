@@ -4,18 +4,17 @@
 //コンストラクタ
 //==============================================================
 SecondsTimerComponent::SecondsTimerComponent(GameObject* owner)
-	: 
-	Component((Actor*)owner),
-	nowCount_(0),
-	countSeconds_(0),
-	isActive_(false)
+	:
+	SecondsTimerComponent(owner, 0.0f)
 {
 };
-SecondsTimerComponent::SecondsTimerComponent(class GameObject* owner,const float count, const float countFrame)
-	: 
+SecondsTimerComponent::SecondsTimerComponent(GameObject* owner, const float countFrame)
+	:
 	Component((Actor*)owner),
-	nowCount_(count),
-	countSeconds_(countFrame)
+	nowCount_(0.0f),
+	countSeconds_(countFrame),
+	isActive_(false),
+	isCountEndFrame_(false)
 {
 	SetActive();
 };
@@ -23,7 +22,7 @@ SecondsTimerComponent::SecondsTimerComponent(class GameObject* owner,const float
 //==============================================================
 //ゲッタ
 //==============================================================
-int SecondsTimerComponent::GetCount() const
+float SecondsTimerComponent::GetCount() const
 {
 	return nowCount_;
 }
@@ -41,12 +40,12 @@ bool SecondsTimerComponent::IsCountEndFrame() const
 //==============================================================
 void SecondsTimerComponent::SetCountSeconds(const float countSeconds)
 {
+	if (countSeconds < 0.0f)
+		assert(!"カウントする秒数にマイナスの値は入れないでください。");
 	countSeconds_ = countSeconds;
 }
 
-//==============================================================
-//イベント
-//==============================================================
+//タイマー起動
 void SecondsTimerComponent::Start()
 {
 	if (countSeconds_ <= 0)
@@ -55,21 +54,22 @@ void SecondsTimerComponent::Start()
 	nowCount_ = countSeconds_;
 	isActive_ = true;
 }
+
 void SecondsTimerComponent::Update()
 {
+	SetActive();
+
 	if (IsActive() == false)
 		return;
 
 	nowCount_ -= 1.0f / REFRESHRATE;
-
-	SetActive();
 }
 void SecondsTimerComponent::SetActive()
 {
-	isCountEndFrame_ = isActive_ && nowCount_ < 0;
+	isCountEndFrame_ = isActive_ && nowCount_ <= 0.0f;
 
-	isActive_ = nowCount_ > 0;
+	isActive_ = nowCount_ > 0.0f;
 
-	if (!isActive_ && nowCount_ < 0)
-		nowCount_ = 0;
+	if (!isActive_ && nowCount_ < 0.0f)
+		nowCount_ = 0.0f;
 }

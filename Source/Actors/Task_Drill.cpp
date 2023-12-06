@@ -54,12 +54,10 @@ namespace  drill
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		this->angle_ = ML::ToRadian(this->UpdateDrillAngle());
-		this->SetPosX(this->GetPos().x+ cos(this->UpdateDrillAngle()) * 15.f);
-		this->SetPosY(this->GetPos().y + sin(this->UpdateDrillAngle()) * 15.0f);
+		this->SetAngle(this->UpdateDrillAngle());
+		this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
+		this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.0f);
 		this->dState = this->state_->GetNowState();
-		this->Think();
-		this->Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -71,7 +69,7 @@ namespace  drill
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
-		//ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), to_string(this->pos_.x));
+		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
 		
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

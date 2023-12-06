@@ -6,8 +6,9 @@ class Drill :public Character
 {
 	int   attackPoint;
 	int   durability;
-	float nowAngle;
-	float Lenght;
+	float angle;
+	float preAngle;
+	bool  canRotate;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -17,6 +18,7 @@ public:
 	virtual ~Drill() { };
 
 	void SetAngle(float angle);
+	void SetCanRotate(bool check);
 
 	int GetAttackPoint();
 	float GetNowAngle();
@@ -26,6 +28,4 @@ public:
 	void DrillCheckMove(ML::Vec2 e_);
 
 	StateComponent::State dState;
-	void Think()override;
-	void Move()override;
 };
