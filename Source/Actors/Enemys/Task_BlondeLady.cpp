@@ -47,7 +47,7 @@ namespace BlondeLady
 		SetTarget(pl.get());
 
 		moveCnt_->SetCountFrame(60);
-
+		//fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
 
 		//šƒ^ƒXƒN‚Ì¶¬
 
@@ -83,6 +83,8 @@ namespace BlondeLady
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		
 		res->img->Draw(draw, src);
+
+		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
 	}
 	//-------------------------------------------------------------------
 	//šššššššššššššššššššššššššššššššššššššššššš
