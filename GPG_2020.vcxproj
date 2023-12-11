@@ -160,9 +160,11 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
@@ -183,6 +185,8 @@
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\TimerComponent.cpp" />
+    <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
@@ -194,8 +198,9 @@
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
+    <ClCompile Include="Source\UIBase\PushButton.cpp" />
+    <ClCompile Include="Source\UIBase\ToggleButton.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
-    <ClCompile Include="ToggleButton.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="XI2018_Ver1_0.cpp" />
   </ItemGroup>
@@ -234,9 +239,11 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
+    <ClInclude Include="Source\Actors\UI\Task_BuyButton.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
@@ -257,6 +264,8 @@
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\TimerComponent.h" />
+    <ClInclude Include="Source\EnemyClasses\Lady.h" />
+    <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
@@ -268,8 +277,9 @@
     <ClInclude Include="Source\System\Task_BackGround.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
+    <ClInclude Include="Source\UIBase\PushButton.h" />
+    <ClInclude Include="Source\UIBase\ToggleButton.h" />
     <ClInclude Include="Task_Effect00.h" />
-    <ClInclude Include="ToggleButton.h" />
     <ClInclude Include="XI2018_Ver1_0.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,26 +1,24 @@
 //-------------------------------------------------------------------
-//UIカーソル
+//
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_Cursor.h"
-#include  "../../Components/Movement.h"
-#include  "../../UIBase/ToggleButton.h"
+#include  "Task_BlondeLady.h"
+#include  "../../Actors/Task_Player.h"
 
-namespace Cursor
+namespace BlondeLady
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		image_ = DG::Image::Create("./data/image/shot.png");
+		img = DG::Image::Create("./data/image/BlondeLady.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		image_.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -33,22 +31,24 @@ namespace Cursor
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->SetPos(ge->screenCenterPos);
+		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		gravity_->SetDirection(ML::Vec2::Down());
+		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32)*10);
 
-		AddComponent(movement_ = make_shared<Movement>(this));
-		//パラメータの設定
-		movement_->SetSpeed(8.0f, 15.0f, 0.5f);
-		movement_->SetDecelerationRate(ML::Percentage(30.0f));
-		movement_->SetAcceleration(20.0f);
+		angle_LR_ = Angle_LR::Right;
 
-		box_->setHitBase(ML::Box2D(-28, -28, 56, 56));
-		
-		auto buttons = ge->GetTasks<ToggleButton>("UI", "Button");
-		for (auto& button : *buttons)
-		{
-			button->SetSelector(this);
-		}
-		
+		SetPreState(Enemy::Patrol);
+		SetNowState(Enemy::Patrol);
+
+		SetFov(200.f);
+
+		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
+
+		moveCnt_->SetCountFrame(60);
+		//fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
+
 		//★タスクの生成
 
 		return  true;
@@ -58,7 +58,7 @@ namespace Cursor
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		movement_.reset();
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -70,25 +70,23 @@ namespace Cursor
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		movement_->LStickInputToMove(ge->in1);
+		Think();
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D src(0, 0, 56, 56);
-		res->image_->Draw(box_->getHitBase().OffsetCopy(this->GetPos()), src);
-	}
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		
+		res->img->Draw(draw, src);
 
-	void Object::SetEnterButton(const XI::VGP enterButton)
-	{
-		enterButton_ = enterButton;
+		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
 	}
-	XI::VGP Object::GetEnterButton() const
-	{
-		return enterButton_;
-	}
-
+	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

@@ -3,14 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../Player.h"
-#include "../Actors/Task_Drill.h"
+#include "../../EnemyClasses/NormalLady.h"
 
-namespace player
+namespace BlondeLady
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("キャラクタ");	//グループ名
-	const  string  defName("プレイヤー");		//タスク名
+	const  string  defGroupName("敵");	//グループ名
+	const  string  defName("金髪お嬢");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -25,10 +24,10 @@ namespace player
 		static  Resource::SP  Create();
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//共有する変数はここに追加する
-		DG::Image::SP playerImg;
+		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  Player
+	class  Object : public  NormalLady
 	{
 	public:
 		virtual  ~Object();
@@ -50,6 +49,6 @@ namespace player
 	public:
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//追加したい変数・メソッドはここに追加する
-		void DebugInfo();
+		//BCharaに含まれないモノのみここに追加する
 	};
 }

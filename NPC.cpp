@@ -57,6 +57,29 @@ bool NPC::CheckFrontFoot() const
 	return map->CheckHit(front);
 }
 
+bool NPC::WithinSight(class Actor* target)
+{
+	//“ñ“_ŠÔ‚Ì’·‚³‚ð’²‚×‚é
+	distance_ = ML::Vec2(GetPos() - target->GetPos()).Length();
+	//‰¼‚ÅŽ‹–ìŠp‚ð–³Ž‹‚µ‚Ä¶‰E‚Ì‚Ý‚Å‚Ì”»’è
+	if (angle_LR_ == Angle_LR::Left)
+	{
+		if (GetPos().x > target->GetPos().x)
+		{
+			return abs(fov_) > distance_;
+		}
+		return false;
+	}
+	else
+	{
+		if (GetPos().x <= target->GetPos().x)
+		{
+			return abs(fov_) > distance_;
+		}
+		return false;
+	}
+}
+
 float NPC::GetFov() const
 {
 	return fov_;

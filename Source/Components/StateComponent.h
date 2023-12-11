@@ -19,10 +19,12 @@ public:
 		Jump,       //ジャンプ
 		Fall,       //降下
 		Dash,       //ダッシュ
+		Drill,      //ドリル
 		DrillDash,  //ドリルダッシュ
 		Mining,     //採掘
 		Appeal      //アピール
 	};
+	int moveCnt_;
 private:
 	State nowState;
 	State preState;
