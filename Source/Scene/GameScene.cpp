@@ -11,6 +11,8 @@
 
 #include  "../System/Task_BackGround.h"
 #include  "Task_Map.h"
+#include  "Task_JewelryMap.h"
+
 #include  "Task_EnemyMap.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
@@ -82,9 +84,8 @@ namespace  GameScene
 			map->Load("MapStone");
 		}
 		{//•óÎ
-			auto mapore = Map::Object::Create(true);
-			mapore->Load("MapJewelry");
-			mapore->render2D_Priority[1] = 0.85f;
+			auto mapJewelry = JewelryMap::Object::Create(true);
+			mapJewelry->Load("MapJewelry");
 		}
 		{//“G
 			auto enemymap = EnemyMap::Object::Create(true);
