@@ -49,10 +49,9 @@ namespace Save
 		enum class ValueKind
 		{
 			StageNo,
-			Attack,
-			Defence,
-			Speed,
-			HP,
+			DrillLevel,
+			DefenceLevel,
+			SpeedLevel,
 			HaveMoney,
 
 			//===============’Ç‰Á‚·‚éê‡‚Í‚±‚±‚æ‚èã==============
