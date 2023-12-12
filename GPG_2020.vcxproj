@@ -199,6 +199,7 @@
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
+    <ClCompile Include="Source\System\Task_Save.cpp" />
     <ClCompile Include="Source\UIBase\PushButton.cpp" />
     <ClCompile Include="Source\UIBase\ToggleButton.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="Source\System\Task_BackGround.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
+    <ClInclude Include="Source\System\Task_Save.h" />
     <ClInclude Include="Source\UIBase\PushButton.h" />
     <ClInclude Include="Source\UIBase\ToggleButton.h" />
     <ClInclude Include="Task_Effect00.h" />
