@@ -34,6 +34,8 @@ public:
 protected:
 
 public:
+	string MapName;						//参照マップの名前を入れる
+
 
 	//受ける
 	virtual void Received(BBlocks* object);
@@ -41,6 +43,5 @@ public:
 	virtual bool Drilling(const string& targetGroupName);
 	virtual bool Drilling(const string& targetGroupName, const ML::Box2D& attackArea);
 	void LoadSe();
-
-
+	void getMapName(const string MapName_);
 };

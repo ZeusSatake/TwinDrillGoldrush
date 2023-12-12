@@ -31,7 +31,6 @@ namespace	Manager
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->InitArray();
 
 		//★タスクの生成
 
@@ -64,7 +63,7 @@ namespace	Manager
 	//ブロックHP・特性設定
 	void Object::InitArray()
 	{
-		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		auto map = ge->GetTask<Map::Object>("本編", MapName);
 		for (int y = 0; y < map->sizeY; y++)
 		{
 			for (int x = 0; x < map->sizeX; x++)
@@ -108,6 +107,11 @@ namespace	Manager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 11;
 					break;
+				case 23:
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
+					this->arr[y][x].event = 23;
+					break;
 				case 27:
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
@@ -133,7 +137,7 @@ namespace	Manager
 		{
 			this->arr[y][x].HP -= power;
 
-			auto map = ge->GetTask<Map::Object>("本編", "マップ");
+			auto map = ge->GetTask<Map::Object>("本編", MapName);
 			this->eventSearch(y, x);
 			map->SetMapChip(y, x, 0);
 		}
@@ -161,6 +165,9 @@ namespace	Manager
 		case 11:
 			IronOre(pos);
 			break;
+		case 23:
+			Stone(pos);
+			break;
 		default:
 			break;
 		}
@@ -178,7 +185,7 @@ namespace	Manager
 	}
 	void Object::collapseBlock(int x,int y)
 	{
-		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		auto map = ge->GetTask<Map::Object>("本編", MapName);
 		int id = map->GetMapChip(y, x);
 
 

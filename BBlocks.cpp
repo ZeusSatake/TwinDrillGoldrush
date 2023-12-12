@@ -65,3 +65,8 @@ bool BBlocks::Drilling(const string& targetGroupName, const ML::Box2D& attackAre
 	return successAttack;
 }
 
+void BBlocks::getMapName(const string MapName_)
+{
+	string str = MapName_;
+	MapName = str;
+}
