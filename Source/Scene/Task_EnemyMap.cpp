@@ -48,7 +48,6 @@ namespace  EnemyMap
 		}
 		
 		//šƒ^ƒXƒN‚Ì¶¬
-		Manager::Object::Create(true);
 
 		return  true;
 	}
