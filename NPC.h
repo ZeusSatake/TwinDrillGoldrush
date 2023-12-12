@@ -23,6 +23,8 @@ public:
 	float GetDistance() const;
 	void SetDistance(const float distance);
 
+	bool WithinSight(class Actor* target);
+
 	Actor* GetTarget() const;
 	void SetTarget(Actor* target);
 };

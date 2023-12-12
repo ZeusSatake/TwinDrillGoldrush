@@ -1,16 +1,13 @@
 #pragma once
-#include "Enemy.h"
-
-//-----------------------------------------------------
-//ç¬ñ±é“äÓíÍÉNÉâÉX
-//-----------------------------------------------------
-class Debtor : public Enemy
+#include "Lady.h"
+class NormalLady : public Lady
 {
+protected:
+	shared_ptr<BoxCollisionComponent> fanEdge_;
 public:
-	Debtor();
-	virtual ~Debtor() {};
+	NormalLady();
+	virtual ~NormalLady() { };
 
-	
 public:
 	virtual void Think();
 	virtual void Move();
@@ -23,9 +20,5 @@ public:
 	virtual void UpDateDodge();
 	virtual void UpDateDamage();
 	virtual void UpDateDead();
-
-	
-
-	bool HitPlayer();
 };
 

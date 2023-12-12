@@ -3,75 +3,75 @@
 
 void HP::UpdateIsAlive()
 {
-	if (now > 0) {
-		isAlive = true;
+	if (now_ > 0) {
+		isAlive_ = true;
 	}
 	else {
-		isAlive = false;
+		isAlive_ = false;
 	}
 }
 
 HP::HP(class Actor* owner)
 	:Component(owner),
-	now(0),
-	max(0),
-	isAlive(false)
+	now_(0),
+	max_(0),
+	isAlive_(false)
 {
 }
 HP::HP(class Actor* owner,int max_)
 	:Component(owner),
-	now(max_),
-	max(max_)
+	now_(max_),
+	max_(max_)
 {
-	assert(max >= 0);
+	assert(max_ >= 0);
 	UpdateIsAlive();
 }
 void HP::TakeDamage(const int damage_)
 {
-	now -= damage_;
-	if (now < 0)
-		now = 0;
+	now_ -= damage_;
+	if (now_ < 0)
+		now_ = 0;
 	UpdateIsAlive();
 }
 
 void HP::TakeHeal(const int heal_)
 {
-	now += heal_;
-	if (now > max)
-		now = max;
+	now_ += heal_;
+	if (now_ > max_)
+		now_ = max_;
 	UpdateIsAlive();
 }
 
 int HP::GetNowHP() const
 {
-	return now;
+	return now_;
 }
 
 void HP::SetMaxHP(const int max_, MaxLifeSetMode setMode)
 {
 	assert(max_ >= 0);
 
-	if (max_ == max)
+	if (max_ == max_)
 		return;
 
-	if (max_ > max) {
-		AddMaxHP(max_ - max, setMode);
+	if (max_ > max_) {
+		AddMaxHP(max_ - max_, setMode);
 	}
 	else {
-		SubMaxHP(max - max_);
+		SubMaxHP(max_ - max_);
 	}
 }
 
 void HP::AddMaxHP(const int add, MaxLifeSetMode setMode)
 {
-	assert(max + add > max);
+	assert(max_ + add > max_);
 
-	max += add;
+	max_ += add;
 
 	switch (setMode) {
 
 	case MaxLifeSetMode::MaxHeal:
-		TakeHeal(this->max);
+		TakeHeal(this->max_);
 		break;
 
 	case MaxLifeSetMode::DifferenceHeal:
@@ -86,17 +86,17 @@ void HP::AddMaxHP(const int add, MaxLifeSetMode setMode)
 
 void HP::SubMaxHP(const int sub)
 {
-	assert(max - sub < max);
+	assert(max_ - sub < max_);
 
-	max -= sub;
-	now = max;
+	max_ -= sub;
+	now_ = max_;
 
 	UpdateIsAlive();
 }
 
 int HP::GetMaxHP() const
 {
-	return max;
+	return max_;
 }
 
 void HP::Initialize(const int max_)
@@ -110,5 +110,5 @@ void HP::Initialize(const int max_)
 
 bool HP::IsAlive() const
 {
-	return isAlive;
+	return isAlive_;
 }

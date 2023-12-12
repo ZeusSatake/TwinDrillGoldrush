@@ -1,21 +1,18 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "Task_EnemyMap.h"
-#include  "../Components/Blocks/Task_Stone.h"
-#include  "../Components/Blocks/BlockManager.h"
-#include "../Actors/Enemys/Task_EtoHaiji.h"
-#include "../Actors/Enemys/Task_BlondeLady.h"
+#include  "../../../MyPG.h"
+#include  "Task_BlondeLady.h"
+#include  "../../Actors/Task_Player.h"
 
-
-namespace  EnemyMap
+namespace BlondeLady
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		img = DG::Image::Create("./data/image/BlondeLady.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -34,21 +31,25 @@ namespace  EnemyMap
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->render2D_Priority[1] = 0.8f;
-		//arrの要素数分(*32)のマップサイズ
-		this->sizeX = sizeof(this->arr[0]) / sizeof(this->arr[0][0]);
-		this->sizeY = sizeof(this->arr) / sizeof(this->arr[0]);
-		this->chipSize = 16;//1マスの大きさ
-		for (int y = 0; y < this->sizeY; ++y)
-		{
-			for (int x = 0; x < this->sizeX; ++x)
-			{
-				this->arr[y][x] = 0;
-			}
-		}
-		
+		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		gravity_->SetDirection(ML::Vec2::Down());
+		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32)*10);
+
+		angle_LR_ = Angle_LR::Right;
+
+		SetPreState(Enemy::Patrol);
+		SetNowState(Enemy::Patrol);
+
+		SetFov(200.f);
+
+		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
+
+		moveCnt_->SetCountFrame(60);
+		//fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
+
 		//★タスクの生成
-		Manager::Object::Create(true);
 
 		return  true;
 	}
@@ -69,69 +70,23 @@ namespace  EnemyMap
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Think();
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		
+		res->img->Draw(draw, src);
+
+		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
 	}
 	//-------------------------------------------------------------------
-	bool Object::Load(const  string& fileName)
-	{
-		//ファイル名の作成
-		string filePath = "./data/Map/" + fileName + ".csv";
-		//ファイルの読み込み
-		ifstream ifs(filePath);
-		if (!ifs) { return false; }
-		this->hitBase = ML::Box2D(0, 0, this->sizeX * chipSize, this->sizeY * chipSize);
-		for (int y = 0; y < this->sizeY; ++y)
-		{
-			//改行までの文字列を取得
-			string lineText;
-			getline(ifs, lineText);
-
-			istringstream ss_lt(lineText);
-			for (int x = 0; x < this->sizeX; ++x)
-			{
-				//カンマまでの文字列を取得
-				string text;
-				getline(ss_lt, text, ',');
-				stringstream ss;
-				ss << text;
-				ss >> this->arr[y][x];
-			}
-		}
-		ifs.close();
-		return true;
-	}
-	//-------------------------------------------------------------------
-	void Object::SetEnemy()
-	{
-		for (int y = 0; y < this->sizeY; ++y) {
-			for (int x = 0; x < this->sizeX; ++x) {
-				// チップの番号によって生成する敵を変える
-				switch (this->arr[y][x])
-				{
-				case 1:
-				{
-					auto enemy = EtoHaiji::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-				}
-				break;
-				case 6:
-				{
-					auto enemy = BlondeLady::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-				}
-				break;
-				
-				}
-			}
-		}
-	}
-
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -144,7 +99,7 @@ namespace  EnemyMap
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-
+				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

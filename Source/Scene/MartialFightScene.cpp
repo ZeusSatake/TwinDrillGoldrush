@@ -5,6 +5,7 @@
 #include  "MartialFightScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "Task_Map.h"
+#include "Task_EnemyMap.h"
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
 
@@ -38,6 +39,11 @@ namespace MartialFightScene
 		{//•“¬‰ï
 			auto map = Map::Object::Create(true);
 			map->Load("MartialFight");
+		}
+		{//“G
+			auto enemymap = EnemyMap::Object::Create(true);
+			enemymap->Load("MartialFightEnemy");
+			enemymap->SetEnemy();
 		}
 		{
 			auto player = player::Object::Create(true);
