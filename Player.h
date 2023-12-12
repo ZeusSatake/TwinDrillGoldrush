@@ -8,6 +8,7 @@ class Player :public Character
 {
 	ML::Vec2 moveVec;
 	float speed;
+	float jumpPow;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -25,8 +26,8 @@ public:
 	//ƒ¿”Å‚ÉŠÔ‚É‡‚í‚¹‚é‚½‚ß‚ÌÚ’n”»’è
 	bool CheckFoot();
 	bool CheckHead();
-	void CheckMove(ML::Vec2& e_);
-
+	//void CheckMove(ML::Vec2& e_);
+	void Dash(ML::Vec2 e_);
 
 	ML::Vec2 GetMoveVec();
 	shared_ptr<drill::Object> drill_;

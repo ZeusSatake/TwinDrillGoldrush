@@ -160,6 +160,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
@@ -184,12 +185,15 @@
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\TimerComponent.cpp" />
+    <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
     <ClCompile Include="Source\Scene\ShopScene.cpp" />
     <ClCompile Include="Source\Scene\Task_EnemyMap.cpp" />
+    <ClCompile Include="Source\Scene\Task_JewelryMap.cpp" />
     <ClCompile Include="Source\Scene\Task_Map.cpp" />
     <ClCompile Include="Source\Scene\TitleScene.cpp" />
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
@@ -237,6 +241,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
@@ -261,12 +266,15 @@
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\TimerComponent.h" />
+    <ClInclude Include="Source\EnemyClasses\Lady.h" />
+    <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\MartialFightScene.h" />
     <ClInclude Include="Source\Scene\ShopScene.h" />
     <ClInclude Include="Source\Scene\Task_EnemyMap.h" />
+    <ClInclude Include="Source\Scene\Task_JewelryMap.h" />
     <ClInclude Include="Source\Scene\Task_Map.h" />
     <ClInclude Include="Source\Scene\TitleScene.h" />
     <ClInclude Include="Source\System\Task_BackGround.h" />

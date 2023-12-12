@@ -1,26 +1,24 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "Task_Drill.h"
-#include "Task_Player.h"
-#include "../../Source/Scene/Task_Map.h"
+#include  "../../../MyPG.h"
+#include  "Task_BlondeLady.h"
+#include  "../../Actors/Task_Player.h"
 
-namespace  drill
+namespace BlondeLady
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->img = DG::Image::Create("./data/image/preDrill.png");
+		img = DG::Image::Create("./data/image/BlondeLady.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		this->img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -33,7 +31,24 @@ namespace  drill
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-4,8,8 });
+		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		gravity_->SetDirection(ML::Vec2::Down());
+		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32)*10);
+
+		angle_LR_ = Angle_LR::Right;
+
+		SetPreState(Enemy::Patrol);
+		SetNowState(Enemy::Patrol);
+
+		SetFov(200.f);
+
+		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
+
+		moveCnt_->SetCountFrame(60);
+		//fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
+
 		//★タスクの生成
 
 		return  true;
@@ -55,27 +70,23 @@ namespace  drill
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		this->SetAngle(this->UpdateDrillAngle());
-		this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
-		this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.0f);
-		this->dState = this->state_->GetNowState();
+		Think();
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
-		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
-		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src = ML::Box2D(0, 0, 500, 615);
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		this->res->img->Draw(draw, src);
-		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
-		ML::Vec2 mapPoint{ (this->GetPos().x+16 + ge->camera2D.x),(this->GetPos().y+16 + ge->camera2D.x )};
-		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };
-		ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "ドリルのマス:" + to_string((int)mapPoint.x/16)+" "+to_string((int)mapPoint.y/16));
 		
+		res->img->Draw(draw, src);
+
+		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
 	}
+	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

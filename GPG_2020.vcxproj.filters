@@ -65,253 +65,268 @@
     <Filter Include="MyPG\Components\Money">
       <UniqueIdentifier>{695b74c9-d253-46b6-b7b6-6899b70df6d8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\EnemyClasses">
+      <UniqueIdentifier>{55f9878c-e6d0-475a-9a45-85a9035b2c01}</UniqueIdentifier>
+    </Filter>
     <Filter Include="MyPG\UIBase">
       <UniqueIdentifier>{f1456bfb-7506-407c-b73e-f9a66c3a0842}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="GameEngine_Ver3_83.cpp">
-      <Filter>GameEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Dm2008_Ver1_4.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="XI2018_Ver1_0.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_DGObject.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Effect.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Font.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Image.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_IndexBuffer.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_InputLayout.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Mesh.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_MeshSOBFile.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Texture.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_Ver3_6.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_VertexBuffer.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="DG2014\DG2014_VertexContainer.cpp">
-      <Filter>Lib\DG2014</Filter>
-    </ClCompile>
-    <ClCompile Include="myLib.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="MyPG.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="fpscounter.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="randomLib.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="sound.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="Task_Effect00.cpp">
-      <Filter>MyPG\Task</Filter>
-    </ClCompile>
-    <ClCompile Include="easing.cpp">
-      <Filter>Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\HP.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Movement.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\TimerComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Task_DrawNumFont.cpp">
-      <Filter>MyPG\Task\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Task_BackGround.cpp">
-      <Filter>MyPG\Task\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Task_FlashDraw.cpp">
-      <Filter>MyPG\Task\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Animation\AnimManager.cpp">
-      <Filter>MyPG\Components\Anim</Filter>
-    </ClCompile>
-    <ClCompile Include="Component.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Animation\AnimInfo.cpp">
-      <Filter>MyPG\Components\Anim</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\BoxCollisionComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\CircleCollisionComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="NPC.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\ControllerInputComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\StateComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\AIMoveComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_Map.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="BBlocks.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
-      <Filter>MyPG\Task\Actors\Enemys</Filter>
-    </ClCompile>
-    <ClCompile Include="BPlayer.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp">
-      <Filter>MyPG\Task\Actors\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\ShopScene.cpp">
-      <Filter>MyPG\Task\Scene\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Drill.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\Task_Drill.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\TitleScene.cpp">
-      <Filter>MyPG\Task\Scene\title</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\EndingScene.cpp">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\BaseScene.cpp">
-      <Filter>MyPG\Task\Scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\GameScene.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\MartialFightScene.cpp">
-      <Filter>MyPG\Task\Scene\MartialFight</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\TitleScene.cpp">
-      <Filter>MyPG\Task\Scene\title</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\BaseScene.cpp">
-      <Filter>MyPG\Task\Scene\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\EndingScene.cpp">
-      <Filter>MyPG\Task\Scene\ending</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\GameScene.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\MartialFightScene.cpp">
-      <Filter>MyPG\Task\Scene\MartialFight</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
-      <Filter>MyPG\Task\Scene\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Debtor.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
-      <Filter>MyPG\Components\Money</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Money\WalletComponent.cpp">
-      <Filter>MyPG\Components\Money</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp">
-      <Filter>MyPG\Task\Actors\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\StatusComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\Task_Player.cpp">
-      <Filter>MyPG\Task\Actors</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
-      <Filter>MyPG\Task\Actors\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
-    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
-      <Filter>MyPG\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp">
-      <Filter>MyPG\Task\Actors\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UIBase\ToggleButton.cpp">
-      <Filter>MyPG\UIBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\UIBase\PushButton.cpp">
-      <Filter>MyPG\UIBase</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\System\Task_Save.cpp">
-      <Filter>MyPG\Task\System</Filter>
-    </ClCompile>
-  </ItemGroup>
+	<ItemGroup>
+		<ClCompile Include="GameEngine_Ver3_83.cpp">
+			<Filter>GameEngine</Filter>
+		</ClCompile>
+		<ClCompile Include="Dm2008_Ver1_4.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="XI2018_Ver1_0.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_DGObject.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Effect.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Font.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Image.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_IndexBuffer.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_InputLayout.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Mesh.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_MeshSOBFile.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Texture.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_Ver3_6.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_VertexBuffer.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="DG2014\DG2014_VertexContainer.cpp">
+			<Filter>Lib\DG2014</Filter>
+		</ClCompile>
+		<ClCompile Include="myLib.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="MyPG.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="WinMain.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="fpscounter.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="randomLib.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="sound.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="Task_Effect00.cpp">
+			<Filter>MyPG\Task</Filter>
+		</ClCompile>
+		<ClCompile Include="easing.cpp">
+			<Filter>Lib</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\HP.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Movement.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\TimerComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\System\Task_DrawNumFont.cpp">
+			<Filter>MyPG\Task\System</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\System\Task_BackGround.cpp">
+			<Filter>MyPG\Task\System</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\System\Task_FlashDraw.cpp">
+			<Filter>MyPG\Task\System</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Animation\AnimManager.cpp">
+			<Filter>MyPG\Components\Anim</Filter>
+		</ClCompile>
+		<ClCompile Include="Component.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Animation\AnimInfo.cpp">
+			<Filter>MyPG\Components\Anim</Filter>
+		</ClCompile>
+		<ClCompile Include="GameObject.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\BoxCollisionComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\CircleCollisionComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Actor.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Character.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="NPC.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Player.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\ControllerInputComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\StateComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\AIMoveComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Enemy.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\Task_Map.cpp">
+			<Filter>MyPG\Task\Scene\Game</Filter>
+		</ClCompile>
+		<ClCompile Include="BBlocks.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
+			<Filter>MyPG\Task\Actors\Blocks</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
+			<Filter>MyPG\Task\Actors\Enemys</Filter>
+		</ClCompile>
+		<ClCompile Include="BPlayer.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp">
+			<Filter>MyPG\Task\Actors\UI</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\ShopScene.cpp">
+			<Filter>MyPG\Task\Scene\Shop</Filter>
+		</ClCompile>
+		<ClCompile Include="Drill.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\Task_Drill.cpp">
+			<Filter>MyPG\Task\Actors</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
+			<Filter>MyPG\Task\Actors\Blocks</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp">
+			<Filter>MyPG\Task\Actors\Blocks</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\TitleScene.cpp">
+			<Filter>MyPG\Task\Scene\title</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\EndingScene.cpp">
+			<Filter>MyPG\Task\Scene\ending</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\BaseScene.cpp">
+			<Filter>MyPG\Task\Scene\Base</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\GameScene.cpp">
+			<Filter>MyPG\Task\Scene\Game</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\MartialFightScene.cpp">
+			<Filter>MyPG\Task\Scene\MartialFight</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp">
+			<Filter>MyPG\Task\Actors\Blocks</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\TitleScene.cpp">
+			<Filter>MyPG\Task\Scene\title</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\BaseScene.cpp">
+			<Filter>MyPG\Task\Scene\Base</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\EndingScene.cpp">
+			<Filter>MyPG\Task\Scene\ending</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\GameScene.cpp">
+			<Filter>MyPG\Task\Scene\Game</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\MartialFightScene.cpp">
+			<Filter>MyPG\Task\Scene\MartialFight</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
+			<Filter>MyPG\Task\Scene\Game</Filter>
+		</ClCompile>
+		<ClCompile Include="Debtor.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
+			<Filter>MyPG\Components\Money</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\Money\WalletComponent.cpp">
+			<Filter>MyPG\Components\Money</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\UI\Task_Cursor.cpp">
+			<Filter>MyPG\Task\Actors\UI</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\StatusComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Camera.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\Task_Player.cpp">
+			<Filter>MyPG\Task\Actors</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
+			<Filter>MyPG\Task\Actors\UI</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
+		<ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp">
+			<Filter>MyPG\Task\Actors\Enemys</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\EnemyClasses\Lady.cpp">
+			<Filter>MyPG\EnemyClasses</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\EnemyClasses\NormalLady.cpp">
+			<Filter>MyPG\EnemyClasses</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
+			<Filter>MyPG\Components</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp">
+			<Filter>MyPG\Task\Actors\UI</Filter>
+		</ClCompile>
+		<ClCompile Include="Scene.cpp">
+			<Filter>MyPG</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\UIBase\ToggleButton.cpp">
+			<Filter>MyPG\UIBase</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\UIBase\PushButton.cpp">
+			<Filter>MyPG\UIBase</Filter>
+		</ClCompile>
+		<ClCompile Include="Source\System\Task_Save.cpp">
+			<Filter>MyPG\Task\System</Filter>
+		</ClCompile>
+	    <ClCompile Include="Source\Scene\Task_JewelryMap.cpp">
+			<Filter>MyPG\Task\Scene\Game</Filter>
+		</ClCompile>
+		</ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
       <Filter>GameEngine</Filter>
@@ -531,6 +546,15 @@
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\Lady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\NormalLady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h">
       <Filter>MyPG\Components</Filter>
     </ClInclude>
@@ -548,7 +572,10 @@
     </ClInclude>
     <ClInclude Include="Source\System\Task_Save.h">
       <Filter>MyPG\Task\System</Filter>
-    </ClInclude>
+	</ClInclude>
+    <ClInclude Include="Source\Scene\Task_JewelryMap.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
+	</ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GPG_20201.rc">

@@ -3,9 +3,9 @@
 class HP : public Component
 {
 private:
-	int now;
-	int max;
-	bool isAlive;
+	int now_;
+	int max_;
+	bool isAlive_;
 
 	//¶‘¶ó‘ÔXV
 	void UpdateIsAlive();

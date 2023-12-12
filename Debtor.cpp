@@ -2,8 +2,6 @@
 
 Debtor::Debtor()
 	:Enemy()
-	,preState_(AIState::Patrol)
-	,nowState_(AIState::Patrol)
 {
 	movement_->SetConsiderationCollition(true);
 	gravity_->SetConsiderationCollition(true);
@@ -11,32 +9,32 @@ Debtor::Debtor()
 
 void Debtor::Think()
 {
-	AIState afterState = nowState_;
+	AIState afterState = GetNowState();
 	switch (afterState)
 	{
-	case AIState::Idle:
+	case Idle:
 		if (!OutOfScreen())
-			afterState = AIState::Patrol;
+			afterState = Patrol;
 		break;
-	//case AIState::Patrol:
-	//	if (GetDistance() <= GetFov())
-	//		afterState = AIState::Approach;
-	//	break;
-	//case AIState::Approach:
+	/*case Patrol:
+		if (WithinSight(GetTarget()))
+			afterState = Approach;
+		break;*/
+	//case Approach:
 	//	if (GetDistance() <= GetRange())
 	//	{
-	//		afterState = AIState::Attack;
+	//		afterState = Attack;
 	//	}
 	//	else if (GetDistance() > GetFov())
 	//	{
-	//		afterState = AIState::Patrol;
+	//		afterState = Patrol;
 	//	}
 	//	break;
-	//case AIState::Attack:
+	//case Attack:
 	//	//ŽË’öŠO‚Éo‚½‚çÚ‹ß‚ÉØ‚è‘Ö‚¦
 	//	if (GetDistance() > GetRange())
 	//	{
-	//		afterState = AIState::Approach;
+	//		afterState = Approach;
 	//	}
 
 	}
@@ -56,10 +54,9 @@ void Debtor::Move()
 	else
 	{
 		SetMoveVecY(0.f);
-		//gravity_->Stop();
 	}
 
-	switch (nowState_)
+	switch (GetNowState())
 	{
 	case AIState::Idle:
 		break;
@@ -70,6 +67,7 @@ void Debtor::Move()
 		UpDateApproach();
 		break;
 	case AIState::Attack:
+		BeginAttack();
 		UpDateAttack();
 		break;
 	case AIState::Damage:
@@ -79,13 +77,14 @@ void Debtor::Move()
 		UpDateDead();
 		break;
 	}
+
 	est = GetMoveVec();
 	CheckMove(est);
 }
 
 void Debtor::UpDatePatrol()
 {
-	AIMove_->Patroll(GetTarget());
+	AIMove_->Patroll();
 }
 
 void Debtor::UpDateApproach()
@@ -95,7 +94,7 @@ void Debtor::UpDateApproach()
 
 void Debtor::UpDateJump()
 {
-
+	AIMove_->Jump();
 }
 
 void Debtor::UpDateFall()
@@ -126,18 +125,6 @@ void Debtor::UpDateDamage()
 void Debtor::UpDateDead()
 {
 
-}
-
-bool Debtor::UpDateState(AIState afterState)
-{
-	if (nowState_ == afterState)
-		return false;
-	else
-	{
-		preState_ = nowState_;
-		nowState_ = afterState;
-		return true;
-	}
 }
 
 bool Debtor::HitPlayer()

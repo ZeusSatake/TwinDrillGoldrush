@@ -3,6 +3,7 @@
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
 #include  "Task_EtoHaiji.h"
+#include  "../../Actors/Task_Player.h"
 
 namespace EtoHaiji
 {
@@ -37,8 +38,13 @@ namespace EtoHaiji
 
 		angle_LR_ = Angle_LR::Right;
 
-		//moveVec_ = ML::Vec2{ 0,0 };
+		SetPreState(Enemy::Patrol);
+		SetNowState(Enemy::Patrol);
 
+		SetFov(200.f);
+
+		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
 		//šƒ^ƒXƒN‚Ì¶¬
 
 		return  true;
@@ -79,7 +85,6 @@ namespace EtoHaiji
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		
 		res->img->Draw(draw, src);
-
 	}
 	//-------------------------------------------------------------------
 	//šššššššššššššššššššššššššššššššššššššššššš
