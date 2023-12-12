@@ -1,8 +1,9 @@
 #include "NormalLady.h"
-
+#include "../Actors/Task_Player.h"
 NormalLady::NormalLady()
 	:Lady()
 {
+	AddComponent(fanEdge_=shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
 	movement_->SetConsiderationCollition(true);
 	gravity_->SetConsiderationCollition(true);
 }
@@ -31,6 +32,7 @@ void NormalLady::Think()
 		}
 		break;
 	}
+	UpDateState(afterState);
 }
 
 void NormalLady::Move()
@@ -56,7 +58,10 @@ void NormalLady::Move()
 		UpDatePatrol();
 		break;
 	case AIState::Approach:
-		UpDateApproach();
+		//UpDateApproach();
+		BeginAttack();
+		moveCnt_->Start();
+		UpDateAttack();
 		break;
 	case AIState::Attack:
 		BeginAttack();
