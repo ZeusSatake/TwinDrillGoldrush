@@ -235,7 +235,9 @@ namespace  JewelryMap
 			if (this->arr[masu.y][masu.x] > 0) {
 				auto manager = ge->GetTasks<Manager::Object>("Blocks");
 				for (auto it = manager->begin(); it != manager->end(); it++) {
-					(*it)->Damage(masu, 1);
+					if ((*it)->MapName == JewelryMap::defName) {
+						(*it)->Damage(masu, 1);
+					}
 				}
 			}
 		}
