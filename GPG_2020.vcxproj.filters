@@ -295,7 +295,6 @@
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
-
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
@@ -320,6 +319,9 @@
     </ClCompile>
     <ClCompile Include="Source\UIBase\PushButton.cpp">
       <Filter>MyPG\UIBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\Task_JewelryMap.cpp">
+      <Filter>MyPG\Task\Scene\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -564,6 +566,9 @@
     </ClInclude>
     <ClInclude Include="Source\UIBase\PushButton.h">
       <Filter>MyPG\UIBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\Task_JewelryMap.h">
+      <Filter>MyPG\Task\Scene\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
