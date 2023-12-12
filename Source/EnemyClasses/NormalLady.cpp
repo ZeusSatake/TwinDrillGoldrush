@@ -25,7 +25,10 @@ void NormalLady::Think()
 		}
 		break;
 	case Attack:
-
+		if (!IsAttacking())
+		{
+			afterState = Approach;
+		}
 		break;
 	}
 }
@@ -97,7 +100,19 @@ void NormalLady::UpDateAttack()
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);
-
+		fanEdge_->getHitBase().Offset(GetPos());
+		if (fanEdge_->CheckHit(GetTarget()->GetBox()->getHitBase()))
+		{
+			static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
+		}
+		if (moveCnt_->IsCounting())
+		{
+			
+		}
+		else
+		{
+			EndAttack();
+		}
 	}
 }
 

@@ -2,6 +2,8 @@
 #include "Lady.h"
 class NormalLady : public Lady
 {
+protected:
+	shared_ptr<BoxCollisionComponent> fanEdge_;
 public:
 	NormalLady();
 	virtual ~NormalLady() { };
