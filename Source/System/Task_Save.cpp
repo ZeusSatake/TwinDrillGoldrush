@@ -26,10 +26,9 @@ namespace Save
 	const std::string Object::valueKindStrings[] =
 	{
 				"ステージ番号",	//StageNo
-				"攻撃力",		//Attack
-				"防御力",		//Defence
-				"速さ",			//Speed
-				"HP",			//HP
+				"ドリルレベル",	//DrillLevel
+				"防御レベル",	//DefenceLevel
+				"速さレベル",	//SpeedLevel
 				"所持金",		//HaveMoney
 	};
 
