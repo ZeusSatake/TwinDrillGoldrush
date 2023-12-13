@@ -73,8 +73,7 @@ namespace ShopScene
 					int nowLevel = save->GetValue<int>(Save::Object::ValueKind::DrillLevel);
 					if (nowLevel == drill_MaxLevel)
 					{
-						button->SetEnable_ResetTimer(false);
-						button->SetRecieveInputEnable(false);
+						button->SetEnable(false);
 						return;
 					}
 
@@ -85,8 +84,7 @@ namespace ShopScene
 					//マックスになったときに入力受付を終了
 					if (nextLevel == drill_MaxLevel)
 					{
-						button->SetEnable_ResetTimer(false);
-						button->SetRecieveInputEnable(false);
+						button->SetEnable(false);
 						return;
 					}
 				}
