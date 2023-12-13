@@ -71,6 +71,9 @@
     <Filter Include="MyPG\UIBase">
       <UniqueIdentifier>{f1456bfb-7506-407c-b73e-f9a66c3a0842}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Event">
+      <UniqueIdentifier>{b4fd3c2e-05c3-455c-b094-24f9b8839ede}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -323,6 +326,27 @@
     <ClCompile Include="Source\Scene\Task_JewelryMap.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_Ev_Image.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_Ev_Message.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_EventEngine.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_EventEngine_System.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_Ev_Input.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Event\Task_InputMap.cpp">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -569,6 +593,24 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Task_JewelryMap.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_Ev_Image.h">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_Ev_Message.h">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_EventEngine.h">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_Ev_Input.h">
+      <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Event\Task_InputMap.h">
+      <Filter>MyPG\Task\Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

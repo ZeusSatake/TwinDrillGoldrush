@@ -187,6 +187,13 @@
     <ClCompile Include="Source\Components\TimerComponent.cpp" />
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
     <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine_System.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Image.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Input.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Message.cpp" />
+    <ClCompile Include="Source\Event\Task_InputMap.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
@@ -267,6 +274,12 @@
     <ClInclude Include="Source\Components\TimerComponent.h" />
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
     <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
+    <ClInclude Include="Source\Event\Task_EventEngine.h" />
+    <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Image.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Input.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Message.h" />
+    <ClInclude Include="Source\Event\Task_InputMap.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
