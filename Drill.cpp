@@ -1,8 +1,11 @@
+#include <math.h>
+
 #include "Drill.h"
 #include "MyPG.h"
 #include "Source/Scene/Task_Map.h"
 #include "Source/Scene/Task_JewelryMap.h"
 #include "Source/Components/Blocks/BlockManager.h"
+
 Drill::Drill()
 	:
 	attackPoint(0),
@@ -10,6 +13,7 @@ Drill::Drill()
 	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
+	Length(300.f),
 	moveVec(ML::Vec2{0,0}),
 	canRotate(true)
 {
@@ -75,6 +79,11 @@ float Drill::GetNowAngle()
 	return this->angle;
 }
 
+float Drill::GetLenght()
+{
+	return this->Length;
+}
+
 float Drill::UpdateDrillAngle()
 {
 	auto inp = controller_->gamePad_->GetState();
@@ -96,6 +105,20 @@ ML::Vec2 Drill::DrillAngleVec()
 		cos(this->UpdateDrillAngle()),
 		sin(this->UpdateDrillAngle())
 	};
+}
+
+bool Drill::LimitLength(ML::Vec2 pos)
+{
+	ML::Vec2 diff = ML::Vec2{
+		fabsf(this->GetTargetPos().x*16 - pos.x),
+		fabsf(this->GetTargetPos().y*16 - pos.x)
+	};
+	float hypo = (diff.x * diff.x) + (diff.y * diff.y);
+	if (this->Length*this->Length > hypo)
+	{
+		return true;
+	}
+	return false;
 }
 
 void Drill::Mining()
@@ -141,8 +164,10 @@ void Drill::Mining()
 //	}
 //}
 
-void Drill::SearchBrocks()
+void Drill::SearchBrocks(ML::Vec2 pos)
 {
+	auto map = ge->GetTask < Map::Object >(Map::defGroupName, Map::defName);
+	if (nullptr == map) { return; }
 
 }
 
@@ -167,10 +192,15 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		else { SetPosX(GetPos().x + e_.x);		e_.x = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
-			SetPosX(preX);
-			this->UpdateTargetPos(this->ChangeBrockPos());
-			//移動をキャンセル
-			break;
+			if (this->LimitLength(this->plPos))
+			{
+				e_.x += 16.f;
+			}
+			else
+			{				//移動をキャンセル
+				SetPosX(preX);
+				break;
+			}
 		}
 	}
 	//縦軸に対する移動
@@ -182,9 +212,10 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
 			this->SetPosY(preY);
-			this->UpdateTargetPos(this->ChangeBrockPos());
+			preVec.y = preY;
 			//移動をキャンセル
 			break;
 		}
 	}
+	//this->UpdateTargetPos(preVec);
 }
