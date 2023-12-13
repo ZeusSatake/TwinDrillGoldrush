@@ -7,7 +7,7 @@ Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
 	speed(2.0f),
-	jumpPow(-20.f)
+	jumpPow(-25.f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -193,7 +193,7 @@ void Player::Move()
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * speed;
-		moveVec.y = jumpPow + (this->state_->moveCnt_/10);
+		moveVec.y = jumpPow + (this->state_->moveCnt_/20);
 		break;
 	case StateComponent::State::Fall:
 		moveVec.x = controller_->GetLStickVec().x*speed;
