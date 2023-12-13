@@ -87,11 +87,11 @@ namespace  GameScene
 			auto mapJewelry = JewelryMap::Object::Create(true);
 			mapJewelry->Load("MapJewelry");
 		}
-		//{//敵
-		//	auto enemymap = EnemyMap::Object::Create(true);
-		//	enemymap->Load("MapEnemy");
-		//	enemymap->SetEnemy();
-		//}
+		{//敵
+			auto enemymap = EnemyMap::Object::Create(true);
+			enemymap->Load("MapEnemy");
+			enemymap->SetEnemy();
+		}
 
 		{//拠点に戻るボタン(デバッグ用
 			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
