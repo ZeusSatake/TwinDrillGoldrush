@@ -23,8 +23,7 @@ namespace  drill
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//‹¤—L‚·‚é•Ï”‚Í‚±‚±‚É’Ç‰Á‚·‚é
-		DG::Image::SP img;
-
+		DG::Image::SP img,target;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  Drill

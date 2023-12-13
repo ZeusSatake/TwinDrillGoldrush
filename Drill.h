@@ -10,6 +10,8 @@ class Drill :public Character
 	float angle;      //角度
 	float preAngle;   //1フレーム前の角度
 	bool  canRotate;  //回転を許可するかどうか
+	ML::Vec2 drawPos;
+	ML::Vec2 targetPos;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -18,17 +20,24 @@ public:
 	Drill();
 	virtual ~Drill() { };
 
+	ML::Vec2 moveVec;
+
 	void SetAngle(float angle);
+	void SetDrawPos(ML::Vec2 pos);
+	void UpdateTargetPos(ML::Vec2 pos);
 	bool SpinAngle(float angle);
 	void SetCanRotate(bool check);
 
+	ML::Vec2 GetDrawPos();
+	ML::Vec2 GetTargetPos();
+	ML::Vec2 DrillAngleVec();
+	ML::Vec2 ChangeBrockPos();
 	int GetAttackPoint();
 	float GetNowAngle();
-	ML::Vec2 DrillAngleVec();
 	float UpdateDrillAngle();
 
 	void Mining();
-	void SearchBrocks(ML::Vec2 pos_);
+	void SearchBrocks();
 	void DrillCheckMove(ML::Vec2 e_);
 
 	StateComponent::State dState;

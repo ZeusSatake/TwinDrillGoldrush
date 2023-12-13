@@ -10,6 +10,7 @@ Drill::Drill()
 	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
+	moveVec(ML::Vec2{0,0}),
 	canRotate(true)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
@@ -21,6 +22,26 @@ Drill::Drill()
 void Drill::SetAngle(float angle)
 {
 	this->angle = angle;
+}
+
+void Drill::SetDrawPos(ML::Vec2 pos)
+{
+	this->drawPos = pos;
+}
+
+void Drill::UpdateTargetPos(ML::Vec2 pos)
+{
+	this->targetPos = pos;
+}
+
+ML::Vec2 Drill::GetDrawPos()
+{
+	return this->drawPos;
+}
+
+ML::Vec2 Drill::GetTargetPos()
+{
+	return this->targetPos;
 }
 
 bool Drill::SpinAngle(float angle)
@@ -54,7 +75,6 @@ float Drill::GetNowAngle()
 	return this->angle;
 }
 
-
 float Drill::UpdateDrillAngle()
 {
 	auto inp = controller_->gamePad_->GetState();
@@ -87,6 +107,7 @@ void Drill::Mining()
 				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
 		map->Search(preVec);
+
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
 	{
@@ -120,6 +141,17 @@ void Drill::Mining()
 //	}
 //}
 
+void Drill::SearchBrocks()
+{
+
+}
+
+ML::Vec2 Drill::ChangeBrockPos()
+{
+	return ML::Vec2{
+		(this->GetPos() + this->DrillAngleVec()*16.f) / 16.f
+	};
+}
 
 void Drill::DrillCheckMove(ML::Vec2 e_)
 {
@@ -136,6 +168,7 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
 			SetPosX(preX);
+			this->UpdateTargetPos(this->ChangeBrockPos());
 			//移動をキャンセル
 			break;
 		}
@@ -149,6 +182,7 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
 			this->SetPosY(preY);
+			this->UpdateTargetPos(this->ChangeBrockPos());
 			//移動をキャンセル
 			break;
 		}
