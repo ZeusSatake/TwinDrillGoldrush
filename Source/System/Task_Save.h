@@ -105,5 +105,5 @@ namespace Save
 template <typename ReturnType>
 ReturnType Save::Object::GetValue(const ValueKind kind) const
 {
-	return (ReturnType)valueData_.find(kind)->second;
+	return (ReturnType)valueData_.at(kind);
 }

@@ -246,7 +246,7 @@ namespace Save
 			assert(!msg.c_str());
 		}
 
-		valueData_.find(kind)->second = value;
+		valueData_.at(kind) = value;
 
 		WriteData();
 	}
@@ -264,14 +264,14 @@ namespace Save
 			assert(!msg.c_str());
 		}
 
-		stringData_.find(kind)->second = str;
+		stringData_.at(kind) = str;
 
 		WriteData();
 	}
 
 	string Object::GetString(const StringKind kind) const
 	{
-		return stringData_.find(kind)->second;
+		return stringData_.at(kind);
 	}
 
 	//šššššššššššššššššššššššššššššššššššššššššš
