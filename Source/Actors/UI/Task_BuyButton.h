@@ -5,6 +5,10 @@
 //-------------------------------------------------------------------
 #include "../../UIBase/PushButton.h"
 
+class PriceTagComponent;
+class WalletComponent;
+class Player;
+
 namespace BuyButton
 {
 	//タスクに割り当てるグループ名と固有名
@@ -45,9 +49,20 @@ namespace BuyButton
 		void  UpDate()		override;	//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
+
+		shared_ptr<PriceTagComponent> priceTag_;
+		weak_ptr<WalletComponent> buyerWallet_;
+		std::function<void()> buyEffect_;
+
+		int buyAmount_;
+
+		void OnEvent() override;
 	public:
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		//追加したい変数・メソッドはここに追加する
-		//BCharaに含まれないモノのみここに追加する
+		void SetPriceTag(const string& name, const int price);
+		void SetBuyerWallet(const shared_ptr<WalletComponent>& wallet);
+		void SetBuyEffect(const std::function<void()>& buyEffect);
+		void SetProduct(const string& name, const int price, const std::function<void()>& buyEffect);
+		void SetBuyAmount(const int amount);
+		const shared_ptr<const WalletComponent> GetBuyerWallet() const;
 	};
 }

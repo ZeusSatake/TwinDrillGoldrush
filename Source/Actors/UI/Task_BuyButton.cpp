@@ -3,6 +3,11 @@
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
 #include  "Task_BuyButton.h"
+#include  "../../Components/Money/PriceTagComponent.h"
+#include  "../Task_Player.h"
+#include  "../../Components/Money/WalletComponent.h"
+
+//デバッグ用
 #include  "../../Components/SecondsTimerComponent.h"
 
 namespace BuyButton
@@ -32,12 +37,16 @@ namespace BuyButton
 		//★データ初期化		
 		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
 		
+		buyAmount_ = 1;
 		SetEnterButton(XI::VGP::B1);
 		SetRecieveInputEnable(true);
 		SetSelected(false);
 		SetMouse(ge->mouse);
 		SetResetTime(5.0f);
 		
+		AddComponent(priceTag_ = make_shared<PriceTagComponent>(this));
+		priceTag_->Set("未設定", 0);
+
 		//★タスクの生成
 
 		return  true;
@@ -47,7 +56,7 @@ namespace BuyButton
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		priceTag_.reset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -65,12 +74,51 @@ namespace BuyButton
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, true);
+		Drawtext(ge->debugFont, false);
 
 		ge->debugFont->Draw(
 			ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y - 30, 500, 500),
-			"タイマー\nカウント：" + to_string(GetTimer()->GetCount()) + "秒\n" +
-			"アクティブ：" + to_string(GetTimer()->IsActive()));
+			"価格：" + to_string(priceTag_->GetPrice())
+		);
+	}
+
+	void Object::OnEvent()
+	{
+		if (buyerWallet_.lock()->Payment(priceTag_->CalcTotalPrice(buyAmount_)))
+		{
+			for (int i = 0; i < buyAmount_; ++i)
+				buyEffect_();
+		}
+	}
+
+	void Object::SetPriceTag(const string& name, const int price)
+	{
+		priceTag_->Set(name, price);
+	}
+	void Object::SetBuyerWallet(const shared_ptr<WalletComponent>& wallet)
+	{
+		buyerWallet_ = wallet;
+	}
+	void Object::SetBuyEffect(const std::function<void()>& buyEffect)
+	{
+		buyEffect_ = buyEffect;
+	}
+	void Object::SetProduct(const string & name, const int price, const std::function<void()>& buyEffect)
+	{
+		SetPriceTag(name, price);
+		SetBuyEffect(buyEffect);
+	}
+	void Object::SetBuyAmount(const int amount)
+	{
+		if (amount <= 0)
+		{
+			assert(!"購入個数は0以下にしないでください。");
+		}
+		buyAmount_ = amount;
+	}
+	const shared_ptr<const WalletComponent> Object::GetBuyerWallet() const
+	{
+		return buyerWallet_.lock();
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
