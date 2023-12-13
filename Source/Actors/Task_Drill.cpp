@@ -56,8 +56,10 @@ namespace  drill
 	void  Object::UpDate()
 	{
 		this->SetAngle(this->UpdateDrillAngle());
-		this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
-		this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.0f);
+		//this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
+		//this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.f);
+		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 15.f), (sin(GetNowAngle()) * 15.f) });
+		this->DrillCheckMove(this->GetMoveVec());
 		this->dState = this->state_->GetNowState();
 	}
 	//-------------------------------------------------------------------
@@ -70,6 +72,7 @@ namespace  drill
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
+		//----------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
 		ML::Vec2 mapPoint{ (this->GetPos().x+16 + ge->camera2D.x),(this->GetPos().y+16 + ge->camera2D.x )};
 		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };

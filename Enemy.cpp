@@ -16,16 +16,11 @@ bool Enemy::WithinRange(class Actor* target)
 	return abs(GetRange()) > GetDistance();
 }
 
-bool Enemy::UpDateState(AIState afterState)
+void Enemy::UpDateState(AIState afterState)
 {
-	if (nowState_ == afterState)
-		return false;
-	else
-	{
-		preState_ = nowState_;
-		nowState_ = afterState;
-		return true;
-	}
+	if (nowState_ == afterState) return;
+	moveCnt_->Start();
+	nowState_ = afterState;
 }
 
 void Enemy::BeginAttack()

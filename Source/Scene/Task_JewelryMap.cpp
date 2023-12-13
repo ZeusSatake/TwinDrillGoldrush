@@ -154,6 +154,8 @@ namespace  JewelryMap
 
 		auto Bm = Manager::Object::Create(true);
 		Bm->LoadSe();
+		Bm->getMapName(JewelryMap::defName);
+		Bm->InitArray();
 
 		return true;
 	}
@@ -231,8 +233,12 @@ namespace  JewelryMap
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
 			if (this->arr[masu.y][masu.x] > 0) {
-				auto manager = ge->GetTask<Manager::Object>("Blocks");
-				manager->Damage(masu, 1);
+				auto manager = ge->GetTasks<Manager::Object>("Blocks");
+				for (auto it = manager->begin(); it != manager->end(); it++) {
+					if ((*it)->MapName == JewelryMap::defName) {
+						(*it)->Damage(masu, 1);
+					}
+				}
 			}
 		}
 	}

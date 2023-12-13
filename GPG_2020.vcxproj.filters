@@ -211,9 +211,6 @@
     <ClCompile Include="BBlocks.cpp">
       <Filter>MyPG</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClCompile>
@@ -235,9 +232,6 @@
     <ClCompile Include="Source\Components\Blocks\BlockManager.cpp">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Scene\TitleScene.cpp">
       <Filter>MyPG\Task\Scene\title</Filter>
     </ClCompile>
@@ -252,9 +246,6 @@
     </ClCompile>
     <ClCompile Include="Source\Scene\MartialFightScene.cpp">
       <Filter>MyPG\Task\Scene\MartialFight</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\TitleScene.cpp">
       <Filter>MyPG\Task\Scene\title</Filter>
@@ -322,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="Source\UIBase\PushButton.cpp">
       <Filter>MyPG\UIBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\System\Task_Save.cpp">
+      <Filter>MyPG\Task\System</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene\Task_JewelryMap.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
@@ -479,9 +473,6 @@
     <ClInclude Include="BBlocks.h">
       <Filter>MyPG</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\Blocks\Task_Stone.h">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
@@ -506,9 +497,6 @@
     <ClInclude Include="Source\Components\Blocks\BlockManager.h">
       <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\Blocks\Task_Bedrock .h">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Scene\EndingScene.h">
       <Filter>MyPG\Task\Scene\ending</Filter>
     </ClInclude>
@@ -523,9 +511,6 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\TitleScene.h">
       <Filter>MyPG\Task\Scene\title</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Components\Blocks\Task_IronOre.h">
-      <Filter>MyPG\Task\Actors\Blocks</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\TitleScene.h">
       <Filter>MyPG\Task\Scene\title</Filter>
@@ -590,6 +575,9 @@
     </ClInclude>
     <ClInclude Include="Source\UIBase\PushButton.h">
       <Filter>MyPG\UIBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\System\Task_Save.h">
+      <Filter>MyPG\Task\System</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene\Task_JewelryMap.h">
       <Filter>MyPG\Task\Scene\Game</Filter>

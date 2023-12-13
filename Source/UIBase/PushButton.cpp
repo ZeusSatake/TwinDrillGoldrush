@@ -5,6 +5,7 @@ PushButton::PushButton()
 {
 	AddComponent(resetTimer_ = make_shared<SecondsTimerComponent>(this));
 	SetResetTime(1.0f);
+	SetEnable_ResetTimer(true);
 }
 
 void PushButton::OnEvent()
@@ -35,22 +36,30 @@ void PushButton::UpDate()
 	}
 
 	ToggleButton::UpDate();
-	//リセット
-	if (resetTimer_->IsCountEndFrame())
-	{
-		++resetCount;
-		Reset();
-		SetRecieveInputEnable(true);
-	}	
 
-	//リセットカウント開始
-	if (IsPressed() && !resetTimer_->IsActive())
+	if (enableResetTimer_)
 	{
-		resetTimer_->Start();
-		//押されている間は入力を受け付けない
-		SetRecieveInputEnable(false);
+		//リセット
+		if (resetTimer_->IsCountEndFrame())
+		{
+			++resetCount;
+			Reset();
+			SetRecieveInputEnable(true);
+		}
+
+		//リセットカウント開始
+		if (IsPressed() && !resetTimer_->IsActive())
+		{
+			resetTimer_->Start();
+			//押されている間は入力を受け付けない
+			SetRecieveInputEnable(false);
+		}
+
+		resetTimer_->Update();
 	}
+}
 
-
-	resetTimer_->Update();
+void PushButton::SetEnable_ResetTimer(const bool stop)
+{
+	enableResetTimer_ = stop;
 }

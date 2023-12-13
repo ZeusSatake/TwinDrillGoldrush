@@ -43,8 +43,7 @@ namespace EtoHaiji
 
 		SetFov(200.f);
 
-		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());
+		
 		//šƒ^ƒXƒN‚Ì¶¬
 
 		return  true;

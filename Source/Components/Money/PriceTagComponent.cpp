@@ -6,16 +6,11 @@ int PriceTagComponent::lastID = 0;
 PriceTagComponent::PriceTagComponent(GameObject* owner)
 	:
 	Component((Actor*)owner),
-	name_(""),
+	name_("ñ¢ê›íË"),
 	price_(0),
 	id_(lastID)
 {
 	++lastID;
-}
-
-void PriceTagComponent::Update()
-{
-
 }
 
 void PriceTagComponent::SetPrice(const int price)

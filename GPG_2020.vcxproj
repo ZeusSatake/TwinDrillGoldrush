@@ -171,9 +171,6 @@
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
     <ClCompile Include="Source\Components\Blocks\BlockManager.cpp" />
-    <ClCompile Include="Source\Components\Blocks\Task_Bedrock .cpp" />
-    <ClCompile Include="Source\Components\Blocks\Task_IronOre.cpp" />
-    <ClCompile Include="Source\Components\Blocks\Task_Stone.cpp" />
     <ClCompile Include="Source\Components\BoxCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
@@ -206,6 +203,7 @@
     <ClCompile Include="Source\System\Task_BackGround.cpp" />
     <ClCompile Include="Source\System\Task_DrawNumFont.cpp" />
     <ClCompile Include="Source\System\Task_FlashDraw.cpp" />
+    <ClCompile Include="Source\System\Task_Save.cpp" />
     <ClCompile Include="Source\UIBase\PushButton.cpp" />
     <ClCompile Include="Source\UIBase\ToggleButton.cpp" />
     <ClCompile Include="Task_Effect00.cpp" />
@@ -258,9 +256,6 @@
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
     <ClInclude Include="Source\Components\Blocks\BlockManager.h" />
-    <ClInclude Include="Source\Components\Blocks\Task_Bedrock .h" />
-    <ClInclude Include="Source\Components\Blocks\Task_IronOre.h" />
-    <ClInclude Include="Source\Components\Blocks\Task_Stone.h" />
     <ClInclude Include="Source\Components\BoxCollisionComponent.h" />
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
     <ClInclude Include="Source\Components\ControllerInputComponent.h" />
@@ -292,6 +287,7 @@
     <ClInclude Include="Source\System\Task_BackGround.h" />
     <ClInclude Include="Source\System\Task_DrawNumFont.h" />
     <ClInclude Include="Source\System\Task_FlashDraw.h" />
+    <ClInclude Include="Source\System\Task_Save.h" />
     <ClInclude Include="Source\UIBase\PushButton.h" />
     <ClInclude Include="Source\UIBase\ToggleButton.h" />
     <ClInclude Include="Task_Effect00.h" />

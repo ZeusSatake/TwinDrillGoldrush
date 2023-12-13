@@ -13,12 +13,15 @@ namespace BlondeLady
 	bool  Resource::Initialize()
 	{
 		img = DG::Image::Create("./data/image/BlondeLady.png");
+		fanImg = DG::Image::Create("./data/image/Slash.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		img.reset();
+		fanImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -38,19 +41,17 @@ namespace BlondeLady
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetPreState(Enemy::Patrol);
-		SetNowState(Enemy::Patrol);
+		SetPreState(AIState::Approach);
+		SetNowState(AIState::Approach);
 
 		SetFov(200.f);
+		SetRange(100.f);
 
-		auto pl=ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());
-
-		moveCnt_->SetCountFrame(60);
-		//fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
-
+		moveCnt_->SetCountFrame(90);
+		fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
 		//★タスクの生成
-
+		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -70,6 +71,8 @@ namespace BlondeLady
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
 		Think();
 		Move();
 	}
@@ -77,14 +80,47 @@ namespace BlondeLady
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src = ML::Box2D(0, 0, 500, 615);
-		//スクロール対応
-		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		
-		res->img->Draw(draw, src);
+		{
+			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			//スクロール対応
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+
+			res->img->Draw(draw, src);
+		}
+		{
+			ML::Box2D draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x + 16, GetPos().y));
+			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
+
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			res->fanImg->Draw(draw, src);
+		}
 
 		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
+		//ge->debugRectDraw();
+
+		string stateName;
+		switch (GetNowState())
+		{
+		case AIState::Idle:
+			stateName = "待機";
+			break;
+		case AIState::Approach:
+			stateName = "接近";
+			break;
+		case AIState::Attack:
+			stateName = "攻撃";
+			break;
+		}
+		
+
+		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
+		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
+		if(WithinRange(GetTarget()))
+		ge->debugFont->Draw(ML::Box2D(1000, 400, 500, 500), "視界内");
+
+		//ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(GetTarget()->GetPos().x));
 	}
 	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

@@ -31,7 +31,6 @@ namespace	Manager
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->InitArray();
 
 		//★タスクの生成
 
@@ -64,49 +63,126 @@ namespace	Manager
 	//ブロックHP・特性設定
 	void Object::InitArray()
 	{
-		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		auto map = ge->GetTask<Map::Object>("本編", MapName);
 		for (int y = 0; y < map->sizeY; y++)
 		{
 			for (int x = 0; x < map->sizeX; x++)
 			{
 				int id = map->GetMapChip(y, x);
 				switch (id) {
-				case 0:
-					this->arr[y][x].MaxHP = 0;
-					this->arr[y][x].HP = 0;
+				case 0:		//空気ブロック
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
 					break;
-				case 1:
+				case 1:		//土
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
 					break;
-				case 2:
+				case 2:		//硬い土
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
-				case 3:
+				case 3:		//苔むした土
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					break;
-				case 6:
+				case 6:		//石
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 6;
 					break;
-				case 7:
+				case 7:		//岩盤
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
-				case 10:
+				//====================鉱石====================
+				case 9:		//石炭
+					this->arr[y][x].MaxHP = 3;
+					this->arr[y][x].HP = 3;
+					this->arr[y][x].event = 9;
+					break;
+				case 10:	//崩れる石
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
 					this->arr[y][x].event = 10;
 					break;
-				case 11:
+				case 11:	//鉄鉱石
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 11;
+					break;
+				case 12:	//金鉱石ぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 12;
+					break;
+				case 13:	//白金ぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 13;
+					break;
+				case 14:	//クロムぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 14;
+					break;
+				case 15:	//オリハルコンぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 16:	//パラジウムぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 17:	//アダマンタイトぽいやつ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				//====================宝石====================
+				case 18:	//ダイヤモンド
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 19:	//ブラックダイヤモンド
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 20:	//ピンクダイヤモンド
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 21:	//エメラルド
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 22:	//サファイア
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 15;
+					break;
+				case 23:	//ガーネット
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
+					this->arr[y][x].event = 23;
+					break;
+				case 24:	//トパーズ
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
+					this->arr[y][x].event = 23;
+					break;
+				case 25:	//アメジスト
+					this->arr[y][x].MaxHP = -1;
+					this->arr[y][x].HP = -1;
+					this->arr[y][x].event = 23;
 					break;
 				case 27:
 					this->arr[y][x].MaxHP = -1;
@@ -133,7 +209,7 @@ namespace	Manager
 		{
 			this->arr[y][x].HP -= power;
 
-			auto map = ge->GetTask<Map::Object>("本編", "マップ");
+			auto map = ge->GetTask<Map::Object>("本編", MapName);
 			this->eventSearch(y, x);
 			map->SetMapChip(y, x, 0);
 		}
@@ -161,6 +237,9 @@ namespace	Manager
 		case 11:
 			IronOre(pos);
 			break;
+		case 23:
+			Stone(pos);
+			break;
 		default:
 			break;
 		}
@@ -178,7 +257,7 @@ namespace	Manager
 	}
 	void Object::collapseBlock(int x,int y)
 	{
-		auto map = ge->GetTask<Map::Object>("本編", "マップ");
+		auto map = ge->GetTask<Map::Object>("本編", MapName);
 		int id = map->GetMapChip(y, x);
 
 

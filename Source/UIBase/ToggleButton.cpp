@@ -7,7 +7,8 @@ ToggleButton::ToggleButton()
 	buttonState_(0),
 	text_(""),
 	enterButton_(),
-	mouseEnterButton_()
+	mouseEnterButton_(),
+	textColor_(ML::Color(1, 1, 0, 0))
 {
 }
 
@@ -132,7 +133,7 @@ void ToggleButton::Drawtext(const DG::Font::SP& font, const bool drawState)
 	msg += drawState ?
 		"\n" + stateText_ :
 		"";
-	font->Draw(ML::Box2D(GetPos().x, GetPos().y, 600, 600), msg, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+	font->Draw(ML::Box2D(GetPos().x, GetPos().y, 600, 600), msg, textColor_);
 }
 
 void ToggleButton::SetMouse(const shared_ptr<XI::Mouse> mouse)
@@ -142,6 +143,11 @@ void ToggleButton::SetMouse(const shared_ptr<XI::Mouse> mouse)
 void ToggleButton::SetSelector(const Actor* selector)
 {
 	selectors_.push_back(selector);
+}
+
+void ToggleButton::SetTextColor(const ML::Color& color)
+{
+	textColor_ = color;
 }
 
 const shared_ptr<const BoxCollisionComponent> ToggleButton::GetBox() const
@@ -155,7 +161,7 @@ void ToggleButton::UpDate()
 
 	SetStateText();
 
-	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput)) 
+	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput))
 	{
 		if (ge->in1->CheckBT(enterButton_) == XI::GamePad::ButtonState::Down ||
 			ge->mouse->CheckBT(mouseEnterButton_) == XI::Mouse::ButtonState::Down)
@@ -163,4 +169,8 @@ void ToggleButton::UpDate()
 			ToggleEvent();
 		}
 	}
+
+	textColor_ = IsPressed() || !GetButtonState((int)ButtonState::RecieveInput) ?
+		ML::Color(0.5f, 1.0f, 0.0f, 0.0f) :
+		ML::Color(1.0f, 1.0f, 0.0f, 0.0f);
 }

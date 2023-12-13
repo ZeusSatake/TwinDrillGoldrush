@@ -30,7 +30,7 @@ public:
 
 	bool WithinRange(class Actor* target);
 
-	bool UpDateState(AIState nowState);
+	void UpDateState(AIState nowState);
 
 	void BeginAttack();
 
