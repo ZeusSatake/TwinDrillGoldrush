@@ -3,7 +3,6 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "Task_EnemyMap.h"
-#include  "../Components/Blocks/Task_Stone.h"
 #include  "../Components/Blocks/BlockManager.h"
 #include "../Actors/Enemys/Task_EtoHaiji.h"
 #include "../Actors/Enemys/Task_BlondeLady.h"
