@@ -57,14 +57,16 @@ namespace  drill
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		this->plPos = ge->playerPtr->GetPos();
 		this->SetAngle(this->UpdateDrillAngle());
 		//this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
 		//this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.f);
 		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 16.f), (sin(GetNowAngle()) * 16.f) });
 		this->SetDrawPos( this->GetPos() + this->GetMoveVec());
+		//if(this->LimitLength(ge->playerPtr->GetPos())) //計算は完成してる
 		this->DrillCheckMove(this->GetMoveVec());
-		this->SearchBrocks();
 		this->dState = this->state_->GetNowState();
+		this->UpdateTargetPos(this->ChangeBrockPos());
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -87,6 +89,7 @@ namespace  drill
 		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };
 		ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "ドリルのマス:" + to_string((int)mapPoint.x/16)+" "+to_string((int)mapPoint.y/16));
 		ge->debugFont->Draw(ML::Box2D(900, 200, 500, 500), to_string((int)GetTargetPos().x)+" "+ to_string((int)GetTargetPos().y));
+		ge->debugFont->Draw(ML::Box2D(850, 600, 500, 500), to_string(ge->playerPtr->GetPos().x) +" " + to_string(this->GetTargetPos().x*16) + " " + to_string(fabsf(this->GetTargetPos().x*16 - ge->playerPtr->GetPos().x)));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
