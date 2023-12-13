@@ -63,3 +63,9 @@ void PushButton::SetEnable_ResetTimer(const bool stop)
 {
 	enableResetTimer_ = stop;
 }
+
+void PushButton::SetEnable(const bool enable)
+{
+	SetEnable_ResetTimer(enable);
+	SetRecieveInputEnable(enable);
+}
