@@ -13,7 +13,6 @@ class PriceTagComponent : public Component
 public:
 	PriceTagComponent(class GameObject* owner);
 	virtual ~PriceTagComponent() {};
-	virtual void Update() override;
 
 	void SetPrice(const int price);
 	void SetName(const std::string& name);
