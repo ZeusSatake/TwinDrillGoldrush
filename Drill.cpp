@@ -83,20 +83,18 @@ void Drill::Mining()
 	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
 	{
 		ML::Vec2 preVec{
-			this->GetPos().x-ge->camera2D.x/*+(cos(this->UpdateDrillAngle()) * 5.f)*/,
-				this->GetPos().y-ge->camera2D.y /*+(sin(this->UpdateDrillAngle()) * 5.0f)*/
+			this->GetPos().x-ge->camera2D.x+(cos(this->UpdateDrillAngle()) * 16.f),
+				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
 		map->Search(preVec);
-		//this->SearchBrocks(preVec);
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
 	{
 		ML::Vec2 preVec{
-			this->GetPos().x-ge->camera2D.x/*+(cos(this->UpdateDrillAngle()) * 5.f)*/,
-				this->GetPos().y-ge->camera2D.y /*+(sin(this->UpdateDrillAngle()) * 5.0f)*/
+			this->GetPos().x-ge->camera2D.x+(cos(this->UpdateDrillAngle()) * 16.f),
+				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
 		map->Search(preVec);
-		//this->SearchBrocks(preVec);
 	}
 }
 
