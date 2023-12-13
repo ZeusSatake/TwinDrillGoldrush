@@ -22,4 +22,5 @@ public:
 	void SetResetTime(const float resetTime_sec);
 	const shared_ptr<SecondsTimerComponent> GetTimer() const;
 	void SetEnable_ResetTimer(const bool enable);
+	void SetEnable(const bool enable);
 };
