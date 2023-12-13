@@ -118,12 +118,12 @@ namespace	Manager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case 13:	//白金ぽいやつ
+				case 13:	//ヒヒイロカネぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
 					break;
-				case 14:	//クロムぽいやつ
+				case 14:	//ダマスカスぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 14;
