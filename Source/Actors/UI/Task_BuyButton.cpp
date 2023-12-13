@@ -81,8 +81,8 @@ namespace BuyButton
 		Drawtext(ge->debugFont, true);
 
 		ge->debugFont->Draw(
-			ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y - 30, 500, 500),
-			"‰¿ŠiF" + to_string(priceTag_->GetPrice())
+			ML::Box2D(GetPos().x, GetPos().y, 500, 500),
+			priceTag_->GetName() + "F" + to_string(priceTag_->GetPrice())
 		);
 	}
 

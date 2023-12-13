@@ -51,10 +51,6 @@ namespace ShopScene
 
 		shared_ptr<Save::Object> save_;
 
-		shared_ptr<PriceTagComponent> priceTag_Iron;
-		shared_ptr<PriceTagComponent> priceTag_Bronze;
-		shared_ptr<PriceTagComponent> priceTag_Gold;
-
 		vector<shared_ptr<ToggleButton>> buttons_;
 
 		static int drill_MaxLevel;

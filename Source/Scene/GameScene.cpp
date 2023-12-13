@@ -61,10 +61,11 @@ namespace  GameScene
 
 		//★タスクの生成
 		{
-			auto player = player::Object::Create(true);
+			//auto player = player::Object::Create(true);
 			auto camera = Camera::Object::Create(true);
-			camera->SetPos(player->GetPos());
-			camera->target = player;
+			camera->SetPos(ge->playerPtr->GetPos());
+			camera->target = ge->playerPtr;
+			ge->playerPtr->SetPos(ML::Vec2{ 50,480 });
 		}
 		
 		{//背景タスク生成

@@ -1,4 +1,5 @@
 #include "WalletComponent.h"
+#include "../../System/Task_Save.h"
 #include <assert.h>
 
 WalletComponent::WalletComponent(class GameObject* owner)
@@ -38,4 +39,9 @@ bool WalletComponent::Recieve(const int price)
 int WalletComponent::GetBalance() const
 {
 	return balance_;
+}
+
+void WalletComponent::RoadHaveMoney(const std::shared_ptr<Save::Object>& save)
+{
+	Recieve(save->GetValue<int>(Save::Object::ValueKind::HaveMoney));
 }
