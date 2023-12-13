@@ -18,7 +18,7 @@ public:
 	typedef weak_ptr<Actor>	WP;
 public:
 	
-	int			moveCnt_;	//行動カウンタ
+	int	moveCnt_;	//行動カウンタ
 	//向き（2D視点）
 	float angle_;
 
