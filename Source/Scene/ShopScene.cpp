@@ -1,6 +1,7 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
+#include  <array>
 #include  "../../MyPG.h"
 #include  "ShopScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
@@ -53,58 +54,79 @@ namespace ShopScene
 		auto save = Save::Object::Create(true);
 
 		AddComponent(wallet = make_shared<WalletComponent>(this));
-		wallet->Recieve(save->GetValue<int>(Save::Object::ValueKind::HaveMoney));
+		wallet->RoadHaveMoney(save);
 
 		{//購入ボタン
-			
-			auto button = BuyButton::Object::Create(true);
-			button->SetPos(ge->screenCenterPos);
-			button->SetMouse(ge->mouse);
-			button->SetEnterButton(XI::Mouse::MB::LB);
-			button->SetResetTime(1.0f);
-			button->SetText("ドリル強化");
-			button->SetProduct
-			(
-				"ドリル強化",
-				125,
-				[save, button](void)
+			array<shared_ptr<BuyButton::Object>, 3> levelButtons;
+			struct LevelButtonInfo
+			{
+				string name;
+				int price;
+				Save::Object::ValueKind kind;
+				int max;
+			};
+
+			LevelButtonInfo levelButtonInfos[levelButtons.size()] =
+			{
 				{
-					save->SetValue(Save::Object::ValueKind::HaveMoney, button->GetBuyerWallet()->GetBalance());
-					int nowLevel = save->GetValue<int>(Save::Object::ValueKind::DrillLevel);
-					if (nowLevel == drill_MaxLevel)
-					{
-						button->SetEnable(false);
-						return;
-					}
-
-					int nextLevel = nowLevel + 1;
-
-					save->SetValue(Save::Object::ValueKind::DrillLevel,	nextLevel);
-
-					//マックスになったときに入力受付を終了
-					if (nextLevel == drill_MaxLevel)
-					{
-						button->SetEnable(false);
-						return;
-					}
+					"ドリル強化",
+					125,
+					Save::Object::ValueKind::DrillLevel,
+					5
+				},
+				{
+					"服",
+					520,
+					Save::Object::ValueKind::DefenceLevel,
+					5
+				},
+				{
+					"速度強化",
+					330,
+					Save::Object::ValueKind::SpeedLevel,
+					5
 				}
-			);
-			button->SetBuyAmount(1);
-			button->SetBuyerWallet(wallet);
-			
-			buttons_.push_back(button);
+			};
+			for (int i = 0; i < levelButtons.size(); ++i)
+			{
+				auto& button = levelButtons[i] = BuyButton::Object::Create(true);
+				auto& info = levelButtonInfos[i];
+				button->SetPosX(300 + button->GetBox()->getHitBase().w * i);
+				button->SetPosY(ge->screenCenterPos.y);
+				button->SetMouse(ge->mouse);
+				button->SetEnterButton(XI::Mouse::MB::LB);
+				button->SetResetTime(1.0f);
+				button->SetBuyAmount(1);
+				button->SetBuyerWallet(wallet);
+				button->SetProduct
+				(
+					info.name,
+					info.price,
+					[save, button, info](void)
+					{
+						save->SetValue(Save::Object::ValueKind::HaveMoney, button->GetBuyerWallet()->GetBalance());
+						int nowLevel = save->GetValue<int>(info.kind);
+						if (nowLevel >= info.max)
+						{
+							button->SetEnable(false);
+							return;
+						}
+
+						int nextLevel = nowLevel + 1;
+
+						save->SetValue(info.kind, nextLevel);
+
+						//マックスになったときに入力受付を終了
+						if (nextLevel >= drill_MaxLevel)
+						{
+							button->SetEnable(false);
+							return;
+						}
+					}
+				);
+				buttons_.push_back(button);
+			}
 		}
-
-		AddComponent(priceTag_Iron = make_shared<PriceTagComponent>(this));
-		priceTag_Iron->Set("鉄鉱石", 15);
-
-		AddComponent(priceTag_Bronze = make_shared<PriceTagComponent>(this));
-		priceTag_Bronze->Set("銅鉱石", 8);
-
-		AddComponent(priceTag_Gold = make_shared<PriceTagComponent>(this));
-		priceTag_Gold->Set("金鉱石", 100);
-
-		//player_->wallet_->Recieve(150);
 
 		return  true;
 	}
@@ -115,6 +137,7 @@ namespace ShopScene
 		//★データ＆タスク解放
 		ge->debugRectReset();
 		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_G(Save::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -140,15 +163,16 @@ namespace ShopScene
 	{
 		ge->debugRectDraw();
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "ショップ");
-		//ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y, 500, 500), "残高" + to_string(player_->wallet_->GetBalance()));
 
 		{
+			auto save = ge->GetTask<Save::Object>(Save::defGroupName, Save::defName);
+
 			string param =
-				priceTag_Iron->GetName() + "：" + to_string(priceTag_Iron->CalcTotalPrice(1)) + "\n" +
-				priceTag_Bronze->GetName() + "：" + to_string(priceTag_Bronze->CalcTotalPrice(1)) + "\n" +
-				priceTag_Gold->GetName() + "：" + to_string(priceTag_Gold->CalcTotalPrice(1)) + "\n" +
-				"プレイヤの所持金：" + to_string(wallet->GetBalance());
-			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 300, ge->screenCenterPos.y, 500, 500), param);
+				"プレイヤの所持金：" + to_string(wallet->GetBalance()) + "\n" + 
+				"ドリル：" + to_string(save->GetValue<int>(Save::Object::ValueKind::DrillLevel)) + "\n" + 
+				"防御　：" + to_string(save->GetValue<int>(Save::Object::ValueKind::DefenceLevel)) + "\n" + 
+				"速度　：" + to_string(save->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
+			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 350, 200, 500, 500), param);
 		}
 	}
 
