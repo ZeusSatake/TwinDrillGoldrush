@@ -41,15 +41,17 @@ namespace BlondeLady
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetPreState(Enemy::Idle);
-		SetNowState(Enemy::Idle);
+		SetPreState(AIState::Approach);
+		SetNowState(AIState::Approach);
 
 		SetFov(200.f);
+		SetRange(100.f);
 
-		moveCnt_->SetCountFrame(60);
+		moveCnt_->SetCountFrame(90);
 		fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
 		//šƒ^ƒXƒN‚Ì¶¬
-
+		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -110,8 +112,15 @@ namespace BlondeLady
 			stateName = "UŒ‚";
 			break;
 		}
+		
 
 		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
+		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());
+		if(WithinRange(GetTarget()))
+		ge->debugFont->Draw(ML::Box2D(1000, 400, 500, 500), "Ž‹ŠE“à");
+
+		//ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(GetTarget()->GetPos().x));
 	}
 	//-------------------------------------------------------------------
 	//šššššššššššššššššššššššššššššššššššššššššš

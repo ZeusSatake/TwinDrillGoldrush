@@ -11,7 +11,7 @@ NormalLady::NormalLady()
 void NormalLady::Think()
 {
 	AIState afterState = GetNowState();
-	switch (afterState)
+	switch (GetPreState())
 	{
 	case Idle:
 		if (!OutOfScreen())
@@ -58,10 +58,7 @@ void NormalLady::Move()
 		UpDatePatrol();
 		break;
 	case AIState::Approach:
-		//UpDateApproach();
-		BeginAttack();
-		moveCnt_->Start();
-		UpDateAttack();
+		UpDateApproach();
 		break;
 	case AIState::Attack:
 		BeginAttack();
@@ -102,6 +99,7 @@ void NormalLady::UpDateFall()
 
 void NormalLady::UpDateAttack()
 {
+	moveCnt_->Update();
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);
@@ -110,11 +108,7 @@ void NormalLady::UpDateAttack()
 		{
 			static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
 		}
-		if (moveCnt_->IsCounting())
-		{
-			
-		}
-		else
+		if (!moveCnt_->IsCounting())
 		{
 			EndAttack();
 		}

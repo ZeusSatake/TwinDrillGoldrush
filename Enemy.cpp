@@ -18,13 +18,9 @@ bool Enemy::WithinRange(class Actor* target)
 
 void Enemy::UpDateState(AIState afterState)
 {
-	if (nowState_ == afterState)
-		return;
-	else
-	{
-		preState_ = nowState_;
-		nowState_ = afterState;
-	}
+	if (nowState_ == afterState) return;
+	moveCnt_->Start();
+	nowState_ = afterState;
 }
 
 void Enemy::BeginAttack()
