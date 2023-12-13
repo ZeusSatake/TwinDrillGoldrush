@@ -9,6 +9,7 @@ class PushButton : public ToggleButton
 	shared_ptr<SecondsTimerComponent> resetTimer_;
 
 	int resetCount = 0;
+	bool enableResetTimer_;
 public:
 	PushButton();
 	virtual ~PushButton() {};
@@ -20,4 +21,5 @@ public:
 
 	void SetResetTime(const float resetTime_sec);
 	const shared_ptr<SecondsTimerComponent> GetTimer() const;
+	void SetEnable_ResetTimer(const bool enable);
 };

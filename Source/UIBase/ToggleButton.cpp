@@ -161,7 +161,7 @@ void ToggleButton::UpDate()
 
 	SetStateText();
 
-	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput)) 
+	if (GetButtonState((int)ButtonState::IsSelected | (int)ButtonState::RecieveInput))
 	{
 		if (ge->in1->CheckBT(enterButton_) == XI::GamePad::ButtonState::Down ||
 			ge->mouse->CheckBT(mouseEnterButton_) == XI::Mouse::ButtonState::Down)
@@ -170,7 +170,7 @@ void ToggleButton::UpDate()
 		}
 	}
 
-	textColor_ = IsPressed() ?
+	textColor_ = IsPressed() || !GetButtonState((int)ButtonState::RecieveInput) ?
 		ML::Color(0.5f, 1.0f, 0.0f, 0.0f) :
 		ML::Color(1.0f, 1.0f, 0.0f, 0.0f);
 }

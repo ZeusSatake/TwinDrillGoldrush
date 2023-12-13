@@ -68,13 +68,18 @@ namespace BuyButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		if (buyerWallet_.lock()->GetBalance() < priceTag_->CalcTotalPrice(buyAmount_))
+		{
+			SetRecieveInputEnable(false);
+			SetEnable_ResetTimer(false);
+		}
 		PushButton::UpDate();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, false);
+		Drawtext(ge->debugFont, true);
 
 		ge->debugFont->Draw(
 			ML::Box2D(ge->screenCenterPos.x, ge->screenCenterPos.y - 30, 500, 500),
