@@ -4,7 +4,6 @@
 //メッセージ表示
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
-#include "../Actors/Task_Player.h"
 #include "../../GameObject.h"
 
 namespace  Ev_Input
@@ -61,7 +60,5 @@ namespace  Ev_Input
 		static void CreateOrReset(stringstream& ss_);
 		//表示するメッセージを設定する
 		void Set(const string& taskName_, stringstream& ss_);
-
-		Player player;
 	};
 }

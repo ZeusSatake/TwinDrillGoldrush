@@ -138,9 +138,7 @@ namespace Ev_Message
 
 		while ((ast1 = msgText.find("&")) != string::npos)
 		{
-			Player play;
-			//Character player;
-			msgText.replace(ast1, 1, play.GetPersonalName());
+			msgText.replace(ast1, 1, ge->playerPtr->GetPersonalName());
 		}
 
 		//イベントエンジンを一時停止させる

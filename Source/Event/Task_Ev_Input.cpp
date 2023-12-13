@@ -136,7 +136,7 @@ namespace Ev_Input
 		}
 		if (inp.B1.down&&flag == true)
 		{//確認後決定
-			//SetPersonalName(this->name);
+			ge->playerPtr->SetPersonalName(this->name);
 			Map->Kill();
 			this->Kill();
 			ge->StopAll_GN("イベント", "実行エンジン", false);
