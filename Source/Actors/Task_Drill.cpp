@@ -14,6 +14,7 @@ namespace  drill
 	bool  Resource::Initialize()
 	{
 		this->img = DG::Image::Create("./data/image/preDrill.png");
+		this->target = DG::Image::Create("./data/image/target.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -21,6 +22,7 @@ namespace  drill
 	bool  Resource::Finalize()
 	{
 		this->img.reset();
+		this->target.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -33,7 +35,7 @@ namespace  drill
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-4,8,8 });
+		this->box_->setHitBase(ML::Box2D{ -2,-2,4,4 });
 		//★タスクの生成
 
 		return  true;
@@ -58,26 +60,33 @@ namespace  drill
 		this->SetAngle(this->UpdateDrillAngle());
 		//this->SetPosX(this->GetPos().x+ cos(GetNowAngle()) * 15.f);
 		//this->SetPosY(this->GetPos().y + sin(GetNowAngle()) * 15.f);
-		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 15.f), (sin(GetNowAngle()) * 15.f) });
+		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 16.f), (sin(GetNowAngle()) * 16.f) });
+		this->SetDrawPos( this->GetPos() + this->GetMoveVec());
 		this->DrillCheckMove(this->GetMoveVec());
+		this->SearchBrocks();
 		this->dState = this->state_->GetNowState();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
+		ML::Box2D draw = ML::Box2D{-4,-4,8,8}.OffsetCopy(this->GetDrawPos());
 		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
 		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		this->res->img->Draw(draw, src);
 		//----------------------------------------------------
+		ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x*16,(int)this->GetTargetPos().y*16,16,16};
+		tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
+		this->res->target->Draw(tDraw, tSrc);
+		//----------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
-		ML::Vec2 mapPoint{ (this->GetPos().x+16 + ge->camera2D.x),(this->GetPos().y+16 + ge->camera2D.x )};
+		ML::Vec2 mapPoint{ (this->GetPos().x + 16 + ge->camera2D.x),(this->GetPos().y + 16 + ge->camera2D.x) };
 		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };
 		ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "ドリルのマス:" + to_string((int)mapPoint.x/16)+" "+to_string((int)mapPoint.y/16));
-		
+		ge->debugFont->Draw(ML::Box2D(900, 200, 500, 500), to_string((int)GetTargetPos().x)+" "+ to_string((int)GetTargetPos().y));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
