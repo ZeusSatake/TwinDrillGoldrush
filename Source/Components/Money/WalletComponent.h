@@ -1,8 +1,10 @@
 #pragma once
 #include "../../../Component.h"
+#include <memory>
 //ç‡ïzÇ≈Ç≤Ç¥ÇÈ
 
 class PriceTagComponent;
+namespace Save { class Object; }
 
 class WalletComponent : public Component
 {
@@ -16,4 +18,6 @@ public:
 	bool Recieve(const int price);
 
 	int GetBalance() const;
+
+	void RoadHaveMoney(const std::shared_ptr<Save::Object>& save);
 };
