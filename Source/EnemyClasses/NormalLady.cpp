@@ -11,7 +11,7 @@ NormalLady::NormalLady()
 void NormalLady::Think()
 {
 	AIState afterState = GetNowState();
-	switch (GetPreState())
+	switch (afterState)
 	{
 	case AIState::Idle:
 		if (!OutOfScreen())
@@ -67,7 +67,10 @@ void NormalLady::Move()
 			BeginAttack();
 			moveCnt_->Start();
 		}
-		UpDateAttack();
+		else
+		{
+			UpDateAttack();
+		}
 		break;
 	case AIState::Damage:
 		UpDateDamage();
@@ -103,7 +106,6 @@ void NormalLady::UpDateFall()
 
 void NormalLady::UpDateAttack()
 {
-	
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);
@@ -115,6 +117,7 @@ void NormalLady::UpDateAttack()
 		if (!moveCnt_->IsCounting())
 		{
 			EndAttack();
+			return;
 		}
 	}
 }

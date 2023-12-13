@@ -41,8 +41,8 @@ namespace BlondeLady
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetPreState(AIState::Approach);
-		SetNowState(AIState::Approach);
+		SetPreState(AIState::Idle);
+		SetNowState(AIState::Idle);
 
 		SetFov(200.f);
 		SetRange(10.f);
