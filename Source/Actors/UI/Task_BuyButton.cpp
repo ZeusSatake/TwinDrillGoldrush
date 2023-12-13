@@ -70,8 +70,7 @@ namespace BuyButton
 	{
 		if (buyerWallet_.lock()->GetBalance() < priceTag_->CalcTotalPrice(buyAmount_))
 		{
-			SetRecieveInputEnable(false);
-			SetEnable_ResetTimer(false);
+			SetEnable(false);
 		}
 		PushButton::UpDate();
 	}
