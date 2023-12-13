@@ -13,22 +13,22 @@ void NormalLady::Think()
 	AIState afterState = GetNowState();
 	switch (GetPreState())
 	{
-	case Idle:
+	case AIState::Idle:
 		if (!OutOfScreen())
 		{
-			afterState = Approach;
+			afterState = AIState::Approach;
 		}
 		break;
-	case Approach:
+	case AIState::Approach:
 		if (WithinRange(GetTarget()))
 		{
-			afterState = Attack;
+			afterState = AIState::Attack;
 		}
 		break;
-	case Attack:
+	case AIState::Attack:
 		if (!IsAttacking())
 		{
-			afterState = Approach;
+			afterState = AIState::Approach;
 		}
 		break;
 	}
@@ -61,8 +61,12 @@ void NormalLady::Move()
 		UpDateApproach();
 		break;
 	case AIState::Attack:
-		BeginAttack();
-		moveCnt_->Start();
+		
+		if (!IsAttacking())
+		{
+			BeginAttack();
+			moveCnt_->Start();
+		}
 		UpDateAttack();
 		break;
 	case AIState::Damage:
@@ -99,7 +103,7 @@ void NormalLady::UpDateFall()
 
 void NormalLady::UpDateAttack()
 {
-	moveCnt_->Update();
+	
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);

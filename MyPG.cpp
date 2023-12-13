@@ -6,9 +6,11 @@
 
 
 #include "Source/Scene/TitleScene.h"
+#include "Source/Actors/Task_Player.h"
 
 namespace MyPG
 {
+	shared_ptr<player::Object> MyGameEngine::playerPtr;
 
 	void MyGameEngine::InitCounter() {
 		counterMap.clear();
@@ -592,6 +594,9 @@ ge->debugRect(me, DEBUGRECTMODE::RED ,- ge->camera2D.x, -ge->camera2D.y);
 		//背景色の設定（デフォルト）
 		this->dgi->EffectState().param.bgColor = ML::Color(0, 0.3f, 0.3f, 0.3f);
 
+		playerPtr = player::Object::Create(true);
+		playerPtr->SetPos(ML::Vec2(-500, -500));
+
 		//初期実行タスク生成＆ゲームエンジンに登録
 		auto  ft = TitleScene::Object::Create(true);
 
@@ -604,6 +609,7 @@ ge->debugRect(me, DEBUGRECTMODE::RED ,- ge->camera2D.x, -ge->camera2D.y);
 	}
 	MyGameEngine::~MyGameEngine()
 	{
+		playerPtr->Kill();
 		//小柳サウンドライブラリ
 		se::Del();
 		bgm::Del();

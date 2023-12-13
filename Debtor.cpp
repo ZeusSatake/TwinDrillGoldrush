@@ -67,7 +67,6 @@ void Debtor::Move()
 		UpDateApproach();
 		break;
 	case AIState::Attack:
-		BeginAttack();
 		UpDateAttack();
 		break;
 	case AIState::Damage:

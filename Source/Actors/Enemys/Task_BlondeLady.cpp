@@ -45,14 +45,19 @@ namespace BlondeLady
 		SetNowState(AIState::Approach);
 
 		SetFov(200.f);
-		SetRange(100.f);
+		SetRange(10.f);
 
 		moveCnt_->SetCountFrame(90);
 		fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
+
+		SetTarget(ge->playerPtr.get());
 		//★タスクの生成
-		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());
 		return  true;
+	}
+
+	void BeginPlay()
+	{
+
 	}
 	//-------------------------------------------------------------------
 	//「終了」タスク消滅時に１回だけ行う処理
@@ -71,8 +76,10 @@ namespace BlondeLady
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());
+		/*auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
+		SetTarget(pl.get());*/
+
+		moveCnt_->Update();
 		Think();
 		Move();
 	}
@@ -96,8 +103,11 @@ namespace BlondeLady
 			res->fanImg->Draw(draw, src);
 		}
 
-		ge->debugRect(GetBox()->getHitBase(), 0, GetPos().x, GetPos().y);
-		//ge->debugRectDraw();
+		if (IsAttacking())
+		{
+			ge->debugFont->Draw(ML::Box2D(500, 700, 500, 500), "攻撃中");
+		}
+		
 
 		string stateName;
 		switch (GetNowState())
@@ -112,15 +122,16 @@ namespace BlondeLady
 			stateName = "攻撃";
 			break;
 		}
-		
-
 		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
 		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
 		SetTarget(pl.get());
-		if(WithinRange(GetTarget()))
-		ge->debugFont->Draw(ML::Box2D(1000, 400, 500, 500), "視界内");
 
-		//ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(GetTarget()->GetPos().x));
+		if(WithinRange(GetTarget()))
+		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "攻撃範囲");
+
+		
+
+		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(moveCnt_->GetCount()));
 	}
 	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
