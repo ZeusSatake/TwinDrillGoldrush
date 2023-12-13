@@ -18,6 +18,7 @@ class ToggleButton : public Actor
 
 	weak_ptr<XI::Mouse> mouse_;
 	vector<const Actor*> selectors_;
+	ML::Color textColor_;
 
 	void SetButtonState(const int bit, const bool flag);
 	bool GetButtonState(const int bit) const;
@@ -50,6 +51,7 @@ public:
 	void Drawtext(const DG::Font::SP& font, const bool drawState);
 	void SetMouse(const shared_ptr<XI::Mouse> mouse);
 	void SetSelector(const Actor* selector);
+	void SetTextColor(const ML::Color& color);
 
 	const shared_ptr<const BoxCollisionComponent> GetBox() const;
 
