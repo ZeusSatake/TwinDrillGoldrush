@@ -9,7 +9,7 @@
 namespace player
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("キャラクタ");	//グループ名
+	const  string  defGroupName("キャラク");	//グループ名
 	const  string  defName("プレイヤー");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource

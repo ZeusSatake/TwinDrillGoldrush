@@ -13,6 +13,9 @@
 #include "task_Effect00.h"
 
 //-----------------------------------------------------------------------------------------------
+
+namespace player { class Object; }
+
 namespace  MyPG
 {
 	//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -182,7 +185,7 @@ namespace  MyPG
 		COUNTER_FLAGS getCounterFlag(string str);
 		void StartCounter(string str, int count);
 
-
+		static shared_ptr<player::Object> playerPtr;
 	};
 }
 extern MyPG::MyGameEngine* ge;

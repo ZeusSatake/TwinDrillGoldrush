@@ -33,7 +33,7 @@ namespace player
 
 		//★データ初期化
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
-		this->SetPos( ML::Vec2{ 50,480 });
+		this->SetPos( ML::Vec2{ 0,0 });
 		this->movement_->SetSpeed(2.f, 5.f, 0.f);
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
@@ -50,7 +50,7 @@ namespace player
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->KillAll_G("プレイヤー");
+		//ge->KillAll_G("プレイヤー");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成

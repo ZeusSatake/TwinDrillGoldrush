@@ -33,11 +33,11 @@ void AIMoveComponent::Patroll()
 	{
 		if (owner_->angle_LR_ == Actor::Angle_LR::Left)
 		{
-			owner_->SetMoveVecX(1);
+			owner_->SetMoveVecX(-1);
 		}
 		else
 		{
-			owner_->SetMoveVecX(-1);
+			owner_->SetMoveVecX(1);
 		}
 		if (static_cast<NPC*>(owner_)->CheckFront())
 		{
