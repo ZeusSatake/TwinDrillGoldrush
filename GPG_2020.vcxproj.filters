@@ -341,6 +341,9 @@
     <ClCompile Include="Source\Event\Task_InputMap.cpp">
       <Filter>MyPG\Task\Event</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp">
+      <Filter>MyPG\Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -599,6 +602,9 @@
     </ClInclude>
     <ClInclude Include="Source\Event\Task_InputMap.h">
       <Filter>MyPG\Task\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h">
+      <Filter>MyPG\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

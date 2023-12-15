@@ -6,7 +6,7 @@
 #include	"../../Scene/Task_Map.h"
 #include	"../../../sound.h"
 
-namespace	Manager
+namespace	BlockManager
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -98,7 +98,7 @@ namespace	Manager
 					this->arr[y][x].event = 7;
 					break;
 				//====================鉱石====================
-				case 9:		//石炭
+				case (int)SellableBlock::Coal:		//石炭
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 9;
@@ -108,78 +108,78 @@ namespace	Manager
 					this->arr[y][x].HP = 1;
 					this->arr[y][x].event = 10;
 					break;
-				case 11:	//鉄鉱石
+				case (int)SellableBlock::Iron:	//鉄鉱石
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 11;
 					break;
-				case 12:	//金鉱石ぽいやつ
+				case (int)SellableBlock::Gold:	//金鉱石ぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case 13:	//ヒヒイロカネぽいやつ
+				case (int)SellableBlock::HihiIroKane:	//ヒヒイロカネぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
 					break;
-				case 14:	//ダマスカスぽいやつ
+				case (int)SellableBlock::Damascus:	//ダマスカスぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 14;
 					break;
-				case 15:	//オリハルコンぽいやつ
+				case (int)SellableBlock::Orichalcum:	//オリハルコンぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 16:	//パラジウムぽいやつ
+				case (int)SellableBlock::Palladium:	//パラジウムぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 17:	//アダマンタイトぽいやつ
+				case (int)SellableBlock::Adamantite:	//アダマンタイトぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
 				//====================宝石====================
-				case 18:	//ダイヤモンド
+				case (int)SellableBlock::Diamond:	//ダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 19:	//ブラックダイヤモンド
+				case (int)SellableBlock::BlackDiamond:	//ブラックダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 20:	//ピンクダイヤモンド
+				case (int)SellableBlock::PinkDiamond:	//ピンクダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 21:	//エメラルド
+				case (int)SellableBlock::Emerald:	//エメラルド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 22:	//サファイア
+				case (int)SellableBlock::Sapphire:	//サファイア
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case 23:	//ガーネット
+				case (int)SellableBlock::Garnet:	//ガーネット
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
 					break;
-				case 24:	//トパーズ
+				case (int)SellableBlock::Topaz:	//トパーズ
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
 					break;
-				case 25:	//アメジスト
+				case (int)SellableBlock::Amethyst:	//アメジスト
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
@@ -234,7 +234,7 @@ namespace	Manager
 		case 10:
 			collapseBlock(x_, y_);
 			break;
-		case 11:
+		case (int)SellableBlock::Iron:
 			IronOre(pos);
 			break;
 		case 23:
