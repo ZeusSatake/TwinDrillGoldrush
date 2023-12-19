@@ -31,7 +31,7 @@ namespace MiningResult
 	private:
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  BTask
+	class  Object : public  GameObject
 	{
 		//•ÏX•s‰ÂŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸŸ
 	public:
@@ -64,7 +64,7 @@ namespace MiningResult
 		static bool IsSellableOre(const Map::Object::ChipKind oreKind);
 		static bool IsSellableJewelry(const JewelryMap::Object::ChipKind oreKind);
 
-		int CalcTotalPrice() const;
+		int CalcTotalSellingPrice() const;
 	public:
 
 		void CountUpOre(const Map::Object::ChipKind oreKind);

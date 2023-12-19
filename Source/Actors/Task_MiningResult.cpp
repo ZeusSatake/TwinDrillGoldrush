@@ -4,6 +4,8 @@
 #include  "../../MyPG.h"
 #include  "Task_MiningResult.h"
 #include  "../Components/Money/PriceTagComponent.h"
+#include  "../Components/Money/WalletComponent.h"
+#include  "../System/Task_Save.h"
 
 namespace MiningResult
 {
@@ -85,11 +87,6 @@ namespace MiningResult
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		{//鉱石の値段設定
-			//for ()
-			//sellableBlockPriceTags_.at(BlockManager::Object::SellableBlock::Iron);
-		}
-		
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -106,6 +103,24 @@ namespace MiningResult
 		__super::Initialize(defGroupName, defName, true);
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
+
+		{//鉱石の値段設定
+			for (const auto& ore : sellableOres_)
+			{
+				shared_ptr<PriceTagComponent> priceTag;
+				AddComponent(priceTag = make_shared<PriceTagComponent>(this));
+				orePriceTags_.insert(make_pair(ore, priceTag));
+				orePriceTags_.at(ore)->Set(SellableOreName(ore), 100);
+			}
+			for (const auto& jewelry : sellableJewelrys_)
+			{
+				shared_ptr<PriceTagComponent> priceTag;
+				AddComponent(priceTag = make_shared<PriceTagComponent>(this));
+				jewelryPriceTags_.insert(make_pair(jewelry, priceTag));
+				jewelryPriceTags_.at(jewelry)->Set(SellableJewelryName(jewelry), 100);
+			}
+		}
+
 
 		//★データ初期化
 		render2D_Priority[1] = 0.0f;
@@ -127,7 +142,11 @@ namespace MiningResult
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		auto save = Save::Object::Create(true);
+		WalletComponent wallet = WalletComponent(this);
+		wallet.RoadHaveMoney(save);
+		wallet.Recieve(CalcTotalSellingPrice());
+		save->SetValue(Save::Object::ValueKind::HaveMoney, wallet.GetBalance());
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -164,7 +183,7 @@ namespace MiningResult
 			ge->debugFont->Draw(ML::Box2D(50, 400, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 		}
 	}
-	int Object::CalcTotalPrice() const
+	int Object::CalcTotalSellingPrice() const
 	{
 		int totalPrice = 0;
 
@@ -176,6 +195,8 @@ namespace MiningResult
 		{
 			totalPrice += jewelryPriceTags_.at(jewelry.first)->CalcTotalPrice(jewelry.second);
 		}
+
+		return totalPrice;
 	}
 	bool Object::IsSellableOre(const Map::Object::ChipKind oreKind)
 	{
