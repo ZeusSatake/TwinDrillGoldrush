@@ -5,6 +5,8 @@
 //-------------------------------------------------------------------
 #include "../../Actor.h"
 
+namespace BlockManager { class Object; }
+
 namespace  JewelryMap
 {
 	//タスクに割り当てるグループ名と固有名
@@ -51,6 +53,7 @@ namespace  JewelryMap
 		int chipSize;
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];
+		shared_ptr<BlockManager::Object> blockManager_;
 	public:
 		enum class ChipKind
 		{

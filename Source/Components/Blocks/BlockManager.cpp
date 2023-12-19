@@ -194,24 +194,29 @@ namespace	BlockManager
 	}
 	//-------------------------------------------------------------------
 	//数値からブロック破壊処理
-	void Object::Damage(const ML::Point pos_, int power)
+	bool Object::DestroyBlock(const ML::Point pos_, int power)
 	{
 		int x = pos_.x;
 		int y = pos_.y;
+		//空っぽ系のチップは音を鳴らすだけ
 		if (this->arr[y][x].HP < 0)
 		{
 			this->eventSearch(y, x);
-			return;
+			return false;
 		}
 
-		if (this->arr[y][x].HP - power > 0) { this->arr[y][x].HP -= power; }
-		else if (this->arr[y][x].HP >= 0)
-		{
-			this->arr[y][x].HP -= power;
+		this->arr[y][x].HP -= power;
 
+		if (this->arr[y][x].HP <= 0)
+		{
 			auto map = ge->GetTask<Map::Object>("本編", MapName);
 			this->eventSearch(y, x);
 			map->SetMapChip(y, x, 0);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	//-------------------------------------------------------------------
