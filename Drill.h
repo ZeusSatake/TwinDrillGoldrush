@@ -23,6 +23,8 @@ public:
 
 	ML::Vec2 moveVec;
 	ML::Vec2 plPos;
+	int x;
+
 
 	void SetAngle(float angle);
 	void SetDrawPos(ML::Vec2 pos);

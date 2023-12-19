@@ -38,8 +38,8 @@ namespace player
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
+		this->GetHP()->SetMaxHP(10, HP::MaxLifeSetMode::MaxHeal);
 
-		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
 		//★タスクの生成
 		auto dl = drill::Object::Create(true);
 		this->drill_ = dl;
@@ -155,6 +155,8 @@ namespace player
 			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "行動モード");
 		}
 		ge->debugFont->Draw(ML::Box2D(1000, 140, 500, 500), "moveCnt:"+to_string(this->state_->moveCnt_));
+
+		ge->debugFont->Draw(ML::Box2D(900, 140, 500, 500), "HP:" + to_string(this->GetHP()->GetNowHP())+" MaxHP:"+to_string(this->GetHP()->GetMaxHP()));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
