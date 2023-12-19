@@ -317,6 +317,12 @@
     <ClCompile Include="Source\Scene\Task_JewelryMap.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\BossLady.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\LadySatake.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -557,6 +563,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\Task_JewelryMap.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\BossLady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\LadySatake.h">
+      <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

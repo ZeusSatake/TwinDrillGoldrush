@@ -15,6 +15,7 @@ public:
 		Approach, //Ú‹ß
 		Jump, //’µ–ô
 		Fall,//—‰º
+		AttackStand,//UŒ‚€”õ
 		Attack,//UŒ‚
 		Guard,//–hŒä
 		Dodge,//‰ñ”ğ
@@ -30,7 +31,7 @@ public:
 
 	bool WithinRange(class Actor* target);
 
-	void UpDateState(AIState nowState);
+	bool UpDateState(AIState nowState);
 
 	void BeginAttack();
 

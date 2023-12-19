@@ -182,7 +182,9 @@
     <ClCompile Include="Source\Components\StateComponent.cpp" />
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\TimerComponent.cpp" />
+    <ClCompile Include="Source\EnemyClasses\BossLady.cpp" />
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\LadySatake.cpp" />
     <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
@@ -260,7 +262,9 @@
     <ClInclude Include="Source\Components\StateComponent.h" />
     <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\TimerComponent.h" />
+    <ClInclude Include="Source\EnemyClasses\BossLady.h" />
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
+    <ClInclude Include="Source\EnemyClasses\LadySatake.h" />
     <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
