@@ -5,6 +5,7 @@
 #include  "Task_Map.h"
 
 #include  "../Components/Blocks/BlockManager.h"
+#include  "../Actors/Task_MiningResult.h"
 
 namespace  Map
 {
@@ -50,6 +51,8 @@ namespace  Map
 			int y = i / 8;
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
+
+		this->miningResult_ = ge->GetTask<MiningResult::Object>(MiningResult::defGroupName, MiningResult::defName);
 		//šƒ^ƒXƒN‚Ì¶¬
 
 		return  true;
@@ -239,7 +242,7 @@ namespace  Map
 
 			if (blockManager_->DestroyBlock(masu, 1))
 			{
-
+				miningResult_.lock()->CountUpOre((ChipKind)GetMapChip(masu.y, masu.x));
 			}
 		}
 	}

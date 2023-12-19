@@ -1,9 +1,9 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
+#include  "../../MyPG.h"
 #include  "Task_MiningResult.h"
-#include  "../../Components/Money/PriceTagComponent.h"
+#include  "../Components/Money/PriceTagComponent.h"
 
 namespace MiningResult
 {
@@ -62,6 +62,34 @@ namespace MiningResult
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
 	{
+		//ƒfƒoƒbƒO•\¦
+		{
+			string param = "";
+			//zÎ
+			param = "yzÎz\n";
+			for (const auto& oreCount : getOreCount_)
+			{
+				param += to_string(oreCount.second) + "\n";
+			}
+
+			//•óÎ
+			param = "y•óÎz\n";
+			for (const auto& jewelryCount : getJewelryCount_)
+			{
+				param += to_string(jewelryCount.second) + "\n";
+			}
+
+			ge->debugFont->Draw(ML::Box2D(500, 500, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+		}
+	}
+
+	void Object::CountUpOre(Map::Object::ChipKind oreKind)
+	{
+		++getOreCount_.at(oreKind);
+	}
+	void Object::CountUpJewelry(JewelryMap::Object::ChipKind jewelryKind)
+	{
+		++getJewelryCount_.at(jewelryKind);
 	}
 
 	//šššššššššššššššššššššššššššššššššššššššššš

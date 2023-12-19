@@ -3,8 +3,10 @@
 //-------------------------------------------------------------------
 //採掘場リザルト
 //-------------------------------------------------------------------
-#include "../../../GameEngine_Ver3_83.h"
-#include "../../Components/Blocks/BlockManager.h"
+#include "../../GameEngine_Ver3_83.h"
+
+#include "../Scene/Task_Map.h"
+#include "../Scene/Task_JewelryMap.h"
 
 class PriceTagComponent;
 
@@ -27,12 +29,13 @@ namespace MiningResult
 		static  Resource::SP  Create();
 
 	private:
-		map<BlockManager::Object::SellableBlock, shared_ptr<PriceTagComponent>> sellableBlockPriceTags_;
+		map<Map::Object::ChipKind, shared_ptr<PriceTagComponent>> orePriceTags_;
+		map<JewelryMap::Object::ChipKind, shared_ptr<PriceTagComponent>> jewelryPriceTags_;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  BTask
 	{
-	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+		//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
 		virtual  ~Object();
 		typedef  shared_ptr<Object>		SP;
@@ -48,6 +51,12 @@ namespace MiningResult
 		void  UpDate()			override;//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
+
+		map<Map::Object::ChipKind, int> getOreCount_;
+		map<JewelryMap::Object::ChipKind, int> getJewelryCount_;
 	public:
+
+		void CountUpOre(Map::Object::ChipKind oreKind);
+		void CountUpJewelry(JewelryMap::Object::ChipKind jewelryKind);
 	};
 }

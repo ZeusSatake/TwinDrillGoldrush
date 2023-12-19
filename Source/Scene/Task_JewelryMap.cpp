@@ -5,6 +5,7 @@
 #include  "Task_JewelryMap.h"
 
 #include  "../Components/Blocks/BlockManager.h"
+#include  "../Actors/Task_MiningResult.h"
 
 namespace  JewelryMap
 {
@@ -51,6 +52,7 @@ namespace  JewelryMap
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
 		//šƒ^ƒXƒN‚Ì¶¬
+		this->miningResult_ = ge->GetTask<MiningResult::Object>(MiningResult::defGroupName, MiningResult::defName);
 
 		return  true;
 	}
@@ -238,7 +240,7 @@ namespace  JewelryMap
 
 			if (blockManager_->DestroyBlock(masu, 1))
 			{
-
+				miningResult_.lock()->CountUpJewelry((ChipKind)GetMapChip(masu.y, masu.x));
 			}
 		}
 	}
