@@ -2,6 +2,7 @@
 #include "Character.h"
 #include "Source/Components/StateComponent.h"
 #include "Source/Components/ControllerInputComponent.h"
+#include "Source/Components/TimerComponent.h"
 #include "Source/Actors/Task_Drill.h"
 
 class Player :public Character
@@ -13,10 +14,10 @@ class Player :public Character
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
+	class shared_ptr<TimerComponent> cooldown_;
 public:
 	Player();
 	virtual ~Player() {}; 
-	
 
 	StateComponent::State pState;
 	
@@ -28,6 +29,11 @@ public:
 	bool CheckHead();
 	//void CheckMove(ML::Vec2& e_);
 	void Dash(ML::Vec2 e_);
+
+	void HitAttack(); //攻撃が当たった時の処理
+	void TakeAttack(); //攻撃を受けたときの処理
+
+	void SetPlayerState(StateComponent::State state); //ステートの外部変更
 
 	ML::Vec2 GetMoveVec();
 	shared_ptr<drill::Object> drill_;
