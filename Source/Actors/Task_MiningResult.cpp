@@ -8,6 +8,79 @@
 namespace MiningResult
 {
 	Resource::WP  Resource::instance;
+
+	const Map::Object::ChipKind Object::sellableOres_[] =
+	{
+		Map::Object::ChipKind::Coal,
+		Map::Object::ChipKind::Iron,
+		Map::Object::ChipKind::Gold,
+		Map::Object::ChipKind::HihiIroKane,
+		Map::Object::ChipKind::Damascus,
+		Map::Object::ChipKind::Orichalcum,
+		Map::Object::ChipKind::Palladium,
+		Map::Object::ChipKind::Adamantite
+	};
+	string Object::SellableOreName(const Map::Object::ChipKind kind)
+	{
+		switch (kind)
+		{
+			case Map::Object::ChipKind::Coal:
+				return "石炭　　　　　";
+			case Map::Object::ChipKind::Iron:
+				return "鉄鉱石　　　　";
+			case Map::Object::ChipKind::Gold:
+				return "金鉱石　　　　";
+			case Map::Object::ChipKind::HihiIroKane:
+				return "ヒヒイロカネ　";
+			case Map::Object::ChipKind::Damascus:
+				return "ダマスカス　　";
+			case Map::Object::ChipKind::Orichalcum:
+				return "オリハルコン　";
+			case Map::Object::ChipKind::Palladium:
+				return "パラジウム　　";
+			case Map::Object::ChipKind::Adamantite:
+				return "アダマンタイト";
+			default:
+				assert(!"設定されていない値です");
+		}
+	}
+
+	const JewelryMap::Object::ChipKind Object::sellableJewelrys_[] =
+	{
+		JewelryMap::Object::ChipKind::Diamond,
+		JewelryMap::Object::ChipKind::BlackDiamond,
+		JewelryMap::Object::ChipKind::PinkDiamond,
+		JewelryMap::Object::ChipKind::Emerald,
+		JewelryMap::Object::ChipKind::Sapphire,
+		JewelryMap::Object::ChipKind::Garnet,
+		JewelryMap::Object::ChipKind::Topaz,
+		JewelryMap::Object::ChipKind::Amethyst
+	};
+	string Object::SellableJewelryName(const JewelryMap::Object::ChipKind kind)
+	{
+		switch (kind)
+		{
+			case JewelryMap::Object::ChipKind::Diamond:
+				return "ダイアモンド　　　　";
+			case JewelryMap::Object::ChipKind::BlackDiamond:
+				return "ブラックダイアモンド";
+			case JewelryMap::Object::ChipKind::PinkDiamond:
+				return "ピンクダイアモンド　";
+			case JewelryMap::Object::ChipKind::Emerald:
+				return "エメラルド　　　　　";
+			case JewelryMap::Object::ChipKind::Sapphire:
+				return "サファイア　　　　　";
+			case JewelryMap::Object::ChipKind::Garnet:
+				return "ガーネット　　　　　";
+			case JewelryMap::Object::ChipKind::Topaz:
+				return "トパーズ　　　　　　";
+			case JewelryMap::Object::ChipKind::Amethyst:
+				return "アメジスト　　　　　";
+			default:
+				assert(!"設定されていない値です");
+		}
+	}
+	
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
@@ -35,6 +108,15 @@ namespace MiningResult
 		this->res = Resource::Create();
 
 		//★データ初期化
+		render2D_Priority[1] = 0.0f;
+		for (int i = 0; i < size(sellableOres_); ++i)
+		{
+			getOreCount_.insert(make_pair(sellableOres_[i], 0));
+		}
+		for (int i = 0; i < size(sellableJewelrys_); ++i)
+		{
+			getJewelryCount_.insert(make_pair(sellableJewelrys_[i], 0));
+		}
 		
 		//★タスクの生成
 
@@ -66,30 +148,63 @@ namespace MiningResult
 		{
 			string param = "";
 			//鉱石
-			param = "【鉱石】\n";
+			param += "【鉱石】\n";
 			for (const auto& oreCount : getOreCount_)
 			{
-				param += to_string(oreCount.second) + "\n";
+				param += SellableOreName(oreCount.first) + "：" + to_string(oreCount.second) + "\n";
 			}
 
 			//宝石
-			param = "【宝石】\n";
+			param += "【宝石】\n";
 			for (const auto& jewelryCount : getJewelryCount_)
 			{
-				param += to_string(jewelryCount.second) + "\n";
+				param += SellableJewelryName(jewelryCount.first) + "：" + to_string(jewelryCount.second) + "\n";
 			}
 
-			ge->debugFont->Draw(ML::Box2D(500, 500, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+			ge->debugFont->Draw(ML::Box2D(50, 400, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 		}
 	}
+	int Object::CalcTotalPrice() const
+	{
+		int totalPrice = 0;
 
-	void Object::CountUpOre(Map::Object::ChipKind oreKind)
-	{
-		++getOreCount_.at(oreKind);
+		for (const auto& ore : getOreCount_)
+		{
+			totalPrice += orePriceTags_.at(ore.first)->CalcTotalPrice(ore.second);
+		}
+		for (const auto& jewelry : getJewelryCount_)
+		{
+			totalPrice += jewelryPriceTags_.at(jewelry.first)->CalcTotalPrice(jewelry.second);
+		}
 	}
-	void Object::CountUpJewelry(JewelryMap::Object::ChipKind jewelryKind)
+	bool Object::IsSellableOre(const Map::Object::ChipKind oreKind)
 	{
-		++getJewelryCount_.at(jewelryKind);
+		for (const auto& sellableOre : sellableOres_)
+		{
+			if (oreKind == sellableOre)
+				return true;
+		}
+		return false;
+	}
+	bool Object::IsSellableJewelry(const JewelryMap::Object::ChipKind jewelryKind)
+	{
+		for (const auto& sellableJewelry : sellableJewelrys_)
+		{
+			if (jewelryKind == sellableJewelry)
+				return true;
+		}
+		return false;
+	}
+
+	void Object::CountUpOre(const Map::Object::ChipKind oreKind)
+	{
+		if (IsSellableOre(oreKind))
+			++getOreCount_.at(oreKind);
+	}
+	void Object::CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind)
+	{
+		if (IsSellableJewelry(jewelryKind))
+			++getJewelryCount_.at(jewelryKind);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

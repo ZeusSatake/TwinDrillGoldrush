@@ -234,13 +234,14 @@ namespace  JewelryMap
 			pos.y >= 0 && pos.y < chipSize * this->sizeY) {
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
+			int preChipNum = this->arr[masu.y][masu.x];
 
-			if (this->arr[masu.y][masu.x] <= (int)ChipKind::Empty)
+			if (preChipNum <= (int)ChipKind::Empty)
 				return;
 
 			if (blockManager_->DestroyBlock(masu, 1))
 			{
-				miningResult_.lock()->CountUpJewelry((ChipKind)GetMapChip(masu.y, masu.x));
+				miningResult_.lock()->CountUpJewelry((ChipKind)preChipNum);
 			}
 		}
 	}

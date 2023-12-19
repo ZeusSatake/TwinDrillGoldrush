@@ -236,13 +236,14 @@ namespace  Map
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
 
-			//”j‰ó•s”\
-			if (this->arr[masu.y][masu.x] <= (int)ChipKind::Empty)
+			int preChipNum = this->arr[masu.y][masu.x];
+
+			if (preChipNum <= (int)ChipKind::Empty)
 				return;
 
 			if (blockManager_->DestroyBlock(masu, 1))
 			{
-				miningResult_.lock()->CountUpOre((ChipKind)GetMapChip(masu.y, masu.x));
+				miningResult_.lock()->CountUpOre((ChipKind)preChipNum);
 			}
 		}
 	}

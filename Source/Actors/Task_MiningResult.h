@@ -29,8 +29,6 @@ namespace MiningResult
 		static  Resource::SP  Create();
 
 	private:
-		map<Map::Object::ChipKind, shared_ptr<PriceTagComponent>> orePriceTags_;
-		map<JewelryMap::Object::ChipKind, shared_ptr<PriceTagComponent>> jewelryPriceTags_;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  BTask
@@ -52,11 +50,24 @@ namespace MiningResult
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 
+		map<Map::Object::ChipKind, shared_ptr<PriceTagComponent>> orePriceTags_;
+		map<JewelryMap::Object::ChipKind, shared_ptr<PriceTagComponent>> jewelryPriceTags_;
+
 		map<Map::Object::ChipKind, int> getOreCount_;
 		map<JewelryMap::Object::ChipKind, int> getJewelryCount_;
+
+		static const Map::Object::ChipKind sellableOres_[];
+		static string SellableOreName(const Map::Object::ChipKind kind);
+		static const JewelryMap::Object::ChipKind sellableJewelrys_[];
+		static string SellableJewelryName(const JewelryMap::Object::ChipKind kind);
+
+		static bool IsSellableOre(const Map::Object::ChipKind oreKind);
+		static bool IsSellableJewelry(const JewelryMap::Object::ChipKind oreKind);
+
+		int CalcTotalPrice() const;
 	public:
 
-		void CountUpOre(Map::Object::ChipKind oreKind);
-		void CountUpJewelry(JewelryMap::Object::ChipKind jewelryKind);
+		void CountUpOre(const Map::Object::ChipKind oreKind);
+		void CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind);
 	};
 }
