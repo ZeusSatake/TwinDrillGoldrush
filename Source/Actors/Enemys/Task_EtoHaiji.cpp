@@ -38,12 +38,11 @@ namespace EtoHaiji
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetPreState(Enemy::Patrol);
-		SetNowState(Enemy::Patrol);
+		SetNowState(Enemy::Idle);
 
 		SetFov(200.f);
 
-		
+		SetTarget(ge->playerPtr.get());
 		//★タスクの生成
 
 		return  true;
@@ -53,7 +52,6 @@ namespace EtoHaiji
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成

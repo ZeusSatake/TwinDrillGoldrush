@@ -41,14 +41,14 @@ namespace BlondeLady
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetPreState(AIState::Approach);
-		SetNowState(AIState::Approach);
+		SetPreState(AIState::Idle);
+		SetNowState(AIState::Idle);
 
 		SetFov(200.f);
-		SetRange(10.f);
+		SetRange(30.f);
 
-		moveCnt_->SetCountFrame(90);
-		fanEdge_->setHitBase(ML::Box2D{ -4,-8,8,32 });
+		moveCnt_->SetCountFrame(0);
+		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
 
 		SetTarget(ge->playerPtr.get());
 		//šƒ^ƒXƒN‚Ì¶¬
@@ -95,12 +95,23 @@ namespace BlondeLady
 
 			res->img->Draw(draw, src);
 		}
+		if(IsAttacking())
 		{
-			ML::Box2D draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x + 16, GetPos().y));
+			ML::Box2D draw;
+			if (angle_LR_ == Angle_LR::Left)
+			{
+				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x - GetAdjustRange(), GetPos().y));
+			}
+			else
+			{
+				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x + GetAdjustRange(), GetPos().y));
+			}
 			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
 
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			res->fanImg->Draw(draw, src);
+
+			
 		}
 
 		if (IsAttacking())
@@ -118,6 +129,9 @@ namespace BlondeLady
 		case AIState::Approach:
 			stateName = "Ú‹ß";
 			break;
+		case AIState::AttackStand:
+			stateName = "UŒ‚€”õ";
+			break;
 		case AIState::Attack:
 			stateName = "UŒ‚";
 			break;
@@ -127,11 +141,9 @@ namespace BlondeLady
 		SetTarget(pl.get());
 
 		if(WithinRange(GetTarget()))
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "UŒ‚”ÍˆÍ");
+		    ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "UŒ‚”ÍˆÍ");
 
-		
-
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(moveCnt_->GetCount()));
+		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));
 	}
 	//-------------------------------------------------------------------
 	//šššššššššššššššššššššššššššššššššššššššššš
