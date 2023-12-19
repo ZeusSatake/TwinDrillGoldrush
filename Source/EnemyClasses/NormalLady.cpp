@@ -2,6 +2,9 @@
 #include "../Actors/Task_Player.h"
 NormalLady::NormalLady()
 	:Lady()
+	, standCnt_(60)
+	, attackCnt_(90)
+	, adjustRange_(30.f)
 {
 	AddComponent(fanEdge_=shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
 	movement_->SetConsiderationCollition(true);
@@ -11,16 +14,22 @@ NormalLady::NormalLady()
 void NormalLady::Think()
 {
 	AIState afterState = GetNowState();
-	switch (GetPreState())
+	switch (afterState)
 	{
 	case AIState::Idle:
-		if (!OutOfScreen())
+		if (WithinSight(GetTarget()))
 		{
 			afterState = AIState::Approach;
 		}
 		break;
 	case AIState::Approach:
 		if (WithinRange(GetTarget()))
+		{
+			afterState = AIState::AttackStand;
+		}
+		break;
+	case AIState::AttackStand:
+		if (IsAttacking())
 		{
 			afterState = AIState::Attack;
 		}
@@ -32,7 +41,23 @@ void NormalLady::Think()
 		}
 		break;
 	}
-	UpDateState(afterState);
+	//状態の更新と各状態ごとの行動カウンタを設定
+	if (UpDateState(afterState))
+	{
+		switch (afterState)
+		{
+		case AIState::AttackStand:
+			moveCnt_->SetCountFrame(standCnt_);
+			break;
+		case AIState::Attack:
+			moveCnt_->SetCountFrame(attackCnt_);
+			break;
+		default:
+			moveCnt_->SetCountFrame(0);
+			break;
+		}
+		moveCnt_->Start();
+	}
 }
 
 void NormalLady::Move()
@@ -60,13 +85,10 @@ void NormalLady::Move()
 	case AIState::Approach:
 		UpDateApproach();
 		break;
+	case AIState::AttackStand:
+		UpDateAttackStand();
+		break;
 	case AIState::Attack:
-		
-		if (!IsAttacking())
-		{
-			BeginAttack();
-			moveCnt_->Start();
-		}
 		UpDateAttack();
 		break;
 	case AIState::Damage:
@@ -101,20 +123,39 @@ void NormalLady::UpDateFall()
 
 }
 
+void NormalLady::UpDateAttackStand()
+{
+	SetMoveVecX(0);
+	if (!moveCnt_->IsCounting())
+	{
+		BeginAttack();
+	}
+}
+
 void NormalLady::UpDateAttack()
 {
-	
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);
-		fanEdge_->getHitBase().Offset(GetPos());
-		if (fanEdge_->CheckHit(GetTarget()->GetBox()->getHitBase()))
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (angle_LR_ == Angle_LR::Left)
+		{
+			fanEdge_->getHitBase().Offset(-adjustRange_, 0.f);
+		}
+		else
+		{
+			fanEdge_->getHitBase().Offset(adjustRange_, 0.f);
+		}
+
+		if (fanEdge_->CheckHit(plBox))
 		{
 			static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
 		}
 		if (!moveCnt_->IsCounting())
 		{
 			EndAttack();
+			return;
 		}
 	}
 }
@@ -137,4 +178,9 @@ void NormalLady::UpDateDamage()
 void NormalLady::UpDateDead()
 {
 
+}
+
+float NormalLady::GetAdjustRange() const
+{
+	return adjustRange_;
 }

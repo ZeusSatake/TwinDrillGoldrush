@@ -13,6 +13,7 @@ public:
 	virtual void UpDateApproach() {};
 	virtual void UpDateJump() {};
 	virtual void UpDateFall() {};
+	virtual void UpDateAttackStand() {};
 	virtual void UpDateAttack() {};
 	virtual void UpDateGuard() {};
 	virtual void UpDateDodge() {};

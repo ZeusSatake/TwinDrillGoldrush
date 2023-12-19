@@ -14,11 +14,11 @@ void Debtor::Think()
 	{
 	case Idle:
 		if (!OutOfScreen())
-			afterState = Patrol;
+			afterState = AIState::Patrol;
 		break;
 	/*case Patrol:
 		if (WithinSight(GetTarget()))
-			afterState = Approach;
+			afterState = AIState::Idle;
 		break;*/
 	//case Approach:
 	//	if (GetDistance() <= GetRange())
