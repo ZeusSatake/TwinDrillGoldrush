@@ -82,15 +82,15 @@ namespace  GameScene
 		
 		{//Î zÎ
 			auto map = Map::Object::Create(true);
-			map->Load("MapStone");
+			map->Load("Map1Stone");
 		}
 		{//•óÎ
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("MapJewelry");
+			mapJewelry->Load("Map1Jewelry");
 		}
 		{//“G
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("MapEnemy");
+			enemymap->Load("Map1Enemy");
 			enemymap->SetEnemy();
 		}
 
