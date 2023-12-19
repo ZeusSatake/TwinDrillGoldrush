@@ -7,6 +7,7 @@ Enemy::Enemy()
 	,nowState_(Idle)
 {
 	AddComponent(moveCnt_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
+	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 }
 
 bool Enemy::WithinRange(class Actor* target)
@@ -18,7 +19,6 @@ bool Enemy::WithinRange(class Actor* target)
 
 bool Enemy::UpDateState(AIState afterState)
 {
-	
 	if (nowState_ == afterState) return false;
 	else
 	{
@@ -70,4 +70,9 @@ Enemy::AIState Enemy::GetNowState() const
 void Enemy::SetNowState(const AIState nowState)
 {
 	nowState_ = nowState;
+}
+
+StatusComponent* Enemy::GetStatus() const
+{
+	return status_.get();
 }

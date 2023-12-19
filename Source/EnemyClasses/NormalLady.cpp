@@ -172,7 +172,12 @@ void NormalLady::UpDateDodge()
 
 void NormalLady::UpDateDamage()
 {
-
+	ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+	plBox.Offset(GetTarget()->GetPos());
+	if (fanEdge_->CheckHit(plBox))
+	{
+		static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
+	}
 }
 
 void NormalLady::UpDateDead()
