@@ -52,6 +52,30 @@ namespace  Map
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];
 	public:
+		enum class ChipKind
+		{
+			Empty,
+			Soil,
+			DarkSoil,
+			GreenSoil,
+			LightSoil,
+			RoughSoil,
+			Rock,
+			DarkRock,
+			GreenRock,
+			Coal,
+			BrokenBrick,
+			Iron,
+			Gold,
+			HihiIroKane,
+			Damascus,
+			Orichalcum,
+			Palladium,
+			Adamantite,
+			DiagonalBrick = 26,
+			Brick
+		};
+
 		int					sizeY, sizeX;
 		bool  Load(const  string& fileName);//マップ読み込み
 		bool  CheckHit(const  ML::Box2D& hit);//あたり判定
