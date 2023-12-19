@@ -5,6 +5,8 @@
 class StatusComponent : public Component
 {
 public:
+	StatusComponent(Actor* owner);
+	virtual ~StatusComponent() {};
 	struct Speed
 	{
 	private:
@@ -76,24 +78,15 @@ public:
 		//ê∂Ç´ÇƒÇ¢ÇÈ
 		bool IsAlive() const;
 	};
-public:
-	StatusComponent(Actor* owner)
-		: Component(owner)
-		, speed()
-		, attack()
-		, defence()
-		, HP()
-	{
-	}
-	StatusComponent(Actor* owner,Speed& spd,Attack& atk,Defence& def,Health& hp)
+		
+	/*StatusComponent(Actor* owner,Speed& spd,Attack& atk,Defence& def,Health& hp)
 		: Component(owner)
 		, speed(spd)
 		, attack(atk)
 		, defence(def)
 		, HP(hp)
 	{
-	}
-	virtual ~StatusComponent() {};
+	}*/
 
 	Speed speed;	
 	Attack attack;

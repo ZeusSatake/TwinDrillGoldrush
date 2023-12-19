@@ -34,9 +34,13 @@ namespace BlondeLady
 		this->res = Resource::Create();
 
 		//★データ初期化
+		status_->HP.Initialize(30);
+		status_->attack.Initialize(30, 100);
+		status_->defence.Initialize(0, 100);
+		status_->speed.Initialize(2.5f, 100.f,10.f);
 		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
 		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, 10, 0.5f);
+		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32)*10);
 
 		angle_LR_ = Angle_LR::Right;
@@ -48,16 +52,13 @@ namespace BlondeLady
 		SetRange(30.f);
 
 		moveCnt_->SetCountFrame(0);
+		unHitTimer_->SetCountFrame(90);
 		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
 
 		SetTarget(ge->playerPtr.get());
+		SetPersonalName("お嬢A");//仮
 		//★タスクの生成
 		return  true;
-	}
-
-	void BeginPlay()
-	{
-
 	}
 	//-------------------------------------------------------------------
 	//「終了」タスク消滅時に１回だけ行う処理
@@ -76,10 +77,8 @@ namespace BlondeLady
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		/*auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());*/
-
 		moveCnt_->Update();
+		unHitTimer_->Update();
 		Think();
 		Move();
 	}
@@ -110,8 +109,6 @@ namespace BlondeLady
 
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			res->fanImg->Draw(draw, src);
-
-			
 		}
 
 		if (IsAttacking())
@@ -139,9 +136,8 @@ namespace BlondeLady
 		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
 		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
 		SetTarget(pl.get());
-
-		if(WithinRange(GetTarget()))
-		    ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), "攻撃範囲");
+		if(test)
+		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(static_cast<Player*>(GetTarget())->status_->HP.GetNowHP()));
 
 		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));
 	}

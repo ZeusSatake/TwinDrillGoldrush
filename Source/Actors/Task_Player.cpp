@@ -39,6 +39,7 @@ namespace player
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
 
+		status_->HP.Initialize(100);
 		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
 		//šƒ^ƒXƒN‚Ì¶¬
 		auto dl = drill::Object::Create(true);

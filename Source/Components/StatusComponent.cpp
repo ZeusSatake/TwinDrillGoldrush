@@ -1,11 +1,23 @@
 #include "StatusComponent.h"
 #include <assert.h>
 
+StatusComponent::StatusComponent(Actor* owner)
+	: Component(owner)
+	, speed()
+	, attack()
+	, defence()
+	, HP()
+{
+	speed.Initialize(0, 1.f, 0);
+	attack.Initialize(0, 1);
+	defence.Initialize(0, 1);
+	HP.Initialize(1);
+}
 void StatusComponent::Speed::Initialize(const float now, const float max, const float fallSpeed)
 {
-	if (max_ <= 0||fallSpeed<0)
+	if (max < now)
 	{
-		assert(!"初期化しようとした値が0以下です");
+		assert(!"最大値が初期値を下回ります");
 	}
 	now_ = now;
 	max_ = max;
@@ -44,9 +56,9 @@ void StatusComponent::Speed::SetFallSpeed(const float fallSpeed)
 
 void StatusComponent::Attack::Initialize(const int now,const int max)
 {
-	if (max_ <= 0)
+	if (max < now)
 	{
-		assert(!"初期化しようとした値が0以下です");
+		assert(!"最大値が初期値を下回ります");
 	}
 	now_ = now;
 	max_ = max;
@@ -74,9 +86,9 @@ void StatusComponent::Attack::SetMax(const int max)
 
 void StatusComponent::Defence::Initialize(const int now, const int max)
 {
-	if (max_ <= 0)
+	if (max < now)
 	{
-		assert(!"初期化しようとした値が0以下です");
+		assert(!"最大値が初期値を下回ります");
 	}
 	now_ = now;
 	max_ = max;
@@ -187,14 +199,16 @@ int StatusComponent::Health::GetMaxHP() const
 	return max_;
 }
 
-void StatusComponent::Health::Initialize(const int max_)
+void StatusComponent::Health::Initialize(const int max)
 {
-	if (max_ <= 0) 
+	if (max <= 0) 
 	{
 		assert(!"初期化しようとした最大HPが0以下です");
 	}
 
-	SetMaxHP(max_, Health::MaxLifeSetMode::MaxHeal);
+	max_= max;
+    now_ = max;
+	//SetMaxHP(max, Health::MaxLifeSetMode::MaxHeal);
 }
 
 bool StatusComponent::Health::IsAlive() const

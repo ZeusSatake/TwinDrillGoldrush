@@ -42,7 +42,7 @@ namespace EtoHaiji
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetNowState(Enemy::Idle);
+		SetNowState(Enemy::Patrol);
 
 		SetFov(200.f);
 

@@ -3,6 +3,7 @@
 #include "Source/Components/StateComponent.h"
 #include "Source/Components/ControllerInputComponent.h"
 #include "Source/Actors/Task_Drill.h"
+#include "Source/Components/StatusComponent.h"
 
 class Player :public Character
 {
@@ -13,10 +14,11 @@ class Player :public Character
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
+	
 public:
 	Player();
 	virtual ~Player() {}; 
-	
+	class shared_ptr<StatusComponent> status_;
 
 	StateComponent::State pState;
 	

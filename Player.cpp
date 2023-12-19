@@ -11,6 +11,7 @@ Player::Player()
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
+	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 	//this->movement_->SetConsiderationCollition(true);
 	//this->gravity_->SetConsiderationCollition(true);
 
@@ -100,16 +101,17 @@ void Player::Think()
 	case StateComponent::State::Idle:
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
-		if (inp.B2.down) { pState = StateComponent::State::Drill; }
+		if (inp.B2.down) { pState = StateComponent::State::Attack; }
 		break;
 	case StateComponent::State::Walk:
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
-		if(inp.B2.down){ pState = StateComponent::State::Drill; }
+		if(inp.B2.down){ pState = StateComponent::State::Attack; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
+		if(moveCnt_>10){pState = StateComponent::State::Idle;}
 		break;
 	case StateComponent::State::SpinAttack:
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
