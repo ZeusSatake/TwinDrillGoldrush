@@ -5,6 +5,7 @@
 #include  "Task_MiningResult.h"
 #include  "../Components/Money/PriceTagComponent.h"
 #include  "../Components/Money/WalletComponent.h"
+#include  "../Components/SecondsTimerComponent.h"
 #include  "../System/Task_Save.h"
 #include  "../../Scene.h"
 
@@ -134,6 +135,8 @@ namespace MiningResult
 		}
 		
 		//ÅöÉ^ÉXÉNÇÃê∂ê¨
+		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
+		transitionTimer_->SetCountSeconds(0.8f);
 
 		return  true;
 	}
@@ -162,6 +165,10 @@ namespace MiningResult
 	//ÅuçXêVÅvÇPÉtÉåÅ[ÉÄñàÇ…çsÇ§èàóù
 	void  Object::UpDate()
 	{
+		UpdateComponents();
+
+		if (transitionTimer_->IsCountEndFrame())
+			nowScene_->Kill();
 	}
 	//-------------------------------------------------------------------
 	//ÅuÇQÇcï`âÊÅvÇPÉtÉåÅ[ÉÄñàÇ…çsÇ§èàóù
@@ -170,19 +177,21 @@ namespace MiningResult
 		//ÉfÉoÉbÉOï\é¶
 		{
 			string param = "";
+			int restTarget = needTargetDestroyAmount_ - getOreCount_.at(targetOreKind_);
+			param += "ñ⁄ïWçzêŒÅF" + SellableOreName(targetOreKind_) + " " + to_string(restTarget) + "/" + to_string(needTargetDestroyAmount_) + "å¬\n";
 			//çzêŒ
-			param += "ÅyçzêŒÅz\n";
-			for (const auto& oreCount : getOreCount_)
-			{
-				param += SellableOreName(oreCount.first) + "ÅF" + to_string(oreCount.second) + "\n";
-			}
+			//param += "ÅyçzêŒÅz\n";
+			//for (const auto& oreCount : getOreCount_)
+			//{
+			//	param += SellableOreName(oreCount.first) + "ÅF" + to_string(oreCount.second) + "\n";
+			//}
 
-			//ïÛêŒ
-			param += "ÅyïÛêŒÅz\n";
-			for (const auto& jewelryCount : getJewelryCount_)
-			{
-				param += SellableJewelryName(jewelryCount.first) + "ÅF" + to_string(jewelryCount.second) + "\n";
-			}
+			////ïÛêŒ
+			//param += "ÅyïÛêŒÅz\n";
+			//for (const auto& jewelryCount : getJewelryCount_)
+			//{
+			//	param += SellableJewelryName(jewelryCount.first) + "ÅF" + to_string(jewelryCount.second) + "\n";
+			//}
 
 			ge->debugFont->Draw(ML::Box2D(50, 400, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 		}
@@ -229,7 +238,7 @@ namespace MiningResult
 		if (oreKind != targetOreKind_)
 			return;
 		if (getOreCount_.at(oreKind) == needTargetDestroyAmount_)
-			nowScene_->Kill();
+			transitionTimer_->Start();
 	}
 	void Object::CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind)
 	{
