@@ -162,12 +162,12 @@
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
+    <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
     <ClCompile Include="Source\Actors\UI\SceneChangeButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
-    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
@@ -250,12 +250,12 @@
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
+    <ClInclude Include="Source\Actors\Task_MiningResult.h" />
     <ClInclude Include="Source\Actors\UI\SceneChangeButton.h" />
     <ClInclude Include="Source\Actors\Task_Player.h" />
     <ClInclude Include="Source\Actors\UI\Task_BuyButton.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
-    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />

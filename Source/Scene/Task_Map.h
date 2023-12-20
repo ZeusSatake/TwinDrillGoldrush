@@ -5,6 +5,9 @@
 //-------------------------------------------------------------------
 #include "../../Actor.h"
 
+namespace BlockManager { class Object; }
+namespace MiningResult { class Object; }
+
 namespace  Map
 {
 	//タスクに割り当てるグループ名と固有名
@@ -51,20 +54,22 @@ namespace  Map
 		int chipSize;
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];
+		shared_ptr<BlockManager::Object> blockManager_;
+		weak_ptr<MiningResult::Object> miningResult_;
 	public:
 		enum class ChipKind
 		{
 			Empty,
 			Soil,
-			DarkSoil,
-			GreenSoil,
+			HardSoil,
+			MossySoil,
 			LightSoil,
 			RoughSoil,
-			Rock,
-			DarkRock,
-			GreenRock,
+			Stone,
+			BedRock,
+			MossyStone,
 			Coal,
-			BrokenBrick,
+			CollapseStone,
 			Iron,
 			Gold,
 			HihiIroKane,

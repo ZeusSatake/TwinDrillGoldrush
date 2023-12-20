@@ -3,8 +3,10 @@
 //-------------------------------------------------------------------
 #include	"../../../MyPG.h"
 #include	"BlockManager.h"
-#include	"../../Scene/Task_Map.h"
 #include	"../../../sound.h"
+
+#include	"../../Scene/Task_Map.h"
+#include    "../../Scene/Task_JewelryMap.h"
 
 namespace	BlockManager
 {
@@ -70,121 +72,121 @@ namespace	BlockManager
 			{
 				int id = map->GetMapChip(y, x);
 				switch (id) {
-				case 0:		//空気ブロック
+				case (int)Map::Object::ChipKind::Empty:		//空気ブロック
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					break;
-				case 1:		//土
+				case (int)Map::Object::ChipKind::Soil:		//土
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
 					break;
-				case 2:		//硬い土
+				case (int)Map::Object::ChipKind::HardSoil:		//硬い土
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
-				case 3:		//苔むした土
+				case (int)Map::Object::ChipKind::MossySoil:		//苔むした土
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					break;
-				case 6:		//石
+				case (int)Map::Object::ChipKind::Stone:		//石
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 6;
 					break;
-				case 7:		//岩盤
+				case (int)Map::Object::ChipKind::BedRock:		//岩盤
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
 				//====================鉱石====================
-				case (int)SellableBlock::Coal:		//石炭
+				case (int)Map::Object::ChipKind::Coal:		//石炭
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 9;
 					break;
-				case 10:	//崩れる石
+				case (int)Map::Object::ChipKind::CollapseStone:	//崩れる石
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
 					this->arr[y][x].event = 10;
 					break;
-				case (int)SellableBlock::Iron:	//鉄鉱石
+				case (int)Map::Object::ChipKind::Iron:	//鉄鉱石
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 11;
 					break;
-				case (int)SellableBlock::Gold:	//金鉱石ぽいやつ
+				case (int)Map::Object::ChipKind::Gold:	//金鉱石ぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case (int)SellableBlock::HihiIroKane:	//ヒヒイロカネぽいやつ
+				case (int)Map::Object::ChipKind::HihiIroKane:	//ヒヒイロカネぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
 					break;
-				case (int)SellableBlock::Damascus:	//ダマスカスぽいやつ
+				case (int)Map::Object::ChipKind::Damascus:	//ダマスカスぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 14;
 					break;
-				case (int)SellableBlock::Orichalcum:	//オリハルコンぽいやつ
+				case (int)Map::Object::ChipKind::Orichalcum:	//オリハルコンぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::Palladium:	//パラジウムぽいやつ
+				case (int)Map::Object::ChipKind::Palladium:	//パラジウムぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::Adamantite:	//アダマンタイトぽいやつ
+				case (int)Map::Object::ChipKind::Adamantite:	//アダマンタイトぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
 				//====================宝石====================
-				case (int)SellableBlock::Diamond:	//ダイヤモンド
+				case (int)JewelryMap::Object::ChipKind::Diamond:	//ダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::BlackDiamond:	//ブラックダイヤモンド
+				case (int)JewelryMap::Object::ChipKind::BlackDiamond:	//ブラックダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::PinkDiamond:	//ピンクダイヤモンド
+				case (int)JewelryMap::Object::ChipKind::PinkDiamond:	//ピンクダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::Emerald:	//エメラルド
+				case (int)JewelryMap::Object::ChipKind::Emerald:	//エメラルド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::Sapphire:	//サファイア
+				case (int)JewelryMap::Object::ChipKind::Sapphire:	//サファイア
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)SellableBlock::Garnet:	//ガーネット
+				case (int)JewelryMap::Object::ChipKind::Garnet:	//ガーネット
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
 					break;
-				case (int)SellableBlock::Topaz:	//トパーズ
+				case (int)JewelryMap::Object::ChipKind::Topaz:	//トパーズ
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
 					break;
-				case (int)SellableBlock::Amethyst:	//アメジスト
+				case (int)JewelryMap::Object::ChipKind::Amethyst:	//アメジスト
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 23;
 					break;
-				case 27:
+				case (int)Map::Object::ChipKind::Brick:
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					break;
@@ -194,24 +196,29 @@ namespace	BlockManager
 	}
 	//-------------------------------------------------------------------
 	//数値からブロック破壊処理
-	void Object::Damage(const ML::Point pos_, int power)
+	bool Object::DestroyBlock(const ML::Point pos_, int power)
 	{
 		int x = pos_.x;
 		int y = pos_.y;
+		//空っぽ系のチップは音を鳴らすだけ
 		if (this->arr[y][x].HP < 0)
 		{
 			this->eventSearch(y, x);
-			return;
+			return false;
 		}
 
-		if (this->arr[y][x].HP - power > 0) { this->arr[y][x].HP -= power; }
-		else if (this->arr[y][x].HP >= 0)
-		{
-			this->arr[y][x].HP -= power;
+		this->arr[y][x].HP -= power;
 
+		if (this->arr[y][x].HP <= 0)
+		{
 			auto map = ge->GetTask<Map::Object>("本編", MapName);
 			this->eventSearch(y, x);
 			map->SetMapChip(y, x, 0);
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	//-------------------------------------------------------------------
@@ -223,21 +230,21 @@ namespace	BlockManager
 		auto pos = ML::Vec2(x_ * 16, y_ * 16);
 		switch (eventNum)
 		{
-		case 0:
+		case (int)Map::Object::ChipKind::Empty:
 			break;
-		case 6:
+		case (int)Map::Object::ChipKind::Stone:
 			Stone(pos);
 			break;
-		case 7:
+		case (int)Map::Object::ChipKind::BedRock:
 			Bedrock(pos);
 			break;
-		case 10:
+		case (int)Map::Object::ChipKind::CollapseStone:
 			collapseBlock(x_, y_);
 			break;
-		case (int)SellableBlock::Iron:
+		case (int)Map::Object::ChipKind::Iron:
 			IronOre(pos);
 			break;
-		case 23:
+		case (int)Map::Object::ChipKind::DiagonalBrick:
 			Stone(pos);
 			break;
 		default:
