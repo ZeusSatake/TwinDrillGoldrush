@@ -1,15 +1,18 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//
+//採掘場リザルト
 //-------------------------------------------------------------------
-#include "../../Drill.h"
+#include "../../../GameEngine_Ver3_83.h"
+#include "../../Components/Blocks/BlockManager.h"
 
-namespace  drill
+class PriceTagComponent;
+
+namespace MiningResult
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName(		"プレイヤー");	//グループ名
-	const  string  defName(				"ドリル");	//タスク名
+	const  string  defGroupName("UI");	//グループ名
+	const  string  defName("MiningResult");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -22,11 +25,12 @@ namespace  drill
 		typedef  weak_ptr<Resource>		WP;
 		static   WP  instance;
 		static  Resource::SP  Create();
-		//共有する変数はここに追加する
-		DG::Image::SP img,target;
+
+	private:
+		map<BlockManager::Object::SellableBlock, shared_ptr<PriceTagComponent>> sellableBlockPriceTags_;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  Drill
+	class  Object : public  BTask
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
@@ -44,9 +48,6 @@ namespace  drill
 		void  UpDate()			override;//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
-	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	public:
-		//追加したい変数・メソッドはここに追加する
-		ML::Vec2 preVec;
 	};
 }

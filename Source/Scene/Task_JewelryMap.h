@@ -52,6 +52,19 @@ namespace  JewelryMap
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
 		ML::Box2D  chip[32];
 	public:
+		enum class ChipKind
+		{
+			Empty = 0,
+			Diamond = 18,
+			BlackDiamond,
+			PinkDiamond,
+			Emerald,
+			Sapphire,
+			Garnet,
+			Topaz,
+			Amethyst
+		};
+
 		int					sizeY, sizeX;
 		bool  Load(const  string& fileName);//マップ読み込み
 		bool  CheckHit(const  ML::Box2D& hit);//あたり判定

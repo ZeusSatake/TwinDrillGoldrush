@@ -1,8 +1,11 @@
+#include <math.h>
+
 #include "Drill.h"
 #include "MyPG.h"
 #include "Source/Scene/Task_Map.h"
 #include "Source/Scene/Task_JewelryMap.h"
 #include "Source/Components/Blocks/BlockManager.h"
+
 Drill::Drill()
 	:
 	attackPoint(0),
@@ -10,7 +13,10 @@ Drill::Drill()
 	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
-	canRotate(true)
+	Length(3.f),
+	moveVec(ML::Vec2{0,0}),
+	canRotate(true),
+	x(1)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -21,6 +27,26 @@ Drill::Drill()
 void Drill::SetAngle(float angle)
 {
 	this->angle = angle;
+}
+
+void Drill::SetDrawPos(ML::Vec2 pos)
+{
+	this->drawPos = pos;
+}
+
+void Drill::UpdateTargetPos(ML::Vec2 pos)
+{
+	this->targetPos = pos;
+}
+
+ML::Vec2 Drill::GetDrawPos()
+{
+	return this->drawPos;
+}
+
+ML::Vec2 Drill::GetTargetPos()
+{
+	return this->targetPos;
 }
 
 bool Drill::SpinAngle(float angle)
@@ -54,6 +80,10 @@ float Drill::GetNowAngle()
 	return this->angle;
 }
 
+float Drill::GetLenght()
+{
+	return this->Length;
+}
 
 float Drill::UpdateDrillAngle()
 {
@@ -78,6 +108,20 @@ ML::Vec2 Drill::DrillAngleVec()
 	};
 }
 
+bool Drill::LimitLength(ML::Vec2 pos)
+{
+	ML::Vec2 diff = ML::Vec2{
+		fabsf(this->GetTargetPos().x*16 - pos.x),
+		fabsf(this->GetTargetPos().y*16 - pos.y)
+	};
+	float hypo = (diff.x * diff.x) + (diff.y * diff.y);
+	if (this->Length*16*this->Length*16 < hypo)
+	{
+		return true;
+	}
+	return false;
+}
+
 void Drill::Mining()
 {
 	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
@@ -87,6 +131,7 @@ void Drill::Mining()
 				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
 		map->Search(preVec);
+
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
 	{
@@ -120,6 +165,19 @@ void Drill::Mining()
 //	}
 //}
 
+void Drill::SearchBrocks(ML::Vec2 pos)
+{
+	auto map = ge->GetTask < Map::Object >(Map::defGroupName, Map::defName);
+	if (nullptr == map) { return; }
+
+}
+
+ML::Vec2 Drill::ChangeBrockPos()
+{
+	return ML::Vec2{
+		(this->GetPos() + this->DrillAngleVec()*16.f) / 16.f
+	};
+}
 
 void Drill::DrillCheckMove(ML::Vec2 e_)
 {
@@ -134,9 +192,10 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		else if (e_.x <= -1) { SetPosX(GetPos().x - 1);		e_.x += 1; }
 		else { SetPosX(GetPos().x + e_.x);		e_.x = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-		if (true == map->CheckHit(hit)) {
-			SetPosX(preX);
+		if (true == map->CheckHit(hit)) 
+		{
 			//移動をキャンセル
+			SetPosX(preX);
 			break;
 		}
 	}
@@ -149,8 +208,18 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 		if (true == map->CheckHit(hit)) {
 			this->SetPosY(preY);
+			preVec.y = preY;
 			//移動をキャンセル
 			break;
 		}
+		/*else
+		{
+			if (!this->LimitLength(this->plPos))
+			{
+				e_.y += 16.f;
+			}
+			else break;
+		}*/
 	}
+	//this->UpdateTargetPos(preVec);
 }

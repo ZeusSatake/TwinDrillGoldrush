@@ -1,15 +1,16 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//
+//メッセージ表示
 //-------------------------------------------------------------------
-#include "../../Actor.h"
+#include "../../MyPG.h"//
+#include "../../GameObject.h"
 
-namespace  Map
+namespace  Ev_Message
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("本編");	//グループ名
-	const  string  defName("マップ");	//タスク名
+	const  string  defGroupName(		"メッセージ表示枠");	//グループ名
+	const  string  defName(				"NoName");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -23,11 +24,13 @@ namespace  Map
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//共有する変数はここに追加する
+		DG::Image::SP img[10];//メッセージ表示枠10種類
+		DG::Font::SP font[3];//フォント3種類
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  Actor
+	class  Object : public  GameObject
 	{
-		//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
 		virtual  ~Object();
 		typedef  shared_ptr<Object>		SP;
@@ -43,46 +46,19 @@ namespace  Map
 		void  UpDate()			override;//「実行」１フレーム毎に行う処理
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
-		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-	private:
-		//追加したい変数・メソッドはここに追加する
-		DG::Image::SP img;
-		int arr[160][160];//yx
-		int chipSize;
-		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
-		ML::Box2D  chip[32];
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	public:
-		enum class ChipKind
-		{
-			Empty,
-			Soil,
-			DarkSoil,
-			GreenSoil,
-			LightSoil,
-			RoughSoil,
-			Rock,
-			DarkRock,
-			GreenRock,
-			Coal,
-			BrokenBrick,
-			Iron,
-			Gold,
-			HihiIroKane,
-			Damascus,
-			Orichalcum,
-			Palladium,
-			Adamantite,
-			DiagonalBrick = 26,
-			Brick
-		};
+		//追加したい変数・メソッドはここに追加する
+		int bgNumber;
+		int fontNumber;
+		ML::Vec2 pos;
+		string msgText;
+		int timeCnt;
+		int timeLimit;
 
-		int					sizeY, sizeX;
-		bool  Load(const  string& fileName);//マップ読み込み
-		bool  CheckHit(const  ML::Box2D& hit);//あたり判定
-		void AdjustCameraPos();//マップ外を見せないようにカメラを位置調整する
-		void  Search(const ML::Vec2& pos_);//対象ブロック検索
-		inline int GetMapChip(int y, int x) { return this->arr[y][x]; } 
-		inline void SetMapChip(int y, int x, int no) { arr[y][x] = no; }
+		//タスクを生成するか、同名のタスクの情報を更新する
+		static void CreateOrReset(stringstream& ss_);
+		//表示するメッセージを設定する
+		void Set(const string& taskName_, stringstream& ss_);
 	};
 }
-		

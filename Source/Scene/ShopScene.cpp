@@ -124,6 +124,12 @@ namespace ShopScene
 						}
 					}
 				);
+
+				//ƒŒƒxƒ‹Å‘å‚Ì‚à‚Ì‚Í–³Œø‚É
+				if (save->GetValue<int>(info.kind) >= info.max)
+				{
+					button->SetEnable(false);
+				}
 				buttons_.push_back(button);
 			}
 		}

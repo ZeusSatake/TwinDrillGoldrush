@@ -1,26 +1,10 @@
 //-------------------------------------------------------------------
-//ゲーム本編
+//
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "GameScene.h"
+#include "../../MyPG.h"
+#include  "Task_Ev_FadeInOut.h"
 
-#include  "../../randomLib.h"
-#include  "../../sound.h"
-
-#include  "EndingScene.h"
-
-#include  "../System/Task_BackGround.h"
-#include  "Task_Map.h"
-#include  "Task_JewelryMap.h"
-
-#include  "Task_EnemyMap.h"
-
-#include  "../Actors/UI/SceneChangeButton.h"
-
-#include "../Actors/Task_Player.h"
-#include "../../Camera.h"
-
-namespace  GameScene
+namespace  Ev_FadeInOut
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -45,63 +29,10 @@ namespace  GameScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->render2D_Priority[1] = 0.0f;
-		ge->debugRectLoad();
-
-		ge->GameOverFlag = false;
-		ge->GameClearFlag = false;
-		ge->gameScreenWidth = ge->screenWidth;
-		
-		fontImg.img = DG::Image::Create("./data/image/font_number.png");
-		fontImg.size = ML::Point{ 20, 32 };
-		ge->score = 0;
-		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
-		//デバッグ用フォントの準備
-		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
-
+		this->render2D_Priority[1] = 0.005f;
+		this->cnt = 0;
+		this->Stop();
 		//★タスクの生成
-		{
-			//auto player = player::Object::Create(true);
-			auto camera = Camera::Object::Create(true);
-			camera->SetPos(ge->playerPtr->GetPos());
-			camera->target = ge->playerPtr;
-			ge->playerPtr->SetPos(ML::Vec2{ 50,480 });
-		}
-		
-		{//背景タスク生成
-			ML::Point imgSize = { 960, 500 };
-			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
-			int sprit = 1;
-			auto back = BackGround::Object::Create(true);
-			back->SetUp("./data/image/gameback.png",
-						imgSize,
-						drawSize,
-						BackGround::Object::RenderSize::FullScreen,
-						sprit);
-		}
-		
-		{//石 鉱石
-			auto map = Map::Object::Create(true);
-			map->Load("Map1Stone");
-		}
-		{//宝石
-			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map1Jewelry");
-		}
-		{//敵
-			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map1Enemy");
-			enemymap->SetEnemy();
-		}
-
-		{//拠点に戻るボタン(デバッグ用
-			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-			gotoBaseButton->SetEnterButton(XI::VGP::ST);
-			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("拠点へ");
-			AddSceneChangeButton(gotoBaseButton);
-		}
 
 		return  true;
 	}
@@ -110,18 +41,10 @@ namespace  GameScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
-		ge->KillAll_G("本編");
-		ge->KillAll_G("システム");
-		ge->KillAll_G(SceneChangeButton::defGroupName);
-		ge->KillAll_G("キャラクタ");
-		ge->KillAll_G("敵");
-
-		ge->debugRectReset();
+		this->img.reset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			CreateNextScene();
 		}
 
 		return  true;
@@ -130,22 +53,80 @@ namespace  GameScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Scene::UpDate();
-
-		auto inp = ge->in1->GetState();
-		if (inp.SE.down) {
-			this->Kill();
+		if (this->mode == Mode::In)
+		{
+			this->cnt--;
+			if (this->cnt < 0)
+			{
+				//イベントエンジンを再開させる
+				ge->StopAll_GN("イベント", "実行エンジン", false);
+				//消滅する
+				this->Kill();
+			}
 		}
-		if (ge->GameOverFlag) {
-			this->Kill();
+		if (this->mode == Mode::Out)
+		{
+			this->cnt++;
+			if (this->cnt > 60)
+			{
+				//イベントエンジンを再開させる
+				ge->StopAll_GN("イベント", "実行エンジン", false);
+				//停止状態にする
+				this->Stop();
+			}
 		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D draw(0, 0, ge->screen2DWidth, ge->screen2DHeight);
+		this->img->Draw(draw, this->src,ML::Color(this->cnt/60.0f,1,1,1));
 	}
 
+	void Object::CreateOrFadeIn(stringstream& ss_)
+	{
+		//新規作成か更新かの判別
+		auto p = ge->GetTask<Object>(defGroupName, defName);
+
+		//新規作成の場合（基本はフェードイン）
+		if (nullptr == p)
+		{
+			p = Object::Create(true);
+			p->Set(ss_);
+		}
+		//更新の場合（基本はフェードアウト）
+		else
+		{
+			p->Set(ss_);
+		}
+	}
+	void Object::Set(stringstream& ss_)
+	{
+		//パラメータを分解する
+		string filePath;
+		ss_ >> filePath;
+		//フェードインする場合
+		if (filePath == "in")
+		{
+			this->mode = Mode::In;
+			this->cnt = 60;
+		}
+		//フェードアウトする場合
+		else
+		{
+			this->mode = Mode::Out;
+			this->cnt = 0;
+			//画像を読み込む
+			this->img = DG::Image::Create(filePath);
+			POINT s = this->img->Size( );
+			this->src = ML::Box2D(0, 0, s.x, s.y);
+		}
+		//イベントエンジンを一時停止させる
+		ge->StopAll_GN("イベント", "実行エンジン");
+		//停止状態を解除する
+		this->Stop(false);
+	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -158,6 +139,7 @@ namespace  GameScene
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
+				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

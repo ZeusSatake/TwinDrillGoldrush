@@ -3,9 +3,10 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../Actor.h"
+#include "../../GameEngine_Ver3_83.h"
+#include "../../GameObject.h"
 
-namespace  Map
+namespace  InputMap
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("本編");	//グループ名
@@ -23,9 +24,10 @@ namespace  Map
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//共有する変数はここに追加する
+		DG::Font::SP font;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  Actor
+	class  Object : public  GameObject
 	{
 		//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
@@ -47,42 +49,15 @@ namespace  Map
 	private:
 		//追加したい変数・メソッドはここに追加する
 		DG::Image::SP img;
-		int arr[160][160];//yx
-		int chipSize;
+		
+		
 		ML::Box2D			hitBase;//ピクセル単位のマップサイズを持つ
-		ML::Box2D  chip[32];
+		ML::Box2D  chip[100];
 	public:
-		enum class ChipKind
-		{
-			Empty,
-			Soil,
-			DarkSoil,
-			GreenSoil,
-			LightSoil,
-			RoughSoil,
-			Rock,
-			DarkRock,
-			GreenRock,
-			Coal,
-			BrokenBrick,
-			Iron,
-			Gold,
-			HihiIroKane,
-			Damascus,
-			Orichalcum,
-			Palladium,
-			Adamantite,
-			DiagonalBrick = 26,
-			Brick
-		};
-
+		string arr[10][10];//yx
+		int chipSize;
 		int					sizeY, sizeX;
 		bool  Load(const  string& fileName);//マップ読み込み
-		bool  CheckHit(const  ML::Box2D& hit);//あたり判定
-		void AdjustCameraPos();//マップ外を見せないようにカメラを位置調整する
-		void  Search(const ML::Vec2& pos_);//対象ブロック検索
-		inline int GetMapChip(int y, int x) { return this->arr[y][x]; } 
-		inline void SetMapChip(int y, int x, int no) { arr[y][x] = no; }
 	};
 }
 		

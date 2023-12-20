@@ -5,7 +5,7 @@
 //-------------------------------------------------------------------
 #include	"../../../BBlocks.h"
 
-namespace	Manager
+namespace	BlockManager
 {
 	class BlockState
 	{
@@ -58,7 +58,26 @@ namespace	Manager
 			//BCharaに含まれないモノのみここに追加する
 		void Damage(const ML::Point pos, int power);
 		void InitArray();					//ブロックHPの初期化に使用
-
+		
+		enum class SellableBlock
+		{
+			Coal = 9,
+			Iron = 11,
+			Gold,
+			HihiIroKane,
+			Damascus,
+			Orichalcum,
+			Palladium,
+			Adamantite,
+			Diamond,
+			BlackDiamond,
+			PinkDiamond,
+			Emerald,
+			Sapphire,
+			Garnet,
+			Topaz,
+			Amethyst
+		};
 	private:
 		BlockState  arr[160][160];//yx
 

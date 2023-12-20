@@ -167,6 +167,7 @@
     <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
@@ -186,6 +187,13 @@
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp" />
     <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine_System.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Image.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Input.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Message.cpp" />
+    <ClCompile Include="Source\Event\Task_InputMap.cpp" />
     <ClCompile Include="Source\Scene\BaseScene.cpp" />
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
@@ -247,6 +255,7 @@
     <ClInclude Include="Source\Actors\UI\Task_BuyButton.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
+    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
@@ -266,6 +275,12 @@
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
     <ClInclude Include="Source\EnemyClasses\LadySatake.h" />
     <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
+    <ClInclude Include="Source\Event\Task_EventEngine.h" />
+    <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Image.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Input.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Message.h" />
+    <ClInclude Include="Source\Event\Task_InputMap.h" />
     <ClInclude Include="Source\Scene\BaseScene.h" />
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />

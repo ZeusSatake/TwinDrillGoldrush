@@ -11,10 +11,10 @@ Player::Player()
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
-	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
+	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	//this->movement_->SetConsiderationCollition(true);
 	//this->gravity_->SetConsiderationCollition(true);
-
+	this->cooldown_->SetCountFrame(30);
 }
 
 
@@ -27,7 +27,7 @@ bool Player::CheckFoot()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>("æœ¬ç·¨", "ãƒžãƒƒãƒ—"))
 	{
 		if (map->CheckHit(footBox.OffsetCopy(this->GetPos())))
 		{
@@ -45,7 +45,7 @@ bool Player::CheckHead()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>("æœ¬ç·¨", "ãƒžãƒƒãƒ—"))
 	{
 		if (map->CheckHit(headBox.OffsetCopy(this->GetPos())))
 		{
@@ -57,11 +57,11 @@ bool Player::CheckHead()
 
 //void Player::CheckMove(ML::Vec2& e_)
 //{
-//	//ƒ}ƒbƒv‚ª‘¶Ý‚·‚é‚©’²‚×‚Ä‚©‚çƒAƒNƒZƒX
+//	//ãƒžãƒƒãƒ—ãŒå­˜åœ¨ã™ã‚‹ã‹èª¿ã¹ã¦ã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹
 //	auto   map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
-//	if (nullptr == map) { return; }//ƒ}ƒbƒv‚ª–³‚¯‚ê‚Î”»’è‚µ‚È‚¢(o—ˆ‚È‚¢j
+//	if (nullptr == map) { return; }//ãƒžãƒƒãƒ—ãŒç„¡ã‘ã‚Œã°åˆ¤å®šã—ãªã„(å‡ºæ¥ãªã„ï¼‰
 //	ML::Vec2 preVec{ 0,0 };
-//	//‰¡Ž²‚É‘Î‚·‚éˆÚ“®
+//	//æ¨ªè»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.x != 0) {
 //		float  preX = this->GetPos().x;
 //		if (e_.x >= 1) { SetPosX(GetPos().x +1);	e_.x -= 1; }
@@ -70,11 +70,11 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			SetPosX(preX);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
-//	//cŽ²‚É‘Î‚·‚éˆÚ“®
+//	//ç¸¦è»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.y != 0) {
 //		float  preY = this->GetPos().y;
 //		if (e_.y >= 1) {SetPosY(GetPos().y + 1);		e_.y -= 1; }
@@ -83,7 +83,7 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			this->SetPosY(preY);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
@@ -94,6 +94,8 @@ bool Player::CheckHead()
 void Player::Think()
 {
 	auto inp = controller_->gamePad_->GetState();
+	this->cooldown_->Update();
+
 	switch (pState)
 	{
 	case StateComponent::State::Non:
@@ -101,22 +103,26 @@ void Player::Think()
 	case StateComponent::State::Idle:
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
-		if (inp.B2.down) { pState = StateComponent::State::Attack; }
+		if (inp.B2.down) { pState = StateComponent::State::Drill; }
+		if(inp.B4.down){ pState = StateComponent::State::Damage; }
 		break;
 	case StateComponent::State::Walk:
+		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
 		if(inp.B2.down){ pState = StateComponent::State::Attack; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
+		if(inp.L1.down && !this->cooldown_->IsCounting()){ pState = StateComponent::State::Attack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
-		if(moveCnt_>10){pState = StateComponent::State::Idle;}
+		if (this->state_->moveCnt_ > 8) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::SpinAttack:
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
+		if(this->state_->moveCnt_>=20){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -153,6 +159,8 @@ void Player::Move()
 {
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
+	this->unHitTimer_->Update();
+	//if (inp.B4.down)this->drill_->x += 1;
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
@@ -179,15 +187,18 @@ void Player::Move()
 		break;
 	case StateComponent::State::Walk:
 		this->moveVec.x=controller_->GetLStickVec().x;
+		
 		break;
 	case StateComponent::State::Attack:
 		moveVec.x = controller_->GetLStickVec().x * speed;
+		this->HitAttack();
 		break;
 	case StateComponent::State::SpinAttack:
 		moveVec.x = controller_->GetLStickVec().x * speed;
 
 		break;
 	case StateComponent::State::Damage:
+		TakeAttack();
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -232,11 +243,27 @@ void Player::Move()
 	case StateComponent::State::Appeal:
 		break;
 	}
-	//‚±‚±‚ÉÅI“I‚Éƒ}ƒbƒv‚Æ‚ÌˆÚ“®‰Â”Ûƒ`ƒFƒbƒN‚ð“ü‚ê‚é
+	//ã“ã“ã«æœ€çµ‚çš„ã«ãƒžãƒƒãƒ—ã¨ã®ç§»å‹•å¯å¦ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹
     //this->CheckHitMap(this->preVec);
 	CheckMove(moveVec);
 }
 
+
+void Player::HitAttack()
+{
+	this->cooldown_->Start();
+}
+
+void Player::TakeAttack()
+{
+	this->moveVec.y = -0.5;
+}
+
+void Player::SetPlayerState(StateComponent::State state)
+{
+	if (this->state_->GetNowState() == state) { return; }
+	this->state_->UpdateNowState(state);
+}
 
 ML::Vec2 Player::GetMoveVec()
 {

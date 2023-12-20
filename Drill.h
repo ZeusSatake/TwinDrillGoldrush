@@ -8,8 +8,11 @@ class Drill :public Character
 	int   durability; //ëœãvín
 	float addAngle;   //í«â¡ÇµÇΩäpìx
 	float angle;      //äpìx
+	float Length;
 	float preAngle;   //1ÉtÉåÅ[ÉÄëOÇÃäpìx
 	bool  canRotate;  //âÒì]Çãñâ¬Ç∑ÇÈÇ©Ç«Ç§Ç©
+	ML::Vec2 drawPos;
+	ML::Vec2 targetPos;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -18,17 +21,30 @@ public:
 	Drill();
 	virtual ~Drill() { };
 
+	ML::Vec2 moveVec;
+	ML::Vec2 plPos;
+	int x;
+
+
 	void SetAngle(float angle);
+	void SetDrawPos(ML::Vec2 pos);
+	void UpdateTargetPos(ML::Vec2 pos);
+	void UpdateLength(float length);
 	bool SpinAngle(float angle);
 	void SetCanRotate(bool check);
 
-	int GetAttackPoint();
-	float GetNowAngle();
+	ML::Vec2 GetDrawPos();
+	ML::Vec2 GetTargetPos();
 	ML::Vec2 DrillAngleVec();
+	ML::Vec2 ChangeBrockPos();
+	int GetAttackPoint();
+	float GetLenght();
+	float GetNowAngle();
 	float UpdateDrillAngle();
 
 	void Mining();
-	void SearchBrocks(ML::Vec2 pos_);
+	bool LimitLength(ML::Vec2 pos);
+	void SearchBrocks(ML::Vec2 pos);
 	void DrillCheckMove(ML::Vec2 e_);
 
 	StateComponent::State dState;
