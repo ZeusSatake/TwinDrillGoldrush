@@ -8,7 +8,7 @@
 
 Drill::Drill()
 	:
-	attackPoint(0),
+	attack(0),
 	angle(0.0f),
 	addAngle(0.0f),
 	preAngle(0.0f),
@@ -69,9 +69,9 @@ void Drill::SetCanRotate(bool check)
 	this->canRotate = check;
 }
 
-int Drill::GetAttackPoint()
+int Drill::GetAttack()
 {
-	return this->attackPoint;
+	return this->attack;
 }
 
 float Drill::GetNowAngle()
@@ -214,4 +214,9 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 
 	}
 
+}
+
+ML::Vec2 Drill::GetAttackPos()
+{
+	return this->GetPos() + ML::Vec2{ (cos(GetNowAngle()) * 2.f), (sin(GetNowAngle()) * 2.f) };
 }

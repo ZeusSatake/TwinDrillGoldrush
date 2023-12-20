@@ -4,7 +4,7 @@
 #include "Source/Components/ControllerInputComponent.h"
 class Drill :public Character
 {
-	int   attackPoint;//çUåÇóÕ
+	int   attack;//çUåÇóÕ
 	int   durability; //ëœãvín
 	float addAngle;   //í«â¡ÇµÇΩäpìx
 	float angle;      //äpìx
@@ -36,12 +36,13 @@ public:
 	ML::Vec2 GetTargetPos();
 	ML::Vec2 DrillAngleVec();
 	ML::Vec2 ChangeBrockPos();
-	int GetAttackPoint();
+	int GetAttack();
 	float GetLenght();
 	float GetNowAngle();
 	float UpdateDrillAngle();
 
 	void Mining();
+	ML::Vec2 GetAttackPos();
 	bool LimitLength(ML::Vec2 pos);
 	void SearchBrocks(ML::Vec2 pos);
 	void DrillCheckMove(ML::Vec2 e_);

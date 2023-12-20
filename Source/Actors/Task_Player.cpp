@@ -80,15 +80,20 @@ namespace player
 			ML::Box2D src{ 0,0,32,64};
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			if (this->unHitTimer_->IsCounting())
+			if (this->pState != StateComponent::State::Dead)
 			{
-				if(this->unHitTimer_->GetCount()%2 ==0)
-				this->res->playerImg->Draw(draw, src);
+				if (this->unHitTimer_->IsCounting())
+				{
+					if (this->unHitTimer_->GetCount() % 2 == 0)
+						this->res->playerImg->Draw(draw, src);
 
+				}
+				else
+					this->res->playerImg->Draw(draw, src);
 			}
-			else
-			this->res->playerImg->Draw(draw, src);
 		}
+		if(this->pState == StateComponent::State::Attack)
+		ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), "Attaking");
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
