@@ -20,6 +20,7 @@
 
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
+#include "../System/Task_Save.h"
 
 namespace  GameScene
 {
@@ -60,6 +61,8 @@ namespace  GameScene
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
 
+		auto save = Save::Object::Create(true);
+
 		//★タスクの生成
 		{
 			//auto player = player::Object::Create(true);
@@ -83,6 +86,18 @@ namespace  GameScene
 		
 		{//リザルト
 			auto miningResult = MiningResult::Object::Create(true);
+			miningResult->SetNowSecene(this);
+
+			//間に合わせること優先の為決め打ちで設定 後で変更
+			pair<Map::Object::ChipKind, int> targetOres[] =
+			{
+				make_pair(Map::Object::ChipKind::Damascus, 2),
+				make_pair(Map::Object::ChipKind::Orichalcum, 1),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 1),
+				make_pair(Map::Object::ChipKind::Adamantite, 1)
+			};
+			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
+			miningResult->SetTargetOre(targetOre.first, targetOre.second);
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
