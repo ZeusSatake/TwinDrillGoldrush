@@ -150,7 +150,7 @@ void Player::Think()
 	case StateComponent::State::Drill:
 		if (inp.L1.on) { pState = StateComponent::State::Mining; }
 		if (inp.B2.down) { pState = StateComponent::State::Idle; }
-		if (inp.Trigger.L2.down) { pState = StateComponent::State::DrillDash; }
+		if (inp.Trigger.L2.down&&this->CheckFoot()) { pState = StateComponent::State::DrillDash; }
 		break;
 	case StateComponent::State::DrillDash:
 		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
@@ -173,6 +173,8 @@ void Player::Move()
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
 	this->unHitTimer_->Update();
+	this->drill_->SetMode(state_->GetNowState());
+
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
@@ -215,7 +217,6 @@ void Player::Move()
 	case StateComponent::State::KnockBack:
 		break;
 	case StateComponent::State::Dead:
-
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
@@ -238,7 +239,7 @@ void Player::Move()
 	case StateComponent::State::Drill:
 		this->status_->speed.SetMax(0.85f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-		if (inp.R1.down) 
+		if (inp.R1.down&&this->CheckFoot()) 
 		{
 			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
 			this->state_->moveCnt_ = 0;
@@ -293,4 +294,10 @@ ML::Vec2 Player::GetMoveVec()
 StatusComponent* Player::GetStatus() const
 {
 	return this->status_.get();
+}
+
+void Player::ResetState()
+{
+	this->state_->UpdateNowState(StateComponent::State::Idle);
+	this->drill_->SetMode(StateComponent::State::Idle);
 }

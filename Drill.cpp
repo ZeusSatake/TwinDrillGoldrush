@@ -33,6 +33,28 @@ void Drill::SetDrawPos(ML::Vec2 pos)
 	this->drawPos = pos;
 }
 
+void Drill::SetMode(StateComponent::State state)
+{
+	if (state == StateComponent::State::Drill ||
+		state == StateComponent::State::DrillDash ||
+		state == StateComponent::State::Mining)
+	{
+		this->mode = Mode::Drill;
+		return;
+	}
+	if (state == StateComponent::State::Dead)
+	{
+		this->mode = Mode::Non;
+		return;
+	}
+	this->mode = Mode::Normal;
+}
+
+Drill::Mode Drill::GetMode()
+{
+	return this->mode;
+}
+
 void Drill::UpdateTargetPos(ML::Vec2 pos)
 {
 	this->targetPos = pos;

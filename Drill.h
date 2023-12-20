@@ -13,6 +13,10 @@ class Drill :public Character
 	bool  canRotate;  //‰ñ“]‚ð‹–‰Â‚·‚é‚©‚Ç‚¤‚©
 	ML::Vec2 drawPos;
 	ML::Vec2 targetPos;
+public:
+	enum class Mode{Normal,Drill,Non};
+private:
+	Mode mode;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -32,6 +36,9 @@ public:
 	bool SpinAngle(float angle);
 	void SetCanRotate(bool check);
 
+	void SetMode(StateComponent::State state);
+	Mode GetMode();
+
 	ML::Vec2 GetDrawPos();
 	ML::Vec2 GetTargetPos();
 	ML::Vec2 DrillAngleVec();
@@ -46,6 +53,7 @@ public:
 	bool LimitLength(ML::Vec2 pos);
 	void SearchBrocks(ML::Vec2 pos);
 	void DrillCheckMove(ML::Vec2 e_);
+
 
 	StateComponent::State dState;
 };
