@@ -6,6 +6,7 @@
 
 #include  "../../randomLib.h"
 #include  "../../sound.h"
+#include  "../Components/SecondsTimerComponent.h"
 
 #include  "EndingScene.h"
 
@@ -53,13 +54,17 @@ namespace  GameScene
 		ge->GameOverFlag = false;
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
-		
+
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
 		ge->score = 0;
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
+
+		AddComponent(limitTimer_ = make_shared<SecondsTimerComponent>(this));
+		limitTimer_->SetCountSeconds(60.0f * 3.0f);
+		limitTimer_->Start();
 
 		auto save = Save::Object::Create(true);
 
@@ -150,12 +155,13 @@ namespace  GameScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+		UpdateComponents();
 
 		auto inp = ge->in1->GetState();
 		if (inp.SE.down) {
 			this->Kill();
 		}
-		if (ge->GameOverFlag) {
+		if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
 			this->Kill();
 		}
 	}
@@ -163,6 +169,13 @@ namespace  GameScene
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		//タイマー表示
+		ge->debugFont->Draw
+		(
+			ML::Box2D(ge->screenCenterPos.x - 20, 30, 500, 500),
+			to_string((int)limitTimer_->GetCount() / 60) + "：" + to_string((int)limitTimer_->GetCount() % 60),
+			ML::Color(1, 1, 0, 0)
+		);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
