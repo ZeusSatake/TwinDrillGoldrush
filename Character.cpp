@@ -4,9 +4,7 @@
 Character::Character()
 	:Actor()
 {
-	//コンポーネントを追加
-
-	AddComponent(hp_ = shared_ptr<HP>(new HP(this)));
+	//AddComponent(hp_ = shared_ptr<HP>(new HP(this)));
 	AddComponent(movement_ = shared_ptr<Movement>(new Movement(this)));
 	AddComponent(gravity_ = shared_ptr<Movement>(new Movement(this)));
 	AddComponent(animManager_ = shared_ptr<AnimManager>(new AnimManager(this,0)));
@@ -42,11 +40,6 @@ bool Character::CheckFoot() const
 	}
 
 	return map->CheckHit(foot);
-}
-
-shared_ptr<HP> Character::GetHP() const
-{
-	return hp_;
 }
 
 std::string Character::GetPersonalName() const

@@ -38,7 +38,6 @@ namespace player
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
-		this->GetHP()->SetMaxHP(10, HP::MaxLifeSetMode::MaxHeal);
 
 		//★タスクの生成
 		auto dl = drill::Object::Create(true);

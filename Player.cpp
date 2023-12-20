@@ -17,7 +17,7 @@ Player::Player()
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(30);
 	
-	status_->HP.Initialize(50);
+	status_->HP.Initialize(100);
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
@@ -131,7 +131,7 @@ void Player::Think()
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
-		if(this->state_->moveCnt_>8){ pState = StateComponent::State::Idle; }
+		if(this->state_->moveCnt_>90){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
 		break;

@@ -184,7 +184,10 @@ void LadySatake::UpDateAttack()
 
 		if (fanEdge_->CheckHit(plBox))
 		{
-			static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+			if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
+			{
+				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+			}
 		}
 		if (!moveCnt_->IsCounting())
 		{

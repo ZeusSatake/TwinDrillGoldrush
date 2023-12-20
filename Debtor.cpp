@@ -159,7 +159,10 @@ bool Debtor::HitPlayer()
 	if (CheckHit(plBox))
 	{
 		//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚Ìˆ—
-		static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(10);
+		if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
+		{
+			static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+		}
 		return true;
 	}
 	return false;
