@@ -217,7 +217,6 @@ void Player::Move()
 	case StateComponent::State::KnockBack:
 		break;
 	case StateComponent::State::Dead:
-		this->drill_->Kill();
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
@@ -295,4 +294,10 @@ ML::Vec2 Player::GetMoveVec()
 StatusComponent* Player::GetStatus() const
 {
 	return this->status_.get();
+}
+
+void Player::ResetState()
+{
+	this->state_->UpdateNowState(StateComponent::State::Idle);
+	this->drill_->SetMode(StateComponent::State::Idle);
 }

@@ -35,6 +35,8 @@ namespace MartialFightScene
 
 		//★データ初期化
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
+		ge->playerPtr->ResetState();
+
 		//★タスクの生成
 		{//武闘会
 			auto map = Map::Object::Create(true);

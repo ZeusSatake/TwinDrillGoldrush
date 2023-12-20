@@ -52,6 +52,7 @@ namespace  GameScene
 		ge->GameOverFlag = false;
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
+		ge->playerPtr->ResetState();
 		
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
