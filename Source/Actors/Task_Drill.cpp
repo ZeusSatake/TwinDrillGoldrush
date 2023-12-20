@@ -83,21 +83,6 @@ namespace  drill
 		tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
 		this->res->target->Draw(tDraw, tSrc);
-		//----------------------------------------------------
-		ge->debugFont->Draw(ML::Box2D(1000, 100, 500, 500), "ドリルの角度:"+to_string(ML::ToDegree(GetNowAngle())));
-		ML::Vec2 mapPoint{ (this->GetPos().x + 16 + ge->camera2D.x),(this->GetPos().y + 16 + ge->camera2D.x) };
-		//ML::Box2D mapPoint{this->box_->getHitBase().OffsetCopy(this->GetPos()) };
-		ge->debugFont->Draw(ML::Box2D(1000, 200, 500, 500), "ドリルのマス:" + to_string((int)mapPoint.x/16)+" "+to_string((int)mapPoint.y/16));
-		ge->debugFont->Draw(ML::Box2D(900, 200, 500, 500), to_string((int)GetTargetPos().x)+" "+ to_string((int)GetTargetPos().y));
-		ge->debugFont->Draw(ML::Box2D(850, 600, 500, 500), to_string(ge->playerPtr->GetPos().x) +" " + to_string(this->GetTargetPos().x*16) + " " + to_string(fabsf(this->GetTargetPos().x*16 - ge->playerPtr->GetPos().x)));
-		{
-			ML::Vec2 diff = ML::Vec2{
-	fabsf(this->GetTargetPos().x * 16 - plPos.x),
-	fabsf(this->GetTargetPos().y * 16 - plPos.y)
-			};
-			float hypo = ((diff.x * diff.x) + (diff.y * diff.y));
-			ge->debugFont->Draw(ML::Box2D(1000, 500, 500, 500), "距離 :" + to_string(hypo)+"Limit :"+to_string((3 * 16 * 3 * 16)));
-		}
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
