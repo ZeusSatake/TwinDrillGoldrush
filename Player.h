@@ -9,7 +9,6 @@
 class Player :public Character
 {
 	ML::Vec2 moveVec;
-	float speed;
 	float jumpPow;
 
 protected:

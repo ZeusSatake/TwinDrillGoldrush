@@ -6,7 +6,6 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
-	speed(2.0f),
 	jumpPow(-25.f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
@@ -16,10 +15,11 @@ Player::Player()
 	//this->movement_->SetConsiderationCollition(true);
 	//this->gravity_->SetConsiderationCollition(true);
 	this->cooldown_->SetCountFrame(30);
+	this->unHitTimer_->SetCountFrame(30);
 	
 	status_->HP.Initialize(50);
 	status_->attack.Initialize(10,100);
-	status_->speed.Initialize(2.f, 10.f, 2.f);
+	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
 }
 
@@ -110,6 +110,7 @@ void Player::Think()
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
+		if(inp.L1.down){pState = StateComponent::State::Attack; }
 		if(inp.B4.down){ pState = StateComponent::State::Damage; }
 		break;
 	case StateComponent::State::Walk:
@@ -118,17 +119,18 @@ void Player::Think()
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
 		if(inp.B2.down){ pState = StateComponent::State::Drill; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
-		if(inp.L1.down && !this->cooldown_->IsCounting()){ pState = StateComponent::State::Attack; }
+		if(inp.L1.down){ pState = StateComponent::State::Attack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
-		if (this->state_->moveCnt_ > 8) { pState = StateComponent::State::Idle; }
+		if (this->state_->moveCnt_ > 30
+			||inp.L1.off) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::SpinAttack:
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
-		if(this->state_->moveCnt_>=20){ pState = StateComponent::State::Idle; }
+		if(this->state_->moveCnt_>8){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -194,14 +196,15 @@ void Player::Move()
 		
 		break;
 	case StateComponent::State::Attack:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		this->HitAttack();
 		break;
 	case StateComponent::State::SpinAttack:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
 		break;
 	case StateComponent::State::Damage:
+		this->unHitTimer_->Start();
 		TakeAttack();
 		break;
 	case StateComponent::State::KnockBack:
@@ -209,15 +212,15 @@ void Player::Move()
 	case StateComponent::State::Dead:
 		break;
 	case StateComponent::State::Jump:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		moveVec.y = jumpPow + (this->state_->moveCnt_/20);
 		break;
 	case StateComponent::State::Fall:
-		moveVec.x = controller_->GetLStickVec().x*speed;
+		moveVec.x = controller_->GetLStickVec().x* this->status_->speed.GetMax();
 		break;
 	case StateComponent::State::Dash:
-		this->speed = 5.0f;
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		this->status_->speed.SetMax(5.0f);
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
 		break;
 	case StateComponent::State::DrillDash:
@@ -227,8 +230,8 @@ void Player::Move()
 		if (this->state_->moveCnt_ >= 29)this->drill_->SetCanRotate(true);
 		break;
 	case StateComponent::State::Drill:
-		this->speed = 0.85f;
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		this->status_->speed.SetMax(0.85f);
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		if (inp.R1.down) 
 		{
 			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
@@ -236,9 +239,8 @@ void Player::Move()
 		}
 		break;
 	case StateComponent::State::Mining:
-		if(this->state_->moveCnt_==0)
 		this->drill_->Mining();
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
 		break;
 	case StateComponent::State::Appeal:
@@ -257,7 +259,11 @@ void Player::HitAttack()
 
 void Player::TakeAttack()
 {
-	this->moveVec.y = -0.5;
+	if (!this->unHitTimer_->IsCounting())
+	{
+		this->moveVec.y = -0.5;
+		this->status_->HP.TakeDamage(1);
+	}
 }
 
 void Player::SetPlayerState(StateComponent::State state)
