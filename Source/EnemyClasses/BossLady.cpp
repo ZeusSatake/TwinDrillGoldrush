@@ -3,5 +3,4 @@
 BossLady::BossLady()
 	:Lady()
 {
-
 }

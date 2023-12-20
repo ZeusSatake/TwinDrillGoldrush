@@ -9,6 +9,8 @@
 #include "../Scene/Task_JewelryMap.h"
 
 class PriceTagComponent;
+class Scene;
+class SecondsTimerComponent;
 
 namespace MiningResult
 {
@@ -56,6 +58,10 @@ namespace MiningResult
 		map<Map::Object::ChipKind, int> getOreCount_;
 		map<JewelryMap::Object::ChipKind, int> getJewelryCount_;
 
+		Scene* nowScene_;
+		Map::Object::ChipKind targetOreKind_;
+		int needTargetDestroyAmount_;
+
 		static const Map::Object::ChipKind sellableOres_[];
 		static string SellableOreName(const Map::Object::ChipKind kind);
 		static const JewelryMap::Object::ChipKind sellableJewelrys_[];
@@ -65,8 +71,12 @@ namespace MiningResult
 		static bool IsSellableJewelry(const JewelryMap::Object::ChipKind oreKind);
 
 		int CalcTotalSellingPrice() const;
-	public:
 
+		bool transitionCountStart_;
+		shared_ptr<SecondsTimerComponent> transitionTimer_;
+	public:
+		void SetTargetOre(const Map::Object::ChipKind oreKind, const int needDestroyAmount);
+		void SetNowSecene(Scene* scene);
 		void CountUpOre(const Map::Object::ChipKind oreKind);
 		void CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind);
 	};
