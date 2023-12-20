@@ -150,7 +150,7 @@ void Player::Think()
 	case StateComponent::State::Drill:
 		if (inp.L1.on) { pState = StateComponent::State::Mining; }
 		if (inp.B2.down) { pState = StateComponent::State::Idle; }
-		if (inp.Trigger.L2.down) { pState = StateComponent::State::DrillDash; }
+		if (inp.Trigger.L2.down&&this->CheckFoot()) { pState = StateComponent::State::DrillDash; }
 		break;
 	case StateComponent::State::DrillDash:
 		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
@@ -239,7 +239,7 @@ void Player::Move()
 	case StateComponent::State::Drill:
 		this->status_->speed.SetMax(0.85f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-		if (inp.R1.down) 
+		if (inp.R1.down&&this->CheckFoot()) 
 		{
 			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
 			this->state_->moveCnt_ = 0;
