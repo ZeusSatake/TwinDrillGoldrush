@@ -10,6 +10,7 @@
 
 class PriceTagComponent;
 class Scene;
+class SecondsTimerComponent;
 
 namespace MiningResult
 {
@@ -70,6 +71,9 @@ namespace MiningResult
 		static bool IsSellableJewelry(const JewelryMap::Object::ChipKind oreKind);
 
 		int CalcTotalSellingPrice() const;
+
+		bool transitionCountStart_;
+		shared_ptr<SecondsTimerComponent> transitionTimer_;
 	public:
 		void SetTargetOre(const Map::Object::ChipKind oreKind, const int needDestroyAmount);
 		void SetNowSecene(Scene* scene);
