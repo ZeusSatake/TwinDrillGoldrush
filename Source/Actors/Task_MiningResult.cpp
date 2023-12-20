@@ -5,6 +5,7 @@
 #include  "Task_MiningResult.h"
 #include  "../Components/Money/PriceTagComponent.h"
 #include  "../Components/Money/WalletComponent.h"
+#include  "../Components/SecondsTimerComponent.h"
 #include  "../System/Task_Save.h"
 #include  "../../Scene.h"
 
@@ -134,6 +135,8 @@ namespace MiningResult
 		}
 		
 		//★タスクの生成
+		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
+		transitionTimer_->SetCountSeconds(0.8f);
 
 		return  true;
 	}
@@ -162,6 +165,10 @@ namespace MiningResult
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		UpdateComponents();
+
+		if (transitionTimer_->IsCountEndFrame())
+			nowScene_->Kill();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -229,7 +236,7 @@ namespace MiningResult
 		if (oreKind != targetOreKind_)
 			return;
 		if (getOreCount_.at(oreKind) == needTargetDestroyAmount_)
-			nowScene_->Kill();
+			transitionTimer_->Start();
 	}
 	void Object::CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind)
 	{
