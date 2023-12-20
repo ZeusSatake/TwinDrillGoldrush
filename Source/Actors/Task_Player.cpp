@@ -91,8 +91,71 @@ namespace player
 					this->res->playerImg->Draw(draw, src);
 			}
 		}
-		if(this->pState == StateComponent::State::Attack)
-		ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), "Attaking");
+		DebugInfo();
+
+	}
+	void Object::DebugInfo()
+	{
+		//------------------------------------------------------------------
+		string StateName;
+		switch (pState)
+		{
+		case StateComponent::State::Non:
+			StateName = "Non";
+			break;
+		case StateComponent::State::Idle:
+			StateName = "Idle";
+			break;
+		case StateComponent::State::Walk:
+			StateName = "Walk";
+			break;
+		case StateComponent::State::Attack:
+			StateName = "Attack";
+			break;
+		case StateComponent::State::SpinAttack:
+			StateName = "SpinAttack";
+			break;
+		case StateComponent::State::Damage:
+			StateName = "Damage";
+			break;
+		case StateComponent::State::KnockBack:
+			StateName = "KnockBack";
+			break;
+		case StateComponent::State::Dead:
+			StateName = "Dead";
+			break;
+		case StateComponent::State::Jump:
+			StateName = "Jump";
+			break;
+		case StateComponent::State::Fall:
+			StateName = "Fall";
+			break;
+		case StateComponent::State::Dash:
+			StateName = "Dash";
+			break;
+		case StateComponent::State::Drill:
+			StateName = "Drill";
+			break;
+		case StateComponent::State::DrillDash:
+			StateName = "DrillDash";
+			break;
+		case StateComponent::State::Mining:
+			StateName = "Mining";
+			break;
+		case StateComponent::State::Appeal:
+			StateName = "Appeal";
+			break;
+
+		}
+		ge->debugFont->Draw(ML::Box2D{ 1000,0,500,500 }, "<NowState>" + StateName, ML::Color{1.f,1.f,0.f,0.f});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1100,0,500,500 }, "<MoveCnt>" + to_string(this->state_->moveCnt_), ML::Color{1, 1, 0, 0});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1000,20,500,500 }, "<PosX>" + to_string(this->GetPos().x) +" " + "<PosY>" + to_string(this->GetPos().y),ML::Color{1,1,0,0});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1000,40,500,500 }, "Drill \: <PosX>" + to_string(this->drill_->GetPos().x) + " <PosY>" + to_string(this->drill_->GetPos().y), ML::Color{ 1,1,0,0 });
+		//------------------------------------------------------------------
+		
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
