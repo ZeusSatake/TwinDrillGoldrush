@@ -177,19 +177,21 @@ namespace MiningResult
 		//ƒfƒoƒbƒO•\Ž¦
 		{
 			string param = "";
+			int restTarget = needTargetDestroyAmount_ - getOreCount_.at(targetOreKind_);
+			param += "–Ú•WzÎF" + SellableOreName(targetOreKind_) + " " + to_string(restTarget) + "/" + to_string(needTargetDestroyAmount_) + "ŒÂ\n";
 			//zÎ
-			param += "yzÎz\n";
-			for (const auto& oreCount : getOreCount_)
-			{
-				param += SellableOreName(oreCount.first) + "F" + to_string(oreCount.second) + "\n";
-			}
+			//param += "yzÎz\n";
+			//for (const auto& oreCount : getOreCount_)
+			//{
+			//	param += SellableOreName(oreCount.first) + "F" + to_string(oreCount.second) + "\n";
+			//}
 
-			//•óÎ
-			param += "y•óÎz\n";
-			for (const auto& jewelryCount : getJewelryCount_)
-			{
-				param += SellableJewelryName(jewelryCount.first) + "F" + to_string(jewelryCount.second) + "\n";
-			}
+			////•óÎ
+			//param += "y•óÎz\n";
+			//for (const auto& jewelryCount : getJewelryCount_)
+			//{
+			//	param += SellableJewelryName(jewelryCount.first) + "F" + to_string(jewelryCount.second) + "\n";
+			//}
 
 			ge->debugFont->Draw(ML::Box2D(50, 400, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
 		}
