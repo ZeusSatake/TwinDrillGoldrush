@@ -15,6 +15,7 @@ namespace  drill
 	{
 		this->img = DG::Image::Create("./data/image/preDrill.png");
 		this->target = DG::Image::Create("./data/image/target.png");
+		this->debug = DG::Image::Create("./data/image/shot.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -23,6 +24,7 @@ namespace  drill
 	{
 		this->img.reset();
 		this->target.reset();
+		this->debug.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -83,6 +85,13 @@ namespace  drill
 		tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
 		this->res->target->Draw(tDraw, tSrc);
+		//----------------------------------------------------
+		ML::Box2D debugdraw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetAttackPos());
+		debugdraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		
+
+		ML::Box2D debugsrc = ML::Box2D{ 0,0,56,56 };
+		this->res->debug->Draw(debugdraw, debugsrc);
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

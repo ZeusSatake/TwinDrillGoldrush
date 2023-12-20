@@ -102,6 +102,7 @@ void Player::Think()
 	auto inp = controller_->gamePad_->GetState();
 	this->cooldown_->Update();
 
+
 	switch (pState)
 	{
 	case StateComponent::State::Non:
@@ -160,6 +161,10 @@ void Player::Think()
 	case StateComponent::State::Appeal:
 		break;
 	}
+	if (this->status_->HP.IsAlive())
+	{
+		this->pState=StateComponent::State::Dead;
+	}
 	this->state_->UpdateNowState(pState);
 }
 
@@ -210,6 +215,7 @@ void Player::Move()
 	case StateComponent::State::KnockBack:
 		break;
 	case StateComponent::State::Dead:
+
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
@@ -270,6 +276,13 @@ void Player::SetPlayerState(StateComponent::State state)
 {
 	if (this->state_->GetNowState() == state) { return; }
 	this->state_->UpdateNowState(state);
+}
+
+ML::Box2D Player::GetAttackBox()
+{
+	this->AttackBox = ML::Box2D{ -8,-8,16,16 };
+	this->AttackBox.Offset(drill_->GetAttackPos());
+	return this->AttackBox;
 }
 
 ML::Vec2 Player::GetMoveVec()
