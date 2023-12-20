@@ -286,7 +286,6 @@
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClCompile>
@@ -323,8 +322,18 @@
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp">
-      <Filter>MyPG\Task</Filter>
+    <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine_System.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Image.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Input.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Message.cpp" />
+    <ClCompile Include="Source\Event\Task_InputMap.cpp" />
+    <ClCompile Include="Source\Actors\Task_MiningResult.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
+      <Filter>MyPG\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -536,7 +545,6 @@
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\SecondsTimerComponent.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
@@ -573,8 +581,17 @@
     <ClInclude Include="Source\EnemyClasses\LadySatake.h">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h">
-      <Filter>MyPG\Task</Filter>
+    <ClInclude Include="Source\Event\Task_EventEngine.h" />
+    <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Image.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Input.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Message.h" />
+    <ClInclude Include="Source\Event\Task_InputMap.h" />
+    <ClInclude Include="Source\Actors\Task_MiningResult.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\SecondsTimerComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
