@@ -82,82 +82,8 @@ namespace player
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, src);
 		}
-		this->DebugInfo();
 	}
 
-	void Object::DebugInfo()
-	{
-		ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), "現在位置:"+to_string(this->GetPos().x) + " " + to_string(this->GetPos().y));
-		ge->debugFont->Draw(ML::Box2D(100, 0, 1500, 500), "~現在の操作方法~移動:Lスティック　角度変更:Rスティック　ジャンプ:R1(Wキー)　採掘(採掘モード中):L1(Qキー)　モード変更:B2(Xキー)　ダッシュ:B1(Zキー)");
-		if (this->CheckHead())
-			ge->debugFont->Draw(ML::Box2D(1000, 20, 500, 500), "頭判定！");
-		if (this->CheckFoot())
-			ge->debugFont->Draw(ML::Box2D(1060, 20, 500, 500), "足判定！");
-		ge->debugFont->Draw(ML::Box2D(1000, 60, 500, 500), "移動ベクトル:"+to_string(this->GetMoveVec().x) + to_string(this->GetMoveVec().y));
-
-		string stateName;
-		switch (pState)
-		{
-		case StateComponent::State::Non:
-			stateName = "なし";
-			break;
-		case StateComponent::State::Idle:
-			stateName = "待機";
-			break;
-		case StateComponent::State::Walk:
-			stateName = "歩き";
-			break;
-		case StateComponent::State::Attack:
-			stateName = "攻撃";
-			break;
-		case StateComponent::State::SpinAttack:
-			stateName = "回転攻撃";
-			break;
-		case StateComponent::State::Damage:
-			stateName = "ダメージ";
-			break;
-		case StateComponent::State::KnockBack:
-			stateName = "ノックバック";
-			break;
-		case StateComponent::State::Dead:
-			stateName = "ﾀﾋ亡";
-			break;
-		case StateComponent::State::Jump:
-			stateName = "ジャンプ";
-			break;
-		case StateComponent::State::Fall:
-			stateName = "落下中";
-			break;
-		case StateComponent::State::Dash:
-			stateName = "ダッシュ";
-			break;
-		case StateComponent::State::Drill:
-			stateName = "ドリルモード";
-			break;
-		case StateComponent::State::DrillDash:
-			stateName = "採掘ダッシュ";
-			break;
-		case StateComponent::State::Mining:
-			stateName = "採掘中";
-			break;
-		case StateComponent::State::Appeal:
-			stateName = "アピール";
-			break;
-		}
-		ge->debugFont->Draw(ML::Box2D(1000, 80, 500, 500), "現在のステータス:"+stateName);
-		if (StateComponent::State::Drill == this->state_->GetNowState() ||
-			StateComponent::State::Mining == this->state_->GetNowState())
-		{
-			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "採掘モード");
-		}
-		else
-		{
-			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "行動モード");
-		}
-		ge->debugFont->Draw(ML::Box2D(1000, 140, 500, 500), "moveCnt:"+to_string(this->state_->moveCnt_));
-
-		ge->debugFont->Draw(ML::Box2D(900, 140, 500, 500), "HP:" + to_string(this->GetHP()->GetNowHP())+" MaxHP:"+to_string(this->GetHP()->GetMaxHP()));
-	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

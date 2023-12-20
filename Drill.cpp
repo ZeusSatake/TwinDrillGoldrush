@@ -15,8 +15,7 @@ Drill::Drill()
 	durability(0),
 	Length(3.f),
 	moveVec(ML::Vec2{0,0}),
-	canRotate(true),
-	x(1)
+	canRotate(true)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));

@@ -12,9 +12,15 @@ Player::Player()
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
 	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
+	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 	//this->movement_->SetConsiderationCollition(true);
 	//this->gravity_->SetConsiderationCollition(true);
 	this->cooldown_->SetCountFrame(30);
+	
+	status_->HP.Initialize(50);
+	status_->attack.Initialize(10,100);
+	status_->speed.Initialize(2.f, 10.f, 2.f);
+	status_->defence.Initialize(0, 100);
 }
 
 
@@ -27,7 +33,7 @@ bool Player::CheckFoot()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
+	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName))
 	{
 		if (map->CheckHit(footBox.OffsetCopy(this->GetPos())))
 		{
@@ -45,7 +51,7 @@ bool Player::CheckHead()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
+	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName))
 	{
 		if (map->CheckHit(headBox.OffsetCopy(this->GetPos())))
 		{
@@ -110,7 +116,7 @@ void Player::Think()
 		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
-		if(inp.B2.down){ pState = StateComponent::State::Attack; }
+		if(inp.B2.down){ pState = StateComponent::State::Drill; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
 		if(inp.L1.down && !this->cooldown_->IsCounting()){ pState = StateComponent::State::Attack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
@@ -160,11 +166,9 @@ void Player::Move()
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
 	this->unHitTimer_->Update();
-	//if (inp.B4.down)this->drill_->x += 1;
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
-		//gravity_->Accel();
 	}
 	else
 	{
@@ -232,13 +236,10 @@ void Player::Move()
 		}
 		break;
 	case StateComponent::State::Mining:
+		if(this->state_->moveCnt_==0)
 		this->drill_->Mining();
 		moveVec.x = controller_->GetLStickVec().x * speed;
-		if (inp.R1.down)
-		{
-			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
-			this->state_->moveCnt_ = 0;
-		}
+
 		break;
 	case StateComponent::State::Appeal:
 		break;
@@ -268,4 +269,9 @@ void Player::SetPlayerState(StateComponent::State state)
 ML::Vec2 Player::GetMoveVec()
 {
 	return this->moveVec;
+}
+
+StatusComponent* Player::GetStatus() const
+{
+	return this->status_.get();
 }
