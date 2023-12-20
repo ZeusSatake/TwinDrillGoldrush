@@ -205,7 +205,15 @@ void LadySatake::UpDateAttack()
 
 void LadySatake::UpDateDamage()
 {
-
+	if (!unHitTimer_->IsCounting())
+	{
+		status_->HP.TakeDamage(15);
+		unHitTimer_->Start();
+	}
+	if (moveCnt_->IsCounting())
+	{
+		AIMove_->KnockBack();
+	}
 }
 
 void LadySatake::UpDateDead()

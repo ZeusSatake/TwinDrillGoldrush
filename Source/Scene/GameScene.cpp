@@ -1,11 +1,12 @@
 //-------------------------------------------------------------------
-//ƒQ[ƒ€–{•Ò
+//ã‚²ãƒ¼ãƒ æœ¬ç·¨
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "GameScene.h"
 
 #include  "../../randomLib.h"
 #include  "../../sound.h"
+#include  "../Components/SecondsTimerComponent.h"
 
 #include  "EndingScene.h"
 
@@ -20,32 +21,33 @@
 
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
+#include "../System/Task_Save.h"
 
 namespace  GameScene
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒX‚Ì‰Šú‰»
+	//ãƒªã‚½ãƒ¼ã‚¹ã®åˆæœŸåŒ–
 	bool  Resource::Initialize()
 	{
 		return true;
 	}
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒX‚Ì‰ğ•ú
+	//ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾
 	bool  Resource::Finalize()
 	{
 		return true;
 	}
 	//-------------------------------------------------------------------
-	//u‰Šú‰»vƒ^ƒXƒN¶¬‚É‚P‰ñ‚¾‚¯s‚¤ˆ—
+	//ã€ŒåˆæœŸåŒ–ã€ã‚¿ã‚¹ã‚¯ç”Ÿæˆæ™‚ã«ï¼‘å›ã ã‘è¡Œã†å‡¦ç†
 	bool  Object::Initialize()
 	{
-		//ƒX[ƒp[ƒNƒ‰ƒX‰Šú‰»
+		//ã‚¹ãƒ¼ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹åˆæœŸåŒ–
 		__super::Initialize(defGroupName, defName, true);
-		//ƒŠƒ\[ƒXƒNƒ‰ƒX¶¬orƒŠƒ\[ƒX‹¤—L
+		//ãƒªã‚½ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ç”Ÿæˆorãƒªã‚½ãƒ¼ã‚¹å…±æœ‰
 		this->res = Resource::Create();
 
-		//šƒf[ƒ^‰Šú‰»
+		//â˜…ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
 		this->render2D_Priority[1] = 0.0f;
 		ge->debugRectLoad();
 
@@ -53,15 +55,21 @@ namespace  GameScene
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
 		ge->playerPtr->ResetState();
-		
+	
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
 		ge->score = 0;
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
-		//ƒfƒoƒbƒO—pƒtƒHƒ“ƒg‚Ì€”õ
-		this->TestFont = DG::Font::Create("‚l‚r ƒSƒVƒbƒN", 30, 30);
+		//ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ•ã‚©ãƒ³ãƒˆã®æº–å‚™
+		this->TestFont = DG::Font::Create("ï¼­ï¼³ ã‚´ã‚·ãƒƒã‚¯", 30, 30);
 
-		//šƒ^ƒXƒN‚Ì¶¬
+		AddComponent(limitTimer_ = make_shared<SecondsTimerComponent>(this));
+		limitTimer_->SetCountSeconds(60.0f * 3.0f);
+		limitTimer_->Start();
+
+		auto save = Save::Object::Create(true);
+
+		//â˜…ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆ
 		{
 			//auto player = player::Object::Create(true);
 			auto camera = Camera::Object::Create(true);
@@ -70,7 +78,7 @@ namespace  GameScene
 			ge->playerPtr->SetPos(ML::Vec2{ 50,480 });
 		}
 		
-		{//”wŒiƒ^ƒXƒN¶¬
+		{//èƒŒæ™¯ã‚¿ã‚¹ã‚¯ç”Ÿæˆ
 			ML::Point imgSize = { 960, 500 };
 			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
 			int sprit = 1;
@@ -82,90 +90,110 @@ namespace  GameScene
 						sprit);
 		}
 		
-		{//ƒŠƒUƒ‹ƒg
+		{//ãƒªã‚¶ãƒ«ãƒˆ
 			auto miningResult = MiningResult::Object::Create(true);
+			miningResult->SetNowSecene(this);
+
+			//é–“ã«åˆã‚ã›ã‚‹ã“ã¨å„ªå…ˆã®ç‚ºæ±ºã‚æ‰“ã¡ã§è¨­å®š å¾Œã§å¤‰æ›´
+			pair<Map::Object::ChipKind, int> targetOres[] =
+			{
+				make_pair(Map::Object::ChipKind::Damascus, 2),
+				make_pair(Map::Object::ChipKind::Orichalcum, 3),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
+				make_pair(Map::Object::ChipKind::Adamantite, 3)
+			};
+			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
+			miningResult->SetTargetOre(targetOre.first, targetOre.second);
 		}
-		{//Î zÎ
+		{//çŸ³ é‰±çŸ³
 			auto map = Map::Object::Create(true);
 			map->Load("Map1Stone");
 		}
-		{//•óÎ
+		{//å®çŸ³
 			auto mapJewelry = JewelryMap::Object::Create(true);
 			mapJewelry->Load("Map1Jewelry");
 		}
-		{//“G
+		{//æ•µ
 			auto enemymap = EnemyMap::Object::Create(true);
 			enemymap->Load("Map1Enemy");
 			enemymap->SetEnemy();
 		}
 
-		{//‹’“_‚É–ß‚éƒ{ƒ^ƒ“(ƒfƒoƒbƒO—p
+		{//æ‹ ç‚¹ã«æˆ»ã‚‹ãƒœã‚¿ãƒ³(ãƒ‡ãƒãƒƒã‚°ç”¨
 			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
 			gotoBaseButton->SetEnterButton(XI::VGP::ST);
 			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
 			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("‹’“_‚Ö");
+			gotoBaseButton->SetText("æ‹ ç‚¹ã¸");
 			AddSceneChangeButton(gotoBaseButton);
 		}
 
 		return  true;
 	}
 	//-------------------------------------------------------------------
-	//uI—¹vƒ^ƒXƒNÁ–Å‚É‚P‰ñ‚¾‚¯s‚¤ˆ—
+	//ã€Œçµ‚äº†ã€ã‚¿ã‚¹ã‚¯æ¶ˆæ»…æ™‚ã«ï¼‘å›ã ã‘è¡Œã†å‡¦ç†
 	bool  Object::Finalize()
 	{
-		//šƒf[ƒ^•ƒ^ƒXƒN‰ğ•ú
+		//â˜…ãƒ‡ãƒ¼ã‚¿ï¼†ã‚¿ã‚¹ã‚¯è§£æ”¾
 
-		ge->KillAll_G("–{•Ò");
-		ge->KillAll_G("ƒVƒXƒeƒ€");
+		ge->KillAll_G("æœ¬ç·¨");
+		ge->KillAll_G("ã‚·ã‚¹ãƒ†ãƒ ");
 		ge->KillAll_G(SceneChangeButton::defGroupName);
-		ge->KillAll_G("ƒLƒƒƒ‰ƒNƒ^");
-		ge->KillAll_G("“G");
+		ge->KillAll_G("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿");
+		ge->KillAll_G("æ•µ");
 
 		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
-			//šˆø‚«Œp‚¬ƒ^ƒXƒN‚Ì¶¬
+			//â˜…å¼•ãç¶™ãã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆ
 			CreateNextScene();
 		}
 
 		return  true;
 	}
 	//-------------------------------------------------------------------
-	//uXVv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
+	//ã€Œæ›´æ–°ã€ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã«è¡Œã†å‡¦ç†
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+		UpdateComponents();
 
 		auto inp = ge->in1->GetState();
 		if (inp.SE.down) {
 			this->Kill();
 		}
-		if (ge->GameOverFlag) {
+		if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
 			this->Kill();
 		}
 	}
 	//-------------------------------------------------------------------
-	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
+	//ã€Œï¼’ï¼¤æç”»ã€ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã«è¡Œã†å‡¦ç†
 	void  Object::Render2D_AF()
 	{
+		//ã‚¿ã‚¤ãƒãƒ¼è¡¨ç¤º
+		ge->debugFont->Draw
+		(
+			ML::Box2D(ge->screenCenterPos.x - 20, 30, 500, 500),
+			to_string((int)limitTimer_->GetCount() / 60) + "ï¼š" + to_string((int)limitTimer_->GetCount() % 60),
+			ML::Color(1, 1, 0, 0)
+		);
 	}
 
-	//šššššššššššššššššššššššššššššššššššššššššš
-	//ˆÈ‰º‚ÍŠî–{“I‚É•ÏX•s—v‚Èƒƒ\ƒbƒh
-	//šššššššššššššššššššššššššššššššššššššššššš
+	//â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…
+	//ä»¥ä¸‹ã¯åŸºæœ¬çš„ã«å¤‰æ›´ä¸è¦ãªãƒ¡ã‚½ãƒƒãƒ‰
+	//â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…
 	//-------------------------------------------------------------------
-	//ƒ^ƒXƒN¶¬‘‹Œû
+	//ã‚¿ã‚¹ã‚¯ç”Ÿæˆçª“å£
 	Object::SP  Object::Create(bool  flagGameEnginePushBack_)
 	{
 		Object::SP  ob = Object::SP(new  Object());
 		if (ob) {
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
-				ge->PushBack(ob);//ƒQ[ƒ€ƒGƒ“ƒWƒ“‚É“o˜^
+				ge->PushBack(ob);//ã‚²ãƒ¼ãƒ ã‚¨ãƒ³ã‚¸ãƒ³ã«ç™»éŒ²
 			}
 			if (!ob->B_Initialize()) {
-				ob->Kill();//ƒCƒjƒVƒƒƒ‰ƒCƒY‚É¸”s‚µ‚½‚çKill
+				ob->Kill();//ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚ºã«å¤±æ•—ã—ãŸã‚‰Kill
 			}
 			return  ob;
 		}
@@ -186,7 +214,7 @@ namespace  GameScene
 	//-------------------------------------------------------------------
 	Object::Object() {	}
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒXƒNƒ‰ƒX‚Ì¶¬
+	//ãƒªã‚½ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
 	Resource::SP  Resource::Create()
 	{
 		if (auto sp = instance.lock()) {

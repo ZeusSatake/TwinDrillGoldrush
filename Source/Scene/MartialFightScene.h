@@ -6,6 +6,9 @@
 #include "../../GameEngine_Ver3_83.h"
 #include "../../Scene.h"
 
+class SecondsTimerComponent;
+namespace Satake { class Object; }
+
 namespace MartialFightScene
 {
 	//タスクに割り当てるグループ名と固有名
@@ -45,6 +48,10 @@ namespace MartialFightScene
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+
+		weak_ptr<Satake::Object> boss_;
+		shared_ptr<SecondsTimerComponent> transitionTimer_;
+		bool clear_;
 	public:
 		//追加したい変数・メソッドはここに追加する
 	};
