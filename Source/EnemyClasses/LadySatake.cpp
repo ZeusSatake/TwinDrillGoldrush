@@ -227,7 +227,7 @@ void LadySatake::UpDateDamage()
 {
 	if (!unHitTimer_->IsCounting())
 	{
-		status_->HP.TakeDamage(15);
+		status_->HP.TakeDamage(status_->attack.GetNow());
 		unHitTimer_->Start();
 	}
 	if (moveCnt_->IsCounting())

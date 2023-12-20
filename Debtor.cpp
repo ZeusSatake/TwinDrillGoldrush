@@ -27,6 +27,7 @@ void Debtor::Think()
 				afterState = AIState::Damage;
 			}
 		}
+		break;
 	case Damage:
 		if (status_->HP.GetNowHP() <= 0)
 		{
@@ -38,7 +39,22 @@ void Debtor::Think()
 		}
 		break;
 	}
-	UpDateState(afterState);
+
+
+	//状態の更新と各状態ごとの行動カウンタを設定
+	if (UpDateState(afterState))
+	{
+		switch (afterState)
+		{
+		case AIState::Damage:
+			moveCnt_->SetCountFrame(30);
+			break;
+		default:
+			moveCnt_->SetCountFrame(0);
+			break;
+		}
+		moveCnt_->Start();
+	}
 }
 
 void Debtor::Move()
@@ -120,12 +136,20 @@ void Debtor::UpDateDodge()
 
 void Debtor::UpDateDamage()
 {
-	
+	if (!unHitTimer_->IsCounting())
+	{
+		status_->HP.TakeDamage(status_->attack.GetNow());
+		unHitTimer_->Start();
+	}
+	if (moveCnt_->IsCounting())
+	{
+		AIMove_->KnockBack();
+	}
 }
 
 void Debtor::UpDateDead()
 {
-
+	this->Kill();
 }
 
 bool Debtor::HitPlayer()
