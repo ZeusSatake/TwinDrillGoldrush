@@ -26,5 +26,6 @@ public:
 	virtual void UpDateDead() override;
 
 	float GetAdjustRange() const;
+	bool test = false;
 };
 

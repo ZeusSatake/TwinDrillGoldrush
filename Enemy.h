@@ -1,12 +1,15 @@
 #pragma once
 #include "NPC.h"
 #include "myLib.h"
+#include "Source/Components/StatusComponent.h"
 class Enemy : public NPC
 {
 	float range_;//射程
 	bool attackFlag_;//攻撃フラグ
+	int attackPattern_;//攻撃パターン
 protected:
 	shared_ptr<TimerComponent> moveCnt_;
+	shared_ptr<StatusComponent> status_;
 public:
 	enum AIState
 	{
@@ -42,10 +45,15 @@ public:
 	float GetRange() const;
 	void SetRange(const float range);
 
+	int GetAttackPattern() const;
+	void SetAttackPattern(const int attackPattern);
+
 	AIState GetPreState() const;
 	void SetPreState(const AIState preState);
 
 	AIState GetNowState() const;
 	void SetNowState(const AIState nowState);
+
+	StatusComponent* GetStatus()const;
 };
 

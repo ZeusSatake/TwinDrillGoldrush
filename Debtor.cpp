@@ -128,6 +128,7 @@ void Debtor::UpDateDead()
 
 bool Debtor::HitPlayer()
 {
+	
 	if (CheckHit(GetTarget()->GetBox()->getHitBase()))
 	{
 		//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚Ìˆ—

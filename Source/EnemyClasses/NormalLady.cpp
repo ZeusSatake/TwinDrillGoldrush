@@ -27,11 +27,30 @@ void NormalLady::Think()
 		{
 			afterState = AIState::AttackStand;
 		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack&&!unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+			plBox.Offset(GetTarget()->GetPos());
+			if (box_->CheckHit(plBox))
+			{
+				afterState = AIState::Damage;
+			}
+		}
 		break;
 	case AIState::AttackStand:
 		if (IsAttacking())
 		{
 			afterState = AIState::Attack;
+		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+			plBox.Offset(GetTarget()->GetPos());
+			if (box_->CheckHit(plBox))
+			{
+				EndAttack();
+				afterState = AIState::Damage;
+			}
 		}
 		break;
 	case AIState::Attack:
@@ -39,6 +58,28 @@ void NormalLady::Think()
 		{
 			afterState = AIState::Approach;
 		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+			plBox.Offset(GetTarget()->GetPos());
+			if (box_->CheckHit(plBox))
+			{
+				EndAttack();
+				afterState = AIState::Damage;
+			}
+		}
+		break;
+	case AIState::Damage:
+		if (status_->HP.GetNowHP() <= 0)
+		{
+			afterState = AIState::Dead;
+		}
+		else if(!moveCnt_->IsCounting())
+		{
+			afterState = AIState::Approach;
+		}
+		break;
+	case AIState::Dead:
 		break;
 	}
 	//状態の更新と各状態ごとの行動カウンタを設定
@@ -51,6 +92,9 @@ void NormalLady::Think()
 			break;
 		case AIState::Attack:
 			moveCnt_->SetCountFrame(attackCnt_);
+			break;
+		case AIState::Damage:
+			moveCnt_->SetCountFrame(30);
 			break;
 		default:
 			moveCnt_->SetCountFrame(0);
@@ -134,6 +178,8 @@ void NormalLady::UpDateAttackStand()
 
 void NormalLady::UpDateAttack()
 {
+
+	//攻撃中なら斬撃判定を出す
 	if (IsAttacking())
 	{
 		SetMoveVecX(0);
@@ -141,16 +187,17 @@ void NormalLady::UpDateAttack()
 		plBox.Offset(GetTarget()->GetPos());
 		if (angle_LR_ == Angle_LR::Left)
 		{
-			fanEdge_->getHitBase().Offset(-adjustRange_, 0.f);
+			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x - adjustRange_, GetTarget()->GetPos().y);
 		}
 		else
 		{
-			fanEdge_->getHitBase().Offset(adjustRange_, 0.f);
+			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x + adjustRange_, GetTarget()->GetPos().y);
 		}
 
 		if (fanEdge_->CheckHit(plBox))
 		{
-			static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
+			static_cast<Player*>(GetTarget())->status_->HP.TakeDamage(status_->attack.GetNow());
+			test = true;
 		}
 		if (!moveCnt_->IsCounting())
 		{
@@ -172,12 +219,22 @@ void NormalLady::UpDateDodge()
 
 void NormalLady::UpDateDamage()
 {
-
+	if (!unHitTimer_->IsCounting())
+	{
+		status_->HP.TakeDamage(15);
+		unHitTimer_->Start();
+	}
+	if (moveCnt_->IsCounting())
+	{
+		AIMove_->KnockBack();
+	}
+	
 }
 
 void NormalLady::UpDateDead()
 {
-
+	//仮ですぐ死ぬように
+	this->Kill();
 }
 
 float NormalLady::GetAdjustRange() const

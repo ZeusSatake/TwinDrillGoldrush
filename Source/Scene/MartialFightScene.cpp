@@ -46,11 +46,11 @@ namespace MartialFightScene
 			enemymap->SetEnemy();
 		}
 		{
-			auto player = player::Object::Create(true);
+			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
 			auto camera = Camera::Object::Create(true);
 			camera->horizontalScroll=true;
-			camera->SetPos(player->GetPos());
-			camera->target = player;
+			camera->SetPos(ge->playerPtr->GetPos());
+			camera->target = ge->playerPtr;
 		}
 		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
 		gotoTitleButton->SetEnterButton(XI::VGP::ST);

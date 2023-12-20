@@ -27,7 +27,7 @@ bool Player::CheckFoot()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>("æœ¬ç·¨", "ãƒžãƒƒãƒ—"))
 	{
 		if (map->CheckHit(footBox.OffsetCopy(this->GetPos())))
 		{
@@ -45,7 +45,7 @@ bool Player::CheckHead()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>("æœ¬ç·¨", "ãƒžãƒƒãƒ—"))
 	{
 		if (map->CheckHit(headBox.OffsetCopy(this->GetPos())))
 		{
@@ -57,11 +57,11 @@ bool Player::CheckHead()
 
 //void Player::CheckMove(ML::Vec2& e_)
 //{
-//	//ƒ}ƒbƒv‚ª‘¶Ý‚·‚é‚©’²‚×‚Ä‚©‚çƒAƒNƒZƒX
+//	//ãƒžãƒƒãƒ—ãŒå­˜åœ¨ã™ã‚‹ã‹èª¿ã¹ã¦ã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹
 //	auto   map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
-//	if (nullptr == map) { return; }//ƒ}ƒbƒv‚ª–³‚¯‚ê‚Î”»’è‚µ‚È‚¢(o—ˆ‚È‚¢j
+//	if (nullptr == map) { return; }//ãƒžãƒƒãƒ—ãŒç„¡ã‘ã‚Œã°åˆ¤å®šã—ãªã„(å‡ºæ¥ãªã„ï¼‰
 //	ML::Vec2 preVec{ 0,0 };
-//	//‰¡Ž²‚É‘Î‚·‚éˆÚ“®
+//	//æ¨ªè»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.x != 0) {
 //		float  preX = this->GetPos().x;
 //		if (e_.x >= 1) { SetPosX(GetPos().x +1);	e_.x -= 1; }
@@ -70,11 +70,11 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			SetPosX(preX);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
-//	//cŽ²‚É‘Î‚·‚éˆÚ“®
+//	//ç¸¦è»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.y != 0) {
 //		float  preY = this->GetPos().y;
 //		if (e_.y >= 1) {SetPosY(GetPos().y + 1);		e_.y -= 1; }
@@ -83,7 +83,7 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			this->SetPosY(preY);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
@@ -110,7 +110,7 @@ void Player::Think()
 		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
-		if(inp.B2.down){ pState = StateComponent::State::Drill; }
+		if(inp.B2.down){ pState = StateComponent::State::Attack; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
 		if(inp.L1.down && !this->cooldown_->IsCounting()){ pState = StateComponent::State::Attack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
@@ -243,7 +243,7 @@ void Player::Move()
 	case StateComponent::State::Appeal:
 		break;
 	}
-	//‚±‚±‚ÉÅI“I‚Éƒ}ƒbƒv‚Æ‚ÌˆÚ“®‰Â”Ûƒ`ƒFƒbƒN‚ð“ü‚ê‚é
+	//ã“ã“ã«æœ€çµ‚çš„ã«ãƒžãƒƒãƒ—ã¨ã®ç§»å‹•å¯å¦ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹
     //this->CheckHitMap(this->preVec);
 	CheckMove(moveVec);
 }

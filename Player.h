@@ -4,6 +4,7 @@
 #include "Source/Components/ControllerInputComponent.h"
 #include "Source/Components/TimerComponent.h"
 #include "Source/Actors/Task_Drill.h"
+#include "Source/Components/StatusComponent.h"
 
 class Player :public Character
 {
@@ -24,16 +25,16 @@ public:
 	void Think()override;
 	void Move()override;
 
-	//ƒ¿”Å‚ÉŠÔ‚É‡‚í‚¹‚é‚½‚ß‚ÌÚ’n”»’è
+	//Î±ç‰ˆã«é–“ã«åˆã‚ã›ã‚‹ãŸã‚ã®æ¥åœ°åˆ¤å®š
 	bool CheckFoot();
 	bool CheckHead();
 	//void CheckMove(ML::Vec2& e_);
 	void Dash(ML::Vec2 e_);
 
-	void HitAttack(); //UŒ‚‚ª“–‚½‚Á‚½‚Ìˆ—
-	void TakeAttack(); //UŒ‚‚ğó‚¯‚½‚Æ‚«‚Ìˆ—
+	void HitAttack(); //æ”»æ’ƒãŒå½“ãŸã£ãŸæ™‚ã®å‡¦ç†
+	void TakeAttack(); //æ”»æ’ƒã‚’å—ã‘ãŸã¨ãã®å‡¦ç†
 
-	void SetPlayerState(StateComponent::State state); //ƒXƒe[ƒg‚ÌŠO•”•ÏX
+	void SetPlayerState(StateComponent::State state); //ã‚¹ãƒ†ãƒ¼ãƒˆã®å¤–éƒ¨å¤‰æ›´
 
 	ML::Vec2 GetMoveVec();
 	shared_ptr<drill::Object> drill_;

@@ -31,18 +31,24 @@ namespace EtoHaiji
 		this->res = Resource::Create();
 
 		//★データ初期化
+		status_->HP.Initialize(20);
+		status_->speed.Initialize(2.f, 2.f, 10.f);
+		status_->attack.Initialize(25, 50);
+		status_->defence.Initialize(0, 100);
 		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
 		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, 10, 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32)*10);
+		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
+		gravity_->SetAcceleration(ML::Gravity(32)*20);
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetNowState(Enemy::Idle);
+		SetNowState(Enemy::Patrol);
 
 		SetFov(200.f);
 
 		SetTarget(ge->playerPtr.get());
+
+		
 		//★タスクの生成
 
 		return  true;
@@ -53,7 +59,8 @@ namespace EtoHaiji
 	{
 		//★データ＆タスク解放
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) {
+		if (!ge->QuitFlag() && this->nextTaskCreate) 
+		{
 			//★引き継ぎタスクの生成
 		}
 
