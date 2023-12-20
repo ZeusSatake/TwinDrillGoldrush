@@ -136,8 +136,7 @@ namespace BlondeLady
 		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
 		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
 		SetTarget(pl.get());
-		if(test)
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 500, 500), to_string(static_cast<Player*>(GetTarget())->status_->HP.GetNowHP()));
+
 
 		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));
 	}

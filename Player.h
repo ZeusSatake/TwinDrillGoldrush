@@ -16,6 +16,7 @@ protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
 	class shared_ptr<TimerComponent> cooldown_;
+	class shared_ptr<StatusComponent>status_;
 public:
 	Player();
 	virtual ~Player() {}; 
@@ -37,6 +38,8 @@ public:
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
 
 	ML::Vec2 GetMoveVec();
+	StatusComponent* GetStatus() const;
+
 	shared_ptr<drill::Object> drill_;
 
 };
