@@ -6,6 +6,7 @@ LadySatake::LadySatake()
 	, standCnt_(60)
     , attackCnt_(90)
 {
+	AddComponent(fanEdge_ = shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
 }
 
 void LadySatake::Think()

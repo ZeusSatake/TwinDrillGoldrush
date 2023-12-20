@@ -13,7 +13,7 @@ Drill::Drill()
 	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
-	Length(3.f),
+	Length(1.f),
 	moveVec(ML::Vec2{0,0}),
 	canRotate(true)
 {
@@ -205,20 +205,13 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		else if (e_.y <= -1) { SetPosY(GetPos().y - 1);		e_.y += 1; }
 		else { SetPosY(GetPos().y + e_.y);		e_.y = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-		if (true == map->CheckHit(hit)) {
-			this->SetPosY(preY);
-			preVec.y = preY;
+		if (true == map->CheckHit(hit)) 
+		{
 			//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+			this->SetPosY(preY);
 			break;
 		}
-		/*else
-		{
-			if (!this->LimitLength(this->plPos))
-			{
-				e_.y += 16.f;
-			}
-			else break;
-		}*/
+
 	}
-	//this->UpdateTargetPos(preVec);
+
 }

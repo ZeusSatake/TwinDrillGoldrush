@@ -6,6 +6,7 @@
 #include  "../Components/Money/PriceTagComponent.h"
 #include  "../Components/Money/WalletComponent.h"
 #include  "../System/Task_Save.h"
+#include  "../../Scene.h"
 
 namespace MiningResult
 {
@@ -121,7 +122,6 @@ namespace MiningResult
 			}
 		}
 
-
 		//šƒf[ƒ^‰Šú‰»
 		render2D_Priority[1] = 0.0f;
 		for (int i = 0; i < size(sellableOres_); ++i)
@@ -225,11 +225,27 @@ namespace MiningResult
 	{
 		if (IsSellableOre(oreKind))
 			++getOreCount_.at(oreKind);
+
+		if (oreKind != targetOreKind_)
+			return;
+		if (getOreCount_.at(oreKind) == needTargetDestroyAmount_)
+			nowScene_->Kill();
 	}
 	void Object::CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind)
 	{
 		if (IsSellableJewelry(jewelryKind))
 			++getJewelryCount_.at(jewelryKind);
+	}
+
+	void Object::SetTargetOre(const Map::Object::ChipKind oreKind, const int needDestroyAmount)
+	{
+		targetOreKind_ = oreKind;
+		needTargetDestroyAmount_ = needDestroyAmount;
+	}
+	void Object::SetNowSecene(Scene* scene)
+	{
+		nowScene_ = scene;
+		nowScene_->SetNextScene(Scene::Base);
 	}
 
 	//šššššššššššššššššššššššššššššššššššššššššš

@@ -334,6 +334,9 @@
     </ClCompile>
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
       <Filter>MyPG\Components</Filter>
+	</ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h">
       <Filter>MyPG\Components</Filter>
+	</ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
