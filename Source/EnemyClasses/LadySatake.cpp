@@ -1,5 +1,6 @@
 #include "LadySatake.h"
 #include "../Actors/Task_Player.h"
+
 LadySatake::LadySatake()
 	:BossLady()	
 	, standCnt_(60)
@@ -199,6 +200,7 @@ void LadySatake::UpDateAttack()
 		}
 	}
 }
+
 
 void LadySatake::UpDateDamage()
 {

@@ -17,8 +17,8 @@ protected:
 	virtual void UpDateFall() override;
 	virtual void UpDateAttackStand() override;
 	virtual void UpDateAttack() override;
-	virtual void UpDateGuard() override;
-	virtual void UpDateDodge() override;
+	//virtual void UpDateGuard() override;
+	//virtual void UpDateDodge() override;
 	virtual void UpDateDamage() override;
 	virtual void UpDateDead() override;
 };
