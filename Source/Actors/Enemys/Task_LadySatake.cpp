@@ -48,6 +48,7 @@ namespace Satake
 
 		SetFov(200.f);
 		SetRange(30.f);
+		SetMidRange(100.f);
 
 		moveCnt_->SetCountFrame(0);
 		unHitTimer_->SetCountFrame(90);

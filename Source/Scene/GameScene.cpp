@@ -171,12 +171,12 @@ namespace  GameScene
 	void  Object::Render2D_AF()
 	{
 		//タイマー表示
-		ge->debugFont->Draw
+		/*ge->debugFont->Draw
 		(
 			ML::Box2D(ge->screenCenterPos.x - 20, 30, 500, 500),
 			to_string((int)limitTimer_->GetCount() / 60) + "：" + to_string((int)limitTimer_->GetCount() % 60),
 			ML::Color(1, 1, 0, 0)
-		);
+		);*/
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
