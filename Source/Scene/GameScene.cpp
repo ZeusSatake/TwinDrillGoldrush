@@ -107,15 +107,15 @@ namespace  GameScene
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("Map1Stone");
+			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map1Jewelry");
+			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map1Enemy");
+			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
 			enemymap->SetEnemy();
 		}
 
