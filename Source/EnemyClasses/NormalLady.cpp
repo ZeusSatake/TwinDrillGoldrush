@@ -22,22 +22,32 @@ void NormalLady::Think()
 		{
 			afterState = AIState::Approach;
 		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
+			if (box_->CheckHit(plBox))
+			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
+				EndAttack();
+				afterState = AIState::Damage;
+			}
+		}
 		break;
 	case AIState::Approach:
 		if (WithinRange(GetTarget()))
 		{
 			afterState = AIState::AttackStand;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack&&!unHitTimer_->IsCounting())
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
+				EndAttack();
 				afterState = AIState::Damage;
 			}
-		}
-		break;
+		}		break;
 	case AIState::AttackStand:
 		if (IsAttacking())
 		{
@@ -45,15 +55,14 @@ void NormalLady::Think()
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
-		}
-		break;
+		}		break;
 	case AIState::Attack:
 		if (!IsAttacking())
 		{
@@ -61,10 +70,10 @@ void NormalLady::Think()
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}

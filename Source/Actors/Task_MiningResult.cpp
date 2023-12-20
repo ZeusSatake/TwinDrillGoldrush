@@ -192,8 +192,13 @@ namespace MiningResult
 			//{
 			//	param += SellableJewelryName(jewelryCount.first) + "F" + to_string(jewelryCount.second) + "\n";
 			//}
-
-			ge->debugFont->Draw(ML::Box2D(50, 400, 2000, 2000), param, ML::Color(1.0f, 1.0f, 0.0f, 0.0f));
+			
+			ge->debugFont->Draw
+			(
+				ML::Box2D(ge->screenCenterPos.x - 90, 60, 500, 500),//ML::Box2D(50, 400, 2000, 2000)
+				param,
+				ML::Color(1.0f, 1.0f, 0.0f, 0.0f)
+			);
 		}
 	}
 	int Object::CalcTotalSellingPrice() const
