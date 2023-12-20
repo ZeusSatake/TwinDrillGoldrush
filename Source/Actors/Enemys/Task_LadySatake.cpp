@@ -36,7 +36,7 @@ namespace Satake
 		status_->attack.Initialize(15, 100);
 		status_->defence.Initialize(0, 100);
 		status_->speed.Initialize(2.5f, 100.f, 10.f);
-		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		box_->setHitBase(ML::Box2D{ -32,-16,64,32 });
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
@@ -48,6 +48,7 @@ namespace Satake
 
 		SetFov(200.f);
 		SetRange(30.f);
+		SetMidRange(100.f);
 
 		moveCnt_->SetCountFrame(0);
 		unHitTimer_->SetCountFrame(90);

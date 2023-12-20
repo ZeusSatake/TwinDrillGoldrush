@@ -1,4 +1,5 @@
 #include "Debtor.h"
+#include "Source/Actors/Task_Player.h"
 
 Debtor::Debtor()
 	:Enemy()
@@ -16,27 +17,26 @@ void Debtor::Think()
 		if (!OutOfScreen())
 			afterState = AIState::Patrol;
 		break;
-	/*case Patrol:
-		if (WithinSight(GetTarget()))
-			afterState = AIState::Idle;
-		break;*/
-	//case Approach:
-	//	if (GetDistance() <= GetRange())
-	//	{
-	//		afterState = Attack;
-	//	}
-	//	else if (GetDistance() > GetFov())
-	//	{
-	//		afterState = Patrol;
-	//	}
-	//	break;
-	//case Attack:
-	//	//射程外に出たら接近に切り替え
-	//	if (GetDistance() > GetRange())
-	//	{
-	//		afterState = Approach;
-	//	}
-
+	case Patrol:
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+			plBox.Offset(GetTarget()->GetPos());
+			if (box_->CheckHit(plBox))
+			{
+				afterState = AIState::Damage;
+			}
+		}
+	case Damage:
+		if (status_->HP.GetNowHP() <= 0)
+		{
+			afterState = AIState::Dead;
+		}
+		else if (!moveCnt_->IsCounting())
+		{
+			afterState = AIState::Patrol;
+		}
+		break;
 	}
 	UpDateState(afterState);
 }
@@ -44,6 +44,8 @@ void Debtor::Think()
 void Debtor::Move()
 {
 	ML::Vec2 est;
+
+	HitPlayer();
 
 	//重力加速
 	if (!CheckFoot() || GetGravity()->GetVelocity().y)
@@ -118,7 +120,7 @@ void Debtor::UpDateDodge()
 
 void Debtor::UpDateDamage()
 {
-
+	
 }
 
 void Debtor::UpDateDead()
@@ -128,12 +130,12 @@ void Debtor::UpDateDead()
 
 bool Debtor::HitPlayer()
 {
-	
-	if (CheckHit(GetTarget()->GetBox()->getHitBase()))
+	ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+	plBox.Offset(GetTarget()->GetPos());
+	if (CheckHit(plBox))
 	{
 		//プレイヤーに当たった時の処理
-		static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(2);
-		this->Kill();
+		static_cast<Character*>(GetTarget())->GetHP()->TakeDamage(10);
 		return true;
 	}
 	return false;

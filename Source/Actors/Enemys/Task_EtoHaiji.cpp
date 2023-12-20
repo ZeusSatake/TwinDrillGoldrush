@@ -45,6 +45,7 @@ namespace EtoHaiji
 		SetNowState(Enemy::Patrol);
 
 		SetFov(200.f);
+		unHitTimer_->SetCountFrame(60);
 
 		SetTarget(ge->playerPtr.get());
 
