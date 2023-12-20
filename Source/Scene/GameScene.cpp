@@ -12,6 +12,7 @@
 #include  "../System/Task_BackGround.h"
 #include  "Task_Map.h"
 #include  "Task_JewelryMap.h"
+#include  "../Actors/Task_MiningResult.h"
 
 #include  "Task_EnemyMap.h"
 
@@ -80,6 +81,9 @@ namespace  GameScene
 						sprit);
 		}
 		
+		{//ƒŠƒUƒ‹ƒg
+			auto miningResult = MiningResult::Object::Create(true);
+		}
 		{//Î zÎ
 			auto map = Map::Object::Create(true);
 			map->Load("Map1Stone");

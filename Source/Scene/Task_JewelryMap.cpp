@@ -5,6 +5,7 @@
 #include  "Task_JewelryMap.h"
 
 #include  "../Components/Blocks/BlockManager.h"
+#include  "../Actors/Task_MiningResult.h"
 
 namespace  JewelryMap
 {
@@ -51,6 +52,7 @@ namespace  JewelryMap
 			this->chip[i] = ML::Box2D(x * 32, y * 32, 32, 32);
 		}
 		//šƒ^ƒXƒN‚Ì¶¬
+		this->miningResult_ = ge->GetTask<MiningResult::Object>(MiningResult::defGroupName, MiningResult::defName);
 
 		return  true;
 	}
@@ -152,10 +154,10 @@ namespace  JewelryMap
 		}
 		ifs.close();
 
-		auto Bm = BlockManager::Object::Create(true);
-		Bm->LoadSe();
-		Bm->getMapName(JewelryMap::defName);
-		Bm->InitArray();
+		blockManager_ = BlockManager::Object::Create(true);
+		blockManager_->LoadSe();
+		blockManager_->getMapName(JewelryMap::defName);
+		blockManager_->InitArray();
 
 		return true;
 	}
@@ -225,24 +227,25 @@ namespace  JewelryMap
 	//-------------------------------------------------------------------
 	void Object::Search(const ML::Vec2& pos_)
 	{
-		ML::Vec2 pos; 
+		ML::Vec2 pos;
 		pos.x = pos_.x + ge->camera2D.x;
 		pos.y = pos_.y + ge->camera2D.y;
 		if (pos.x >= 0 && pos.x < chipSize * this->sizeX &&
 			pos.y >= 0 && pos.y < chipSize * this->sizeY) {
 			//
 			ML::Point masu = { pos.x / chipSize,pos.y / chipSize };
-			if (this->arr[masu.y][masu.x] > 0) {
-				auto manager = ge->GetTasks<BlockManager::Object>("Blocks");
-				for (auto it = manager->begin(); it != manager->end(); it++) {
-					if ((*it)->MapName == JewelryMap::defName) {
-						(*it)->Damage(masu, 1);
-					}
-				}
+			int preChipNum = this->arr[masu.y][masu.x];
+
+			if (preChipNum <= (int)ChipKind::Empty)
+				return;
+
+			if (blockManager_->DestroyBlock(masu, 1))
+			{
+				miningResult_.lock()->CountUpJewelry((ChipKind)preChipNum);
 			}
 		}
 	}
-	
+
 
 
 	//šššššššššššššššššššššššššššššššššššššššššš

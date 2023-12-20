@@ -323,6 +323,9 @@
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp">
+      <Filter>MyPG\Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -569,6 +572,9 @@
     </ClInclude>
     <ClInclude Include="Source\EnemyClasses\LadySatake.h">
       <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h">
+      <Filter>MyPG\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
