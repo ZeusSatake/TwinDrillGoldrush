@@ -37,6 +37,8 @@ public:
 
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
 
+	void ResetState();
+
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;
