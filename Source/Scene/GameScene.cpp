@@ -107,15 +107,15 @@ namespace  GameScene
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("Map1Stone");
+			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map1Jewelry");
+			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map1Enemy");
+			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
 			enemymap->SetEnemy();
 		}
 
@@ -171,12 +171,21 @@ namespace  GameScene
 	void  Object::Render2D_AF()
 	{
 		//タイマー表示
+
 	    ge->debugFont->Draw
 		(
 			ML::Box2D{ (int)ge->screenCenterPos.x - 20, 30, 500, 500 },
 			to_string((int)limitTimer_->GetCount() / 60) + "\:" + to_string((int)limitTimer_->GetCount() % 60),
 			ML::Color{ 1, 1, 0, 0 }
 		);
+
+		/*ge->debugFont->Draw
+		(
+			ML::Box2D(ge->screenCenterPos.x - 20, 30, 500, 500),
+			to_string((int)limitTimer_->GetCount() / 60) + "：" + to_string((int)limitTimer_->GetCount() % 60),
+			ML::Color(1, 1, 0, 0)
+		);*/
+
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

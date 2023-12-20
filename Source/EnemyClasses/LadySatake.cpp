@@ -147,7 +147,7 @@ void LadySatake::Move()
 
 void LadySatake::UpDateApproach()
 {
-
+	AIMove_->MoveTo(GetTarget());
 }
 
 void LadySatake::UpDateJump()
@@ -170,34 +170,57 @@ void LadySatake::UpDateAttack()
 	//UŒ‚’†‚È‚çŽaŒ‚”»’è‚ðo‚·
 	if (IsAttacking())
 	{
+		SetMoveVecX(0);
 		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
 		plBox.Offset(GetTarget()->GetPos());
-		switch (GetAttackPattern())
+		if (angle_LR_ == Angle_LR::Left)
 		{
-		case 0:
-			SetMoveVecX(0);
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x, GetTarget()->GetPos().y);
-			}
-			else
-			{
-				fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x, GetTarget()->GetPos().y);
-			}
+			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x, GetTarget()->GetPos().y);
+		}
+		else
+		{
+			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x, GetTarget()->GetPos().y);
+		}
 
-			if (fanEdge_->CheckHit(plBox))
+		if (fanEdge_->CheckHit(plBox))
+		{
+			if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
 			{
 				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
 			}
-			if (!moveCnt_->IsCounting())
-			{
-				EndAttack();
-				return;
-			}
-			break;
-		case 1:
-			SetMoveVecX(10);
-			break;
+		}
+		if (!moveCnt_->IsCounting())
+		{
+			EndAttack();
+			return;
+		}
+	}
+}
+
+void LadySatake::UpDateTackle()
+{
+	if (IsAttacking())
+	{
+		if (GetTarget()->angle_LR_ == Angle_LR::Left)
+		{
+			SetMoveVecX(-5.f);
+		}
+		else
+		{
+			SetMoveVecX(5.f);
+		}
+
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+
+		if (box_->CheckHit(plBox))
+		{
+			static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+		}
+		if (!moveCnt_->IsCounting())
+		{
+			EndAttack();
+			return;
 		}
 	}
 }
@@ -207,7 +230,7 @@ void LadySatake::UpDateDamage()
 {
 	if (!unHitTimer_->IsCounting())
 	{
-		status_->HP.TakeDamage(15);
+		status_->HP.TakeDamage(status_->attack.GetNow());
 		unHitTimer_->Start();
 	}
 	if (moveCnt_->IsCounting())
@@ -219,4 +242,14 @@ void LadySatake::UpDateDamage()
 void LadySatake::UpDateDead()
 {
 	this->Kill();
+}
+
+float LadySatake::GetMidRange() const
+{
+	return midRange_;
+}
+
+void LadySatake::SetMidRange(const float midRange)
+{
+	midRange_ = midRange;
 }

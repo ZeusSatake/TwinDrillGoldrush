@@ -16,7 +16,6 @@ public:
 protected:
 	//-----------------------------------------------------------------------------
 	//コンポーネント
-	class shared_ptr<HP> hp_;
 	class shared_ptr<AnimManager> animManager_;
 	class shared_ptr<TimerComponent> unHitTimer_;
 	//-----------------------------------------------------------------------------
@@ -30,8 +29,6 @@ public:
 	virtual void Move();
 	//足元判定
 	bool CheckFoot() const;
-
-	shared_ptr<HP> GetHP() const;
 
 	std::string GetPersonalName()const;
 	void SetPersonalName(const std::string name);

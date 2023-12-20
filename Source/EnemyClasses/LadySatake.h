@@ -4,6 +4,8 @@ class LadySatake : public BossLady
 {
 	const int standCnt_;
     const int attackCnt_;
+
+	float midRange_;
 public:
 	LadySatake();
 	virtual ~LadySatake() {};
@@ -17,8 +19,12 @@ protected:
 	virtual void UpDateFall() override;
 	virtual void UpDateAttackStand() override;
 	virtual void UpDateAttack() override;
+	virtual void UpDateTackle();
 	//virtual void UpDateGuard() override;
 	//virtual void UpDateDodge() override;
 	virtual void UpDateDamage() override;
 	virtual void UpDateDead() override;
+
+	float GetMidRange() const;
+	void SetMidRange(const float midRange);
 };
