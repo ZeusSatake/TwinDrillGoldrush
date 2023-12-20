@@ -17,7 +17,8 @@ void NormalLady::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
+		SetDistance(abs(ML::Vec2(GetPos() - GetTarget()->GetPos()).Length()));
+		if (abs(GetFov()>GetDistance()))
 		{
 			afterState = AIState::Approach;
 		}
