@@ -8,6 +8,9 @@
 #include "Task_EnemyMap.h"
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
+#include "../Actors/Enemys/Task_LadySatake.h"
+#include "../Components/SecondsTimerComponent.h"
+#include "../System/Task_Save.h"
 
 namespace MartialFightScene
 {
@@ -33,6 +36,11 @@ namespace MartialFightScene
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
+		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
+		transitionTimer_->SetCountSeconds(3.0f);
+
+		clear_ = false;
+
 		//★データ初期化
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		//★タスクの生成
@@ -44,6 +52,7 @@ namespace MartialFightScene
 			auto enemymap = EnemyMap::Object::Create(true);
 			enemymap->Load("MartialFightEnemy");
 			enemymap->SetEnemy();
+			boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
 		}
 		{
 			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
@@ -52,11 +61,7 @@ namespace MartialFightScene
 			camera->SetPos(ge->playerPtr->GetPos());
 			camera->target = ge->playerPtr;
 		}
-		auto gotoTitleButton = SceneChangeButton::Object::Create(true);
-		gotoTitleButton->SetEnterButton(XI::VGP::ST);
-		gotoTitleButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoTitleButton->SetScene(this, Scene::Kind::Base);
-		AddSceneChangeButton(gotoTitleButton);
+		SetNextScene(Scene::Base);
 
 		return  true;
 	}
@@ -65,6 +70,15 @@ namespace MartialFightScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
+		if (clear_)
+		{
+			auto save = Save::Object::Create(true);
+			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::StageNo);
+			//次のステージへ
+			save->SetValue(Save::Object::ValueKind::StageNo, nowStage + 1);
+			save->Kill();
+		}
+
 		ge->KillAll_G("本編");
 		ge->KillAll_G(SceneChangeButton::defGroupName);
 		ge->KillAll_G("キャラクタ");
@@ -82,12 +96,30 @@ namespace MartialFightScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+		UpdateComponents();
+
+		if (transitionTimer_->IsCountEndFrame())
+		{
+			this->Kill();
+			return;
+		}
+
+		if (!boss_.lock() && !transitionTimer_->IsActive())
+		{
+			transitionTimer_->Start();
+			clear_ = true;
+		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "武闘会");
+
+		if (clear_)
+		{
+			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 50, 30, 500, 500), "ボスを倒したわね。", ML::Color(1, 1, 0, 0));
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
