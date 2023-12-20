@@ -74,18 +74,21 @@ namespace  drill
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = ML::Box2D{-4,-4,8,8}.OffsetCopy(this->GetDrawPos());
-		ML::Box2D src = ML::Box2D{ 0,0,64,64 };
-		this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{4, 4});
-		//スクロール対応
-		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		this->res->img->Draw(draw, src);
-		//----------------------------------------------------
-		ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x*16,(int)this->GetTargetPos().y*16,16,16};
-		tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
-		if(this->GetMode()==Drill::Mode::Drill)
-		this->res->target->Draw(tDraw, tSrc);
+		if(this->GetMode()!=Mode::Non)
+		{
+			ML::Box2D draw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetDrawPos());
+			ML::Box2D src = ML::Box2D{ 0,0,64,64 };
+			this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
+			//スクロール対応
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			this->res->img->Draw(draw, src);
+			//----------------------------------------------------
+			ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x * 16,(int)this->GetTargetPos().y * 16,16,16 };
+			tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
+			if (this->GetMode() == Drill::Mode::Drill)
+				this->res->target->Draw(tDraw, tSrc);
+		}
 		//----------------------------------------------------
 		/*ML::Box2D debugdraw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetAttackPos());
 		debugdraw.Offset(-ge->camera2D.x, -ge->camera2D.y);

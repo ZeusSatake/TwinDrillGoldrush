@@ -14,7 +14,7 @@ class Drill :public Character
 	ML::Vec2 drawPos;
 	ML::Vec2 targetPos;
 public:
-	enum class Mode{Normal,Drill};
+	enum class Mode{Normal,Drill,Non};
 private:
 	Mode mode;
 
