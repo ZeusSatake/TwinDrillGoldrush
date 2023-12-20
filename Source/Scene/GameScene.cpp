@@ -92,9 +92,9 @@ namespace  GameScene
 			pair<Map::Object::ChipKind, int> targetOres[] =
 			{
 				make_pair(Map::Object::ChipKind::Damascus, 2),
-				make_pair(Map::Object::ChipKind::Orichalcum, 1),
-				make_pair(Map::Object::ChipKind::HihiIroKane, 1),
-				make_pair(Map::Object::ChipKind::Adamantite, 1)
+				make_pair(Map::Object::ChipKind::Orichalcum, 3),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
+				make_pair(Map::Object::ChipKind::Adamantite, 3)
 			};
 			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
 			miningResult->SetTargetOre(targetOre.first, targetOre.second);
