@@ -323,8 +323,16 @@
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Actors\UI\Task_MiningResult.cpp">
-      <Filter>MyPG\Task</Filter>
+    <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
+    <ClCompile Include="Source\Event\Task_EventEngine_System.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Image.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Input.cpp" />
+    <ClCompile Include="Source\Event\Task_Ev_Message.cpp" />
+    <ClCompile Include="Source\Event\Task_InputMap.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -573,8 +581,15 @@
     <ClInclude Include="Source\EnemyClasses\LadySatake.h">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Actors\UI\Task_MiningResult.h">
-      <Filter>MyPG\Task</Filter>
+    <ClInclude Include="Source\Actors\Task_MiningResult.h" />
+    <ClInclude Include="Source\Event\Task_EventEngine.h" />
+    <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Image.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Input.h" />
+    <ClInclude Include="Source\Event\Task_Ev_Message.h" />
+    <ClInclude Include="Source\Event\Task_InputMap.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
