@@ -173,6 +173,8 @@ void Player::Move()
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
 	this->unHitTimer_->Update();
+	this->drill_->SetMode(state_->GetNowState());
+
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
@@ -215,7 +217,7 @@ void Player::Move()
 	case StateComponent::State::KnockBack:
 		break;
 	case StateComponent::State::Dead:
-
+		this->drill_->Kill();
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();

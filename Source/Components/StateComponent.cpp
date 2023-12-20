@@ -17,6 +17,11 @@ void StateComponent::UpdateNowState(State state)
 	this->nowState = state;
 }
 
+void StateComponent::InitializeState()
+{
+	this->UpdateNowState(State::Idle);
+}
+
 void StateComponent::InitializeState(State state)
 {
 	this->nowState = state;
