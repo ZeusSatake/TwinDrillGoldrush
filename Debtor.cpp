@@ -161,8 +161,17 @@ bool Debtor::HitPlayer()
 		//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚Ìˆ—
 		if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
 		{
-			static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+			if (ge->playerPtr->pState == StateComponent::State::Attack)
+			{
+				status_->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+			}
+			else
+			{
+				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+			}
+			
 		}
+		
 		return true;
 	}
 	return false;
