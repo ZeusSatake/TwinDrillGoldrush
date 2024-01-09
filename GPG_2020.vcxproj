@@ -154,6 +154,7 @@
     <ClCompile Include="MyPG.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NPC.cpp" />
+    <ClCompile Include="OrionContainer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="MyPG.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="NPC.h" />
+    <ClInclude Include="OrionContainer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="randomLib.h" />
     <ClInclude Include="resource.h" />

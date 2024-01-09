@@ -19,4 +19,6 @@ protected:
 	virtual void UpDateAttack() override;
 	virtual void UpDateDamage() override;
 	virtual void UpDateDead() override;
+
+	void CreateContainer();
 };
