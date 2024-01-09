@@ -231,6 +231,9 @@ namespace	BlockManager
 		auto pos = ML::Vec2(x_ * 16, y_ * 16);
 		switch (eventNum)
 		{
+		case (int)Map::Object::ChipKind::HardSoil:
+			SoundOnly(pos);
+			break;
 		case (int)Map::Object::ChipKind::BedRock:
 			SoundOnly(pos);
 			break;
