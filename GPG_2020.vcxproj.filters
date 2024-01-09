@@ -347,6 +347,9 @@
     <ClCompile Include="OrionContainer.cpp">
       <Filter>MyPG\ActorClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Task_OrionContainer.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -613,6 +616,9 @@
     </ClInclude>
     <ClInclude Include="OrionContainer.h">
       <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_OrionContainer.h">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
