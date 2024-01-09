@@ -17,6 +17,14 @@ void GameObject::RemoveComponent(shared_ptr<Component> component)
 		components_.erase(itr);
 	}
 }
+void GameObject::RemoveAllComponent()
+{
+	for (auto itr : components_)
+	{
+		RemoveComponent(itr);
+	}
+}
+
 void GameObject::UpdateComponents()
 {
 	for (auto& component : components_)

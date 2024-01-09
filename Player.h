@@ -11,6 +11,7 @@ class Player :public Character
 	ML::Vec2 moveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
+	int PreHp;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -20,6 +21,7 @@ protected:
 public:
 	Player();
 	virtual ~Player() {}; 
+
 
 	StateComponent::State pState;
 	

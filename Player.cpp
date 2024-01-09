@@ -6,7 +6,8 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
-	jumpPow(-25.f)
+	jumpPow(-25.f),
+	PreHp(100)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -17,7 +18,8 @@ Player::Player()
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(30);
 	
-	status_->HP.Initialize(100);
+	status_->HP.Initialize(1000);
+	this->PreHp = this->status_->HP.GetNowHP();
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
@@ -102,7 +104,6 @@ void Player::Think()
 	auto inp = controller_->gamePad_->GetState();
 	this->cooldown_->Update();
 
-
 	switch (pState)
 	{
 	case StateComponent::State::Non:
@@ -112,7 +113,6 @@ void Player::Think()
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
 		if(inp.L1.down){pState = StateComponent::State::Attack; }
-		if(inp.B4.down){ pState = StateComponent::State::Damage; }
 		break;
 	case StateComponent::State::Walk:
 		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
@@ -161,10 +161,17 @@ void Player::Think()
 	case StateComponent::State::Appeal:
 		break;
 	}
-	if (this->status_->HP.IsAlive())
+	
+	if (this->PreHp != this->status_->HP.GetNowHP())
+	{
+		this->pState = StateComponent::State::Damage;
+		this->PreHp = this->status_->HP.GetNowHP();
+	}
+
+	/*if (this->status_->HP.IsAlive())
 	{
 		this->pState=StateComponent::State::Dead;
-	}
+	}*/
 	this->state_->UpdateNowState(pState);
 }
 
@@ -211,6 +218,8 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::Damage:
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+
 		this->unHitTimer_->Start();
 		TakeAttack();
 		break;
