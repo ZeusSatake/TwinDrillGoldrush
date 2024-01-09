@@ -79,6 +79,7 @@ namespace	BlockManager
 				case (int)Map::Object::ChipKind::Soil:		//“y
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
+					this->arr[y][x].event = 1;
 					break;
 				case (int)Map::Object::ChipKind::HardSoil:		//d‚¢“y
 					this->arr[y][x].MaxHP = -1;
@@ -231,24 +232,32 @@ namespace	BlockManager
 		switch (eventNum)
 		{
 		case (int)Map::Object::ChipKind::Empty:
-			soil(pos);
+			EffectOnly(pos, eventNum);
 			break;
 		case (int)Map::Object::ChipKind::Soil:
+			EffectOnly(pos, eventNum);
 			break;
 		case (int)Map::Object::ChipKind::Stone:
-			Stone(pos);
+			EffectOnly(pos, eventNum);
 			break;
 		case (int)Map::Object::ChipKind::BedRock:
-			Bedrock(pos);
+			SoundOnly(pos);
 			break;
 		case (int)Map::Object::ChipKind::CollapseStone:
 			collapseBlock(x_, y_);
 			break;
 		case (int)Map::Object::ChipKind::Iron:
-			IronOre(pos);
+			EffectOnly(pos, eventNum);
 			break;
+		case (int)Map::Object::ChipKind::Gold:
+			EffectOnly(pos, eventNum);
+			break;
+		case (int)Map::Object::ChipKind::Damascus:
+			EffectOnly(pos, eventNum);
+			break;
+		//======================
 		case (int)Map::Object::ChipKind::DiagonalBrick:
-			Stone(pos);
+			EffectOnly(pos, 6);
 			break;
 		default:
 			break;
@@ -256,20 +265,19 @@ namespace	BlockManager
 	}
 	//-------------------------------------------------------------------
 	//ƒuƒƒbƒN“Á«EhTask_ƒuƒƒbƒN–¼h‚ÍŽg‚í‚È‚¢‚æ‚¤‚É‚·‚é‚©‚à
-	void Object::soil(ML::Vec2 pos)
+	//=========Žg‚¢‚Ü‚í‚µ—p==========
+	void Object::EffectOnly(ML::Vec2 pos, int n)
 	{
-		ge->CreateEffect(11, pos, 1);
+		ge->CreateEffect(11, pos, n);
 		se::Play("crush");
 	}
-	void Object::Stone(ML::Vec2 pos)
-	{
-		ge->CreateEffect(11, pos, 6);
-		se::Play("crush");
-	}
-	void Object::Bedrock(ML::Vec2 pos)
+
+	void Object::SoundOnly(ML::Vec2 pos)
 	{
 		se::Play("repelled");
 	}
+
+	//==========================================
 	void Object::collapseBlock(int x,int y)
 	{
 		auto map = ge->GetTask<Map::Object>("–{•Ò", MapName);
@@ -304,13 +312,9 @@ namespace	BlockManager
 		ge->CreateEffect(11, ep, 6);
 		se::Play("crush");
 	}
-	void Object::IronOre(ML::Vec2 pos)
-	{
-		ge->CreateEffect(11, pos, 11);
-		se::Play("crush");
-	}
+	
 
-
+	
 
 	//-------------------------------------------------------------------
 	// ‰ß‹Ž‚ÌˆâŽY
