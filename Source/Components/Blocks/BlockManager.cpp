@@ -99,16 +99,16 @@ namespace	BlockManager
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
+				case (int)Map::Object::ChipKind::CollapseStone:	//崩れる石
+					this->arr[y][x].MaxHP = 1;
+					this->arr[y][x].HP = 1;
+					this->arr[y][x].event = 10;
+					break;
 				//====================鉱石====================
 				case (int)Map::Object::ChipKind::Coal:		//石炭
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 9;
-					break;
-				case (int)Map::Object::ChipKind::CollapseStone:	//崩れる石
-					this->arr[y][x].MaxHP = 1;
-					this->arr[y][x].HP = 1;
-					this->arr[y][x].event = 10;
 					break;
 				case (int)Map::Object::ChipKind::Iron:	//鉄鉱石
 					this->arr[y][x].MaxHP = 6;
@@ -120,56 +120,56 @@ namespace	BlockManager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case (int)Map::Object::ChipKind::HihiIroKane:	//ヒヒイロカネぽいやつ
+				case (int)Map::Object::ChipKind::HihiIroKane:	//ヒヒイロカネぽいやつ　白
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
 					break;
-				case (int)Map::Object::ChipKind::Damascus:	//ダマスカスぽいやつ
+				case (int)Map::Object::ChipKind::Damascus:	//ダマスカスぽいやつ 緑
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 14;
 					break;
-				case (int)Map::Object::ChipKind::Orichalcum:	//オリハルコンぽいやつ
+				case (int)Map::Object::ChipKind::Orichalcum:	//オリハルコンぽいやつ　水
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)Map::Object::ChipKind::Palladium:	//パラジウムぽいやつ
+				case (int)Map::Object::ChipKind::Palladium:	//パラジウムぽいやつ　橙
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 16;
 					break;
-				case (int)Map::Object::ChipKind::Adamantite:	//アダマンタイトぽいやつ
+				case (int)Map::Object::ChipKind::Adamantite:	//アダマンタイトぽいやつ　赤紫
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 17;
 					break;
 				//====================宝石====================
 				case (int)JewelryMap::Object::ChipKind::Diamond:	//ダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 18;
 					break;
 				case (int)JewelryMap::Object::ChipKind::BlackDiamond:	//ブラックダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 19;
 					break;
 				case (int)JewelryMap::Object::ChipKind::PinkDiamond:	//ピンクダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 20;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Emerald:	//エメラルド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 21;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Sapphire:	//サファイア
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 22;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Garnet:	//ガーネット
 					this->arr[y][x].MaxHP = -1;
@@ -179,12 +179,12 @@ namespace	BlockManager
 				case (int)JewelryMap::Object::ChipKind::Topaz:	//トパーズ
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
-					this->arr[y][x].event = 23;
+					this->arr[y][x].event = 24;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Amethyst:	//アメジスト
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
-					this->arr[y][x].event = 23;
+					this->arr[y][x].event = 25;
 					break;
 				case (int)Map::Object::ChipKind::Brick:
 					this->arr[y][x].MaxHP = -1;
@@ -231,6 +231,9 @@ namespace	BlockManager
 		switch (eventNum)
 		{
 		case (int)Map::Object::ChipKind::Empty:
+			soil(pos);
+			break;
+		case (int)Map::Object::ChipKind::Soil:
 			break;
 		case (int)Map::Object::ChipKind::Stone:
 			Stone(pos);
@@ -253,6 +256,11 @@ namespace	BlockManager
 	}
 	//-------------------------------------------------------------------
 	//ブロック特性・”Task_ブロック名”は使わないようにするかも
+	void Object::soil(ML::Vec2 pos)
+	{
+		ge->CreateEffect(11, pos, 1);
+		se::Play("crush");
+	}
 	void Object::Stone(ML::Vec2 pos)
 	{
 		ge->CreateEffect(11, pos, 6);
@@ -301,6 +309,7 @@ namespace	BlockManager
 		ge->CreateEffect(11, pos, 11);
 		se::Play("crush");
 	}
+
 
 
 	//-------------------------------------------------------------------

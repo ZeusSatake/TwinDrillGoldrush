@@ -61,11 +61,15 @@ namespace	BlockManager
 	private:
 		BlockState  arr[160][160];//yx
 
-		void eventSearch(int y_, int x_);	//ブロックのイベント(特性)を呼び出す		
-		//名			num		破壊
+		void eventSearch(int y_, int x_);	//ブロックのイベント(特性)を呼び出す
+
+											//名			num		破壊
+		void soil(ML::Vec2 pos);			//土			.1		.可
 		void Stone(ML::Vec2 pos);			//石			.6		.可
 		void Bedrock(ML::Vec2 pos);			//岩盤		.7		.不可
 		void collapseBlock(int x, int y);	//連鎖崩壊	.10		.可
 		void IronOre(ML::Vec2 pos);			//鉄鉱石		.11		.可
+
+		
 	};
 }
