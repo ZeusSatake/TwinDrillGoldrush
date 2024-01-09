@@ -262,9 +262,6 @@
     <ClCompile Include="Source\Scene\Task_EnemyMap.cpp">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Debtor.cpp">
-      <Filter>MyPG</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp">
       <Filter>MyPG\Components\Money</Filter>
     </ClCompile>
@@ -334,9 +331,15 @@
     </ClCompile>
     <ClCompile Include="Source\Components\SecondsTimerComponent.cpp">
       <Filter>MyPG\Components</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\Debtor.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\LadyKumagai.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -527,9 +530,6 @@
     <ClInclude Include="Source\Scene\Task_EnemyMap.h">
       <Filter>MyPG\Task\Scene\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Debtor.h">
-      <Filter>MyPG</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Components\Money\PriceTagComponent.h">
       <Filter>MyPG\Components\Money</Filter>
     </ClInclude>
@@ -595,9 +595,15 @@
     </ClInclude>
     <ClInclude Include="Source\Components\SecondsTimerComponent.h">
       <Filter>MyPG\Components</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\Debtor.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\LadyKumagai.h">
+      <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
