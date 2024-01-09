@@ -132,7 +132,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Debtor.cpp" />
     <ClCompile Include="DG2014\DG2014_DGObject.cpp" />
     <ClCompile Include="DG2014\DG2014_Effect.cpp" />
     <ClCompile Include="DG2014\DG2014_Font.cpp" />
@@ -185,7 +184,9 @@
     <ClCompile Include="Source\Components\StatusComponent.cpp" />
     <ClCompile Include="Source\Components\TimerComponent.cpp" />
     <ClCompile Include="Source\EnemyClasses\BossLady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\Debtor.cpp" />
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\LadyKumagai.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp" />
     <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
     <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
@@ -221,7 +222,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="Debtor.h" />
     <ClInclude Include="DG2014\DG2014_DGObject.h" />
     <ClInclude Include="DG2014\DG2014_Effect.h" />
     <ClInclude Include="DG2014\DG2014_Font.h" />
@@ -274,7 +274,9 @@
     <ClInclude Include="Source\Components\StatusComponent.h" />
     <ClInclude Include="Source\Components\TimerComponent.h" />
     <ClInclude Include="Source\EnemyClasses\BossLady.h" />
+    <ClInclude Include="Source\EnemyClasses\Debtor.h" />
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
+    <ClInclude Include="Source\EnemyClasses\LadyKumagai.h" />
     <ClInclude Include="Source\EnemyClasses\LadySatake.h" />
     <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
     <ClInclude Include="Source\Event\Task_EventEngine.h" />
