@@ -245,6 +245,8 @@ namespace MyPG
 			for (int i = 0; i < 3; i++) {
 				if (auto e = Effect00::Object::Create(true)) {
 					e->filename = "data/image/effect/Effect_Blocks/crushEffect_" + to_string(id) + ".png";
+					ifstream ifs(e->filename);
+					if (!ifs) { return; }
 
 					e->resSizeX = e->resSizeY = 32;
 					e->drawSizeX = e->drawSizeY = 32;

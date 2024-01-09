@@ -231,35 +231,20 @@ namespace	BlockManager
 		auto pos = ML::Vec2(x_ * 16, y_ * 16);
 		switch (eventNum)
 		{
-		case (int)Map::Object::ChipKind::Empty:
-			EffectOnly(pos, eventNum);
-			break;
-		case (int)Map::Object::ChipKind::Soil:
-			EffectOnly(pos, eventNum);
-			break;
-		case (int)Map::Object::ChipKind::Stone:
-			EffectOnly(pos, eventNum);
-			break;
 		case (int)Map::Object::ChipKind::BedRock:
 			SoundOnly(pos);
 			break;
 		case (int)Map::Object::ChipKind::CollapseStone:
 			collapseBlock(x_, y_);
 			break;
-		case (int)Map::Object::ChipKind::Iron:
-			EffectOnly(pos, eventNum);
-			break;
-		case (int)Map::Object::ChipKind::Gold:
-			EffectOnly(pos, eventNum);
-			break;
-		case (int)Map::Object::ChipKind::Damascus:
-			EffectOnly(pos, eventNum);
-			break;
 		//======================
 		case (int)Map::Object::ChipKind::DiagonalBrick:
 			EffectOnly(pos, 6);
 			break;
+
+		//============エフェクトのみ======
 		default:
+			EffectOnly(pos, eventNum);
 			break;
 		}
 	}
