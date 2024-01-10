@@ -5,6 +5,8 @@
 #include  "Task_Ev_Message.h"
 #include "../../Character.h"
 #include "../Actors/Task_Player.h"
+#include "../System/Task_Save.h"
+#include  "../Actors/Task_MiningResult.h"
 
 namespace Ev_Message
 {
@@ -14,7 +16,7 @@ namespace Ev_Message
 	bool  Resource::Initialize()
 	{
 		this->img[0] = DG::Image::Create("./data/image/MessageF.png");
-		this->img[1] = DG::Image::Create("./data/image/MessageF.png");//以下仮
+		this->img[1] = DG::Image::Create("./data/image/message.png");//以下仮
 		this->img[2] = DG::Image::Create("./data/image/MessageF.png");
 		this->img[3] = DG::Image::Create("./data/image/MessageF.png");
 		this->img[4] = DG::Image::Create("./data/image/MessageF.png");
@@ -58,7 +60,7 @@ namespace Ev_Message
 		this->pos.x = 0;
 		this->pos.y = ge->screen2DHeight - 128;//270
 		this->msgText = "";
-		this->bgNumber = 0;
+		this->bgNumber = 1;
 		this->fontNumber = 1;
 		//★タスクの生成
 
@@ -99,11 +101,11 @@ namespace Ev_Message
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw(0, 0, ge->screen2DWidth, 128);//0.480
-		ML::Box2D src(0, 0, 240, 64);
+		ML::Box2D draw(0, 0, ge->screen2DWidth, 128);
+		ML::Box2D src(0, 0, 1280, 206);
 		draw.Offset(this->pos);
-		this->res->img[this->bgNumber]->Draw(draw, src, ML::Color(0.9f, 1, 1, 1));
-		ML::Box2D drawF(6, 6, ge->screen2DWidth - 12,  128 - 12);//6.480
+		this->res->img[this->bgNumber]->Draw(draw, src, ML::Color(1, 1, 1, 1));
+		ML::Box2D drawF(50, 15, ge->screen2DWidth - 12, 128 - 12);
 		drawF.Offset(this->pos);
 		this->res->font[this->fontNumber]->Draw(drawF, this->msgText);
 	}
@@ -139,6 +141,16 @@ namespace Ev_Message
 		while ((ast1 = msgText.find("&")) != string::npos)
 		{
 			msgText.replace(ast1, 1, ge->playerPtr->GetPersonalName());
+		}
+
+		//%を目標鉱石に置き換える
+		string::size_type ast2;
+
+		while ((ast2 = msgText.find("%")) != string::npos)
+		{
+			string orename[5] = { "ダマスカス","オリハルコン","ヒヒイロカネ","アダマンタイト","レディアンタイト" };
+			auto save = Save::Object::Create(true);
+			msgText.replace(ast2, 1, orename[save->GetValue<int>(Save::Object::ValueKind::StageNo)]);
 		}
 
 		//イベントエンジンを一時停止させる
