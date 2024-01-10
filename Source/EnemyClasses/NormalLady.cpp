@@ -17,9 +17,20 @@ void NormalLady::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
+		SetDistance(abs(ML::Vec2(GetPos() - GetTarget()->GetPos()).Length()));
+		if (abs(GetFov()>GetDistance()))
 		{
 			afterState = AIState::Approach;
+		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
+			if (box_->CheckHit(plBox))
+			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
+				EndAttack();
+				afterState = AIState::Damage;
+			}
 		}
 		break;
 	case AIState::Approach:
@@ -27,16 +38,16 @@ void NormalLady::Think()
 		{
 			afterState = AIState::AttackStand;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack&&!unHitTimer_->IsCounting())
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
+				EndAttack();
 				afterState = AIState::Damage;
 			}
-		}
-		break;
+		}		break;
 	case AIState::AttackStand:
 		if (IsAttacking())
 		{
@@ -44,15 +55,14 @@ void NormalLady::Think()
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
-		}
-		break;
+		}		break;
 	case AIState::Attack:
 		if (!IsAttacking())
 		{
@@ -60,10 +70,10 @@ void NormalLady::Think()
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
+			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
+				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
@@ -196,8 +206,10 @@ void NormalLady::UpDateAttack()
 
 		if (fanEdge_->CheckHit(plBox))
 		{
-			static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
-			test = true;
+			if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
+			{
+				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+			}
 		}
 		if (!moveCnt_->IsCounting())
 		{

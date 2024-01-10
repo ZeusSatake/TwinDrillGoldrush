@@ -6,7 +6,8 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
-	jumpPow(-25.f)
+	jumpPow(-25.f),
+	PreHp(100)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -17,7 +18,8 @@ Player::Player()
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(30);
 	
-	status_->HP.Initialize(50);
+	status_->HP.Initialize(1000);
+	this->PreHp = this->status_->HP.GetNowHP();
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
@@ -111,7 +113,6 @@ void Player::Think()
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
 		if(inp.L1.down){pState = StateComponent::State::Attack; }
-		if(inp.B4.down){ pState = StateComponent::State::Damage; }
 		break;
 	case StateComponent::State::Walk:
 		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
@@ -130,7 +131,7 @@ void Player::Think()
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
-		if(this->state_->moveCnt_>8){ pState = StateComponent::State::Idle; }
+		if(this->state_->moveCnt_>90){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -149,7 +150,7 @@ void Player::Think()
 	case StateComponent::State::Drill:
 		if (inp.L1.on) { pState = StateComponent::State::Mining; }
 		if (inp.B2.down) { pState = StateComponent::State::Idle; }
-		if (inp.Trigger.L2.down) { pState = StateComponent::State::DrillDash; }
+		if (inp.Trigger.L2.down&&this->CheckFoot()) { pState = StateComponent::State::DrillDash; }
 		break;
 	case StateComponent::State::DrillDash:
 		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
@@ -160,6 +161,17 @@ void Player::Think()
 	case StateComponent::State::Appeal:
 		break;
 	}
+	
+	if (this->PreHp != this->status_->HP.GetNowHP())
+	{
+		this->pState = StateComponent::State::Damage;
+		this->PreHp = this->status_->HP.GetNowHP();
+	}
+
+	/*if (this->status_->HP.IsAlive())
+	{
+		this->pState=StateComponent::State::Dead;
+	}*/
 	this->state_->UpdateNowState(pState);
 }
 
@@ -168,6 +180,8 @@ void Player::Move()
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
 	this->unHitTimer_->Update();
+	this->drill_->SetMode(state_->GetNowState());
+
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
@@ -204,6 +218,8 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::Damage:
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+
 		this->unHitTimer_->Start();
 		TakeAttack();
 		break;
@@ -232,7 +248,7 @@ void Player::Move()
 	case StateComponent::State::Drill:
 		this->status_->speed.SetMax(0.85f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-		if (inp.R1.down) 
+		if (inp.R1.down&&this->CheckFoot()) 
 		{
 			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
 			this->state_->moveCnt_ = 0;
@@ -272,6 +288,13 @@ void Player::SetPlayerState(StateComponent::State state)
 	this->state_->UpdateNowState(state);
 }
 
+ML::Box2D Player::GetAttackBox()
+{
+	this->AttackBox = ML::Box2D{ -8,-8,16,16 };
+	this->AttackBox.Offset(drill_->GetAttackPos());
+	return this->AttackBox;
+}
+
 ML::Vec2 Player::GetMoveVec()
 {
 	return this->moveVec;
@@ -280,4 +303,10 @@ ML::Vec2 Player::GetMoveVec()
 StatusComponent* Player::GetStatus() const
 {
 	return this->status_.get();
+}
+
+void Player::ResetState()
+{
+	this->state_->UpdateNowState(StateComponent::State::Idle);
+	this->drill_->SetMode(StateComponent::State::Idle);
 }

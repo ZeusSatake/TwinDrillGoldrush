@@ -22,6 +22,7 @@ public:
 	//Œü‚«i2D‹“_j
 	float angle_;
 
+
 	enum class Angle_LR
 	{
 		Left,Right

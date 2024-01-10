@@ -32,7 +32,7 @@ namespace Satake
 		this->res = Resource::Create();
 
 		//šƒf[ƒ^‰Šú‰»
-		status_->HP.Initialize(200);
+		status_->HP.Initialize(20);
 		status_->attack.Initialize(15, 100);
 		status_->defence.Initialize(0, 100);
 		status_->speed.Initialize(2.5f, 100.f, 10.f);
@@ -48,6 +48,7 @@ namespace Satake
 
 		SetFov(200.f);
 		SetRange(30.f);
+		SetMidRange(100.f);
 
 		moveCnt_->SetCountFrame(0);
 		unHitTimer_->SetCountFrame(90);

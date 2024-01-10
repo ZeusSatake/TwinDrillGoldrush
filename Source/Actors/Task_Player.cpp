@@ -38,7 +38,6 @@ namespace player
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
-		this->GetHP()->SetMaxHP(10, HP::MaxLifeSetMode::MaxHeal);
 
 		//★タスクの生成
 		auto dl = drill::Object::Create(true);
@@ -80,15 +79,83 @@ namespace player
 			ML::Box2D src{ 0,0,32,64};
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			if (this->unHitTimer_->IsCounting())
+			if (this->pState != StateComponent::State::Dead)
 			{
-				if(this->unHitTimer_->GetCount()%2 ==0)
-				this->res->playerImg->Draw(draw, src);
+				if (this->unHitTimer_->IsCounting())
+				{
+					if (this->unHitTimer_->GetCount() % 2 == 0)
+						this->res->playerImg->Draw(draw, src);
 
+				}
+				else
+					this->res->playerImg->Draw(draw, src);
 			}
-			else
-			this->res->playerImg->Draw(draw, src);
 		}
+		DebugInfo();
+
+	}
+	void Object::DebugInfo()
+	{
+		//------------------------------------------------------------------
+		string StateName;
+		switch (pState)
+		{
+		case StateComponent::State::Non:
+			StateName = "Non";
+			break;
+		case StateComponent::State::Idle:
+			StateName = "Idle";
+			break;
+		case StateComponent::State::Walk:
+			StateName = "Walk";
+			break;
+		case StateComponent::State::Attack:
+			StateName = "Attack";
+			break;
+		case StateComponent::State::SpinAttack:
+			StateName = "SpinAttack";
+			break;
+		case StateComponent::State::Damage:
+			StateName = "Damage";
+			break;
+		case StateComponent::State::KnockBack:
+			StateName = "KnockBack";
+			break;
+		case StateComponent::State::Dead:
+			StateName = "Dead";
+			break;
+		case StateComponent::State::Jump:
+			StateName = "Jump";
+			break;
+		case StateComponent::State::Fall:
+			StateName = "Fall";
+			break;
+		case StateComponent::State::Dash:
+			StateName = "Dash";
+			break;
+		case StateComponent::State::Drill:
+			StateName = "Drill";
+			break;
+		case StateComponent::State::DrillDash:
+			StateName = "DrillDash";
+			break;
+		case StateComponent::State::Mining:
+			StateName = "Mining";
+			break;
+		case StateComponent::State::Appeal:
+			StateName = "Appeal";
+			break;
+
+		}
+		ge->debugFont->Draw(ML::Box2D{ 1000,0,500,500 }, "<NowState>" + StateName, ML::Color{1.f,1.f,0.f,0.f});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1100,0,500,500 }, "<MoveCnt>" + to_string(this->state_->moveCnt_), ML::Color{1, 1, 0, 0});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1000,20,500,500 }, "<PosX>" + to_string(this->GetPos().x) +" " + "<PosY>" + to_string(this->GetPos().y),ML::Color{1,1,0,0});
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1000,40,500,500 }, "Drill \: <PosX>" + to_string(this->drill_->GetPos().x) + " <PosY>" + to_string(this->drill_->GetPos().y), ML::Color{ 1,1,0,0 });
+		//------------------------------------------------------------------
+		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP\:" + to_string(this->status_->HP.GetNowHP()));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

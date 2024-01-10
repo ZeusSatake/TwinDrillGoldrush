@@ -8,7 +8,7 @@
 
 Drill::Drill()
 	:
-	attackPoint(0),
+	attack(0),
 	angle(0.0f),
 	addAngle(0.0f),
 	preAngle(0.0f),
@@ -31,6 +31,28 @@ void Drill::SetAngle(float angle)
 void Drill::SetDrawPos(ML::Vec2 pos)
 {
 	this->drawPos = pos;
+}
+
+void Drill::SetMode(StateComponent::State state)
+{
+	if (state == StateComponent::State::Drill ||
+		state == StateComponent::State::DrillDash ||
+		state == StateComponent::State::Mining)
+	{
+		this->mode = Mode::Drill;
+		return;
+	}
+	if (state == StateComponent::State::Dead)
+	{
+		this->mode = Mode::Non;
+		return;
+	}
+	this->mode = Mode::Normal;
+}
+
+Drill::Mode Drill::GetMode()
+{
+	return this->mode;
 }
 
 void Drill::UpdateTargetPos(ML::Vec2 pos)
@@ -69,9 +91,9 @@ void Drill::SetCanRotate(bool check)
 	this->canRotate = check;
 }
 
-int Drill::GetAttackPoint()
+int Drill::GetAttack()
 {
-	return this->attackPoint;
+	return this->attack;
 }
 
 float Drill::GetNowAngle()
@@ -130,7 +152,6 @@ void Drill::Mining()
 				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
 		map->Search(preVec);
-
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
 	{
@@ -142,27 +163,18 @@ void Drill::Mining()
 	}
 }
 
-//void Drill::SearchBrocks(ML::Vec2 pos_)
-//{
-//	//現在のマスを出さない限りはどうしようもない
-//	ML::Vec2 pos = pos_;
-//	//ML::Point brock{ (int)pos_.x / 16,(int)pos_.y / 16 };//これで現在いるマスが取れる
-//	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName)) {
-//		if (!map->Search(pos))
-//		{
-//			if (!map->Search(ML::Vec2{ pos.x, pos.y - 16.f }))
-//			{
-//				if (!map->Search(ML::Vec2{ pos.x - 16.f,pos.y }))
-//				{
-//					if (!map->Search(ML::Vec2{ pos.x + 16.f,pos.y }))
-//					{
-//						return;
-//					}
-//				}
-//			}
-//		}
-//	}
-//}
+void Drill::Mining(ML::Vec2 pos)
+{
+	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
+	{
+		map->Search(pos);
+	}
+	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
+	{
+		map->Search(pos);
+	}
+}
+
 
 void Drill::SearchBrocks(ML::Vec2 pos)
 {
@@ -214,4 +226,9 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 
 	}
 
+}
+
+ML::Vec2 Drill::GetAttackPos()
+{
+	return this->GetPos() + ML::Vec2{ (cos(GetNowAngle()) * 2.f), (sin(GetNowAngle()) * 2.f) };
 }

@@ -22,6 +22,7 @@ public:
 
 	void AddComponent(class shared_ptr<Component> component);
 	void RemoveComponent(class shared_ptr<Component> component);
+	void RemoveAllComponent();
 
 	void UpdateComponents();
 };

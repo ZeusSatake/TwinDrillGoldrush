@@ -1,17 +1,15 @@
 #include "BossLady.h"
 
-class LadySatake : public BossLady
+class LadyKumagai : public BossLady
 {
 	const int standCnt_;
-    const int attackCnt_;
+	const int attackCnt_;
 
 	float midRange_;
 public:
-	LadySatake();
-	virtual ~LadySatake() {};
+	LadyKumagai();
+	virtual ~LadyKumagai() {};
 protected:
-	shared_ptr<BoxCollisionComponent> fanEdge_;
-
 	virtual void Think();
 	virtual void Move();
 	virtual void UpDateApproach() override;
@@ -19,12 +17,8 @@ protected:
 	virtual void UpDateFall() override;
 	virtual void UpDateAttackStand() override;
 	virtual void UpDateAttack() override;
-	virtual void UpDateTackle();
-	//virtual void UpDateGuard() override;
-	//virtual void UpDateDodge() override;
 	virtual void UpDateDamage() override;
 	virtual void UpDateDead() override;
 
-	float GetMidRange() const;
-	void SetMidRange(const float midRange);
+	void CreateContainer();
 };
