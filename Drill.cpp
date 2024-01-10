@@ -13,7 +13,7 @@ Drill::Drill()
 	addAngle(0.0f),
 	preAngle(0.0f),
 	durability(0),
-	Length(300.f),
+	Length(1.f),
 	moveVec(ML::Vec2{0,0}),
 	canRotate(true)
 {
@@ -111,10 +111,10 @@ bool Drill::LimitLength(ML::Vec2 pos)
 {
 	ML::Vec2 diff = ML::Vec2{
 		fabsf(this->GetTargetPos().x*16 - pos.x),
-		fabsf(this->GetTargetPos().y*16 - pos.x)
+		fabsf(this->GetTargetPos().y*16 - pos.y)
 	};
 	float hypo = (diff.x * diff.x) + (diff.y * diff.y);
-	if (this->Length*this->Length > hypo)
+	if (this->Length*16*this->Length*16 < hypo)
 	{
 		return true;
 	}
@@ -191,16 +191,11 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		else if (e_.x <= -1) { SetPosX(GetPos().x - 1);		e_.x += 1; }
 		else { SetPosX(GetPos().x + e_.x);		e_.x = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-		if (true == map->CheckHit(hit)) {
-			if (this->LimitLength(this->plPos))
-			{
-				e_.x += 16.f;
-			}
-			else
-			{				//移動をキャンセル
-				SetPosX(preX);
-				break;
-			}
+		if (true == map->CheckHit(hit)) 
+		{
+			//移動をキャンセル
+			SetPosX(preX);
+			break;
 		}
 	}
 	//縦軸に対する移動
@@ -210,12 +205,13 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 		else if (e_.y <= -1) { SetPosY(GetPos().y - 1);		e_.y += 1; }
 		else { SetPosY(GetPos().y + e_.y);		e_.y = 0; }
 		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-		if (true == map->CheckHit(hit)) {
-			this->SetPosY(preY);
-			preVec.y = preY;
+		if (true == map->CheckHit(hit)) 
+		{
 			//移動をキャンセル
+			this->SetPosY(preY);
 			break;
 		}
+
 	}
-	//this->UpdateTargetPos(preVec);
+
 }

@@ -6,14 +6,21 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
-	speed(2.0f),
 	jumpPow(-25.f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
+	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
+	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 	//this->movement_->SetConsiderationCollition(true);
 	//this->gravity_->SetConsiderationCollition(true);
-
+	this->cooldown_->SetCountFrame(30);
+	this->unHitTimer_->SetCountFrame(30);
+	
+	status_->HP.Initialize(50);
+	status_->attack.Initialize(10,100);
+	status_->speed.Initialize(2.f, 2.f, 2.f);
+	status_->defence.Initialize(0, 100);
 }
 
 
@@ -26,7 +33,7 @@ bool Player::CheckFoot()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName))
 	{
 		if (map->CheckHit(footBox.OffsetCopy(this->GetPos())))
 		{
@@ -44,7 +51,7 @@ bool Player::CheckHead()
 			this->box_->getHitBase().w,
 			1
 	};
-	if (auto map = ge->GetTask<Map::Object>("–{•Ò", "ƒ}ƒbƒv"))
+	if (auto map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName))
 	{
 		if (map->CheckHit(headBox.OffsetCopy(this->GetPos())))
 		{
@@ -56,11 +63,11 @@ bool Player::CheckHead()
 
 //void Player::CheckMove(ML::Vec2& e_)
 //{
-//	//ƒ}ƒbƒv‚ª‘¶Ý‚·‚é‚©’²‚×‚Ä‚©‚çƒAƒNƒZƒX
+//	//ãƒžãƒƒãƒ—ãŒå­˜åœ¨ã™ã‚‹ã‹èª¿ã¹ã¦ã‹ã‚‰ã‚¢ã‚¯ã‚»ã‚¹
 //	auto   map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
-//	if (nullptr == map) { return; }//ƒ}ƒbƒv‚ª–³‚¯‚ê‚Î”»’è‚µ‚È‚¢(o—ˆ‚È‚¢j
+//	if (nullptr == map) { return; }//ãƒžãƒƒãƒ—ãŒç„¡ã‘ã‚Œã°åˆ¤å®šã—ãªã„(å‡ºæ¥ãªã„ï¼‰
 //	ML::Vec2 preVec{ 0,0 };
-//	//‰¡Ž²‚É‘Î‚·‚éˆÚ“®
+//	//æ¨ªè»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.x != 0) {
 //		float  preX = this->GetPos().x;
 //		if (e_.x >= 1) { SetPosX(GetPos().x +1);	e_.x -= 1; }
@@ -69,11 +76,11 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			SetPosX(preX);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
-//	//cŽ²‚É‘Î‚·‚éˆÚ“®
+//	//ç¸¦è»¸ã«å¯¾ã™ã‚‹ç§»å‹•
 //	while (e_.y != 0) {
 //		float  preY = this->GetPos().y;
 //		if (e_.y >= 1) {SetPosY(GetPos().y + 1);		e_.y -= 1; }
@@ -82,7 +89,7 @@ bool Player::CheckHead()
 //		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
 //		if (true == map->CheckHit(hit)) {
 //			this->SetPosY(preY);
-//					//ˆÚ“®‚ðƒLƒƒƒ“ƒZƒ‹
+//					//ç§»å‹•ã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 //			break;
 //		}
 //	}
@@ -93,6 +100,8 @@ bool Player::CheckHead()
 void Player::Think()
 {
 	auto inp = controller_->gamePad_->GetState();
+	this->cooldown_->Update();
+
 	switch (pState)
 	{
 	case StateComponent::State::Non:
@@ -101,20 +110,27 @@ void Player::Think()
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
+		if(inp.L1.down){pState = StateComponent::State::Attack; }
+		if(inp.B4.down){ pState = StateComponent::State::Damage; }
 		break;
 	case StateComponent::State::Walk:
+		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if(inp.B1.down){pState = StateComponent::State::Dash;}
 		if(inp.B2.down){ pState = StateComponent::State::Drill; }
 		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
+		if(inp.L1.down){ pState = StateComponent::State::Attack; }
 		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
+		if (this->state_->moveCnt_ > 30
+			||inp.L1.off) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::SpinAttack:
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
+		if(this->state_->moveCnt_>8){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -151,10 +167,10 @@ void Player::Move()
 {
 	auto inp = this->controller_->gamePad_->GetState();
 	ML::Vec2 preVec;
+	this->unHitTimer_->Update();
 	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
 	{
 		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
-		//gravity_->Accel();
 	}
 	else
 	{
@@ -177,30 +193,34 @@ void Player::Move()
 		break;
 	case StateComponent::State::Walk:
 		this->moveVec.x=controller_->GetLStickVec().x;
+		
 		break;
 	case StateComponent::State::Attack:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+		this->HitAttack();
 		break;
 	case StateComponent::State::SpinAttack:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
 		break;
 	case StateComponent::State::Damage:
+		this->unHitTimer_->Start();
+		TakeAttack();
 		break;
 	case StateComponent::State::KnockBack:
 		break;
 	case StateComponent::State::Dead:
 		break;
 	case StateComponent::State::Jump:
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		moveVec.y = jumpPow + (this->state_->moveCnt_/20);
 		break;
 	case StateComponent::State::Fall:
-		moveVec.x = controller_->GetLStickVec().x*speed;
+		moveVec.x = controller_->GetLStickVec().x* this->status_->speed.GetMax();
 		break;
 	case StateComponent::State::Dash:
-		this->speed = 5.0f;
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		this->status_->speed.SetMax(5.0f);
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
 		break;
 	case StateComponent::State::DrillDash:
@@ -210,8 +230,8 @@ void Player::Move()
 		if (this->state_->moveCnt_ >= 29)this->drill_->SetCanRotate(true);
 		break;
 	case StateComponent::State::Drill:
-		this->speed = 0.85f;
-		moveVec.x = controller_->GetLStickVec().x * speed;
+		this->status_->speed.SetMax(0.85f);
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		if (inp.R1.down) 
 		{
 			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
@@ -220,23 +240,44 @@ void Player::Move()
 		break;
 	case StateComponent::State::Mining:
 		this->drill_->Mining();
-		moveVec.x = controller_->GetLStickVec().x * speed;
-		if (inp.R1.down)
-		{
-			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
-			this->state_->moveCnt_ = 0;
-		}
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+
 		break;
 	case StateComponent::State::Appeal:
 		break;
 	}
-	//‚±‚±‚ÉÅI“I‚Éƒ}ƒbƒv‚Æ‚ÌˆÚ“®‰Â”Ûƒ`ƒFƒbƒN‚ð“ü‚ê‚é
+	//ã“ã“ã«æœ€çµ‚çš„ã«ãƒžãƒƒãƒ—ã¨ã®ç§»å‹•å¯å¦ãƒã‚§ãƒƒã‚¯ã‚’å…¥ã‚Œã‚‹
     //this->CheckHitMap(this->preVec);
 	CheckMove(moveVec);
 }
 
 
+void Player::HitAttack()
+{
+	this->cooldown_->Start();
+}
+
+void Player::TakeAttack()
+{
+	if (!this->unHitTimer_->IsCounting())
+	{
+		this->moveVec.y = -0.5;
+		this->status_->HP.TakeDamage(1);
+	}
+}
+
+void Player::SetPlayerState(StateComponent::State state)
+{
+	if (this->state_->GetNowState() == state) { return; }
+	this->state_->UpdateNowState(state);
+}
+
 ML::Vec2 Player::GetMoveVec()
 {
 	return this->moveVec;
+}
+
+StatusComponent* Player::GetStatus() const
+{
+	return this->status_.get();
 }

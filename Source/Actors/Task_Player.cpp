@@ -9,57 +9,57 @@ namespace player
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒX‚Ì‰Šú‰»
+	//ãƒªã‚½ãƒ¼ã‚¹ã®åˆæœŸåŒ–
 	bool  Resource::Initialize()
 	{
 		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒX‚Ì‰ğ•ú
+	//ãƒªã‚½ãƒ¼ã‚¹ã®è§£æ”¾
 	bool  Resource::Finalize()
 	{
 		this->playerImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
-	//u‰Šú‰»vƒ^ƒXƒN¶¬‚É‚P‰ñ‚¾‚¯s‚¤ˆ—
+	//ã€ŒåˆæœŸåŒ–ã€ã‚¿ã‚¹ã‚¯ç”Ÿæˆæ™‚ã«ï¼‘å›ã ã‘è¡Œã†å‡¦ç†
 	bool  Object::Initialize()
 	{
-		//ƒX[ƒp[ƒNƒ‰ƒX‰Šú‰»
+		//ã‚¹ãƒ¼ãƒ‘ãƒ¼ã‚¯ãƒ©ã‚¹åˆæœŸåŒ–
 		__super::Initialize(defGroupName, defName, true);
-		//ƒŠƒ\[ƒXƒNƒ‰ƒX¶¬orƒŠƒ\[ƒX‹¤—L
+		//ãƒªã‚½ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ç”Ÿæˆorãƒªã‚½ãƒ¼ã‚¹å…±æœ‰
 		this->res = Resource::Create();
 
-		//šƒf[ƒ^‰Šú‰»
+		//â˜…ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
 		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
 		this->SetPos( ML::Vec2{ 0,0 });
 		this->movement_->SetSpeed(2.f, 5.f, 0.f);
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
+		this->GetHP()->SetMaxHP(10, HP::MaxLifeSetMode::MaxHeal);
 
-		this->hp_->SetMaxHP(10,HP::MaxLifeSetMode::MaxHeal);
-		//šƒ^ƒXƒN‚Ì¶¬
+		//â˜…ã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆ
 		auto dl = drill::Object::Create(true);
 		this->drill_ = dl;
 		return  true;
 	}
 	//-------------------------------------------------------------------
-	//uI—¹vƒ^ƒXƒNÁ–Å‚É‚P‰ñ‚¾‚¯s‚¤ˆ—
+	//ã€Œçµ‚äº†ã€ã‚¿ã‚¹ã‚¯æ¶ˆæ»…æ™‚ã«ï¼‘å›ã ã‘è¡Œã†å‡¦ç†
 	bool  Object::Finalize()
 	{
-		//šƒf[ƒ^•ƒ^ƒXƒN‰ğ•ú
-		//ge->KillAll_G("ƒvƒŒƒCƒ„[");
+		//â˜…ãƒ‡ãƒ¼ã‚¿ï¼†ã‚¿ã‚¹ã‚¯è§£æ”¾
+		//ge->KillAll_G("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
-			//šˆø‚«Œp‚¬ƒ^ƒXƒN‚Ì¶¬
+			//â˜…å¼•ãç¶™ãã‚¿ã‚¹ã‚¯ã®ç”Ÿæˆ
 		}
 
 		return  true;
 	}
 	//-------------------------------------------------------------------
-	//uXVv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
+	//ã€Œæ›´æ–°ã€ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã«è¡Œã†å‡¦ç†
 	void  Object::UpDate()
 	{
 
@@ -71,107 +71,41 @@ namespace player
 		drill_->dState = this->state_->GetNowState();
 	}
 	//-------------------------------------------------------------------
-	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
+	//ã€Œï¼’ï¼¤æç”»ã€ï¼‘ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã«è¡Œã†å‡¦ç†
 	void  Object::Render2D_AF()
 	{
-		//ƒvƒŒƒCƒ„ƒLƒƒƒ‰‚Ì•`‰æ
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ã‚­ãƒ£ãƒ©ã®æç”»
 		{
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
 			ML::Box2D src{ 0,0,32,64};
-			//ƒXƒNƒ[ƒ‹‘Î‰
+			//ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«å¯¾å¿œ
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			if (this->unHitTimer_->IsCounting())
+			{
+				if(this->unHitTimer_->GetCount()%2 ==0)
+				this->res->playerImg->Draw(draw, src);
+
+			}
+			else
 			this->res->playerImg->Draw(draw, src);
 		}
-		this->DebugInfo();
 	}
-
-	void Object::DebugInfo()
-	{
-		ge->debugFont->Draw(ML::Box2D(1000, 0, 500, 500), "Œ»İˆÊ’u:"+to_string(this->GetPos().x) + " " + to_string(this->GetPos().y));
-		ge->debugFont->Draw(ML::Box2D(100, 0, 1500, 500), "~Œ»İ‚Ì‘€ì•û–@~ˆÚ“®:LƒXƒeƒBƒbƒN@Šp“x•ÏX:RƒXƒeƒBƒbƒN@ƒWƒƒƒ“ƒv:R1(WƒL[)@ÌŒ@(ÌŒ@ƒ‚[ƒh’†):L1(QƒL[)@ƒ‚[ƒh•ÏX:B2(XƒL[)@ƒ_ƒbƒVƒ…:B1(ZƒL[)");
-		if (this->CheckHead())
-			ge->debugFont->Draw(ML::Box2D(1000, 20, 500, 500), "“ª”»’èI");
-		if (this->CheckFoot())
-			ge->debugFont->Draw(ML::Box2D(1060, 20, 500, 500), "‘«”»’èI");
-		ge->debugFont->Draw(ML::Box2D(1000, 60, 500, 500), "ˆÚ“®ƒxƒNƒgƒ‹:"+to_string(this->GetMoveVec().x) + to_string(this->GetMoveVec().y));
-
-		string stateName;
-		switch (pState)
-		{
-		case StateComponent::State::Non:
-			stateName = "‚È‚µ";
-			break;
-		case StateComponent::State::Idle:
-			stateName = "‘Ò‹@";
-			break;
-		case StateComponent::State::Walk:
-			stateName = "•à‚«";
-			break;
-		case StateComponent::State::Attack:
-			stateName = "UŒ‚";
-			break;
-		case StateComponent::State::SpinAttack:
-			stateName = "‰ñ“]UŒ‚";
-			break;
-		case StateComponent::State::Damage:
-			stateName = "ƒ_ƒ[ƒW";
-			break;
-		case StateComponent::State::KnockBack:
-			stateName = "ƒmƒbƒNƒoƒbƒN";
-			break;
-		case StateComponent::State::Dead:
-			stateName = "ÀË–S";
-			break;
-		case StateComponent::State::Jump:
-			stateName = "ƒWƒƒƒ“ƒv";
-			break;
-		case StateComponent::State::Fall:
-			stateName = "—‰º’†";
-			break;
-		case StateComponent::State::Dash:
-			stateName = "ƒ_ƒbƒVƒ…";
-			break;
-		case StateComponent::State::Drill:
-			stateName = "ƒhƒŠƒ‹ƒ‚[ƒh";
-			break;
-		case StateComponent::State::DrillDash:
-			stateName = "ÌŒ@ƒ_ƒbƒVƒ…";
-			break;
-		case StateComponent::State::Mining:
-			stateName = "ÌŒ@’†";
-			break;
-		case StateComponent::State::Appeal:
-			stateName = "ƒAƒs[ƒ‹";
-			break;
-		}
-		ge->debugFont->Draw(ML::Box2D(1000, 80, 500, 500), "Œ»İ‚ÌƒXƒe[ƒ^ƒX:"+stateName);
-		if (StateComponent::State::Drill == this->state_->GetNowState() ||
-			StateComponent::State::Mining == this->state_->GetNowState())
-		{
-			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "ÌŒ@ƒ‚[ƒh");
-		}
-		else
-		{
-			ge->debugFont->Draw(ML::Box2D(1000, 120, 500, 500), "s“®ƒ‚[ƒh");
-		}
-		ge->debugFont->Draw(ML::Box2D(1000, 140, 500, 500), "moveCnt:"+to_string(this->state_->moveCnt_));
-	}
-	//šššššššššššššššššššššššššššššššššššššššššš
-	//ˆÈ‰º‚ÍŠî–{“I‚É•ÏX•s—v‚Èƒƒ\ƒbƒh
-	//šššššššššššššššššššššššššššššššššššššššššš
+	//â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…
+	//ä»¥ä¸‹ã¯åŸºæœ¬çš„ã«å¤‰æ›´ä¸è¦ãªãƒ¡ã‚½ãƒƒãƒ‰
+	//â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…
 	//-------------------------------------------------------------------
-	//ƒ^ƒXƒN¶¬‘‹Œû
+	//ã‚¿ã‚¹ã‚¯ç”Ÿæˆçª“å£
 	Object::SP  Object::Create(bool  flagGameEnginePushBack_)
 	{
 		Object::SP  ob = Object::SP(new  Object());
 		if (ob) {
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
-				ge->PushBack(ob);//ƒQ[ƒ€ƒGƒ“ƒWƒ“‚É“o˜^
+				ge->PushBack(ob);//ã‚²ãƒ¼ãƒ ã‚¨ãƒ³ã‚¸ãƒ³ã«ç™»éŒ²
 				
 			}
 			if (!ob->B_Initialize()) {
-				ob->Kill();//ƒCƒjƒVƒƒƒ‰ƒCƒY‚É¸”s‚µ‚½‚çKill
+				ob->Kill();//ã‚¤ãƒ‹ã‚·ãƒ£ãƒ©ã‚¤ã‚ºã«å¤±æ•—ã—ãŸã‚‰Kill
 			}
 			return  ob;
 		}
@@ -192,7 +126,7 @@ namespace player
 	//-------------------------------------------------------------------
 	Object::Object() {	}
 	//-------------------------------------------------------------------
-	//ƒŠƒ\[ƒXƒNƒ‰ƒX‚Ì¶¬
+	//ãƒªã‚½ãƒ¼ã‚¹ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
 	Resource::SP  Resource::Create()
 	{
 		if (auto sp = instance.lock()) {

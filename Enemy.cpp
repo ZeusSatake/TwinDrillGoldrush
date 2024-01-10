@@ -5,8 +5,10 @@ Enemy::Enemy()
 	,range_(0)
 	,preState_(Idle)
 	,nowState_(Idle)
+	,attackPattern_(0)
 {
 	AddComponent(moveCnt_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
+	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 }
 
 bool Enemy::WithinRange(class Actor* target)
@@ -18,7 +20,6 @@ bool Enemy::WithinRange(class Actor* target)
 
 bool Enemy::UpDateState(AIState afterState)
 {
-	
 	if (nowState_ == afterState) return false;
 	else
 	{
@@ -52,6 +53,16 @@ void Enemy::SetRange(const float range)
 	range_ = range;
 }
 
+int Enemy::GetAttackPattern() const
+{
+	return attackPattern_;
+}
+
+void Enemy::SetAttackPattern(const int attackPattern)
+{
+	attackPattern_ = attackPattern;
+}
+
 Enemy::AIState Enemy::GetPreState() const
 {
 	return preState_;
@@ -70,4 +81,9 @@ Enemy::AIState Enemy::GetNowState() const
 void Enemy::SetNowState(const AIState nowState)
 {
 	nowState_ = nowState;
+}
+
+StatusComponent* Enemy::GetStatus() const
+{
+	return status_.get();
 }

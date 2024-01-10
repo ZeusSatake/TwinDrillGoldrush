@@ -6,7 +6,7 @@
 #include  "../Components/Blocks/BlockManager.h"
 #include "../Actors/Enemys/Task_EtoHaiji.h"
 #include "../Actors/Enemys/Task_BlondeLady.h"
-
+#include "../Actors/Enemys/Task_LadySatake.h"
 
 namespace  EnemyMap
 {
@@ -124,7 +124,13 @@ namespace  EnemyMap
 					enemy->SetPosY(y * chipSize);
 				}
 				break;
-				
+				case 10:
+				{
+					auto enemy = Satake::Object::Create(true);
+					enemy->SetPosX(x * chipSize);
+					enemy->SetPosY(y * chipSize);
+				}
+				break;
 				}
 			}
 		}

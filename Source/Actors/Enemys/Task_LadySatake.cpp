@@ -2,17 +2,18 @@
 //
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_EtoHaiji.h"
-#include  "../../Actors/Task_Player.h"
+#include  "Task_LadySatake.h"
+#include "../../Actors/Task_Player.h"
 
-namespace EtoHaiji
+namespace Satake
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/EtoHaiji.png");
+		img = DG::Image::Create("./data/image/LadySatake.png");
+		fanImg = DG::Image::Create("./data/image/Slash.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,24 +32,28 @@ namespace EtoHaiji
 		this->res = Resource::Create();
 
 		//★データ初期化
-		status_->HP.Initialize(20);
-		status_->speed.Initialize(2.f, 2.f, 10.f);
-		status_->attack.Initialize(25, 50);
+		status_->HP.Initialize(200);
+		status_->attack.Initialize(15, 100);
 		status_->defence.Initialize(0, 100);
+		status_->speed.Initialize(2.5f, 100.f, 10.f);
 		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32)*20);
+		gravity_->SetAcceleration(ML::Gravity(32) * 10);
 
 		angle_LR_ = Angle_LR::Right;
 
-		SetNowState(Enemy::Patrol);
+		SetPreState(AIState::Idle);
+		SetNowState(AIState::Idle);
 
 		SetFov(200.f);
+		SetRange(30.f);
+
+		moveCnt_->SetCountFrame(0);
+		unHitTimer_->SetCountFrame(90);
+		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
 
 		SetTarget(ge->playerPtr.get());
-
-		
 		//★タスクの生成
 
 		return  true;
@@ -59,8 +64,8 @@ namespace EtoHaiji
 	{
 		//★データ＆タスク解放
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) 
-		{
+
+		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
 
@@ -70,6 +75,8 @@ namespace EtoHaiji
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		moveCnt_->Update();
+		unHitTimer_->Update();
 		Think();
 		Move();
 	}
@@ -77,20 +84,32 @@ namespace EtoHaiji
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src;
-		if (angle_LR_ == Angle_LR::Left)
-		src=ML::Box2D(0, 0, 960, 895);
-		else
 		{
-			src = ML::Box2D(960, 0, 960, 895);
+			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			//スクロール対応
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+
+			res->img->Draw(draw, src);
 		}
-		//スクロール対応
-		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		
-		res->img->Draw(draw, src);
+		if (IsAttacking())
+		{
+			ML::Box2D draw;
+			if (angle_LR_ == Angle_LR::Left)
+			{
+				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
+			}
+			else
+			{
+				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
+			}
+			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
+
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			res->fanImg->Draw(draw, src);
+		}
 	}
-	//-------------------------------------------------------------------
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

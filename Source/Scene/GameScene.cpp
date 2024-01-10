@@ -6,6 +6,7 @@
 
 #include  "../../randomLib.h"
 #include  "../../sound.h"
+#include  "../Components/SecondsTimerComponent.h"
 
 #include  "EndingScene.h"
 
@@ -20,6 +21,7 @@
 
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
+#include "../System/Task_Save.h"
 
 namespace  GameScene
 {
@@ -52,13 +54,19 @@ namespace  GameScene
 		ge->GameOverFlag = false;
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
-		
+
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
 		ge->score = 0;
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
+
+		AddComponent(limitTimer_ = make_shared<SecondsTimerComponent>(this));
+		limitTimer_->SetCountSeconds(60.0f * 3.0f);
+		limitTimer_->Start();
+
+		auto save = Save::Object::Create(true);
 
 		//★タスクの生成
 		{
@@ -83,18 +91,30 @@ namespace  GameScene
 		
 		{//リザルト
 			auto miningResult = MiningResult::Object::Create(true);
+			miningResult->SetNowSecene(this);
+
+			//間に合わせること優先の為決め打ちで設定 後で変更
+			pair<Map::Object::ChipKind, int> targetOres[] =
+			{
+				make_pair(Map::Object::ChipKind::Damascus, 2),
+				make_pair(Map::Object::ChipKind::Orichalcum, 3),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
+				make_pair(Map::Object::ChipKind::Adamantite, 3)
+			};
+			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
+			miningResult->SetTargetOre(targetOre.first, targetOre.second);
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("MapStone");
+			map->Load("Map1Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("MapJewelry");
+			mapJewelry->Load("Map1Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("MapEnemy");
+			enemymap->Load("Map1Enemy");
 			enemymap->SetEnemy();
 		}
 
@@ -135,12 +155,13 @@ namespace  GameScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
+		UpdateComponents();
 
 		auto inp = ge->in1->GetState();
 		if (inp.SE.down) {
 			this->Kill();
 		}
-		if (ge->GameOverFlag) {
+		if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
 			this->Kill();
 		}
 	}
@@ -148,6 +169,13 @@ namespace  GameScene
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		//タイマー表示
+		ge->debugFont->Draw
+		(
+			ML::Box2D(ge->screenCenterPos.x - 20, 30, 500, 500),
+			to_string((int)limitTimer_->GetCount() / 60) + "：" + to_string((int)limitTimer_->GetCount() % 60),
+			ML::Color(1, 1, 0, 0)
+		);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

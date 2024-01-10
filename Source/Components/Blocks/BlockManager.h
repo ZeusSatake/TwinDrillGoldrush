@@ -58,26 +58,6 @@ namespace	BlockManager
 			//BCharaに含まれないモノのみここに追加する
 		bool DestroyBlock(const ML::Point pos, int power);
 		void InitArray();					//ブロックHPの初期化に使用
-		
-		enum class SellableBlock
-		{
-			Coal = 9,
-			Iron = 11,
-			Gold,
-			HihiIroKane,
-			Damascus,
-			Orichalcum,
-			Palladium,
-			Adamantite,
-			Diamond,
-			BlackDiamond,
-			PinkDiamond,
-			Emerald,
-			Sapphire,
-			Garnet,
-			Topaz,
-			Amethyst
-		};
 	private:
 		BlockState  arr[160][160];//yx
 
