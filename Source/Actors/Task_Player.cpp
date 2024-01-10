@@ -74,6 +74,7 @@ namespace player
 	void  Object::Render2D_AF()
 	{
 		//プレイヤキャラの描画
+		if(this->pState != StateComponent::State::Non)
 		{
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
 			ML::Box2D src{ 0,0,32,64};
@@ -155,7 +156,7 @@ namespace player
 		//------------------------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D{ 1000,40,500,500 }, "Drill \: <PosX>" + to_string(this->drill_->GetPos().x) + " <PosY>" + to_string(this->drill_->GetPos().y), ML::Color{ 1,1,0,0 });
 		//------------------------------------------------------------------
-		
+		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP\:" + to_string(this->status_->HP.GetNowHP()));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

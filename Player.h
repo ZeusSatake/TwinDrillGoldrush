@@ -11,6 +11,7 @@ class Player :public Character
 	ML::Vec2 moveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
+	int PreHp;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -20,6 +21,7 @@ protected:
 public:
 	Player();
 	virtual ~Player() {}; 
+
 
 	StateComponent::State pState;
 	
@@ -31,6 +33,8 @@ public:
 	bool CheckHead();
 	//void CheckMove(ML::Vec2& e_);
 	void Dash(ML::Vec2 e_);
+
+	void HiddenPlayer();
 
 	void HitAttack(); //攻撃が当たった時の処理
 	void TakeAttack(); //攻撃を受けたときの処理
