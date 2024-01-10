@@ -63,7 +63,14 @@ namespace MartialFightScene
 			camera->SetPos(ge->playerPtr->GetPos());
 			camera->target = ge->playerPtr;
 		}
-		SetNextScene(Scene::Base);
+		{//拠点に戻るボタン(デバッグ用
+			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
+			gotoBaseButton->SetEnterButton(XI::VGP::ST);
+			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+			gotoBaseButton->SetScene(this, Scene::Kind::Base);
+			gotoBaseButton->SetText("拠点へ");
+			AddSceneChangeButton(gotoBaseButton);
+		}
 
 		return  true;
 	}

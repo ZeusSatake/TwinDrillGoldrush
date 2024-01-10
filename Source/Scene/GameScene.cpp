@@ -147,7 +147,6 @@ namespace  GameScene
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			ge->playerPtr->HiddenPlayer();
 			CreateNextScene();
 		}
 
