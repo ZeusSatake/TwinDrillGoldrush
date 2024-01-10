@@ -14,6 +14,7 @@
 #include  "../System/Task_FlashDraw.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../Actors/Task_Player.h"
 
 namespace  TitleScene
 {
@@ -47,6 +48,8 @@ namespace  TitleScene
 		int RenderTime = 0;
 
 		ge->stage = 1;
+
+		ge->playerPtr->HiddenPlayer();
 
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
@@ -104,7 +107,7 @@ namespace  TitleScene
 		ge->KillAll_G("背景");
 		//bgm::Stop("bgm1");
 		ge->KillAll_G("システム");
-		ge->KillAll_G("UI");
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			CreateNextScene();
 		}
