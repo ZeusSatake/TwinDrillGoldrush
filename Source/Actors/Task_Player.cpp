@@ -74,6 +74,7 @@ namespace player
 	void  Object::Render2D_AF()
 	{
 		//プレイヤキャラの描画
+		if(this->pState != StateComponent::State::Non)
 		{
 			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
 			ML::Box2D src{ 0,0,32,64};

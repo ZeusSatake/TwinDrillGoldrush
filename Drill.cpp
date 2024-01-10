@@ -47,6 +47,11 @@ void Drill::SetMode(StateComponent::State state)
 		this->mode = Mode::Non;
 		return;
 	}
+	if (state == StateComponent::State::Non)
+	{
+		this->mode = Mode::Non;
+		return;
+	}
 	this->mode = Mode::Normal;
 }
 

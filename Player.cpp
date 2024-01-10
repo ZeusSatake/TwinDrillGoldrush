@@ -107,6 +107,7 @@ void Player::Think()
 	switch (pState)
 	{
 	case StateComponent::State::Non:
+
 		break;
 	case StateComponent::State::Idle:
 		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
@@ -309,4 +310,10 @@ void Player::ResetState()
 {
 	this->state_->UpdateNowState(StateComponent::State::Idle);
 	this->drill_->SetMode(StateComponent::State::Idle);
+}
+
+void Player::HiddenPlayer()
+{
+	this->state_->UpdateNowState(StateComponent::State::Non);
+	this->drill_->SetMode(StateComponent::State::Non);
 }
