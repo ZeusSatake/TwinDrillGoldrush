@@ -90,7 +90,7 @@ namespace MartialFightScene
 		}
 
 		ge->KillAll_G("本編");
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_G("キャラクタ");
 		ge->KillAll_G("敵");
 
