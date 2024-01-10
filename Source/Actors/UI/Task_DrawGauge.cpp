@@ -31,8 +31,10 @@ namespace DrawGauge
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->render2D_Priority[1] = 0.05f;
+		this->render2D_Priority[1] = 0.01f;
 		pos_ = ML::Vec2(0, 0);
+		isVisible_ = true;
+		isSupportScroll_ = true;
 
 		//★タスクの生成
 
@@ -60,15 +62,21 @@ namespace DrawGauge
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		if (isVisible_ == false)
+			return;
+
 		if (res->img == nullptr)
 			assert(!"ゲージのimgがnullptrです");
 		
 		//背景
-		ML::Box2D backDraw(-48, -16, 96, 32);
+		ML::Box2D backDraw(-(size_.x / 2), -(size_.y / 2), size_.x, size_.y);
 		ML::Box2D backSrc(0, 0, 96, 32);
 
+		//スクロール対応
+		if (isSupportScroll_)
+			backDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		res->img->Draw(backDraw.OffsetCopy(pos_), backSrc);
-
+		
 		//中身
 		ML::Box2D insideDraw(backDraw);
 		insideDraw.w *= gaugeValue_.GetNormalizeValue();
@@ -107,6 +115,36 @@ namespace DrawGauge
 	{
 		gaugeValue_.SetMinValue(min);
 	}
+	void Object::SetPos(const ML::Vec2& pos)
+	{
+		pos_ = pos;
+	}
+	void Object::SetPos(const float x, const float y)
+	{
+		SetPos(ML::Vec2(x, y));
+	}
+	void Object::SetDrawSize(const int width, const int height)
+	{
+		size_.x = width;
+		size_.y = height;
+	}
+	void Object::SetImg(const string& path)
+	{
+		if (res->img != nullptr) {
+			res->img->ReLoad(path);
+		}
+		else {
+			res->img = DG::Image::Create(path);
+		}
+	}
+	void Object::SetSupportScroll(const bool isSupportScroll)
+	{
+		isSupportScroll_ = isSupportScroll;
+	}
+	void Object::SetVisible(const bool visible)
+	{
+		isVisible_ = visible;
+	}
 	//===================================================================
 	//ゲッター
 	//===================================================================
@@ -118,20 +156,6 @@ namespace DrawGauge
 	{
 		return gaugeValue_.GetPercent() == 100.0f;
 	}
-
-	//===================================================================
-	//画像
-	//===================================================================
-	void Object::SetImg(const string& path)
-	{
-		if (res->img != nullptr) {
-			res->img->ReLoad(path);
-		}
-		else {
-			res->img = DG::Image::Create(path);
-		}
-	}
-	//===================================================================
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
