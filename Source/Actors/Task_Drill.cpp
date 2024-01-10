@@ -74,7 +74,7 @@ namespace  drill
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
 	{
-		if(this->GetMode()!=Mode::Non)
+		if(this->GetMode()!=Mode::Non )
 		{
 			ML::Box2D draw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetDrawPos());
 			ML::Box2D src = ML::Box2D{ 0,0,64,64 };
