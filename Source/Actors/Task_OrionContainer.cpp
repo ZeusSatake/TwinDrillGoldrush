@@ -4,14 +4,14 @@
 #include  "../../MyPG.h"
 #include  "Task_OrionContainer.h"
 
-namespace OrionContainer
+namespace Container
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img=DG::Image::Create("./data/image/rank.png");
+		img=DG::Image::Create("./data/image/Container.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -30,7 +30,7 @@ namespace OrionContainer
 		this->res = Resource::Create();
 
 		//★データ初期化
-		box_->setHitBase(ML::Box2D(-32, -8, 64, 16));
+		box_->setHitBase(ML::Box2D(-16, -4, 32, 8));
 
 		//★タスクの生成
 
@@ -43,7 +43,8 @@ namespace OrionContainer
 		//★データ＆タスク解放
 
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) {
+		if (!ge->QuitFlag() && this->nextTaskCreate) 
+		{
 			//★引き継ぎタスクの生成
 		}
 
@@ -53,15 +54,19 @@ namespace OrionContainer
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Move();
+		this->Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
 		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src(0, 0, 64, 16);
+		ML::Box2D src(0, 0, 530, 230);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		res->img->Draw(draw, src);
+
+		ge->debugFont->Draw(ML::Box2D(600, 300, 700, 700), to_string(GetPos().x));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

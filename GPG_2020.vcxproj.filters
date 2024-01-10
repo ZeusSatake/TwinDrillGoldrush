@@ -350,6 +350,9 @@
     <ClCompile Include="Source\Actors\Task_OrionContainer.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_LadyKumagai.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -619,6 +622,9 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_OrionContainer.h">
       <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_LadyKumagai.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

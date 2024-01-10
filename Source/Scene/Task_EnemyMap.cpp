@@ -7,6 +7,7 @@
 #include "../Actors/Enemys/Task_EtoHaiji.h"
 #include "../Actors/Enemys/Task_BlondeLady.h"
 #include "../Actors/Enemys/Task_LadySatake.h"
+#include "../Actors/Enemys/Task_LadyKumagai.h"
 
 namespace  EnemyMap
 {
@@ -127,6 +128,13 @@ namespace  EnemyMap
 				case 10:
 				{
 					auto enemy = Satake::Object::Create(true);
+					enemy->SetPosX(x * chipSize);
+					enemy->SetPosY(y * chipSize);
+				}
+				break;
+				case 15:
+				{
+					auto enemy = Kumagai::Object::Create(true);
 					enemy->SetPosX(x * chipSize);
 					enemy->SetPosY(y * chipSize);
 				}

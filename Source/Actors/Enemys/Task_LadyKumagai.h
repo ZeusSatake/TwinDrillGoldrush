@@ -3,13 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../OrionContainer.h"
+#include "../../EnemyClasses/LadyKumagai.h"
 
-namespace Container
+namespace Kumagai
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("オブジェクト");	//グループ名
-	const  string  defName("コンテナ");		//タスク名
+	const  string  defGroupName("敵");	//グループ名
+	const  string  defName("熊谷お嬢様");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -27,7 +27,7 @@ namespace Container
 		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public OrionContainer
+	class  Object : public  LadyKumagai
 	{
 	public:
 		virtual  ~Object();

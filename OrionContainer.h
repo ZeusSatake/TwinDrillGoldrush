@@ -5,11 +5,11 @@ class OrionContainer : public Actor
 	const float movementAmount_;
 	float limitRange_;
 public:
-	OrionContainer(const float moveAmount);
+	OrionContainer();
 	virtual ~OrionContainer() {};
 
 	void HitPlayer();
 
-	void Move();
+	virtual void Move();
 };
 

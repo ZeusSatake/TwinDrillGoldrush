@@ -161,6 +161,7 @@
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_EtoHaiji.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_LadyKumagai.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="sound.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_EtoHaiji.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_LadyKumagai.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\Task_MiningResult.h" />
