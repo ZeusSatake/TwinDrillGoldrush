@@ -199,6 +199,11 @@ int StatusComponent::Health::GetMaxHP() const
 	return max_;
 }
 
+ML::Percentage StatusComponent::Health::GetPercentage() const
+{
+	return ML::Percentage::CalcPercentage(0, GetMaxHP(), GetNowHP());
+}
+
 void StatusComponent::Health::Initialize(const int max)
 {
 	if (max <= 0) 

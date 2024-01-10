@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Component.h"
 #include "../Components/HP.h"
+#include "../../GameEngine_Ver3_83.h"
 
 class StatusComponent : public Component
 {
@@ -74,6 +75,8 @@ public:
 		void Initialize(const int max_);
 		//void SetMaxLife(const int& max_, MaxLifeSetMode interpolationMode);
 		int GetMaxHP() const;
+
+		ML::Percentage GetPercentage() const;
 
 		//ê∂Ç´ÇƒÇ¢ÇÈ
 		bool IsAlive() const;
