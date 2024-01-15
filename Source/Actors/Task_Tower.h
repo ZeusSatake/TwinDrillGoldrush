@@ -3,13 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../EnemyClasses/LadySatake.h"
+#include "../ActorClasses/Tower.h"
 
-namespace Satake
+namespace Tower0
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("ボス");	//グループ名
-	const  string  defName("佐竹お嬢様");//タスク名
+	const  string  defGroupName("オブジェクト");	//グループ名
+	const  string  defName("塔");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -25,10 +25,9 @@ namespace Satake
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//共有する変数はここに追加する
 		DG::Image::SP img;
-		DG::Image::SP fanImg;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  LadySatake
+	class  Object : public  Tower
 	{
 	public:
 		virtual  ~Object();

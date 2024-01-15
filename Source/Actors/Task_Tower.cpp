@@ -1,27 +1,23 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_BlondeLady.h"
-#include  "../../Actors/Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_Tower.h"
 
-namespace BlondeLady
+namespace Tower0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/BlondeLady.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
+		img= DG::Image::Create("./data/image/Tower.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		img.reset();
-		fanImg.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -34,30 +30,9 @@ namespace BlondeLady
 		this->res = Resource::Create();
 
 		//★データ初期化
-		status_->HP.Initialize(30);
-		status_->attack.Initialize(30, 100);
-		status_->defence.Initialize(0, 100);
-		status_->speed.Initialize(2.5f, 100.f,10.f);
-		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
-		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32)*10);
-
-		angle_LR_ = Angle_LR::Right;
-
-		SetPreState(AIState::Idle);
-		SetNowState(AIState::Idle);
-
-		SetFov(200.f);
-		SetRange(30.f);
-
-		moveCnt_->SetCountFrame(0);
-		unHitTimer_->SetCountFrame(90);
-		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
-
-		SetTarget(ge->playerPtr.get());
-		SetPersonalName("お嬢A");//仮
+		
 		//★タスクの生成
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -77,8 +52,6 @@ namespace BlondeLady
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		moveCnt_->Update();
-		unHitTimer_->Update();
 		Think();
 		Move();
 	}
@@ -86,43 +59,14 @@ namespace BlondeLady
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src(0, 0, 54, 174);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		res->img->Draw(draw, src);
 
-			res->img->Draw(draw, src);
-		}
-		if(IsAttacking())
-		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x - GetAdjustRange(), GetPos().y));
-			}
-			else
-			{
-				draw = fanEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x + GetAdjustRange(), GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
-		}
-
-		if (IsAttacking())
-		{
-			ge->debugFont->Draw(ML::Box2D(500, 700, 500, 500), "攻撃中");
-		}
-		
-
-		
-
-
-		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));
 	}
-	//-------------------------------------------------------------------
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
