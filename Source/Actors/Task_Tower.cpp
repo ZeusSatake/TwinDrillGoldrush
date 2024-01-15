@@ -4,7 +4,7 @@
 #include  "../../MyPG.h"
 #include  "Task_Tower.h"
 
-namespace Tower
+namespace Tower0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -52,6 +52,7 @@ namespace Tower
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Think();
 		Move();
 	}
 	//-------------------------------------------------------------------
@@ -63,6 +64,7 @@ namespace Tower
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		res->img->Draw(draw, src);
+
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

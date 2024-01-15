@@ -7,7 +7,8 @@ class Tower : public Actor
 	const int noticeCnt_;
 	const int decisionCnt_;
 	const int stopCnt_;
-	const int damage;
+	const int damage_;
+	bool isfellChandelier_;
 	enum TowerState
 	{
 		Idle,//‘Ò‹@

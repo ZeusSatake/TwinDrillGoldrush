@@ -2,10 +2,9 @@
 //
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_LadyKumagai.h"
-#include "../Task_Player.h"
+#include  "Task_LadyHaraguchi.h"
 
-namespace Kumagai
+namespace Haraguchi
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -31,26 +30,7 @@ namespace Kumagai
 		this->res = Resource::Create();
 
 		//★データ初期化
-		status_->HP.Initialize(150);
-		status_->attack.Initialize(15, 100);
-		status_->defence.Initialize(0, 100);
-		status_->speed.Initialize(2.5f, 100.f, 10.f);
-		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
-		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32) * 10);
-
-		angle_LR_ = Angle_LR::Left;
-
-		SetPreState(AIState::Idle);
-		SetNowState(AIState::Idle);
-
-		SetFov(1000.f);
-
-		moveCnt_->SetCountFrame(0);
-		unHitTimer_->SetCountFrame(15);
-
-		SetTarget(ge->playerPtr.get());
+		
 		//★タスクの生成
 
 		return  true;
@@ -62,8 +42,7 @@ namespace Kumagai
 		//★データ＆タスク解放
 
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) 
-		{
+		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
 
@@ -87,9 +66,9 @@ namespace Kumagai
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 
 			res->img->Draw(draw, src);
-		}
 
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
+			ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

@@ -3,13 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../EnemyClasses/LadyKumagai.h"
+#include "../ActorClasses/Chandelier.h"
 
-namespace Kumagai
+namespace Chandelier0
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("ボス");	//グループ名
-	const  string  defName("熊谷お嬢様");		//タスク名
+	const  string  defGroupName("オブジェクト");	//グループ名
+	const  string  defName("シャンデリア");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -27,7 +27,7 @@ namespace Kumagai
 		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  LadyKumagai
+	class  Object : public  Chandelier
 	{
 	public:
 		virtual  ~Object();

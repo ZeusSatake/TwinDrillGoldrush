@@ -1,18 +1,17 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_LadyKumagai.h"
-#include "../Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_Chandelier.h"
 
-namespace Kumagai
+namespace Chandelier0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
+		img = DG::Image::Create("./data/image/Chandelier.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,26 +30,7 @@ namespace Kumagai
 		this->res = Resource::Create();
 
 		//★データ初期化
-		status_->HP.Initialize(150);
-		status_->attack.Initialize(15, 100);
-		status_->defence.Initialize(0, 100);
-		status_->speed.Initialize(2.5f, 100.f, 10.f);
-		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
-		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32) * 10);
-
-		angle_LR_ = Angle_LR::Left;
-
-		SetPreState(AIState::Idle);
-		SetNowState(AIState::Idle);
-
-		SetFov(1000.f);
-
-		moveCnt_->SetCountFrame(0);
-		unHitTimer_->SetCountFrame(15);
-
-		SetTarget(ge->playerPtr.get());
+		box_->setHitBase(ML::Box2D(-32, -32, 64, 64));
 		//★タスクの生成
 
 		return  true;
@@ -62,8 +42,7 @@ namespace Kumagai
 		//★データ＆タスク解放
 
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) 
-		{
+		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
 
@@ -73,23 +52,17 @@ namespace Kumagai
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Think();
 		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
-			res->img->Draw(draw, src);
-		}
-
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src(0, 0, 1200, 1200);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		res->img->Draw(draw, src);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

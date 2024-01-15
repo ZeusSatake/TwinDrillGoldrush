@@ -1,11 +1,18 @@
 #include "LadyHaraguchi.h"
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Tower.h"
+#include "../../Source/Scene/Task_Map.h"
 
 LadyHaraguchi::LadyHaraguchi()
 	:BossLady()
 {
-	
+	SetFov(1000.f);
+	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
+	GetStatus()->HP.Initialize(200);
+
+	moveCnt_->SetCountFrame(0);
+	unHitTimer_->SetCountFrame(15);
+	SetTarget(ge->playerPtr.get());
 }
 
 void LadyHaraguchi::Think()
@@ -16,7 +23,7 @@ void LadyHaraguchi::Think()
 	case AIState::Idle:
 		if (WithinSight(GetTarget()))
 		{
-			afterState = AttackStand;
+			afterState = AIState::AttackStand;
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 		{
@@ -61,6 +68,7 @@ void LadyHaraguchi::Think()
 		}
 		break;
 	case AIState::Dead:
+
 		break;
 	}
 	//状態の更新と各状態ごとの行動カウンタを設定
@@ -87,9 +95,63 @@ void LadyHaraguchi::Think()
 
 void LadyHaraguchi::Move()
 {
-	if (!isCreatedTower_)
+	//タイマーの更新
+	moveCnt_->Update();
+	unHitTimer_->Update();
+
+	if (GetNowState() != AIState::Idle)
 	{
-		auto tw = Tower::Object::Create(true);
-		tw->SetPosX(ge->playerPtr->GetPos().x);
+		if (!isCreatedTower_)
+		{
+			CreateTower();
+			isCreatedTower_ = true;
+		}
+		if (!isCreatedTerrain_)
+		{
+			CreateTerrain();
+			isCreatedTerrain_ = true;
+		}
 	}
+	//状態に応じた行動
+	switch (GetNowState())
+	{
+		case AIState::Idle:
+			break;
+		case AIState::AttackStand:
+			break;
+		case AIState::Attack:
+			break;
+		case AIState::Damage:
+			UpDateDamage();
+			break;
+		case AIState::Dead:
+			UpDateDead();
+			break;
+	}
+}
+
+void LadyHaraguchi::UpDateDamage()
+{
+	if (!unHitTimer_->IsCounting())
+	{
+		GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		unHitTimer_->Start();
+	}
+}
+
+void LadyHaraguchi::UpDateDead()
+{
+	Kill();
+}
+
+void LadyHaraguchi::CreateTower()
+{
+	auto tw = Tower0::Object::Create(true);
+	tw->SetPosX(ge->playerPtr->GetPos().x);
+}
+
+void LadyHaraguchi::CreateTerrain()
+{
+	auto mapEX = Map::Object::Create(true);
+	mapEX->Load("MartialFightEX");
 }

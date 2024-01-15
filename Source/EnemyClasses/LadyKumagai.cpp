@@ -23,7 +23,7 @@ void LadyKumagai::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
+		if (WithinSight(GetTarget()))//イベント終了してから切り替え
 		{
 			afterState = AttackStand;
 		}
@@ -55,7 +55,6 @@ void LadyKumagai::Think()
 			plBox.Offset(GetTarget()->GetPos());
 			if (box_->CheckHit(plBox))
 			{
-				//EndAttack();
 				afterState = AIState::Damage;
 			}
 		}
@@ -97,6 +96,8 @@ void LadyKumagai::Think()
 
 void LadyKumagai::Move()
 {
+	moveCnt_->Update();
+	unHitTimer_->Update();
 	ML::Vec2 est;
 
 	//イベント終了後は常にコンテナと魚を召喚

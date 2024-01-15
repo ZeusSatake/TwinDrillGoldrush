@@ -8,6 +8,7 @@
 #include "../Actors/Enemys/Task_BlondeLady.h"
 #include "../Actors/Enemys/Task_LadySatake.h"
 #include "../Actors/Enemys/Task_LadyKumagai.h"
+#include "../Actors/Enemys/Task_LadyHaraguchi.h"
 
 namespace  EnemyMap
 {
@@ -139,6 +140,12 @@ namespace  EnemyMap
 					enemy->SetPosY(y * chipSize);
 				}
 				break;
+				case 20:
+				{
+					auto enemy = Haraguchi::Object::Create(true);
+					enemy->SetPosX(x * chipSize);
+					enemy->SetPosY(y * chipSize);
+				}
 				}
 			}
 		}
