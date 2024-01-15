@@ -7,6 +7,7 @@ class LadyKumagai : public BossLady
 	const int attackCnt_;
 protected:
 	shared_ptr<TimerComponent> containerCD_;
+	shared_ptr<TimerComponent> fishCD_;
 public:
 	LadyKumagai();
 	virtual ~LadyKumagai() {};
@@ -19,4 +20,5 @@ protected:
 	virtual void UpDateDead() override;
 
 	void CreateContainer();
+	void SummonFish();
 };

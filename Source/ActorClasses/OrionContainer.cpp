@@ -1,10 +1,10 @@
 #include "OrionContainer.h"
-#include "Source/Actors/Task_Player.h"
+#include "../Actors/Task_Player.h"
 
 OrionContainer::OrionContainer()
 	:Actor()
 	,movementAmount_(1.5f)
-	,limitRange_(100)
+	,limitRange_(750)
 {
 }
 

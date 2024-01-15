@@ -344,14 +344,29 @@
     <ClCompile Include="Source\EnemyClasses\LadyKumagai.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
-    <ClCompile Include="OrionContainer.cpp">
-      <Filter>MyPG\ActorClasses</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Actors\Task_OrionContainer.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
     <ClCompile Include="Source\Actors\Enemys\Task_LadyKumagai.cpp">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\Fish.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_Fish00.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\LadyHaraguchi.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\Tower.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\OrionContainer.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Tower.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -617,14 +632,29 @@
     <ClInclude Include="Source\EnemyClasses\LadyKumagai.h">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
-    <ClInclude Include="OrionContainer.h">
-      <Filter>MyPG\ActorClasses</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Actors\Task_OrionContainer.h">
       <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
     <ClInclude Include="Source\Actors\Enemys\Task_LadyKumagai.h">
       <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\Fish.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_Fish00.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\LadyHaraguchi.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\Tower.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\OrionContainer.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Tower.h">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

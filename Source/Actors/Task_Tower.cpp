@@ -2,16 +2,16 @@
 //
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
-#include  "Task_OrionContainer.h"
+#include  "Task_Tower.h"
 
-namespace Container
+namespace Tower
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img=DG::Image::Create("./data/image/Container.png");
+		img= DG::Image::Create("./data/image/Tower.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -30,8 +30,7 @@ namespace Container
 		this->res = Resource::Create();
 
 		//★データ初期化
-		box_->setHitBase(ML::Box2D(-32, -8, 64, 16));
-
+		
 		//★タスクの生成
 
 		return  true;
@@ -43,8 +42,7 @@ namespace Container
 		//★データ＆タスク解放
 
 
-		if (!ge->QuitFlag() && this->nextTaskCreate) 
-		{
+		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
 
@@ -61,7 +59,7 @@ namespace Container
 	void  Object::Render2D_AF()
 	{
 		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src(0, 0, 530, 230);
+		ML::Box2D src(0, 0, 54, 174);
 		//スクロール対応
 		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 		res->img->Draw(draw, src);

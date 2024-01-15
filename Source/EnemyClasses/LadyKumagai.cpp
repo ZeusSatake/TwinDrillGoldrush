@@ -1,5 +1,6 @@
 #include"LadyKumagai.h"
 #include "../../Source/Actors/Task_OrionContainer.h"
+#include "../../Source/Actors/Enemys/Task_Fish00.h"
 #include"../Actors/Task_Player.h"
 
 LadyKumagai::LadyKumagai()
@@ -10,6 +11,10 @@ LadyKumagai::LadyKumagai()
 	AddComponent(containerCD_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	containerCD_->SetCountFrame(120);
 	containerCD_->Start();
+
+	AddComponent(fishCD_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
+	fishCD_->SetCountFrame(180);
+	fishCD_->Start();
 }
 
 void LadyKumagai::Think()
@@ -28,7 +33,6 @@ void LadyKumagai::Think()
 			plBox.Offset(GetTarget()->GetPos());
 			if (box_->CheckHit(plBox))
 			{
-				//EndAttack();
 				afterState = AIState::Damage;
 			}
 		}
@@ -40,7 +44,6 @@ void LadyKumagai::Think()
 			plBox.Offset(GetTarget()->GetPos());
 			if (box_->CheckHit(plBox))
 			{
-				//EndAttack();
 				afterState = AIState::Damage;
 			}
 		}
@@ -96,12 +99,17 @@ void LadyKumagai::Move()
 {
 	ML::Vec2 est;
 
-	//イベント終了後は常にコンテナを召喚
+	//イベント終了後は常にコンテナと魚を召喚
 	if (GetNowState()!=AIState::Idle)
 	{
 		CreateContainer();
 		containerCD_->Update();
+
+		SummonFish();
+		fishCD_->Update();
 	}
+
+
 
 	switch (GetNowState())
 	{
@@ -156,6 +164,16 @@ void LadyKumagai::CreateContainer()
 		auto con = Container::Object::Create(true);
 		con->SetPos(ML::Vec2(GetPos().x + 30, GetPos().y));
 		containerCD_->Start();
+	}
+}
+
+void LadyKumagai::SummonFish()
+{
+	if (!fishCD_->IsCounting())
+	{
+		auto fish = Fish00::Object::Create(true);
+		fish->SetPos(ML::Vec2(GetPos().x + 30, GetPos().y));
+		fishCD_->Start();
 	}
 }
 

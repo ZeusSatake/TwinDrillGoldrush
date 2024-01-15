@@ -3,13 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../ActorClasses/OrionContainer.h"
+#include "../ActorClasses/Tower.h"
 
-namespace Container
+namespace Tower
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("オブジェクト");	//グループ名
-	const  string  defName("コンテナ");		//タスク名
+	const  string  defName("塔");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -27,7 +27,7 @@ namespace Container
 		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public OrionContainer
+	class  Object : public  Tower
 	{
 	public:
 		virtual  ~Object();
