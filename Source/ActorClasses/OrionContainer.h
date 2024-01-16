@@ -14,5 +14,9 @@ public:
 	void HitPlayer();
 
 	virtual void Move();
+
+	void HitFoward();
+
+	void HitTop();
 };
 
