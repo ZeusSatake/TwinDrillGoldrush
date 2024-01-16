@@ -13,5 +13,9 @@ public:
 	void UpDateAttack() override;
 	void UpDateDamage() override;
 
+	void DropBombs();
+	void GlidingAttack();
+
+
 };
 
