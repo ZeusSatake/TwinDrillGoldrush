@@ -6,6 +6,8 @@
 #include "Source/Actors/Task_Drill.h"
 #include "Source/Components/StatusComponent.h"
 
+namespace DrawGauge { class Object; }
+
 class Player :public Character
 {
 	ML::Vec2 moveVec;
@@ -34,6 +36,8 @@ public:
 	//void CheckMove(ML::Vec2& e_);
 	void Dash(ML::Vec2 e_);
 
+	void HiddenPlayer();
+
 	void HitAttack(); //攻撃が当たった時の処理
 	void TakeAttack(); //攻撃を受けたときの処理
 
@@ -46,5 +50,5 @@ public:
 	StatusComponent* GetStatus() const;
 
 	shared_ptr<drill::Object> drill_;
-
+	shared_ptr<DrawGauge::Object> hpGauge_;
 };

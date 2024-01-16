@@ -117,25 +117,7 @@ namespace BlondeLady
 		}
 		
 
-		string stateName;
-		switch (GetNowState())
-		{
-		case AIState::Idle:
-			stateName = "‘Ò‹@";
-			break;
-		case AIState::Approach:
-			stateName = "Ú‹ß";
-			break;
-		case AIState::AttackStand:
-			stateName = "UŒ‚€”õ";
-			break;
-		case AIState::Attack:
-			stateName = "UŒ‚";
-			break;
-		}
-		ge->debugFont->Draw(ML::Box2D(1000, 700, 500, 500), stateName);
-		auto pl = ge->GetTask<player::Object>(player::defGroupName, player::defName);
-		SetTarget(pl.get());
+		
 
 
 		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));

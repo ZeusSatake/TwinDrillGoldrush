@@ -1,5 +1,5 @@
 evimg>PL_A,./data/image/butler.png,R
-msg>’Êí˜g,0,¡‰ñ‚Ì–Ú•W‚Íu%v‚¾‚æB
+msg>’Êí˜g,0,¡‰ñ‚Ì‘ŠŽè‚Í››‚¨ì—l‚¾‚æB
 msg>’Êí˜g,0,off
 evimg>PL_A,off
 end>

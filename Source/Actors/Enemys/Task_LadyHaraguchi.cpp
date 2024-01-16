@@ -1,24 +1,17 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "MartialFightScene.h"
-#include  "../Actors/UI/SceneChangeButton.h"
-#include  "Task_Map.h"
-#include "Task_EnemyMap.h"
-#include "../Actors/Task_Player.h"
-#include "../../Camera.h"
-#include "../Actors/Enemys/Task_LadySatake.h"
-#include "../Components/SecondsTimerComponent.h"
-#include "../System/Task_Save.h"
+#include  "../../../MyPG.h"
+#include  "Task_LadyHaraguchi.h"
 
-namespace MartialFightScene
+namespace Haraguchi
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		img = DG::Image::Create("./data/image/LadySatake.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -36,41 +29,9 @@ namespace MartialFightScene
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
-		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
-		transitionTimer_->SetCountSeconds(3.0f);
-
-		clear_ = false;
-
 		//★データ初期化
-		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
-		ge->playerPtr->ResetState();
-
+		
 		//★タスクの生成
-		{//武闘会
-			auto map = Map::Object::Create(true);
-			map->Load("MartialFight");
-		}
-		{//敵
-			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("MartialFightEnemy");
-			enemymap->SetEnemy();
-			boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
-		}
-		{
-			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
-			auto camera = Camera::Object::Create(true);
-			camera->horizontalScroll=true;
-			camera->SetPos(ge->playerPtr->GetPos());
-			camera->target = ge->playerPtr;
-		}
-		{//拠点に戻るボタン(デバッグ用
-			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-			gotoBaseButton->SetEnterButton(XI::VGP::ST);
-			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("拠点へ");
-			AddSceneChangeButton(gotoBaseButton);
-		}
 
 		return  true;
 	}
@@ -79,24 +40,10 @@ namespace MartialFightScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		if (clear_)
-		{
-			auto save = Save::Object::Create(true);
-			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::StageNo);
-			//次のステージへ
-			if (nowStage < 3)
-				save->SetValue(Save::Object::ValueKind::StageNo, nowStage + 1);
-			save->Kill();
-		}
 
-		ge->KillAll_G("本編");
-		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
-		ge->KillAll_G("キャラクタ");
-		ge->KillAll_G("敵");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
-			CreateNextScene();
 		}
 
 		return  true;
@@ -105,30 +52,22 @@ namespace MartialFightScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Scene::UpDate();
-		UpdateComponents();
-
-		if (transitionTimer_->IsCountEndFrame())
-		{
-			this->Kill();
-			return;
-		}
-
-		if (!boss_.lock() && !transitionTimer_->IsActive())
-		{
-			transitionTimer_->Start();
-			clear_ = true;
-		}
+		Think();
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "武闘会");
-
-		if (clear_)
 		{
-			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 50, 30, 500, 500), "ボスを倒したわね。", ML::Color(1, 1, 0, 0));
+			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			//スクロール対応
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+
+			res->img->Draw(draw, src);
+
+			ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
 		}
 	}
 

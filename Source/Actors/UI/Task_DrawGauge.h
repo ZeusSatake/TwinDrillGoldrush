@@ -50,8 +50,11 @@ namespace DrawGauge
 		ML::Percentage gaugeValue_;
 
 		bool isMaxCharge;
+		bool isSupportScroll_;
+		bool isVisible_;
 
 		ML::Vec2 pos_;
+		ML::Point size_;
 	public:
 
 		void Set(const int max, const string& path);
@@ -62,6 +65,12 @@ namespace DrawGauge
 		int Getmax() const;
 
 		void SetImg(const string& path);
+		void SetDrawSize(const int width, const int height);
+		void SetPos(const ML::Vec2& pos);
+		void SetPos(const float x, const float y);
+
+		void SetSupportScroll(const bool isSupportScroll);
+		void SetVisible(const bool visible);
 
 		bool IsMax() const;
 	};

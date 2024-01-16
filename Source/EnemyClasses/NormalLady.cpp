@@ -73,7 +73,6 @@ void NormalLady::Think()
 			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
-				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
@@ -195,6 +194,7 @@ void NormalLady::UpDateAttack()
 		SetMoveVecX(0);
 		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
 		plBox.Offset(GetTarget()->GetPos());
+		//¶‰E‚ÌŽaŒ‚”»’è‚ÌˆÊ’u‚ð’²®
 		if (angle_LR_ == Angle_LR::Left)
 		{
 			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x - adjustRange_, GetTarget()->GetPos().y);

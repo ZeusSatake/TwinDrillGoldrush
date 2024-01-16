@@ -22,6 +22,7 @@
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
 #include "../System/Task_Save.h"
+#include "../Actors/Enemys/Task_BlondeLady.h"
 
 namespace  GameScene
 {
@@ -136,13 +137,13 @@ namespace  GameScene
 	{
 		//★データ＆タスク解放
 
-		ge->KillAll_G("本編");
-		ge->KillAll_G("システム");
-		ge->KillAll_G(SceneChangeButton::defGroupName);
-		ge->KillAll_G("キャラクタ");
-		ge->KillAll_G("敵");
+		ge->KillAll_G(Map::defGroupName);
+		ge->KillAll_G(BackGround::defGroupName);
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		ge->KillAll_G(BlondeLady::defGroupName);
 
 		ge->debugRectReset();
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
