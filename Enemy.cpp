@@ -23,6 +23,7 @@ bool Enemy::UpDateState(AIState afterState)
 	if (nowState_ == afterState) return false;
 	else
 	{
+		preState_ = nowState_;
 		nowState_ = afterState;
 		return true;
 	}

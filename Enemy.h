@@ -14,6 +14,9 @@ public:
 	enum AIState
 	{
 		Idle, //‘Ò‹@
+		Stand, //—§‚¿
+		Walk, //•às
+		Run, //‘–s
 		Patrol, //„‰ñ
 		Approach, //Ú‹ß
 		Jump, //’µ–ô

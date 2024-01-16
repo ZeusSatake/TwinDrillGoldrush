@@ -380,6 +380,15 @@
     <ClCompile Include="Source\EnemyClasses\LadyKiyohara.cpp">
       <Filter>MyPG\EnemyClasses</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_LadyKiyohara.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\Bomb.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Bomb.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -679,6 +688,15 @@
     </ClInclude>
     <ClInclude Include="Source\EnemyClasses\LadyKiyohara.h">
       <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_LadyKiyohara.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\Bomb.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Bomb.h">
+      <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

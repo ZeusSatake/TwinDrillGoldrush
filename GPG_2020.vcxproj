@@ -158,6 +158,7 @@
     <ClCompile Include="randomLib.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="Source\ActorClasses\Bomb.cpp" />
     <ClCompile Include="Source\ActorClasses\Chandelier.cpp" />
     <ClCompile Include="Source\ActorClasses\OrionContainer.cpp" />
     <ClCompile Include="Source\ActorClasses\Tower.cpp" />
@@ -165,8 +166,10 @@
     <ClCompile Include="Source\Actors\Enemys\Task_BlondeLady.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_Fish00.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadyHaraguchi.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_LadyKiyohara.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadyKumagai.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp" />
+    <ClCompile Include="Source\Actors\Task_Bomb.cpp" />
     <ClCompile Include="Source\Actors\Task_Chandelier.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
     <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
@@ -260,6 +263,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="Source\ActorClasses\Bomb.h" />
     <ClInclude Include="Source\ActorClasses\Chandelier.h" />
     <ClInclude Include="Source\ActorClasses\OrionContainer.h" />
     <ClInclude Include="Source\ActorClasses\Tower.h" />
@@ -267,8 +271,10 @@
     <ClInclude Include="Source\Actors\Enemys\Task_BlondeLady.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_Fish00.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadyHaraguchi.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_LadyKiyohara.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadyKumagai.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h" />
+    <ClInclude Include="Source\Actors\Task_Bomb.h" />
     <ClInclude Include="Source\Actors\Task_Chandelier.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\Task_MiningResult.h" />

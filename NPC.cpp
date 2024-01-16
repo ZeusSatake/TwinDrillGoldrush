@@ -80,6 +80,15 @@ bool NPC::WithinSight(class Actor* target)
 	}
 }
 
+ML::Vec2 NPC::CalcAngle(ML::Vec2 targetPos)
+{
+	ML::Vec2 angle;
+	angle.x = targetPos.x - GetPos().x;
+	angle.y = targetPos.y - GetPos().y;
+	angle = angle.Normalize();
+	return angle;
+}
+
 float NPC::GetFov() const
 {
 	return fov_;

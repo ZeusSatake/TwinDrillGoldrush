@@ -27,5 +27,7 @@ public:
 
 	Actor* GetTarget() const;
 	void SetTarget(Actor* target);
+
+	ML::Vec2 CalcAngle(ML::Vec2 targetPos);
 };
 
