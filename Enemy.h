@@ -18,6 +18,7 @@ public:
 		Approach, //Ú‹ß
 		Jump, //’µ–ô
 		Fall,//—‰º
+		Fly,//‘Ø‹ó
 		AttackStand,//UŒ‚€”õ
 		Attack,//UŒ‚
 		Guard,//–hŒä

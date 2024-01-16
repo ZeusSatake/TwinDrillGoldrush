@@ -377,6 +377,9 @@
     <ClCompile Include="Source\Actors\Task_Chandelier.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\LadyKiyohara.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -673,6 +676,9 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_Chandelier.h">
       <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\LadyKiyohara.h">
+      <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
