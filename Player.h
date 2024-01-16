@@ -11,6 +11,7 @@ namespace DrawGauge { class Object; }
 class Player :public Character
 {
 	ML::Vec2 moveVec;
+	ML::Vec2 externalMoveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
 
@@ -41,6 +42,7 @@ public:
 	void TakeAttack(int damage_); //攻撃を受けたときの処理
 
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
+	void SetExternalVec(ML::Vec2 moveVec_);//外部から渡された移動量で移動するようのメソッド 
 
 	void ResetState();
 
