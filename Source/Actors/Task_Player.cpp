@@ -114,6 +114,7 @@ namespace player
 	{
 		//------------------------------------------------------------------
 		string StateName;
+
 		switch (pState)
 		{
 		case StateComponent::State::Non:
@@ -174,6 +175,7 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP\:" + to_string(this->status_->HP.GetNowHP()));
 		//------------------------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D{ 1000,80,500,500 }, "UnHitTimer\:" + to_string(this->unHitTimer_->GetCount()));
+		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "moveVec\:" + to_string(this->controller_->gamePad_->GetState().LStick.volume));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
