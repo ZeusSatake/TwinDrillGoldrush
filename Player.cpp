@@ -96,7 +96,10 @@ void Player::Think()
 		if(this->state_->moveCnt_>90){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
-		
+		if (this->externalMoveVec == ML::Vec2{ 0,0 })
+		{
+			pState = StateComponent::State::Idle;
+		}
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -179,6 +182,8 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::KnockBack:
+		moveVec = this->externalMoveVec;
+		this->externalMoveVec = ML::Vec2{ 0,0 };
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -217,24 +222,26 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
-	if(this->externalMoveVec!=0)
-	this->moveVec = this->externalMoveVec;
+	
 	CheckMove(moveVec);
 }
 
-bool Player::CollisionJudge(ML::Box2D hitBox_,ML::Vec2 moveVec_)
+void Player::CollisionJudge(ML::Box2D hitBox_)
 {
-	if (this->CheckHit(hitBox_))
+	ML::Rect  r = { hitBox_.x, hitBox_.y, hitBox_.x + hitBox_.w, hitBox_.y + hitBox_.h };
+	//矩形がマップ外に出ていたらサイズを変更する
+	ML::Rect  me =
 	{
-		this->state_->UpdateNowState(StateComponent::State::KnockBack);
-		CheckMove(moveVec_);
-		return true;
-	}
-	else
-	{
-		this->state_->UpdateNowState(StateComponent::State::Idle);
-	}
-	return false;
+		this->box_->getHitBase().x,
+		this->box_->getHitBase().y,
+		this->box_->getHitBase().x + this->box_->getHitBase().w,
+		this->box_->getHitBase().y + this->box_->getHitBase().h
+	};
+	if (r.left < me.left) { r.left = me.left; }
+	if (r.top < me.top) { r.top = me.top; }
+	if (r.right > me.right) { r.right = me.right; }
+	if (r.bottom > me.bottom) { r.bottom = me.bottom; }
+
 }
 
 void Player::HitAttack()
@@ -261,6 +268,7 @@ void Player::SetPlayerState(StateComponent::State state)
 void Player::SetExternalVec(ML::Vec2 moveVec_)
 {
 	this->externalMoveVec = moveVec_;
+	this->state_->UpdateNowState(StateComponent::State::KnockBack);
 }
 
 ML::Box2D Player::GetAttackBox()
