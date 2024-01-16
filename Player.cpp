@@ -6,20 +6,17 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
-	jumpPow(-25.f),
-	PreHp(100)
+	externalMoveVec(ML::Vec2{0,0}),
+	jumpPow(-25.f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
 	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
-	//this->movement_->SetConsiderationCollition(true);
-	//this->gravity_->SetConsiderationCollition(true);
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(30);
 	
 	status_->HP.Initialize(1000);
-	this->PreHp = this->status_->HP.GetNowHP();
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
@@ -63,42 +60,6 @@ bool Player::CheckHead()
 	return false;
 }
 
-//void Player::CheckMove(ML::Vec2& e_)
-//{
-//	//マップが存在するか調べてからアクセス
-//	auto   map = ge->GetTask<Map::Object>(Map::defGroupName, Map::defName);
-//	if (nullptr == map) { return; }//マップが無ければ判定しない(出来ない）
-//	ML::Vec2 preVec{ 0,0 };
-//	//横軸に対する移動
-//	while (e_.x != 0) {
-//		float  preX = this->GetPos().x;
-//		if (e_.x >= 1) { SetPosX(GetPos().x +1);	e_.x -= 1; }
-//		else if (e_.x <= -1) { SetPosX(GetPos().x - 1);		e_.x += 1; }
-//		else {SetPosX(GetPos().x + e_.x);		e_.x = 0; }
-//		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-//		if (true == map->CheckHit(hit)) {
-//			SetPosX(preX);
-//					//移動をキャンセル
-//			break;
-//		}
-//	}
-//	//縦軸に対する移動
-//	while (e_.y != 0) {
-//		float  preY = this->GetPos().y;
-//		if (e_.y >= 1) {SetPosY(GetPos().y + 1);		e_.y -= 1; }
-//		else if (e_.y <= -1) { SetPosY(GetPos().y -1);		e_.y += 1; }
-//		else { SetPosY( GetPos().y + e_.y);		e_.y = 0; }
-//		ML::Box2D  hit = this->box_->getHitBase().OffsetCopy(this->GetPos());
-//		if (true == map->CheckHit(hit)) {
-//			this->SetPosY(preY);
-//					//移動をキャンセル
-//			break;
-//		}
-//	}
-//	
-//}
-
-
 void Player::Think()
 {
 	auto inp = controller_->gamePad_->GetState();
@@ -135,6 +96,7 @@ void Player::Think()
 		if(this->state_->moveCnt_>90){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::KnockBack:
+		
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -163,12 +125,6 @@ void Player::Think()
 		break;
 	}
 	
-	if (this->PreHp != this->status_->HP.GetNowHP())
-	{
-		this->pState = StateComponent::State::Damage;
-		this->PreHp = this->status_->HP.GetNowHP();
-	}
-
 	if (this->status_->HP.IsAlive())
 	{
 		this->pState=StateComponent::State::Dead;
@@ -221,8 +177,6 @@ void Player::Move()
 	case StateComponent::State::Damage:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 
-		this->unHitTimer_->Start();
-		TakeAttack();
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -238,7 +192,6 @@ void Player::Move()
 	case StateComponent::State::Dash:
 		this->status_->speed.SetMax(5.0f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-
 		break;
 	case StateComponent::State::DrillDash:
 		if(this->state_->moveCnt_ == 0)this->drill_->SetCanRotate(false);
@@ -258,28 +211,43 @@ void Player::Move()
 	case StateComponent::State::Mining:
 		this->drill_->Mining();
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-
 		break;
 	case StateComponent::State::Appeal:
 		break;
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
+	this->moveVec = this->externalMoveVec;
 	CheckMove(moveVec);
 }
 
+bool Player::CollisionJudge(ML::Box2D hitBox_,ML::Vec2 moveVec_)
+{
+	if (this->CheckHit(hitBox_))
+	{
+		this->state_->UpdateNowState(StateComponent::State::KnockBack);
+		CheckMove(moveVec_);
+		return true;
+	}
+	else
+	{
+		this->state_->UpdateNowState(StateComponent::State::Idle);
+	}
+	return false;
+}
 
 void Player::HitAttack()
 {
 	this->cooldown_->Start();
 }
 
-void Player::TakeAttack()
+void Player::TakeAttack(int damage_)
 {
 	if (!this->unHitTimer_->IsCounting())
 	{
 		this->moveVec.y = -0.5;
-		this->status_->HP.TakeDamage(1);
+		this->status_->HP.TakeDamage(damage_);
+		this->unHitTimer_->Start();
 	}
 }
 
@@ -287,6 +255,11 @@ void Player::SetPlayerState(StateComponent::State state)
 {
 	if (this->state_->GetNowState() == state) { return; }
 	this->state_->UpdateNowState(state);
+}
+
+void Player::SetExternalVec(ML::Vec2 moveVec_)
+{
+	this->externalMoveVec = moveVec_;
 }
 
 ML::Box2D Player::GetAttackBox()
@@ -300,6 +273,7 @@ ML::Vec2 Player::GetMoveVec()
 {
 	return this->moveVec;
 }
+
 
 StatusComponent* Player::GetStatus() const
 {
