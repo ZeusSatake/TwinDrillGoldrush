@@ -49,8 +49,8 @@ public:
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;
-
-	bool CollisionJudge(ML::Box2D hitBox_,ML::Vec2 moveVec_);
+    
+	void CollisionJudge(ML::Box2D hitBox_);//外部のオブジェクトにめり込まないようにするメソッド
 
 	shared_ptr<drill::Object> drill_;
 	shared_ptr<DrawGauge::Object> hpGauge_;
