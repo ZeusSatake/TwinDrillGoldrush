@@ -217,6 +217,7 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
+	if(this->externalMoveVec!=0)
 	this->moveVec = this->externalMoveVec;
 	CheckMove(moveVec);
 }
