@@ -14,7 +14,7 @@ Player::Player()
 	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 	this->cooldown_->SetCountFrame(30);
-	this->unHitTimer_->SetCountFrame(30);
+	this->unHitTimer_->SetCountFrame(120);
 	
 	status_->HP.Initialize(1000);
 	status_->attack.Initialize(10,100);
@@ -93,7 +93,7 @@ void Player::Think()
 		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
-		if(this->state_->moveCnt_>90){ pState = StateComponent::State::Idle; }
+		if(this->unHitTimer_->GetCount()>30)pState = StateComponent::State::Idle;
 		break;
 	case StateComponent::State::KnockBack:
 		if (this->externalMoveVec == ML::Vec2{ 0,0 })
@@ -128,7 +128,7 @@ void Player::Think()
 		break;
 	}
 	
-	if (this->status_->HP.IsAlive())
+	if (this->status_->HP.GetNowHP()<=0)
 	{
 		this->pState=StateComponent::State::Dead;
 	}
@@ -164,9 +164,10 @@ void Player::Move()
 	case StateComponent::State::Non:
 		break;
 	case StateComponent::State::Idle:
+		
 		break;
 	case StateComponent::State::Walk:
-		this->moveVec.x=controller_->GetLStickVec().x;
+		this->moveVec.x=controller_->GetLStickVec().x *this->status_->speed.GetMax();
 		
 		break;
 	case StateComponent::State::Attack:
@@ -178,7 +179,7 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::Damage:
-		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+		
 
 		break;
 	case StateComponent::State::KnockBack:
@@ -253,9 +254,9 @@ void Player::TakeAttack(int damage_)
 {
 	if (!this->unHitTimer_->IsCounting())
 	{
-		this->moveVec.y = -0.5;
 		this->status_->HP.TakeDamage(damage_);
 		this->unHitTimer_->Start();
+		this->state_->UpdateNowState(StateComponent::State::Damage);
 	}
 }
 
