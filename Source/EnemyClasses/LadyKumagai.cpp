@@ -163,7 +163,7 @@ void LadyKumagai::CreateContainer()
 	if (!containerCD_->IsCounting())
 	{
 		auto con = Container::Object::Create(true);
-		con->SetPos(ML::Vec2(GetPos().x + 30, GetPos().y));
+		con->SetPos(ML::Vec2(GetPos().x + 30, GetPos().y+10));
 		containerCD_->Start();
 	}
 }

@@ -6,11 +6,6 @@ OrionContainer::OrionContainer()
 	,movementAmount_(1.5f)
 	,limitRange_(750)
 {
-	AddComponent(fowardCollision_ = shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
-	fowardCollision_->setHitBase(ML::Box2D{ 0,0,1,16 });
-
-	AddComponent(topCollision_ = shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
-	topCollision_->setHitBase(ML::Box2D{ 0,0,64,1 });
 }
 
 void OrionContainer::Move()
@@ -26,7 +21,8 @@ void OrionContainer::Move()
 		Kill();
 	}
 
-
+	HitFoward();
+	HitTop();
 }
 
 void OrionContainer::HitPlayer()
@@ -48,7 +44,7 @@ void OrionContainer::HitFoward()
 
 	if (ge->playerPtr->CheckHit(foward))
 	{
-		ge->playerPtr->SetExternalVec(ML::Vec2{ movementAmount_, GetPos().x });
+		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, GetPos().x });
 	}
 }
 
@@ -65,6 +61,6 @@ void OrionContainer::HitTop()
 
 	if (ge->playerPtr->CheckHit(foward))
 	{
-		ge->playerPtr->SetExternalVec(ML::Vec2{ movementAmount_, GetPos().x });
+		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, GetPos().x });
 	}
 }

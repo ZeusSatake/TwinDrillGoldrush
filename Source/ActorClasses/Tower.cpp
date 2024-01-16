@@ -111,15 +111,12 @@ void Tower::Move()
 
 void Tower::HitPlayer()
 {
-	if (ge->playerPtr->pState != StateComponent::State::Damage)
-	{
-		ML::Box2D plBox = ge->playerPtr->GetBox()->getHitBase();
-		plBox.Offset(ge->playerPtr->GetPos());
+	ML::Box2D plBox = ge->playerPtr->GetBox()->getHitBase();
+	plBox.Offset(ge->playerPtr->GetPos());
 
-		if (box_->CheckHit(plBox))
-		{
-			ge->playerPtr->GetStatus()->HP.TakeDamage(damage_);
-		}
+	if (box_->CheckHit(plBox))
+	{
+		ge->playerPtr->TakeAttack(damage_);
 	}
 }
 
