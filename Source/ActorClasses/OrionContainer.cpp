@@ -40,7 +40,7 @@ void OrionContainer::HitFoward()
 	ML::Box2D foward = ML::Box2D
 	{
 		box_->getHitBase().x,
-		-1,
+		box_->getHitBase().y - 1,
 		1,
 		box_->getHitBase().h
 	};
@@ -57,7 +57,7 @@ void OrionContainer::HitTop()
 	ML::Box2D foward = ML::Box2D
 	{
 		box_->getHitBase().x,
-		-1,
+		box_->getHitBase().y - 1,
 		box_->getHitBase().w,
 		1
 	};
