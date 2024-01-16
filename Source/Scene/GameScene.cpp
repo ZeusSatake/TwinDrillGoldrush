@@ -24,6 +24,8 @@
 #include "../System/Task_Save.h"
 #include "../Actors/Enemys/Task_BlondeLady.h"
 
+#include "../Event/Task_EventEngine.h"
+
 namespace  GameScene
 {
 	Resource::WP  Resource::instance;
@@ -71,6 +73,12 @@ namespace  GameScene
 		auto save = Save::Object::Create(true);
 
 		//★タスクの生成
+		{
+			if (auto ev = EventEngine::Object::Create_Mutex())
+			{
+				ev->Set("./data/event/eventgamestart.txt");
+			}
+		}
 		{
 			//auto player = player::Object::Create(true);
 			auto camera = Camera::Object::Create(true);
