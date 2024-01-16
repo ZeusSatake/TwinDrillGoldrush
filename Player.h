@@ -13,7 +13,6 @@ class Player :public Character
 	ML::Vec2 moveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
-	int PreHp;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -39,7 +38,7 @@ public:
 	void HiddenPlayer();
 
 	void HitAttack(); //攻撃が当たった時の処理
-	void TakeAttack(); //攻撃を受けたときの処理
+	void TakeAttack(int damage_); //攻撃を受けたときの処理
 
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
 
@@ -48,6 +47,8 @@ public:
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;
+
+	bool CollisionJudge(ML::Box2D hitBox_,ML::Vec2 moveVec_);
 
 	shared_ptr<drill::Object> drill_;
 	shared_ptr<DrawGauge::Object> hpGauge_;
