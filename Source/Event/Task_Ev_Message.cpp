@@ -107,7 +107,7 @@ namespace Ev_Message
 		this->res->img[this->bgNumber]->Draw(draw, src, ML::Color(1, 1, 1, 1));
 		ML::Box2D drawF(50, 15, ge->screen2DWidth - 12, 128 - 12);
 		drawF.Offset(this->pos);
-		this->res->font[this->fontNumber]->Draw(drawF, this->msgText);
+		this->res->font[this->fontNumber]->Draw(drawF, this->msgText,ML::Color(1,0.1f,0.1f,0.1f));
 	}
 
 	//-------------------------------------------------------------------
