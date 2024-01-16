@@ -169,10 +169,10 @@ void Player::Think()
 		this->PreHp = this->status_->HP.GetNowHP();
 	}
 
-	/*if (this->status_->HP.IsAlive())
+	if (this->status_->HP.IsAlive())
 	{
 		this->pState=StateComponent::State::Dead;
-	}*/
+	}
 	this->state_->UpdateNowState(pState);
 }
 

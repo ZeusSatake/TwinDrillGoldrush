@@ -142,7 +142,8 @@ namespace ShopScene
 	{
 		//★データ＆タスク解放
 		ge->debugRectReset();
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
 		ge->KillAll_G(Save::defGroupName);
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {

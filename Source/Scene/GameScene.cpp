@@ -139,7 +139,7 @@ namespace  GameScene
 
 		ge->KillAll_G(Map::defGroupName);
 		ge->KillAll_G(BackGround::defGroupName);
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_G(BlondeLady::defGroupName);
 
 		ge->debugRectReset();

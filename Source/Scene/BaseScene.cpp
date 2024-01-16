@@ -102,7 +102,8 @@ namespace BaseScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->KillAll_G(SceneChangeButton::defGroupName);
+		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		ge->KillAll_GN(Cursor::defGroupName, Cursor::defName);
 		ge->debugRectReset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
