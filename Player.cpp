@@ -6,6 +6,7 @@
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
+	externalMoveVec(ML::Vec2{0,0}),
 	jumpPow(-25.f)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
@@ -216,6 +217,7 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
+	this->moveVec = this->externalMoveVec;
 	CheckMove(moveVec);
 }
 
@@ -253,6 +255,11 @@ void Player::SetPlayerState(StateComponent::State state)
 {
 	if (this->state_->GetNowState() == state) { return; }
 	this->state_->UpdateNowState(state);
+}
+
+void Player::SetExternalVec(ML::Vec2 moveVec_)
+{
+	this->externalMoveVec = moveVec_;
 }
 
 ML::Box2D Player::GetAttackBox()
