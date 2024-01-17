@@ -1,0 +1,5 @@
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,180,•óÎ‚âzÎA‚¨ì—l‚ªŽè‚É“ü‚ê‚½‚à‚Ì‚Í‚·‚Î‚ç‚µ‚¢‚à‚Ì‚Î‚©‚è‚Å‚·B
+msg>’Êí˜g,0,off
+evimg>PL_A,off
+end>
