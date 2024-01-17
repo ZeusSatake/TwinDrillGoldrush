@@ -12,9 +12,9 @@ class HPBarComponent;//includeすると循環参照が起こるため前方宣�
 class Player :public Character
 {
 	ML::Vec2 moveVec;
+	ML::Vec2 externalMoveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
-	int PreHp;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -41,9 +41,10 @@ public:
 	void HiddenPlayer();
 
 	void HitAttack(); //攻撃が当たった時の処理
-	void TakeAttack(); //攻撃を受けたときの処理
+	void TakeAttack(int damage_); //攻撃を受けたときの処理
 
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
+	void SetExternalVec(ML::Vec2 moveVec_);//外部から渡された移動量で移動するようのメソッド 
 
 	void ResetState();
 
@@ -51,6 +52,8 @@ public:
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;
 	HPBarComponent* GetHPBar() const;
+    
+	void CollisionJudge(ML::Box2D hitBox_ , ML::Vec2 pos_);//外部のオブジェクトにめり込まないようにするメソッド
 
 	shared_ptr<drill::Object> drill_;
 	shared_ptr<DrawGauge::Object> hpGauge_;

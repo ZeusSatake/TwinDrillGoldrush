@@ -1,24 +1,17 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "Task_EnemyMap.h"
-#include  "../Components/Blocks/BlockManager.h"
-#include "../Actors/Enemys/Task_EtoHaiji.h"
-#include "../Actors/Enemys/Task_BlondeLady.h"
-#include "../Actors/Enemys/Task_LadySatake.h"
-#include "../Actors/Enemys/Task_LadyKumagai.h"
-#include "../Actors/Enemys/Task_LadyHaraguchi.h"
+#include  "../../../MyPG.h"
+#include  "Task_Fish00.h"
 
-#include "../Scene/MartialFightScene.h"
-
-namespace  EnemyMap
+namespace Fish00
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		img = DG::Image::Create("./data/image/Tuna.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -37,19 +30,8 @@ namespace  EnemyMap
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->render2D_Priority[1] = 0.8f;
-		//arrの要素数分(*32)のマップサイズ
-		this->sizeX = sizeof(this->arr[0]) / sizeof(this->arr[0][0]);
-		this->sizeY = sizeof(this->arr) / sizeof(this->arr[0]);
-		this->chipSize = 16;//1マスの大きさ
-		for (int y = 0; y < this->sizeY; ++y)
-		{
-			for (int x = 0; x < this->sizeX; ++x)
-			{
-				this->arr[y][x] = 0;
-			}
-		}
-		
+		box_->setHitBase(ML::Box2D(-16, -4, 32, 8));
+		GetStatus()->attack.Initialize(10, 10);
 		//★タスクの生成
 
 		return  true;
@@ -71,91 +53,17 @@ namespace  EnemyMap
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-	}
-	//-------------------------------------------------------------------
-	bool Object::Load(const  string& fileName)
-	{
-		//ファイル名の作成
-		string filePath = "./data/Map/" + fileName + ".csv";
-		//ファイルの読み込み
-		ifstream ifs(filePath);
-		if (!ifs) { return false; }
-		this->hitBase = ML::Box2D(0, 0, this->sizeX * chipSize, this->sizeY * chipSize);
-		for (int y = 0; y < this->sizeY; ++y)
-		{
-			//改行までの文字列を取得
-			string lineText;
-			getline(ifs, lineText);
-
-			istringstream ss_lt(lineText);
-			for (int x = 0; x < this->sizeX; ++x)
-			{
-				//カンマまでの文字列を取得
-				string text;
-				getline(ss_lt, text, ',');
-				stringstream ss;
-				ss << text;
-				ss >> this->arr[y][x];
-			}
-		}
-		ifs.close();
-		return true;
-	}
-	//-------------------------------------------------------------------
-	void Object::SetEnemy()
-	{
-		auto scene = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName);
-
-		for (int y = 0; y < this->sizeY; ++y) {
-			for (int x = 0; x < this->sizeX; ++x) {
-				// チップの番号によって生成する敵を変える
-				switch (this->arr[y][x])
-				{
-				case 1:
-				{
-					auto enemy = EtoHaiji::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-				}
-				break;
-				case 6:
-				{
-					auto enemy = BlondeLady::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-				}
-				break;
-				case 10:
-				{
-					auto enemy = Satake::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				break;
-				case 15:
-				{
-					auto enemy = Kumagai::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				break;
-				case 20:
-				{
-					auto enemy = Haraguchi::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				}
-			}
-		}
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src(0, 0, 270, 150);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		res->img->Draw(draw, src);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
@@ -170,7 +78,7 @@ namespace  EnemyMap
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-
+				
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

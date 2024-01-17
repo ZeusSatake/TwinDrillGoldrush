@@ -1,3 +1,4 @@
+#pragma once
 #include "BossLady.h"
 
 class LadySatake : public BossLady
