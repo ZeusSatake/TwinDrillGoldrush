@@ -96,10 +96,10 @@ namespace MartialFightScene
 		if (clear_)
 		{
 			auto save = Save::Object::Create(true);
-			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::MiningStageNo);
+			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::StageNo);
 			//次のステージへ
 			if (nowStage < 3)
-				save->SetValue(Save::Object::ValueKind::MiningStageNo, nowStage + 1);
+				save->SetValue(Save::Object::ValueKind::StageNo, nowStage + 1);
 			save->Kill();
 		}
 

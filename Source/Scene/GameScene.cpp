@@ -115,20 +115,20 @@ namespace  GameScene
 				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
 				make_pair(Map::Object::ChipKind::Adamantite, 3)
 			};
-			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::MiningStageNo)];
+			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
 			miningResult->SetTargetOre(targetOre.first, targetOre.second);
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Stone");
+			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Jewelry");
+			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Enemy");
+			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
 			enemymap->SetEnemy();
 		}
 
