@@ -53,10 +53,12 @@ public:
 	float GetNowAngle();
 	float UpdateDrillAngle();
 
-	void SetDurability(int num);
-	void InitDurability(int num);
-	int GetDurability();
-	int GetMaxDurability();
+	void SetDurability(int num);//セッター
+	void InitDurability(int num);//初期化用
+
+	int GetDurability();              //耐久値を取得する
+	int GetMaxDurability();           //最大耐久値取得
+	float GetNowDurabilityPercent();  //耐久値を％取得
 
 	void ResetDurability();
 

@@ -21,11 +21,15 @@ Player::Player()
 	this->cooldown->SetCountFrame(30);
 	this->overheat->SetCountFrame(300);
 	this->unHitTimer_->SetCountFrame(120);
+
+	this->angle_LR_ = Angle_LR::Left;
 	
 	status_->HP.Initialize(1000);
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
+
+
 
 	//HPバー設定
 	hpBar_->SetVisible(true);
@@ -160,6 +164,8 @@ void Player::Move()
 	this->overheat->Update();
 	this->drill_->SetMode(state_->GetNowState());
 
+	
+
 	if (this->overheat->IsCounting())
 	{
 		if(this->overheat->GetCount()<=1)
@@ -168,7 +174,7 @@ void Player::Move()
 
 	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot())
 	{
-		this->moveVec.y = min(this->moveVec.y + ((ML::Gravity(25) + (this->state_->moveCnt_ / 10)) * 5), 35.f);
+		this->moveVec.y = min(this->moveVec.y + ((ML::Gravity(15) + (this->state_->moveCnt_ / 10)) * 5), 35.f);
 	}
 	else
 	{
@@ -251,6 +257,14 @@ void Player::Move()
 		break;
 	case StateComponent::State::Appeal:
 		break;
+	}
+	if (this->controller_->GetLStickVec().x < 0)
+	{
+		this->angle_LR_ = Angle_LR::Left;
+	}
+	else if(this->controller_->GetLStickVec().x>0)
+	{
+		this->angle_LR_ = Angle_LR::Right;
 	}
     //this->CheckHitMap(this->preVec);
 	CheckMove(externalMoveVec);
@@ -375,4 +389,12 @@ void Player::HiddenPlayer()
 {
 	this->state_->UpdateNowState(StateComponent::State::Non);
 	this->drill_->SetMode(StateComponent::State::Non);
+}
+
+void Player::UpdateStates(int hp_, float speed_, int attack_, int defence_)
+{
+	this->status_->HP.Initialize(hp_);
+	this->status_->speed.Initialize(speed_, speed_, speed_);
+	this->status_->attack.Initialize(attack_, attack_);
+	this->status_->defence.Initialize(defence_, defence_);
 }
