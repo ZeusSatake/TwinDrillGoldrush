@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Source/Components/HPBarComponent.h"
 
 Enemy::Enemy()
 	:NPC()
@@ -9,6 +10,11 @@ Enemy::Enemy()
 {
 	AddComponent(moveCnt_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
+	AddComponent(hpBar_ = shared_ptr<HPBarComponent>(new HPBarComponent(this)));
+
+	hpBar_->SetVisible(true);
+	hpBar_->SetSupportScroll(true);
+	hpBar_->SetDrawSize(30, 6);
 }
 
 bool Enemy::WithinRange(class Actor* target)
@@ -86,4 +92,17 @@ void Enemy::SetNowState(const AIState nowState)
 StatusComponent* Enemy::GetStatus() const
 {
 	return status_.get();
+}
+
+void Enemy::UpDate()
+{
+	NPC::UpDate();
+
+	//hpƒo[‚ÌˆÊ’u‚ð‘«Œ³‚É“¯Šú
+	float bodyHeight = GetBox()->getHitBase().h;
+	float hpBarHeight = hpBar_->GetSize().y;
+	float footDistance = (bodyHeight + hpBarHeight) * 0.5f;
+	hpBar_->SetPos(GetPos().x, GetPos().y + footDistance);
+
+	hpBar_->Update();
 }

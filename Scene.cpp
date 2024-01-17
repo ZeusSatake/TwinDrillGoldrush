@@ -8,6 +8,7 @@
 #include "Source/Scene/BaseScene.h"
 #include "Source/Scene/MartialFightScene.h"
 #include "Source/Actors/Task_Player.h"
+#include "Source/Components/HPBarComponent.h"
 
 void Scene::SetNextScene(const Kind nextScene)
 {
@@ -22,7 +23,11 @@ void Scene::AddSceneChangeButton(const shared_ptr<ToggleButton>& sceneChangeButt
 void Scene::CreateNextScene()
 {
 	if (ge->playerPtr != nullptr)
-		ge->playerPtr->HiddenPlayer();
+	{
+		auto& playerPtr = ge->playerPtr;
+		playerPtr->HiddenPlayer();
+	}
+		
 	switch (nextScene_)
 	{
 	

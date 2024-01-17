@@ -156,6 +156,10 @@ namespace DrawGauge
 	{
 		return gaugeValue_.GetPercent() == 100.0f;
 	}
+	ML::Point Object::GetSize() const
+	{
+		return size_;
+	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
