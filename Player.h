@@ -19,7 +19,7 @@ class Player :public Character
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
-	class shared_ptr<TimerComponent> cooldown_;
+	class shared_ptr<TimerComponent> cooldown,overheat;
 	class shared_ptr<StatusComponent>status_;
 	shared_ptr<HPBarComponent> hpBar_;
 public:
@@ -48,6 +48,11 @@ public:
 
 	void ResetState();
 
+	bool UpdateDrilldurability();
+	void SetDrillDurability(int durability_);
+	int  GetDrilldurability();
+
+	int GetDrillAttack();
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;

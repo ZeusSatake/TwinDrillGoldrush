@@ -8,17 +8,20 @@
 
 Drill::Drill()
 	:
-	attack(0),
+	attack(1),
 	angle(0.0f),
 	addAngle(0.0f),
 	preAngle(0.0f),
-	durability(0),
+	durability(30),
+	maxDurability(30),
 	Length(1.f),
 	moveVec(ML::Vec2{0,0}),
 	canRotate(true)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
+
+	this->SetDurability(30);
 }
 
 
@@ -156,6 +159,7 @@ void Drill::Mining()
 			this->GetPos().x-ge->camera2D.x+(cos(this->UpdateDrillAngle()) * 16.f),
 				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
+		
 		map->Search(preVec);
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
@@ -166,6 +170,7 @@ void Drill::Mining()
 		};
 		map->Search(preVec);
 	}
+	
 }
 
 void Drill::Mining(ML::Vec2 pos)
@@ -231,6 +236,30 @@ void Drill::DrillCheckMove(ML::Vec2 e_)
 
 	}
 
+}
+
+void Drill::InitDurability(int num)
+{
+	this->durability = num;
+	this->maxDurability = num;
+}
+
+void Drill::SetDurability(int num)
+{
+	this->durability = num;
+}
+
+int Drill::GetDurability()
+{
+	return this->durability;
+}
+int Drill::GetMaxDurability()
+{
+	return this->maxDurability;
+}
+void Drill::ResetDurability()
+{
+	this->durability = this->maxDurability;
 }
 
 ML::Vec2 Drill::GetAttackPos()
