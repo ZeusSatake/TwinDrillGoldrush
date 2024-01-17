@@ -66,6 +66,13 @@ namespace ShopScene
 				int max;
 			};
 
+			enum class levelButtonKind
+			{
+				Drill,
+				Dress,
+				Speed
+			};
+
 			LevelButtonInfo levelButtonInfos[levelButtons.size()] =
 			{
 				{
@@ -91,8 +98,8 @@ namespace ShopScene
 			{
 				auto& button = levelButtons[i] = BuyButton::Object::Create(true);
 				auto& info = levelButtonInfos[i];
-				button->SetPosX(300 + button->GetBox()->getHitBase().w * i);
-				button->SetPosY(ge->screenCenterPos.y);
+				//button->SetPosX(300 + button->GetBox()->getHitBase().w * i);
+				//button->SetPosY(ge->screenCenterPos.y);
 				button->SetMouse(ge->mouse);
 				button->SetEnterButton(XI::Mouse::MB::LB);
 				button->SetResetTime(1.0f);
@@ -132,6 +139,11 @@ namespace ShopScene
 				}
 				buttons_.push_back(button);
 			}
+
+			//ˆÊ’u’²®
+			levelButtons.at((int)levelButtonKind::Drill)->SetPos(ML::Vec2(ge->screenCenterPos.x, 150));
+			levelButtons.at((int)levelButtonKind::Dress)->SetPos(ML::Vec2(280, ge->screenCenterPos.y + 120));
+			levelButtons.at((int)levelButtonKind::Speed)->SetPos(ML::Vec2(ge->screenWidth - 280, ge->screenCenterPos.y + 120));
 		}
 
 		return  true;
