@@ -7,6 +7,7 @@
 #include  "../../randomLib.h"
 #include  "../../sound.h"
 #include  "../Components/SecondsTimerComponent.h"
+#include  "../Components/HPBarComponent.h"
 
 #include  "EndingScene.h"
 
@@ -58,6 +59,8 @@ namespace  GameScene
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
 		ge->playerPtr->ResetState();
+		auto hpBar = ge->playerPtr->GetHPBar();
+		hpBar->SetPos(hpBar->GetSize().x * 0.5f, ge->screenHeight - hpBar->GetSize().y * 0.5f);
 	
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
