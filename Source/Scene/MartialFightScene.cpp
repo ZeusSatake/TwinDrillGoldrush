@@ -54,6 +54,12 @@ namespace MartialFightScene
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 
 		//šƒ^ƒXƒN‚Ì¶¬
+		{
+			if (auto ev = EventEngine::Object::Create_Mutex())
+			{
+				ev->Set("./data/event/eventmartialfightstart.txt");
+			}
+		}
 		{//•“¬‰ï
 			auto map = Map::Object::Create(true);
 			map->Load("MartialFight");
