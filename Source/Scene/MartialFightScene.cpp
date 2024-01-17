@@ -16,6 +16,8 @@
 #include "../Components/SecondsTimerComponent.h"
 #include "../Components/HPBarComponent.h"
 
+#include "../Event/Task_EventEngine.h"
+
 namespace MartialFightScene
 {
 	Resource::WP  Resource::instance;
@@ -58,7 +60,7 @@ namespace MartialFightScene
 		}
 		{//“G
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("MartialFightEnemy");
+			enemymap->Load("MartialFight1Enemy");
 			enemymap->SetEnemy();
 			//boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
 		}
@@ -114,6 +116,14 @@ namespace MartialFightScene
 	{
 		Scene::UpDate();
 		UpdateComponents();
+
+		if (clear_)
+		{
+			if (auto ev = EventEngine::Object::Create_Mutex())
+			{
+				ev->Set("./data/event/eventmartialfightclear.txt");
+			}
+		}
 
 		if (transitionTimer_->IsCountEndFrame())
 		{
