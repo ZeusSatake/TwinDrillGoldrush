@@ -48,7 +48,8 @@ namespace Save
 	public:
 		enum class ValueKind
 		{
-			StageNo,
+			MiningStageNo,
+			MartialFightStageNo,
 			DrillLevel,
 			DefenceLevel,
 			SpeedLevel,

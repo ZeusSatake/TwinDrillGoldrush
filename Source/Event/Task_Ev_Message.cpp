@@ -150,7 +150,7 @@ namespace Ev_Message
 		{
 			string orename[5] = { "ダマスカス","オリハルコン","ヒヒイロカネ","アダマンタイト","レディアンタイト" };
 			auto save = Save::Object::Create(true);
-			msgText.replace(ast2, 1, orename[save->GetValue<int>(Save::Object::ValueKind::StageNo)]);
+			msgText.replace(ast2, 1, orename[save->GetValue<int>(Save::Object::ValueKind::MiningStageNo)]);
 		}
 
 		//イベントエンジンを一時停止させる

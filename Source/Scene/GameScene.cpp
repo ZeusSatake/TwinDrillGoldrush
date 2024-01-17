@@ -19,6 +19,7 @@
 #include  "Task_EnemyMap.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../Actors/Task_MiningResult.h"
 
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
@@ -114,20 +115,20 @@ namespace  GameScene
 				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
 				make_pair(Map::Object::ChipKind::Adamantite, 3)
 			};
-			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::StageNo)];
+			const auto& targetOre = targetOres[save->GetValue<int>(Save::Object::ValueKind::MiningStageNo)];
 			miningResult->SetTargetOre(targetOre.first, targetOre.second);
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Stone");
+			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Jewelry");
+			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
+			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::MiningStageNo) + 1) + "Enemy");
 			enemymap->SetEnemy();
 		}
 
@@ -151,6 +152,7 @@ namespace  GameScene
 		ge->KillAll_G(Map::defGroupName);
 		ge->KillAll_G(BackGround::defGroupName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		ge->KillAll_GN(MiningResult::defGroupName, MiningResult::defName);
 		ge->KillAll_G(BlondeLady::defGroupName);
 
 		ge->debugRectReset();
