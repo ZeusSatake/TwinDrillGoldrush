@@ -4,7 +4,6 @@
 
 LadyKiyohara::LadyKiyohara()
 	:BossLady()
-	, isAttacking_(false)
 	, defaultFlyPosY_(200.f)
 	, attackPattern_(AttackPattern::Non)
 	, toGlidingPos_(0.f, 0.f)
@@ -15,7 +14,7 @@ LadyKiyohara::LadyKiyohara()
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(250);
 	preHP_=GetStatus()->HP.GetNowHP();
-	GetStatus()->speed.Initialize(3.5f, 7.f, -5.f);
+	GetStatus()->speed.Initialize(3.5f, 7.f, 5.f);
 
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);
@@ -55,7 +54,7 @@ void LadyKiyohara::Think()
 				attackPattern_ = AttackPattern::DropBombs;
 				break;
 			case AttackPattern::GlidingAttack:
-				attackPattern_ = AttackPattern::TackleAttack;
+				attackPattern_ = AttackPattern::GlidingAttack;
 				break;
 			case AttackPattern::TackleAttack:
 				attackPattern_ = AttackPattern::DropBombs;
@@ -65,7 +64,7 @@ void LadyKiyohara::Think()
 		}
 		break;
 	case AIState::Attack:
-		if (!isAttacking_)
+		if (!IsAttacking())
 		{
 			switch (attackPattern_)
 			{
@@ -73,7 +72,7 @@ void LadyKiyohara::Think()
 				afterState = AIState::AttackStand;
 				break;
 			case AttackPattern::GlidingAttack:
-				afterState = AIState::AttackStand;
+				afterState = AIState::Fly;
 				break;
 			case AttackPattern::TackleAttack:
 				afterState = AIState::Fly;
@@ -119,6 +118,8 @@ void LadyKiyohara::Think()
 		case AIState::Damage:
 			moveCnt_->SetCountFrame(30);
 			break;
+		case AIState::Dead:
+			moveCnt_->SetCountFrame(120);
 		default:
 			moveCnt_->SetCountFrame(0);
 			break;
@@ -164,11 +165,11 @@ void LadyKiyohara::Move()
 		plBox.Offset(GetTarget()->GetPos());
 		if (box_->CheckHit(plBox))
 		{
-			ge->playerPtr->TakeAttack(status_->attack.GetNow());
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
 		}
 	}
 
-	if (preHP_ != GetStatus()->HP.GetNowHP())
+	if(preHP_ != GetStatus()->HP.GetNowHP())
 	{
 		preHP_ = GetStatus()->HP.GetNowHP();
 		unHitTimer_->Start();
@@ -177,7 +178,7 @@ void LadyKiyohara::Move()
 
 void LadyKiyohara::UpDateFly()
 {
-	SetMoveVecY(GetStatus()->speed.GetNow());
+	SetMoveVecY(-GetStatus()->speed.GetNow());
 }
 
 void LadyKiyohara::UpDateDamage()
@@ -187,11 +188,15 @@ void LadyKiyohara::UpDateDamage()
 
 void LadyKiyohara::UpDateDead()
 {
-	Kill();
+	if (!moveCnt_->IsCounting())
+	{
+		Kill();
+	}
 }
 
 void LadyKiyohara::UpDateAttackStand()
 {
+	BeginAttack();
 	switch (attackPattern_)
 	{
 	case AttackPattern::Non:
@@ -247,20 +252,34 @@ void LadyKiyohara::UpDateDropBombs()
 	auto bomb04 = Bomb0::Object::Create(true);
 	bomb04->SetPos({ GetPos().x + bombDistance_ * 2,GetPos().y });
 	bomb04->SetOwner(this);
+
+	EndAttack();
 }
 
 void LadyKiyohara::UpDateGlidingAttack()
 {
-	SetMoveVec(toVec_ * status_->speed.GetNow());
 	//Œˆ’è‚ÌYÀ•W‚Ü‚Å~‰º‚µ‚½‚çUŒ‚I—¹
+	//‰º‚É‚¢‚éê‡
 	if (toGlidingPos_.y < GetPos().y)
 	{
-		isAttacking_ = false;
+		SetMoveVec(toVec_ * -status_->speed.GetFallSpeed());
+		if (toGlidingPos_.y >= GetPos().y)
+		{
+			EndAttack();
+		}
+	}
+	else
+	{
+		SetMoveVec(toVec_ * status_->speed.GetFallSpeed());
+		if (toGlidingPos_.y < GetPos().y)
+		{
+			EndAttack();
+		}
 	}
 }
 
 void LadyKiyohara::UpDateTackleAttack()
 {
-
+	EndAttack();
 }
 

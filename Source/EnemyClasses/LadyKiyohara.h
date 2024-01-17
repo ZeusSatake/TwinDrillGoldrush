@@ -2,7 +2,6 @@
 #include "BossLady.h"
 class LadyKiyohara : public BossLady
 {
-	bool isAttacking_;
 	ML::Vec2 toGlidingPos_;
 	ML::Vec2 toVec_;
 	const float defaultFlyPosY_;
