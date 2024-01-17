@@ -169,6 +169,7 @@
     <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
+    <ClCompile Include="Source\Actors\UI\Task_DrawHPBars.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Source\Components\CircleCollisionComponent.cpp" />
     <ClCompile Include="Source\Components\ControllerInputComponent.cpp" />
     <ClCompile Include="Source\Components\HP.cpp" />
+    <ClCompile Include="Source\Components\HPBarComponent.cpp" />
     <ClCompile Include="Source\Components\Money\PriceTagComponent.cpp" />
     <ClCompile Include="Source\Components\Money\WalletComponent.cpp" />
     <ClCompile Include="Source\Components\Movement.cpp" />
@@ -260,6 +262,7 @@
     <ClInclude Include="Source\Actors\UI\Task_BuyButton.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
+    <ClInclude Include="Source\Actors\UI\Task_DrawHPBars.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />
@@ -268,6 +271,7 @@
     <ClInclude Include="Source\Components\CircleCollisionComponent.h" />
     <ClInclude Include="Source\Components\ControllerInputComponent.h" />
     <ClInclude Include="Source\Components\HP.h" />
+    <ClInclude Include="Source\Components\HPBarComponent.h" />
     <ClInclude Include="Source\Components\Money\PriceTagComponent.h" />
     <ClInclude Include="Source\Components\Money\WalletComponent.h" />
     <ClInclude Include="Source\Components\Movement.h" />

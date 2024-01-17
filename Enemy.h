@@ -2,6 +2,9 @@
 #include "NPC.h"
 #include "myLib.h"
 #include "Source/Components/StatusComponent.h"
+
+class HPBarComponent;
+
 class Enemy : public NPC
 {
 	float range_;//ŽË’ö
@@ -10,6 +13,7 @@ class Enemy : public NPC
 protected:
 	shared_ptr<TimerComponent> moveCnt_;
 	shared_ptr<StatusComponent> status_;
+	shared_ptr<HPBarComponent> hpBar_;
 public:
 	enum AIState
 	{
@@ -55,5 +59,7 @@ public:
 	void SetNowState(const AIState nowState);
 
 	StatusComponent* GetStatus()const;
+
+	void UpDate() override;
 };
 
