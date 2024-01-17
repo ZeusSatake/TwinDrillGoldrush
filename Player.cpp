@@ -16,7 +16,7 @@ Player::Player()
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(120);
 	
-	status_->HP.Initialize(1000);
+	status_->HP.Initialize(10000000000);
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
@@ -183,8 +183,7 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::KnockBack:
-		moveVec = this->externalMoveVec;
-		this->externalMoveVec = ML::Vec2{ 0,0 };
+		
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -223,26 +222,39 @@ void Player::Move()
 	}
 	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
-	
+	if(this->state_->GetNowState() == StateComponent::State::KnockBack)
+	CheckMove(externalMoveVec);
+	else
 	CheckMove(moveVec);
 }
 
-void Player::CollisionJudge(ML::Box2D hitBox_)
+void Player::CollisionJudge(ML::Box2D hitBox_ ,ML::Vec2 pos_)
 {
-	ML::Rect  r = { hitBox_.x, hitBox_.y, hitBox_.x + hitBox_.w, hitBox_.y + hitBox_.h };
-	//矩形がマップ外に出ていたらサイズを変更する
-	ML::Rect  me =
+	
+	ML::Rect ext =
 	{
-		this->box_->getHitBase().x,
-		this->box_->getHitBase().y,
-		this->box_->getHitBase().x + this->box_->getHitBase().w,
-		this->box_->getHitBase().y + this->box_->getHitBase().h
+		hitBox_.OffsetCopy(pos_).x,
+		hitBox_.OffsetCopy(pos_).y,
+		hitBox_.OffsetCopy(pos_).x + hitBox_.OffsetCopy(pos_).w,
+		hitBox_.OffsetCopy(pos_).y + hitBox_.OffsetCopy(pos_).h
 	};
-	if (r.left < me.left) { r.left = me.left; }
-	if (r.top < me.top) { r.top = me.top; }
-	if (r.right > me.right) { r.right = me.right; }
-	if (r.bottom > me.bottom) { r.bottom = me.bottom; }
 
+	ML::Rect me =
+	{
+		this->box_->getHitBase().OffsetCopy(this->GetPos()).x,
+		this->box_->getHitBase().OffsetCopy(this->GetPos()).y,
+		this->box_->getHitBase().OffsetCopy(this->GetPos()).x + this->box_->getHitBase().OffsetCopy(this->GetPos()).w,
+		this->box_->getHitBase().OffsetCopy(this->GetPos()).y + this->box_->getHitBase().OffsetCopy(this->GetPos()).h,
+	};
+
+	if(CheckHit(hitBox_.OffsetCopy(pos_)))
+	{
+		this->state_->UpdateNowState(StateComponent::State::KnockBack);
+		if (ext.left - 1 < me.right) { this->externalMoveVec.x = -1; }
+		//if (ext.bottom > me.top) { this->externalMoveVec.y = 1; }
+		if (ext.right > me.left) { this->externalMoveVec.x = 1; }
+		if (ext.top < me.bottom-1) { this->externalMoveVec.y = -1; }
+	}
 }
 
 void Player::HitAttack()

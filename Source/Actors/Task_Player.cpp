@@ -170,12 +170,12 @@ namespace player
 		//------------------------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D{ 1000,20,500,500 }, "<PosX>" + to_string(this->GetPos().x) +" " + "<PosY>" + to_string(this->GetPos().y),ML::Color{1,1,0,0});
 		//------------------------------------------------------------------
-		ge->debugFont->Draw(ML::Box2D{ 1000,40,500,500 }, "Drill \: <PosX>" + to_string(this->drill_->GetPos().x) + " <PosY>" + to_string(this->drill_->GetPos().y), ML::Color{ 1,1,0,0 });
+		ge->debugFont->Draw(ML::Box2D{ 1000,40,500,500 }, "Drill : <PosX>" + to_string(this->drill_->GetPos().x) + " <PosY>" + to_string(this->drill_->GetPos().y), ML::Color{ 1,1,0,0 });
 		//------------------------------------------------------------------
-		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP\:" + to_string(this->status_->HP.GetNowHP()));
+		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP:" + to_string(this->status_->HP.GetNowHP()));
 		//------------------------------------------------------------------
-		ge->debugFont->Draw(ML::Box2D{ 1000,80,500,500 }, "UnHitTimer\:" + to_string(this->unHitTimer_->GetCount()));
-		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "moveVec\:" + to_string(this->controller_->gamePad_->GetState().LStick.volume));
+		ge->debugFont->Draw(ML::Box2D{ 1000,80,500,500 }, "UnHitTimer:" + to_string(this->unHitTimer_->GetCount()));
+		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "hitbox : <Left>" + to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).x)+" <Top>"+ to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).y));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
