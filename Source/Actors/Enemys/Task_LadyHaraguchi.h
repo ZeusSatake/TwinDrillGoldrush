@@ -8,7 +8,7 @@
 namespace Haraguchi
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("ボス");	//グループ名
+	const  string  defGroupName("敵");	//グループ名
 	const  string  defName("原口お嬢様");//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource

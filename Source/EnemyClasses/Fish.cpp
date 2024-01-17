@@ -20,17 +20,14 @@ void Fish::Move()
 
 	limitRange_ -= movementAmount_;
 	//ƒ_ƒ[ƒW‚ğ—^‚¦‚éˆ—
-	if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
+	ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+	plBox.Offset(GetTarget()->GetPos());
+	if (box_->CheckHit(plBox))
 	{
-		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-		plBox.Offset(GetTarget()->GetPos());
-		if (box_->CheckHit(plBox))
-		{
-			HitPlayer();
-			Kill();
-		}
+		HitPlayer();
+		Kill();
 	}
-	
+
 	if (limitRange_ <= 0)
 	{
 		Kill();
@@ -39,7 +36,7 @@ void Fish::Move()
 
 void Fish::HitPlayer()
 {
-	static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+	static_cast<Player*>(GetTarget())->TakeAttack(status_->attack.GetNow());
 }
 
 

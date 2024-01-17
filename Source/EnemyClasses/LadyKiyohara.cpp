@@ -1,0 +1,285 @@
+#include "LadyKiyohara.h"
+#include "../Actors/Task_Player.h"
+#include "../Actors/Task_Bomb.h"
+
+LadyKiyohara::LadyKiyohara()
+	:BossLady()
+	, defaultFlyPosY_(200.f)
+	, attackPattern_(AttackPattern::Non)
+	, toGlidingPos_(0.f, 0.f)
+	, toVec_(0.f, 0.f)
+	, bombDistance_(50.f)
+{
+	SetFov(1000.f);
+	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
+	GetStatus()->HP.Initialize(250);
+	preHP_=GetStatus()->HP.GetNowHP();
+	GetStatus()->speed.Initialize(3.5f, 7.f, 5.f);
+
+	moveCnt_->SetCountFrame(0);
+	unHitTimer_->SetCountFrame(15);
+
+	SetTarget(ge->playerPtr.get());
+}
+
+void LadyKiyohara::Think()
+{
+	AIState afterState = GetNowState();
+	switch (afterState)
+	{
+	case AIState::Idle:
+		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+		{
+			afterState = AttackStand;
+		}
+		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+		{
+			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+			plBox.Offset(GetTarget()->GetPos());
+			if (box_->CheckHit(plBox))
+			{
+				afterState = AIState::Damage;
+			}
+		}
+		break;
+	case AIState::AttackStand:
+		if (!moveCnt_->IsCounting())
+		{
+			switch (attackPattern_)
+			{
+			case AttackPattern::Non:
+				attackPattern_ = AttackPattern::DropBombs;
+				break;
+			case AttackPattern::DropBombs:
+				attackPattern_ = AttackPattern::DropBombs;
+				break;
+			case AttackPattern::GlidingAttack:
+				attackPattern_ = AttackPattern::GlidingAttack;
+				break;
+			case AttackPattern::TackleAttack:
+				attackPattern_ = AttackPattern::DropBombs;
+				break;
+			}
+			afterState = AIState::Attack;
+		}
+		break;
+	case AIState::Attack:
+		if (!IsAttacking())
+		{
+			switch (attackPattern_)
+			{
+			case AttackPattern::DropBombs:
+				afterState = AIState::AttackStand;
+				break;
+			case AttackPattern::GlidingAttack:
+				afterState = AIState::Fly;
+				break;
+			case AttackPattern::TackleAttack:
+				afterState = AIState::Fly;
+				break;
+			}
+			
+		}
+		break;
+	case AIState::Damage:
+		if (status_->HP.GetNowHP() <= 0)
+		{
+			afterState = AIState::Dead;
+		}
+		else if (!moveCnt_->IsCounting())
+		{
+			afterState = GetPreState();
+		}
+		break;
+	case AIState::Fly:
+		if (GetPos().y <= defaultFlyPosY_)
+		{
+			afterState = AIState::AttackStand;
+		}
+		break;
+	case AIState::Dead:
+		break;
+	}
+	if (GetStatus()->HP.GetNowHP() <= 0)
+	{
+		afterState = AIState::Dead;
+	}
+	//状態の更新と各状態ごとの行動カウンタを設定
+	if (UpDateState(afterState))
+	{
+		switch (afterState)
+		{
+		case AIState::AttackStand:
+			moveCnt_->SetCountFrame(120);
+			break;
+		case AIState::Attack:
+			moveCnt_->SetCountFrame(0);
+			break;
+		case AIState::Damage:
+			moveCnt_->SetCountFrame(30);
+			break;
+		case AIState::Dead:
+			moveCnt_->SetCountFrame(120);
+		default:
+			moveCnt_->SetCountFrame(0);
+			break;
+		}
+		moveCnt_->Start();
+	}
+}
+
+void LadyKiyohara::Move()
+{
+	moveCnt_->Update();
+	unHitTimer_->Update();
+	ML::Vec2 est;
+
+	switch (GetNowState())
+	{
+	case AIState::Idle:
+		break;
+	case AIState::AttackStand:
+		UpDateAttackStand();
+		break;
+	case AIState::Attack:
+		UpDateAttack();
+		break;
+	case AIState::Damage:
+		UpDateDamage();
+		break;
+	case AIState::Fly:
+		UpDateFly();
+		break;
+	case AIState::Dead:
+		UpDateDead();
+		break;
+	}
+
+	est = GetMoveVec();
+	CheckMove(est);
+
+	//ダメージ処理
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		}
+	}
+
+	if(preHP_ != GetStatus()->HP.GetNowHP())
+	{
+		preHP_ = GetStatus()->HP.GetNowHP();
+		unHitTimer_->Start();
+	}
+}
+
+void LadyKiyohara::UpDateFly()
+{
+	SetMoveVecY(-GetStatus()->speed.GetNow());
+}
+
+void LadyKiyohara::UpDateDamage()
+{
+
+}
+
+void LadyKiyohara::UpDateDead()
+{
+	if (!moveCnt_->IsCounting())
+	{
+		Kill();
+	}
+}
+
+void LadyKiyohara::UpDateAttackStand()
+{
+	BeginAttack();
+	switch (attackPattern_)
+	{
+	case AttackPattern::Non:
+		break;
+	case AttackPattern::DropBombs:
+		SetMoveVecX(ge->playerPtr->GetPos().x - GetPos().x);
+		SetMoveVecY(0);
+		break;
+	case AttackPattern::GlidingAttack:
+		//降下する方向を決定
+		SetMoveVec(ML::Vec2{0, 0});
+		toVec_ = CalcAngle(ge->playerPtr->GetPos());
+		toGlidingPos_ = ge->playerPtr->GetPos();
+		break;
+	case AttackPattern::TackleAttack:
+		break;
+	}
+}
+
+void LadyKiyohara::UpDateAttack()
+{
+	switch (attackPattern_)
+	{
+	case AttackPattern::Non:
+		break;
+	case AttackPattern::DropBombs:
+		UpDateDropBombs();
+		break;
+	case AttackPattern::GlidingAttack:
+		UpDateGlidingAttack();
+		break;
+	case AttackPattern::TackleAttack:
+		UpDateTackleAttack();
+		break;
+	}
+}
+
+void LadyKiyohara::UpDateDropBombs()
+{
+	SetMoveVec({ 0,0 });
+	auto bomb00 = Bomb0::Object::Create(true);
+	bomb00->SetPos({ GetPos().x,GetPos().y });
+	bomb00->SetOwner(this);
+	auto bomb01 = Bomb0::Object::Create(true);
+	bomb01->SetPos({ GetPos().x - bombDistance_ * 2,GetPos().y });
+	bomb01->SetOwner(this);
+	auto bomb02 = Bomb0::Object::Create(true);
+	bomb02->SetPos({ GetPos().x - bombDistance_ * 1,GetPos().y });
+	bomb02->SetOwner(this);
+	auto bomb03 = Bomb0::Object::Create(true);
+	bomb03->SetPos({ GetPos().x + bombDistance_ * 1,GetPos().y });
+	bomb03->SetOwner(this);
+	auto bomb04 = Bomb0::Object::Create(true);
+	bomb04->SetPos({ GetPos().x + bombDistance_ * 2,GetPos().y });
+	bomb04->SetOwner(this);
+
+	EndAttack();
+}
+
+void LadyKiyohara::UpDateGlidingAttack()
+{
+	//決定時のY座標まで降下したら攻撃終了
+	//下にいる場合
+	if (toGlidingPos_.y < GetPos().y)
+	{
+		SetMoveVec(toVec_ * -status_->speed.GetFallSpeed());
+		if (toGlidingPos_.y >= GetPos().y)
+		{
+			EndAttack();
+		}
+	}
+	else
+	{
+		SetMoveVec(toVec_ * status_->speed.GetFallSpeed());
+		if (toGlidingPos_.y < GetPos().y)
+		{
+			EndAttack();
+		}
+	}
+}
+
+void LadyKiyohara::UpDateTackleAttack()
+{
+	EndAttack();
+}
+

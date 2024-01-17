@@ -3,13 +3,13 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include "../../EnemyClasses/LadyKumagai.h"
+#include "../ActorClasses/Bomb.h"
 
-namespace Kumagai
+namespace Bomb0
 {
 	//タスクに割り当てるグループ名と固有名
-	const  string  defGroupName("敵");	//グループ名
-	const  string  defName("熊谷お嬢様");		//タスク名
+	const  string  defGroupName("オブジェクト");	//グループ名
+	const  string  defName("爆弾");		//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -24,10 +24,11 @@ namespace Kumagai
 		static  Resource::SP  Create();
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		//共有する変数はここに追加する
-		DG::Image::SP img;
+		DG::Image::SP  imgBomb;
+		DG::Image::SP  imgBlast;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  LadyKumagai
+	class  Object : public  Bomb
 	{
 	public:
 		virtual  ~Object();

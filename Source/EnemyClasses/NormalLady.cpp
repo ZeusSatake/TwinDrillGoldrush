@@ -206,10 +206,7 @@ void NormalLady::UpDateAttack()
 
 		if (fanEdge_->CheckHit(plBox))
 		{
-			if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
-			{
-				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
-			}
+			static_cast<Player*>(GetTarget())->TakeAttack(status_->attack.GetNow());
 		}
 		if (!moveCnt_->IsCounting())
 		{
