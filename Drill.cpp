@@ -253,10 +253,17 @@ int Drill::GetDurability()
 {
 	return this->durability;
 }
+
 int Drill::GetMaxDurability()
 {
 	return this->maxDurability;
 }
+
+float Drill::GetNowDurabilityPercent()
+{
+	return this->durability / this->maxDurability;
+}
+
 void Drill::ResetDurability()
 {
 	this->durability = this->maxDurability;

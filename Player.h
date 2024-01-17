@@ -28,7 +28,10 @@ public:
 
 
 	StateComponent::State pState;
+
+
 	
+
 	void Think()override;
 	void Move()override;
 
@@ -51,6 +54,8 @@ public:
 	bool UpdateDrilldurability();
 	void SetDrillDurability(int durability_);
 	int  GetDrilldurability();
+
+	void UpdateStates(int hp_,float speed_,int attack_,int defence_);//プレイヤーのステータスを一括でアップデートするメソッド
 
 	int GetDrillAttack();
 	ML::Box2D GetAttackBox();
