@@ -73,5 +73,6 @@ namespace DrawGauge
 		void SetVisible(const bool visible);
 
 		bool IsMax() const;
+		ML::Point GetSize() const;
 	};
 }
