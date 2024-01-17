@@ -177,7 +177,6 @@
     <ClCompile Include="Source\Actors\UI\Task_BuyButton.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_Cursor.cpp" />
     <ClCompile Include="Source\Actors\UI\Task_DrawGauge.cpp" />
-    <ClCompile Include="Source\Actors\UI\Task_DrawHPBars.cpp" />
     <ClCompile Include="Source\Components\AIMoveComponent.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimInfo.cpp" />
     <ClCompile Include="Source\Components\Animation\AnimManager.cpp" />
@@ -280,7 +279,6 @@
     <ClInclude Include="Source\Actors\UI\Task_BuyButton.h" />
     <ClInclude Include="Source\Actors\UI\Task_Cursor.h" />
     <ClInclude Include="Source\Actors\UI\Task_DrawGauge.h" />
-    <ClInclude Include="Source\Actors\UI\Task_DrawHPBars.h" />
     <ClInclude Include="Source\Components\AIMoveComponent.h" />
     <ClInclude Include="Source\Components\Animation\AnimInfo.h" />
     <ClInclude Include="Source\Components\Animation\AnimManager.h" />

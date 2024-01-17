@@ -3,14 +3,17 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "MartialFightScene.h"
-#include  "../Actors/UI/SceneChangeButton.h"
-#include  "Task_Map.h"
-#include "Task_EnemyMap.h"
-#include "../Actors/Task_Player.h"
+
 #include "../../Camera.h"
-#include "../Actors/Enemys/Task_LadySatake.h"
-#include "../Components/SecondsTimerComponent.h"
+#include "../EnemyClasses/BossLady.h"
+
 #include "../System/Task_Save.h"
+#include "../Actors/Task_Player.h"
+#include  "Task_Map.h"
+#include  "Task_EnemyMap.h"
+#include  "../Actors/UI/SceneChangeButton.h"
+
+#include "../Components/SecondsTimerComponent.h"
 
 namespace MartialFightScene
 {
@@ -54,7 +57,7 @@ namespace MartialFightScene
 			auto enemymap = EnemyMap::Object::Create(true);
 			enemymap->Load("MartialFightEnemy");
 			enemymap->SetEnemy();
-			boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
+			//boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
 		}
 		{
 			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
@@ -120,6 +123,12 @@ namespace MartialFightScene
 			clear_ = true;
 		}
 	}
+
+	void Object::SetBoss(const shared_ptr<BossLady>& boss)
+	{
+		boss_ = boss;
+	}
+
 	//-------------------------------------------------------------------
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
