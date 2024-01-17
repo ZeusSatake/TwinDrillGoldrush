@@ -96,6 +96,7 @@ namespace MartialFightScene
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_G("キャラクタ");
 		ge->KillAll_G("敵");
+		ge->KillAll_G("オブジェクト");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
