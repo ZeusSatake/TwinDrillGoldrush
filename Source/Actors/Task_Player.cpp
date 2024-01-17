@@ -5,6 +5,7 @@
 #include  "Task_Player.h"
 #include "Task_Drill.h"
 #include "../Actors/UI/Task_DrawGauge.h"
+#include "../Components/HPBarComponent.h"
 
 namespace player
 {
@@ -44,17 +45,6 @@ namespace player
 		auto dl = drill::Object::Create(true);
 		this->drill_ = dl;
 
-		//HPバー
-		{
-			hpGauge_ = DrawGauge::Object::Create(true);
-			hpGauge_->Set(status_->HP.GetPercentage());
-			hpGauge_->SetSupportScroll(false);
-			ML::Point size{ 350, 60 };
-			hpGauge_->SetDrawSize(size.x, size.y);
-			hpGauge_->SetPos(size.x * 0.5f, ge->screenHeight - size.y * 0.5f);
-			hpGauge_->SetVisible(false);
-		}
-
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -62,7 +52,7 @@ namespace player
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
@@ -81,8 +71,8 @@ namespace player
 		drill_->SetPos(this->GetPos());
 		drill_->dState = this->state_->GetNowState();
 
-		hpGauge_->Set(status_->HP.GetPercentage());
-		hpGauge_->SetVisible(pState != StateComponent::State::Non);
+		hpBar_->Update();
+		this->hpBar_->SetVisible(pState != StateComponent::State::Non);
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

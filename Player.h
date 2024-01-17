@@ -7,6 +7,7 @@
 #include "Source/Components/StatusComponent.h"
 
 namespace DrawGauge { class Object; }
+class HPBarComponent;//includeすると循環参照が起こるため前方宣言
 
 class Player :public Character
 {
@@ -20,6 +21,7 @@ protected:
 	class shared_ptr<StateComponent> state_;
 	class shared_ptr<TimerComponent> cooldown_;
 	class shared_ptr<StatusComponent>status_;
+	shared_ptr<HPBarComponent> hpBar_;
 public:
 	Player();
 	virtual ~Player() {}; 
@@ -49,6 +51,7 @@ public:
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;
+	HPBarComponent* GetHPBar() const;
     
 	void CollisionJudge(ML::Box2D hitBox_ , ML::Vec2 pos_);//外部のオブジェクトにめり込まないようにするメソッド
 

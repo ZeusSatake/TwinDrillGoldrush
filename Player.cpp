@@ -2,6 +2,7 @@
 #include "MyPG.h"
 #include "Source/Scene/Task_Map.h"
 #include "Drill.h"
+#include "Source/Components/HPBarComponent.h"
 
 Player::Player()
 	:
@@ -13,6 +14,9 @@ Player::Player()
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
 	AddComponent(cooldown_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
+
+	AddComponent(hpBar_ = shared_ptr<HPBarComponent>(new HPBarComponent(this)));
+
 	this->cooldown_->SetCountFrame(30);
 	this->unHitTimer_->SetCountFrame(120);
 	
@@ -20,6 +24,13 @@ Player::Player()
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
+
+	//HPバー設定
+	hpBar_->SetVisible(true);
+	hpBar_->SetSupportScroll(false);
+	ML::Point hpBarSize{ 350, 60 };
+	hpBar_->SetDrawSize(hpBarSize.x, hpBarSize.y);
+	hpBar_->SetPos(hpBarSize.x * 0.5f, ge->screenHeight - hpBarSize.y * 0.5f);
 }
 
 
@@ -27,8 +38,8 @@ Player::Player()
 bool Player::CheckFoot()
 {
 	ML::Box2D footBox{
-		    this->box_->getHitBase().x,
-			this->box_->getHitBase().y +this->box_->getHitBase().h,
+			this->box_->getHitBase().x,
+			this->box_->getHitBase().y + this->box_->getHitBase().h,
 			this->box_->getHitBase().w,
 			1
 	};
@@ -71,26 +82,28 @@ void Player::Think()
 
 		break;
 	case StateComponent::State::Idle:
-		if (inp.LStick.volume!=0) { pState = StateComponent::State::Walk; }
+		if (inp.LStick.volume != 0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
-		if(inp.L1.down){pState = StateComponent::State::Attack; }
+		if (inp.L1.down) { pState = StateComponent::State::Attack; }
 		break;
 	case StateComponent::State::Walk:
 		if (inp.LStick.volume == 0) { pState = StateComponent::State::Idle; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
-		if(inp.B1.down){pState = StateComponent::State::Dash;}
-		if(inp.B2.down){ pState = StateComponent::State::Drill; }
-		if(inp.Trigger.L2.down){ pState = StateComponent::State::SpinAttack; }
-		if(inp.L1.down){ pState = StateComponent::State::Attack; }
-		if (!CheckFoot()&&!CheckHead()) { pState = StateComponent::State::Fall; }
+		if (inp.B1.down) { pState = StateComponent::State::Dash; }
+		if (inp.B2.down) { pState = StateComponent::State::Drill; }
+		if (inp.Trigger.L2.down) { pState = StateComponent::State::SpinAttack; }
+		if (inp.L1.down) { pState = StateComponent::State::Attack; }
+		if (!CheckFoot() && !CheckHead()) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
 		if (this->state_->moveCnt_ > 30
-			||inp.L1.off) { pState = StateComponent::State::Idle; }
+			|| inp.L1.off) {
+			pState = StateComponent::State::Idle;
+		}
 		break;
 	case StateComponent::State::SpinAttack:
-		if (this->drill_->SpinAngle(0.3f)){ pState = StateComponent::State::Idle; }
+		if (this->drill_->SpinAngle(0.3f)) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
 		if(this->unHitTimer_->GetCount()>30)pState = StateComponent::State::Idle;
@@ -105,29 +118,30 @@ void Player::Think()
 		break;
 	case StateComponent::State::Jump:
 		if (GetMoveVec().y > 0 || CheckHead()
-			||!CheckFoot()) { pState = StateComponent::State::Fall; }
+			|| !CheckFoot()) {
+			pState = StateComponent::State::Fall;
+		}
 		break;
 	case StateComponent::State::Fall:
 		if (CheckFoot()) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Dash:
-		if(inp.LStick.volume ==0||this->state_->moveCnt_ >=30){pState= StateComponent::State::Idle; }
+		if (inp.LStick.volume == 0 || this->state_->moveCnt_ >= 30) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Drill:
 		if (inp.L1.on) { pState = StateComponent::State::Mining; }
 		if (inp.B2.down) { pState = StateComponent::State::Idle; }
-		if (inp.Trigger.L2.down&&this->CheckFoot()) { pState = StateComponent::State::DrillDash; }
+		if (inp.Trigger.L2.down && this->CheckFoot()) { pState = StateComponent::State::DrillDash; }
 		break;
 	case StateComponent::State::DrillDash:
-		if(this->state_->moveCnt_>=30){pState= StateComponent::State::Drill;}
+		if (this->state_->moveCnt_ >= 30) { pState = StateComponent::State::Drill; }
 		break;
 	case StateComponent::State::Mining:
-		if(inp.L1.off) { pState = StateComponent::State::Drill; }
+		if (inp.L1.off) { pState = StateComponent::State::Drill; }
 		break;
 	case StateComponent::State::Appeal:
 		break;
-	}
-	
+	}	
 	if (this->status_->HP.GetNowHP()<=0)
 	{
 		this->pState=StateComponent::State::Dead;
@@ -142,14 +156,14 @@ void Player::Move()
 	this->unHitTimer_->Update();
 	this->drill_->SetMode(state_->GetNowState());
 
-	if (this->moveVec.y<=0||!CheckHead()||!CheckFoot())
+	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot())
 	{
-		this->moveVec.y = min(this->moveVec.y+((ML::Gravity(25) +(this->state_->moveCnt_/10)) * 5), 35.f);
+		this->moveVec.y = min(this->moveVec.y + ((ML::Gravity(25) + (this->state_->moveCnt_ / 10)) * 5), 35.f);
 	}
 	else
 	{
 		this->moveVec.y = 0;
-		
+
 	}
 	if (this->moveVec.x < 0)
 	{
@@ -168,7 +182,6 @@ void Player::Move()
 		break;
 	case StateComponent::State::Walk:
 		this->moveVec.x=controller_->GetLStickVec().x *this->status_->speed.GetMax();
-		
 		break;
 	case StateComponent::State::Attack:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
@@ -189,27 +202,27 @@ void Player::Move()
 		break;
 	case StateComponent::State::Jump:
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-		moveVec.y = jumpPow + (this->state_->moveCnt_/20);
+		moveVec.y = jumpPow + (this->state_->moveCnt_ / 20);
 		break;
 	case StateComponent::State::Fall:
-		moveVec.x = controller_->GetLStickVec().x* this->status_->speed.GetMax();
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		break;
 	case StateComponent::State::Dash:
 		this->status_->speed.SetMax(5.0f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		break;
 	case StateComponent::State::DrillDash:
-		if(this->state_->moveCnt_ == 0)this->drill_->SetCanRotate(false);
-		moveVec = this->drill_->DrillAngleVec()*5;
+		if (this->state_->moveCnt_ == 0)this->drill_->SetCanRotate(false);
+		moveVec = this->drill_->DrillAngleVec() * 5;
 		this->drill_->Mining();
 		if (this->state_->moveCnt_ >= 29)this->drill_->SetCanRotate(true);
 		break;
 	case StateComponent::State::Drill:
 		this->status_->speed.SetMax(0.85f);
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-		if (inp.R1.down&&this->CheckFoot()) 
+		if (inp.R1.down && this->CheckFoot())
 		{
-			moveVec.y = jumpPow-10 + (this->state_->moveCnt_ / 10);
+			moveVec.y = jumpPow - 10 + (this->state_->moveCnt_ / 10);
 			this->state_->moveCnt_ = 0;
 		}
 		break;
@@ -220,7 +233,6 @@ void Player::Move()
 	case StateComponent::State::Appeal:
 		break;
 	}
-	//ここに最終的にマップとの移動可否チェックを入れる
     //this->CheckHitMap(this->preVec);
 	if(this->state_->GetNowState() == StateComponent::State::KnockBack)
 	CheckMove(externalMoveVec);
@@ -300,6 +312,11 @@ ML::Vec2 Player::GetMoveVec()
 StatusComponent* Player::GetStatus() const
 {
 	return this->status_.get();
+}
+
+HPBarComponent* Player::GetHPBar() const
+{
+	return this->hpBar_.get();
 }
 
 void Player::ResetState()
