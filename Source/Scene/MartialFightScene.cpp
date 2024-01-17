@@ -14,6 +14,7 @@
 #include  "../Actors/UI/SceneChangeButton.h"
 
 #include "../Components/SecondsTimerComponent.h"
+#include "../Components/HPBarComponent.h"
 
 namespace MartialFightScene
 {
@@ -47,6 +48,8 @@ namespace MartialFightScene
 		//★データ初期化
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
 		ge->playerPtr->ResetState();
+		auto hpBar = ge->playerPtr->GetHPBar();
+		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 
 		//★タスクの生成
 		{//武闘会
