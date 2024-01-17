@@ -10,6 +10,8 @@
 #include "../Actors/Enemys/Task_LadyKumagai.h"
 #include "../Actors/Enemys/Task_LadyHaraguchi.h"
 
+#include "../Scene/MartialFightScene.h"
+
 namespace  EnemyMap
 {
 	Resource::WP  Resource::instance;
@@ -107,6 +109,8 @@ namespace  EnemyMap
 	//-------------------------------------------------------------------
 	void Object::SetEnemy()
 	{
+		auto scene = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName);
+
 		for (int y = 0; y < this->sizeY; ++y) {
 			for (int x = 0; x < this->sizeX; ++x) {
 				// ƒ`ƒbƒv‚Ì”Ô†‚É‚æ‚Á‚Ä¶¬‚·‚é“G‚ð•Ï‚¦‚é
@@ -131,6 +135,7 @@ namespace  EnemyMap
 					auto enemy = Satake::Object::Create(true);
 					enemy->SetPosX(x * chipSize);
 					enemy->SetPosY(y * chipSize);
+					scene->SetBoss(enemy);
 				}
 				break;
 				case 15:
@@ -138,6 +143,7 @@ namespace  EnemyMap
 					auto enemy = Kumagai::Object::Create(true);
 					enemy->SetPosX(x * chipSize);
 					enemy->SetPosY(y * chipSize);
+					scene->SetBoss(enemy);
 				}
 				break;
 				case 20:
@@ -145,6 +151,7 @@ namespace  EnemyMap
 					auto enemy = Haraguchi::Object::Create(true);
 					enemy->SetPosX(x * chipSize);
 					enemy->SetPosY(y * chipSize);
+					scene->SetBoss(enemy);
 				}
 				}
 			}
