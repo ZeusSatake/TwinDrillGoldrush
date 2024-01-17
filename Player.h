@@ -19,7 +19,7 @@ class Player :public Character
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
 	class shared_ptr<StateComponent> state_;
-	class shared_ptr<TimerComponent> cooldown_;
+	class shared_ptr<TimerComponent> cooldown,overheat;
 	class shared_ptr<StatusComponent>status_;
 	shared_ptr<HPBarComponent> hpBar_;
 public:
@@ -28,7 +28,10 @@ public:
 
 
 	StateComponent::State pState;
+
+
 	
+
 	void Think()override;
 	void Move()override;
 
@@ -48,6 +51,13 @@ public:
 
 	void ResetState();
 
+	bool UpdateDrilldurability();
+	void SetDrillDurability(int durability_);
+	int  GetDrilldurability();
+
+	void UpdateStates(int hp_,float speed_,int attack_,int defence_);//プレイヤーのステータスを一括でアップデートするメソッド
+
+	int GetDrillAttack();
 	ML::Box2D GetAttackBox();
 	ML::Vec2 GetMoveVec();
 	StatusComponent* GetStatus() const;

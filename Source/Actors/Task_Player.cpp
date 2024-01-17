@@ -165,7 +165,9 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,60,500,500 }, "HP:" + to_string(this->status_->HP.GetNowHP()));
 		//------------------------------------------------------------------
 		ge->debugFont->Draw(ML::Box2D{ 1000,80,500,500 }, "UnHitTimer:" + to_string(this->unHitTimer_->GetCount()));
-		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "hitbox : <Left>" + to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).x)+" <Top>"+ to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).y));
+		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "countdown:" + to_string(this->cooldown->GetCount()));
+		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
+		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 	}
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

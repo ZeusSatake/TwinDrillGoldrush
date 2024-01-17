@@ -7,6 +7,7 @@
 #include  "../../randomLib.h"
 #include  "../../sound.h"
 #include  "../Components/SecondsTimerComponent.h"
+#include  "../Components/HPBarComponent.h"
 
 #include  "EndingScene.h"
 
@@ -18,6 +19,7 @@
 #include  "Task_EnemyMap.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../Actors/Task_MiningResult.h"
 
 #include "../Actors/Task_Player.h"
 #include "../../Camera.h"
@@ -58,6 +60,8 @@ namespace  GameScene
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
 		ge->playerPtr->ResetState();
+		auto hpBar = ge->playerPtr->GetHPBar();
+		hpBar->SetPos(hpBar->GetSize().x * 0.5f, ge->screenHeight - hpBar->GetSize().y * 0.5f);
 	
 		fontImg.img = DG::Image::Create("./data/image/font_number.png");
 		fontImg.size = ML::Point{ 20, 32 };
@@ -148,6 +152,7 @@ namespace  GameScene
 		ge->KillAll_G(Map::defGroupName);
 		ge->KillAll_G(BackGround::defGroupName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		ge->KillAll_GN(MiningResult::defGroupName, MiningResult::defName);
 		ge->KillAll_G(BlondeLady::defGroupName);
 
 		ge->debugRectReset();

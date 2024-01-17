@@ -6,6 +6,7 @@ class Drill :public Character
 {
 	int   attack;//UŒ‚—Í
 	int   durability; //‘Ï‹v’n
+	int   maxDurability;
 	float addAngle;   //’Ç‰Á‚µ‚½Šp“x
 	float angle;      //Šp“x
 	float Length;
@@ -52,6 +53,14 @@ public:
 	float GetNowAngle();
 	float UpdateDrillAngle();
 
+	void SetDurability(int num);//ƒZƒbƒ^[
+	void InitDurability(int num);//‰Šú‰»—p
+
+	int GetDurability();              //‘Ï‹v’l‚ğæ“¾‚·‚é
+	int GetMaxDurability();           //Å‘å‘Ï‹v’læ“¾
+	float GetNowDurabilityPercent();  //‘Ï‹v’l‚ğ“æ“¾
+
+	void ResetDurability();
 
 	void Mining();
 	void Mining(ML::Vec2 pos);
