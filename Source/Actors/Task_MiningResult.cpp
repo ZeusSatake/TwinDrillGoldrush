@@ -107,7 +107,7 @@ namespace MiningResult
 		this->res = Resource::Create();
 
 		render2D_Priority[1] = 0.0f;
-		clear_ = true;
+		clear_ = false;
 
 		{
 			//==================鉱石==================
@@ -158,13 +158,6 @@ namespace MiningResult
 			getJewelryCount_.insert(make_pair(sellableJewelrys_[i], 0));
 		}
 
-		{//デバッグ用
-			for (auto& oreCount : getOreCount_)
-				++oreCount.second;
-			for (auto& jewelryCount : getJewelryCount_)
-				++jewelryCount.second;
-		}
-
 		//★タスクの生成
 		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
 		transitionTimer_->SetCountSeconds(20.0f);
@@ -202,7 +195,7 @@ namespace MiningResult
 	{
 		UpdateComponents();
 
-		//clear_ = getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_;
+		clear_ = getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_;
 
 		if (clear_ /*&&
 			transitionTimer_->IsActive() == false*/)
