@@ -51,10 +51,10 @@ namespace ShopScene
 		gotoBaseButton->SetText("拠点へ");
 		AddSceneChangeButton(gotoBaseButton);
 
-		auto save = Save::Object::Create(true);
+		save_ = Save::Object::Create(true);
 
 		AddComponent(wallet = make_shared<WalletComponent>(this));
-		wallet->RoadHaveMoney(save);
+		wallet->RoadHaveMoney(save_);
 
 		{//購入ボタン
 			array<shared_ptr<BuyButton::Object>, 3> levelButtons;
@@ -109,10 +109,10 @@ namespace ShopScene
 				(
 					info.name,
 					info.price,
-					[save, button, info](void)
+					[this, button, info](void)
 					{
-						save->SetValue(Save::Object::ValueKind::HaveMoney, button->GetBuyerWallet()->GetBalance());
-						int nowLevel = save->GetValue<int>(info.kind);
+						save_->SetValue(Save::Object::ValueKind::HaveMoney, button->GetBuyerWallet()->GetBalance());
+						int nowLevel = save_->GetValue<int>(info.kind);
 						if (nowLevel >= info.max)
 						{
 							button->SetEnable(false);
@@ -121,7 +121,7 @@ namespace ShopScene
 
 						int nextLevel = nowLevel + 1;
 
-						save->SetValue(info.kind, nextLevel);
+						save_->SetValue(info.kind, nextLevel);
 
 						//マックスになったときに入力受付を終了
 						if (nextLevel >= drill_MaxLevel)
@@ -133,7 +133,7 @@ namespace ShopScene
 				);
 
 				//レベル最大のものは無効に
-				if (save->GetValue<int>(info.kind) >= info.max)
+				if (save_->GetValue<int>(info.kind) >= info.max)
 				{
 					button->SetEnable(false);
 				}
@@ -156,7 +156,7 @@ namespace ShopScene
 		ge->debugRectReset();
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
-		ge->KillAll_G(Save::defGroupName);
+		save_->Kill();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -184,13 +184,11 @@ namespace ShopScene
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "ショップ");
 
 		{
-			auto save = ge->GetTask<Save::Object>(Save::defGroupName, Save::defName);
-
 			string param =
 				"プレイヤの所持金：" + to_string(wallet->GetBalance()) + "\n" + 
-				"ドリル：" + to_string(save->GetValue<int>(Save::Object::ValueKind::DrillLevel)) + "\n" + 
-				"防御　：" + to_string(save->GetValue<int>(Save::Object::ValueKind::DefenceLevel)) + "\n" + 
-				"速度　：" + to_string(save->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
+				"ドリル：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DrillLevel)) + "\n" + 
+				"防御　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)) + "\n" + 
+				"速度　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
 			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 350, 200, 500, 500), param);
 		}
 	}
