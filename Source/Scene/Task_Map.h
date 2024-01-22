@@ -78,7 +78,8 @@ namespace  Map
 			Palladium,
 			Adamantite,
 			DiagonalBrick = 26,
-			Brick
+			Brick,
+			Ladyanite
 		};
 
 		int					sizeY, sizeX;

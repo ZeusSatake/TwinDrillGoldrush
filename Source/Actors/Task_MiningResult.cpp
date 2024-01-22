@@ -22,7 +22,8 @@ namespace MiningResult
 		Object::OreKind::Damascus,
 		Object::OreKind::Orichalcum,
 		Object::OreKind::Palladium,
-		Object::OreKind::Adamantite
+		Object::OreKind::Adamantite,
+		Object::OreKind::Ladyanite
 	};
 	string Object::SellableOreName(const OreKind kind)
 	{
@@ -44,6 +45,8 @@ namespace MiningResult
 			return "パラジウム　　";
 		case Object::OreKind::Adamantite:
 			return "アダマンタイト";
+		case Object::OreKind::Ladyanite:
+			return "レディアナイト";
 		default:
 			assert(!"設定されていない値です");
 		}
@@ -128,6 +131,7 @@ namespace MiningResult
 			orePriceTags_.at(OreKind::Orichalcum)->SetPrice(120);
 			orePriceTags_.at(OreKind::Palladium)->SetPrice(140);
 			orePriceTags_.at(OreKind::Adamantite)->SetPrice(160);
+			orePriceTags_.at(OreKind::Ladyanite)->SetPrice(200);
 
 			//==================宝石==================
 			//初期化
