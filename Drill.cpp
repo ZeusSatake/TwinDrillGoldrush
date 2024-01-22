@@ -153,14 +153,14 @@ bool Drill::LimitLength(ML::Vec2 pos)
 
 void Drill::Mining()
 {
-	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
+	auto map = ge->GetTasks<Map::Object>(Map::defGroupName, Map::defName);
+	for(auto it = map->begin();it!=map->end();it++)
 	{
 		ML::Vec2 preVec{
 			this->GetPos().x-ge->camera2D.x+(cos(this->UpdateDrillAngle()) * 16.f),
 				this->GetPos().y-ge->camera2D.y +(sin(this->UpdateDrillAngle()) * 16.f)
 		};
-		
-		map->Search(preVec);
+		it->get()->Search(preVec);
 	}
 	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
 	{

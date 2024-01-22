@@ -27,7 +27,6 @@ void NormalLady::Think()
 			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
-				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
@@ -58,7 +57,6 @@ void NormalLady::Think()
 			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
-				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}

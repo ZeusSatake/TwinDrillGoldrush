@@ -2,6 +2,7 @@
 #include "BossLady.h"
 class LadyKiyohara : public BossLady
 {
+	bool patternSwitchFlag_;
 	ML::Vec2 toGlidingPos_;
 	ML::Vec2 toVec_;
 	const float defaultFlyPosY_;
@@ -31,9 +32,6 @@ public:
 	void UpDateDropBombs();
 	void UpDateGlidingAttack();
 	void UpDateTackleAttack();
-
-
-	//is•ûŒü‚ğ‹‚ß‚é
 	
 };
 

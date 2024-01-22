@@ -4,11 +4,12 @@
 
 LadyKiyohara::LadyKiyohara()
 	:BossLady()
-	, defaultFlyPosY_(200.f)
+	, defaultFlyPosY_(500.f)
 	, attackPattern_(AttackPattern::Non)
 	, toGlidingPos_(0.f, 0.f)
 	, toVec_(0.f, 0.f)
 	, bombDistance_(50.f)
+	, patternSwitchFlag_(false)
 {
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
@@ -30,36 +31,13 @@ void LadyKiyohara::Think()
 	case AIState::Idle:
 		if (WithinSight(GetTarget()))//イベント終了してから切り替え
 		{
+			patternSwitchFlag_ = true;
 			afterState = AttackStand;
-		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
-			if (box_->CheckHit(plBox))
-			{
-				afterState = AIState::Damage;
-			}
 		}
 		break;
 	case AIState::AttackStand:
 		if (!moveCnt_->IsCounting())
 		{
-			switch (attackPattern_)
-			{
-			case AttackPattern::Non:
-				attackPattern_ = AttackPattern::DropBombs;
-				break;
-			case AttackPattern::DropBombs:
-				attackPattern_ = AttackPattern::DropBombs;
-				break;
-			case AttackPattern::GlidingAttack:
-				attackPattern_ = AttackPattern::GlidingAttack;
-				break;
-			case AttackPattern::TackleAttack:
-				attackPattern_ = AttackPattern::DropBombs;
-				break;
-			}
 			afterState = AIState::Attack;
 		}
 		break;
@@ -78,7 +56,6 @@ void LadyKiyohara::Think()
 				afterState = AIState::Fly;
 				break;
 			}
-			
 		}
 		break;
 	case AIState::Damage:
@@ -92,7 +69,7 @@ void LadyKiyohara::Think()
 		}
 		break;
 	case AIState::Fly:
-		if (GetPos().y <= defaultFlyPosY_)
+		if (GetPos().y < defaultFlyPosY_+50.f&&GetPos().y>=defaultFlyPosY_-50.f)
 		{
 			afterState = AIState::AttackStand;
 		}
@@ -120,6 +97,7 @@ void LadyKiyohara::Think()
 			break;
 		case AIState::Dead:
 			moveCnt_->SetCountFrame(120);
+			break;
 		default:
 			moveCnt_->SetCountFrame(0);
 			break;
@@ -130,6 +108,7 @@ void LadyKiyohara::Think()
 
 void LadyKiyohara::Move()
 {
+
 	moveCnt_->Update();
 	unHitTimer_->Update();
 	ML::Vec2 est;
@@ -174,11 +153,38 @@ void LadyKiyohara::Move()
 		preHP_ = GetStatus()->HP.GetNowHP();
 		unHitTimer_->Start();
 	}
+
+	if (patternSwitchFlag_)
+	{
+		switch (attackPattern_)
+		{
+		case AttackPattern::Non:
+			attackPattern_ = AttackPattern::DropBombs;
+			break;
+		case AttackPattern::DropBombs:
+			attackPattern_ = AttackPattern::GlidingAttack;
+			break;
+		case AttackPattern::GlidingAttack:
+			attackPattern_ = AttackPattern::TackleAttack;
+			break;
+		case AttackPattern::TackleAttack:
+			attackPattern_ = AttackPattern::DropBombs;
+			break;
+		}
+		patternSwitchFlag_ = false;
+	}
 }
 
 void LadyKiyohara::UpDateFly()
 {
-	SetMoveVecY(-GetStatus()->speed.GetNow());
+	if (defaultFlyPosY_ < GetPos().y)
+	{
+		SetMoveVecY(-GetStatus()->speed.GetFallSpeed());
+	}
+	else
+	{
+		SetMoveVecY(GetStatus()->speed.GetFallSpeed());
+	}
 }
 
 void LadyKiyohara::UpDateDamage()
@@ -202,7 +208,7 @@ void LadyKiyohara::UpDateAttackStand()
 	case AttackPattern::Non:
 		break;
 	case AttackPattern::DropBombs:
-		SetMoveVecX(ge->playerPtr->GetPos().x - GetPos().x);
+		SetMoveVecX(0);
 		SetMoveVecY(0);
 		break;
 	case AttackPattern::GlidingAttack:
@@ -212,6 +218,7 @@ void LadyKiyohara::UpDateAttackStand()
 		toGlidingPos_ = ge->playerPtr->GetPos();
 		break;
 	case AttackPattern::TackleAttack:
+		SetMoveVec(ML::Vec2{ 0,0 });  
 		break;
 	}
 }
@@ -254,32 +261,24 @@ void LadyKiyohara::UpDateDropBombs()
 	bomb04->SetOwner(this);
 
 	EndAttack();
+	patternSwitchFlag_ = true;
 }
 
 void LadyKiyohara::UpDateGlidingAttack()
 {
 	//決定時のY座標まで降下したら攻撃終了
 	//下にいる場合
-	if (toGlidingPos_.y < GetPos().y)
+	SetMoveVec(toVec_ * status_->speed.GetFallSpeed());
+	if (toGlidingPos_.y >= GetPos().y)
 	{
-		SetMoveVec(toVec_ * -status_->speed.GetFallSpeed());
-		if (toGlidingPos_.y >= GetPos().y)
-		{
-			EndAttack();
-		}
-	}
-	else
-	{
-		SetMoveVec(toVec_ * status_->speed.GetFallSpeed());
-		if (toGlidingPos_.y < GetPos().y)
-		{
-			EndAttack();
-		}
+		EndAttack();
+		patternSwitchFlag_ = true;
 	}
 }
 
 void LadyKiyohara::UpDateTackleAttack()
 {
 	EndAttack();
+	patternSwitchFlag_ = true;
 }
 

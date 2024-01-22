@@ -68,7 +68,25 @@ namespace Kiyohara
 			res->img->Draw(draw, src);
 
 			ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
-			ge->debugFont->Draw(ML::Box2D(400, 300, 700, 700), to_string(unHitTimer_->GetCount()));
+
+			{
+				std::string sn;
+				switch (GetNowState())
+				{
+				case AttackStand:
+					sn = "UŒ‚‘Ò‹@";
+					break;
+				case Attack:
+					sn = "UŒ‚’†";
+					break;
+				case Fly:
+					sn = "”òs’†";
+					break;
+				}
+
+				ge->debugFont->Draw(ML::Box2D(400, 300, 700, 700), sn);
+			}
+
 		}
 	}
 
