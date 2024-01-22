@@ -52,32 +52,40 @@ namespace MiningResult
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 
-		map<Map::Object::ChipKind, shared_ptr<PriceTagComponent>> orePriceTags_;
-		map<JewelryMap::Object::ChipKind, shared_ptr<PriceTagComponent>> jewelryPriceTags_;
+		using OreKind = Map::Object::ChipKind;
+		using JewelryKind = JewelryMap::Object::ChipKind;
 
-		map<Map::Object::ChipKind, int> getOreCount_;
-		map<JewelryMap::Object::ChipKind, int> getJewelryCount_;
 
 		Scene* nowScene_;
-		Map::Object::ChipKind targetOreKind_;
+
+		bool clear_;
+		shared_ptr<SecondsTimerComponent> transitionTimer_;
+
+		int initialHaveMoney_;
+
+		OreKind targetOreKind_;
 		int needTargetDestroyAmount_;
 
-		static const Map::Object::ChipKind sellableOres_[];
-		static string SellableOreName(const Map::Object::ChipKind kind);
-		static const JewelryMap::Object::ChipKind sellableJewelrys_[];
-		static string SellableJewelryName(const JewelryMap::Object::ChipKind kind);
+		map<OreKind, int> getOreCount_;
+		map<JewelryKind, int> getJewelryCount_;
 
-		static bool IsSellableOre(const Map::Object::ChipKind oreKind);
-		static bool IsSellableJewelry(const JewelryMap::Object::ChipKind oreKind);
+		map<OreKind, shared_ptr<PriceTagComponent>> orePriceTags_;
+		map<JewelryKind, shared_ptr<PriceTagComponent>> jewelryPriceTags_;
 
-		int CalcTotalSellingPrice() const;
+		int totalSellingPrice_;
+		void CalcTotalSellingPrice();
 
-		bool transitionCountStart_;
-		shared_ptr<SecondsTimerComponent> transitionTimer_;
+		static const OreKind sellableOres_[];
+		static string SellableOreName(const OreKind kind);
+		static const JewelryKind sellableJewelrys_[];
+		static string SellableJewelryName(const JewelryKind kind);
+
+		static bool IsSellableOre(const OreKind oreKind);
+		static bool IsSellableJewelry(const JewelryKind oreKind);
 	public:
-		void SetTargetOre(const Map::Object::ChipKind oreKind, const int needDestroyAmount);
+		void SetTargetOre(const OreKind oreKind, const int needDestroyAmount);
 		void SetNowSecene(Scene* scene);
-		void CountUpOre(const Map::Object::ChipKind oreKind);
-		void CountUpJewelry(const JewelryMap::Object::ChipKind jewelryKind);
+		void CountUpOre(const OreKind oreKind);
+		void CountUpJewelry(const JewelryKind jewelryKind);
 	};
 }
