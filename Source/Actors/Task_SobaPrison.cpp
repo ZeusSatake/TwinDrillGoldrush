@@ -1,19 +1,18 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_LadySatake.h"
-#include "../../Actors/Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_SobaPrison.h"
 
-namespace Satake
+namespace SobaPrison0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
+		imgNotice = DG::Image::Create("./data/image/NoticeLine.png");
+		imgPrison = DG::Image::Create("./data/image/SobaTate.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -54,37 +53,30 @@ namespace Satake
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Think();
 		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		if(GetState()==SobaPrison::State::Notice)
 		{
 			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D src(0, 0, 8, 36);
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
-			res->img->Draw(draw, src);
+			res->imgNotice->Draw(draw, src);
 		}
-		if (IsAttacking())
+		else if(GetState() == SobaPrison::State::Expand)
 		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
+			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+			ML::Box2D src(0, 0, 8, 36);
+			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
+			res->imgPrison->Draw(draw, src);
 		}
+
+		ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(expandTimer_->GetCount()));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

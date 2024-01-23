@@ -6,6 +6,7 @@ class LadyKiyohara : public BossLady
 	ML::Vec2 toGlidingPos_;
 	ML::Vec2 toVec_;
 	const float defaultFlyPosY_;
+	int tackleCnt_;
 	int preHP_;
 	enum AttackPattern
 	{
@@ -33,5 +34,7 @@ public:
 	void UpDateGlidingAttack();
 	void UpDateTackleAttack();
 	
+	void UpDateTackleCount();
+	void HitBomb();
 };
 

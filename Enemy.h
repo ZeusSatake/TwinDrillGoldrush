@@ -26,6 +26,7 @@ public:
 		Jump, //’µ–ô
 		Fall,//—‰º
 		Fly,//‘Ø‹ó
+		Warp,//ƒ[ƒv
 		AttackStand,//UŒ‚€”õ
 		Attack,//UŒ‚
 		Guard,//–hŒä

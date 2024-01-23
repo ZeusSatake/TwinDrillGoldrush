@@ -1,19 +1,17 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_LadySatake.h"
-#include "../../Actors/Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_LongSword.h"
 
-namespace Satake
+namespace LongSword
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
+		img = DG::Image::Create("./data/image/LongSword.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,7 +30,7 @@ namespace Satake
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		box_->setHitBase(ML::Box2D(-16, -40, 32, 80));
 		//★タスクの生成
 
 		return  true;
@@ -54,37 +52,17 @@ namespace Satake
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Think();
 		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
-			res->img->Draw(draw, src);
-		}
-		if (IsAttacking())
-		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
-		}
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src(0, 0, 32, 80);
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		res->img->Draw(draw, src);
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

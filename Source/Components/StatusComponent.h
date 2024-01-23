@@ -20,6 +20,7 @@ public:
 		float GetMax() const;
 		float GetFallSpeed() const;
 		void AddSpeed(const float add);
+		void SetNow(const float now);
 		void SetMax(const float max);
 		void SetFallSpeed(const float fallSpeed);
 	};
@@ -33,6 +34,7 @@ public:
 		int GetNow() const;
 		int GetMax() const;
 		void AddAttack(const int add);
+		void SetNow(const int now);
 		void SetMax(const int max);
 	};
 	struct Defence
@@ -45,6 +47,7 @@ public:
 		int GetNow() const;
 		int GetMax() const;
 		void AddDefence(const int add);
+		void SetNow(const int now);
 		void SetMax(const int max);
 	};
 	struct Health

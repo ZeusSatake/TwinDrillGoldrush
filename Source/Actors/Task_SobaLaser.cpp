@@ -1,19 +1,18 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_LadySatake.h"
-#include "../../Actors/Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_SobaLaser.h"
 
-namespace Satake
+namespace SobaLaser0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
+		imgVertical = DG::Image::Create("./data/image/Soba.png");
+		imgHorizontal = DG::Image::Create("./data/image/SobaTate.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -32,7 +31,7 @@ namespace Satake
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		box_->setHitBase(ML::Box2D(-32, -32, 64, 64));
 		//★タスクの生成
 
 		return  true;
@@ -54,37 +53,27 @@ namespace Satake
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Think();
 		Move();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
+		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
+		ML::Box2D src;
+		//スクロール対応
+		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+		if (GetDirection() == Down)
 		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
-			res->img->Draw(draw, src);
+			src = { 0,0,8,32 };
+			res->imgVertical->Draw(draw, src);
 		}
-		if (IsAttacking())
+		else
 		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
+			src = { 0,0,32,8 };
+			res->imgHorizontal->Draw(draw, src);
 		}
+		
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

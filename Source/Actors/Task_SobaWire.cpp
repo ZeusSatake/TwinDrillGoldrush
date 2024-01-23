@@ -1,25 +1,26 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../../MyPG.h"
-#include  "Task_LadySatake.h"
-#include "../../Actors/Task_Player.h"
+#include  "../../MyPG.h"
+#include  "Task_SobaWire.h"
 
-namespace Satake
+namespace SobaWire0
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
+		imgWire = DG::Image::Create("./data/image/SobaWire.png");
+		imgWeak= DG::Image::Create("./data/image/SobaWeak.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		imgWire.reset();
+		imgWeak.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -54,8 +55,7 @@ namespace Satake
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		Think();
-		Move();
+		Update();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -63,28 +63,22 @@ namespace Satake
 	{
 		{
 			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D src(0, 0, 256, 8);
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
-			res->img->Draw(draw, src);
+			res->imgWire->Draw(draw, src);
 		}
-		if (IsAttacking())
 		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
+			for (int i=0;i<weakPoint_.size();++i)
 			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
+				ML::Box2D draw = weakPoint_[i]->getHitBase().OffsetCopy(GetWeakPointPos()[i]);
+				ML::Box2D src(0, 0, 8, 8);
+				//スクロール対応
+				draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+				res->imgWeak->Draw(draw, src);
 			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
 		}
+		//ge->debugFont->Draw(ML::Box2D(100, 300, 700, 700), to_string(GetWeakPointPos().size()));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
