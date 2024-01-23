@@ -44,6 +44,11 @@ void StatusComponent::Speed::AddSpeed(const float add)
 	now_ += add;
 }
 
+void StatusComponent::Speed::SetNow(const float now)
+{
+	now_ = now;
+}
+
 void StatusComponent::Speed::SetMax(const float max)
 {
 	max_ = max;
@@ -79,6 +84,11 @@ void StatusComponent::Attack::AddAttack(const int add)
 	now_ += add;
 }
 
+void StatusComponent::Attack::SetNow(const int now)
+{
+	now_ = now;
+}
+
 void StatusComponent::Attack::SetMax(const int max)
 {
 	max_ = max;
@@ -106,6 +116,11 @@ int StatusComponent::Defence::GetMax() const
 void StatusComponent::Defence::AddDefence(const int add)
 {
 	now_ += add;
+}
+
+void StatusComponent::Defence::SetNow(const int now)
+{
+	now_ = now;
 }
 
 void StatusComponent::Defence::SetMax(const int max)

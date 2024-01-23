@@ -7,7 +7,7 @@ class Bomb : public Actor
 	bool isReflected_;
 	const int damage_;
 	const float movementAmount_;
-	LadyKiyohara* owner_;
+	BossLady* owner_;
 	shared_ptr<class TimerComponent> bombCnt_;
 protected:
 	shared_ptr<class BoxCollisionComponent> blastBox_;
@@ -21,7 +21,7 @@ public:
 
 	void ChangeExplosion();
 
-	void SetOwner(LadyKiyohara* owner) { owner_ = owner; }
+	void SetOwner(BossLady* owner) { owner_ = owner; }
 
 	enum BombState
 	{

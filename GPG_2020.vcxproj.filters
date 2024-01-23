@@ -389,6 +389,43 @@
     <ClCompile Include="Source\Actors\Task_Bomb.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Components\HPBarComponent.cpp" />
+    <ClCompile Include="Source\EnemyClasses\LadyNegishi.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_LadyNegishi.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\SobaLaser.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\Sobanomi.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\SobaPrison.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\SobaWire.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_SobaPrison.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_SobaLaser.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_SobaWire.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Sobanomi.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ActorClasses\FallObject.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_LongSword.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -696,6 +733,43 @@
       <Filter>MyPG\ActorClasses</Filter>
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_Bomb.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\HPBarComponent.h" />
+    <ClInclude Include="Source\EnemyClasses\LadyNegishi.h">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_LadyNegishi.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\SobaLaser.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\Sobanomi.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\SobaPrison.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\SobaWire.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_SobaPrison.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_SobaLaser.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_SobaWire.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Sobanomi.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\FallObject.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_LongSword.h">
       <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
   </ItemGroup>

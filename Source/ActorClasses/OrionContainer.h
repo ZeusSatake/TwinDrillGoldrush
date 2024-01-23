@@ -15,5 +15,7 @@ public:
 	void HitFoward();
 
 	void HitTop();
+
+	void SetLimitRange(float limitRange) { limitRange_ = limitRange; }
 };
 

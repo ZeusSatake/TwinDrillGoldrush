@@ -10,12 +10,14 @@ LadyKiyohara::LadyKiyohara()
 	, toVec_(0.f, 0.f)
 	, bombDistance_(50.f)
 	, patternSwitchFlag_(false)
+	, tackleCnt_(5)
 {
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(250);
 	preHP_=GetStatus()->HP.GetNowHP();
-	GetStatus()->speed.Initialize(3.5f, 7.f, 5.f);
+	GetStatus()->speed.Initialize(4.5f, 7.f, 5.f);
+	GetStatus()->attack.Initialize(100, 100);
 
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);
@@ -47,13 +49,20 @@ void LadyKiyohara::Think()
 			switch (attackPattern_)
 			{
 			case AttackPattern::DropBombs:
-				afterState = AIState::AttackStand;
+				afterState = AIState::Fly;
 				break;
 			case AttackPattern::GlidingAttack:
-				afterState = AIState::Fly;
+				afterState = AIState::AttackStand;
 				break;
 			case AttackPattern::TackleAttack:
-				afterState = AIState::Fly;
+				if (tackleCnt_ > 0)
+				{
+					afterState = AIState::AttackStand;
+				}
+				else
+				{
+					afterState = AIState::Fly;
+				}
 				break;
 			}
 		}
@@ -69,7 +78,7 @@ void LadyKiyohara::Think()
 		}
 		break;
 	case AIState::Fly:
-		if (GetPos().y < defaultFlyPosY_+50.f&&GetPos().y>=defaultFlyPosY_-50.f)
+		if (GetPos().y < defaultFlyPosY_ + 50.f && GetPos().y >= defaultFlyPosY_ - 50.f)
 		{
 			afterState = AIState::AttackStand;
 		}
@@ -87,10 +96,17 @@ void LadyKiyohara::Think()
 		switch (afterState)
 		{
 		case AIState::AttackStand:
-			moveCnt_->SetCountFrame(120);
+			if (attackPattern_ == TackleAttack)
+			{
+				moveCnt_->SetCountFrame(60);
+			}
+			else
+			{
+				moveCnt_->SetCountFrame(120);
+			}
 			break;
 		case AIState::Attack:
-			moveCnt_->SetCountFrame(0);
+			moveCnt_->SetCountFrame(60);
 			break;
 		case AIState::Damage:
 			moveCnt_->SetCountFrame(30);
@@ -148,6 +164,16 @@ void LadyKiyohara::Move()
 		}
 	}
 
+	if (GetNowState()!=AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
+
 	if(preHP_ != GetStatus()->HP.GetNowHP())
 	{
 		preHP_ = GetStatus()->HP.GetNowHP();
@@ -165,6 +191,7 @@ void LadyKiyohara::Move()
 			attackPattern_ = AttackPattern::GlidingAttack;
 			break;
 		case AttackPattern::GlidingAttack:
+			UpDateTackleCount();
 			attackPattern_ = AttackPattern::TackleAttack;
 			break;
 		case AttackPattern::TackleAttack:
@@ -208,17 +235,42 @@ void LadyKiyohara::UpDateAttackStand()
 	case AttackPattern::Non:
 		break;
 	case AttackPattern::DropBombs:
-		SetMoveVecX(0);
+		if (ge->playerPtr->GetPos().x < GetPos().x)
+		{
+			SetMoveVecX(-GetStatus()->speed.GetNow());
+		}
+		else if(ge->playerPtr->GetPos().x>GetPos().x)
+		{
+			SetMoveVecX(GetStatus()->speed.GetNow());
+		}
+		else
+		{
+			SetMoveVecX(0);
+		}
 		SetMoveVecY(0);
+
+		if (isHitBomb_)
+		{
+			patternSwitchFlag_ = true;
+			isHitBomb_ = false;
+		}
 		break;
 	case AttackPattern::GlidingAttack:
 		//降下する方向を決定
 		SetMoveVec(ML::Vec2{0, 0});
-		toVec_ = CalcAngle(ge->playerPtr->GetPos());
+		toVec_ = CalcAngle({ ge->playerPtr->GetPos().x, ge->playerPtr->GetPos().y});
 		toGlidingPos_ = ge->playerPtr->GetPos();
 		break;
 	case AttackPattern::TackleAttack:
-		SetMoveVec(ML::Vec2{ 0,0 });  
+		SetMoveVec(ML::Vec2{ 0,0 });
+		if (ge->playerPtr->GetPos().x < GetPos().x)
+		{
+			angle_LR_ = Angle_LR::Left;
+		}
+		else
+		{
+			angle_LR_ = Angle_LR::Right;
+		}
 		break;
 	}
 }
@@ -243,6 +295,7 @@ void LadyKiyohara::UpDateAttack()
 
 void LadyKiyohara::UpDateDropBombs()
 {
+	
 	SetMoveVec({ 0,0 });
 	auto bomb00 = Bomb0::Object::Create(true);
 	bomb00->SetPos({ GetPos().x,GetPos().y });
@@ -259,17 +312,15 @@ void LadyKiyohara::UpDateDropBombs()
 	auto bomb04 = Bomb0::Object::Create(true);
 	bomb04->SetPos({ GetPos().x + bombDistance_ * 2,GetPos().y });
 	bomb04->SetOwner(this);
-
 	EndAttack();
-	patternSwitchFlag_ = true;
 }
 
 void LadyKiyohara::UpDateGlidingAttack()
 {
 	//決定時のY座標まで降下したら攻撃終了
-	//下にいる場合
 	SetMoveVec(toVec_ * status_->speed.GetFallSpeed());
-	if (toGlidingPos_.y >= GetPos().y)
+	//プレイヤーと自身の高さの整合性を取る
+	if (toGlidingPos_.y <= GetPos().y+16)
 	{
 		EndAttack();
 		patternSwitchFlag_ = true;
@@ -278,7 +329,44 @@ void LadyKiyohara::UpDateGlidingAttack()
 
 void LadyKiyohara::UpDateTackleAttack()
 {
-	EndAttack();
-	patternSwitchFlag_ = true;
+	if (tackleCnt_ <= 0)
+	{
+		patternSwitchFlag_ = true;
+	}
+	else
+	{
+		if (angle_LR_==Angle_LR::Left)
+		{
+			SetMoveVecX(-GetStatus()->speed.GetNow());
+		}
+		else
+		{
+			SetMoveVecX(GetStatus()->speed.GetNow());
+		}
+		if(!moveCnt_->IsCounting())
+		{
+			--tackleCnt_;
+			EndAttack();
+		}
+	}
 }
+
+void LadyKiyohara::UpDateTackleCount()
+{
+	if (GetStatus()->HP.GetNowHP() <= GetStatus()->HP.GetMaxHP() / 2)
+	{
+		GetStatus()->speed.SetNow(GetStatus()->speed.GetNow() * 1.2f);
+		tackleCnt_ = 5;
+	}
+	else if (GetStatus()->HP.GetNowHP() <= GetStatus()->HP.GetMaxHP() / 4)
+	{
+		GetStatus()->speed.SetNow(GetStatus()->speed.GetNow() * 1.5f);
+		tackleCnt_ = 3;
+	}
+	else
+	{
+		tackleCnt_ = 7;
+	}
+}
+
 

@@ -4,7 +4,7 @@
 Bomb::Bomb()
 	:Actor()
 	, isReflected_(false)
-	, damage_(50)
+	, damage_(10)
 	, movementAmount_(5.5f)
 	, bombState_(BombState::Fall)
 {
@@ -29,6 +29,17 @@ void Bomb::Move()
 		break;
 	case BombState::Fall:
 		SetMoveVecY(movementAmount_);
+		//ƒhƒŠƒ‹UŒ‚‚É“–‚½‚Á‚½‚ç”½ŽË
+		if (ge->playerPtr->pState == StateComponent::State::Attack)
+		{
+			ML::Box2D drill = ge->playerPtr->drill_->GetBox()->getHitBase();
+			drill.Offset(ge->playerPtr->drill_->GetPos());
+
+			if (box_->CheckHit(drill))
+			{
+				ChangeReflect();
+			}
+		}
 		break;
 	case BombState::Reflect:
 	{
@@ -64,6 +75,7 @@ void Bomb::Move()
 			if (blastBox_->CheckHit(ownerBox))
 			{
 				isGiveDamage_ = true;
+				owner_->HitBomb();
 				owner_->GetStatus()->HP.TakeDamage(damage_);
 			}
 		}
@@ -71,17 +83,7 @@ void Bomb::Move()
 		break;
 	}
 
-	//ƒhƒŠƒ‹UŒ‚‚É“–‚½‚Á‚½‚ç”½ŽË
-	if (ge->playerPtr->pState == StateComponent::State::Attack)
-	{
-		ML::Box2D drill = ge->playerPtr->drill_->GetBox()->getHitBase();
-		drill.Offset(ge->playerPtr->drill_->GetPos());
-
-		if (box_->CheckHit(drill))
-		{
-			ChangeReflect();
-		}
-	}
+	
 
 	if (bombState_ != BombState::Explosion)
 	{

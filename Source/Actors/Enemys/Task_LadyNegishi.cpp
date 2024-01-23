@@ -2,10 +2,9 @@
 //
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_LadySatake.h"
-#include "../../Actors/Task_Player.h"
+#include  "Task_LadyNegishi.h"
 
-namespace Satake
+namespace Negishi
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
@@ -13,7 +12,6 @@ namespace Satake
 	bool  Resource::Initialize()
 	{
 		img = DG::Image::Create("./data/image/LadySatake.png");
-		fanImg = DG::Image::Create("./data/image/Slash.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -68,22 +66,7 @@ namespace Satake
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 
 			res->img->Draw(draw, src);
-		}
-		if (IsAttacking())
-		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
 
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
 		}
 	}
 

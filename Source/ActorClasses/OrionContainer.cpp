@@ -28,7 +28,7 @@ void OrionContainer::Move()
 void OrionContainer::HitPlayer()
 {
 	//プレイヤー側の追加移動量に自身の移動量代入
-	
+	ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, 0.f });
 }
 
 void OrionContainer::HitFoward()
