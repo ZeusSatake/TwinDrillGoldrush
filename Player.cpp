@@ -163,7 +163,6 @@ void Player::Move()
 	this->cooldown->Update();
 	this->overheat->Update();
 	this->drill_->SetMode(state_->GetNowState());
-
 	
 
 	if (this->overheat->IsCounting())
@@ -382,6 +381,8 @@ HPBarComponent* Player::GetHPBar() const
 void Player::ResetState()
 {
 	this->state_->UpdateNowState(StateComponent::State::Idle);
+	this->pState = this->state_->GetNowState();
+	this->drill_->SetPos(this->GetPos());
 	this->drill_->SetMode(StateComponent::State::Idle);
 }
 
