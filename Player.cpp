@@ -29,7 +29,7 @@ Player::Player()
 	this->angle_LR_ = Angle_LR::Left;
 	
 	status_->HP.Initialize(1000);
-	status_->attack.Initialize(10,100);
+	status_->attack.Initialize(100,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
 
@@ -214,7 +214,7 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::KnockBack:
-		
+		this->moveVec.x = externalMoveVec.x;
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -245,10 +245,7 @@ void Player::Move()
 		}
 		break;
 	case StateComponent::State::Mining:
-		/*if (this->state_->moveCnt_ == 0)
-		{
-			this->overheat->Start();
-		}*/
+
 		if (this->cooldown->GetCount() <= 0)
 		{
 			if(this->UpdateDrilldurability())
@@ -269,6 +266,7 @@ void Player::Move()
 		this->angle_LR_ = Angle_LR::Right;
 	}
     //this->CheckHitMap(this->preVec);
+	externalMoveVec.y = 0;
 	CheckMove(externalMoveVec);
 	CheckMove(moveVec);
 }
@@ -379,6 +377,11 @@ StatusComponent* Player::GetStatus() const
 HPBarComponent* Player::GetHPBar() const
 {
 	return this->hpBar_.get();
+}
+
+ML::Vec2 Player::GetExternalVec()
+{
+	return this->externalMoveVec;
 }
 
 void Player::ResetState()

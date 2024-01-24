@@ -48,6 +48,7 @@ public:
 
 	void SetPlayerState(StateComponent::State state); //ステートの外部変更
 	void SetExternalVec(ML::Vec2 moveVec_);//外部から渡された移動量で移動するようのメソッド 
+	ML::Vec2 GetExternalVec();
 
 	void ResetState();
 
