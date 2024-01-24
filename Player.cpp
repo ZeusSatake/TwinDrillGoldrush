@@ -118,7 +118,7 @@ void Player::Think()
 		if(this->state_->moveCnt_>30)pState = StateComponent::State::Idle;
 		break;
 	case StateComponent::State::KnockBack:
-		if (this->externalMoveVec == ML::Vec2{ 0,0 })
+		if (this->externalMoveVec == ML::Vec2{ 0,0 }||this->state_->moveCnt_ >60)
 		{
 			pState = StateComponent::State::Idle;
 		}
