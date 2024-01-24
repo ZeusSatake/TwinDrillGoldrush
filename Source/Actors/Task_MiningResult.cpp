@@ -18,10 +18,10 @@ namespace MiningResult
 		Object::OreKind::Coal,
 		Object::OreKind::Iron,
 		Object::OreKind::Gold,
-		Object::OreKind::HihiIroKane,
+		Object::OreKind::Palladium,
 		Object::OreKind::Damascus,
 		Object::OreKind::Orichalcum,
-		Object::OreKind::Palladium,
+		Object::OreKind::HihiIroKane,
 		Object::OreKind::Adamantite,
 		Object::OreKind::Ladyanite
 	};
@@ -35,14 +35,14 @@ namespace MiningResult
 			return "鉄鉱石　　　　";
 		case Object::OreKind::Gold:
 			return "金鉱石　　　　";
-		case Object::OreKind::HihiIroKane:
-			return "ヒヒイロカネ　";
+		case Object::OreKind::Palladium:
+			return "パラジウム　";
 		case Object::OreKind::Damascus:
 			return "ダマスカス　　";
 		case Object::OreKind::Orichalcum:
 			return "オリハルコン　";
-		case Object::OreKind::Palladium:
-			return "パラジウム　　";
+		case Object::OreKind::HihiIroKane:
+			return "ヒヒイロカネ　　";
 		case Object::OreKind::Adamantite:
 			return "アダマンタイト";
 		case Object::OreKind::Ladyanite:
@@ -126,10 +126,10 @@ namespace MiningResult
 			orePriceTags_.at(OreKind::Coal)->SetPrice(15);
 			orePriceTags_.at(OreKind::Iron)->SetPrice(30);
 			orePriceTags_.at(OreKind::Gold)->SetPrice(50);
-			orePriceTags_.at(OreKind::HihiIroKane)->SetPrice(70);
+			orePriceTags_.at(OreKind::Palladium)->SetPrice(70);
 			orePriceTags_.at(OreKind::Damascus)->SetPrice(100);
 			orePriceTags_.at(OreKind::Orichalcum)->SetPrice(120);
-			orePriceTags_.at(OreKind::Palladium)->SetPrice(140);
+			orePriceTags_.at(OreKind::HihiIroKane)->SetPrice(140);
 			orePriceTags_.at(OreKind::Adamantite)->SetPrice(160);
 			orePriceTags_.at(OreKind::Ladyanite)->SetPrice(200);
 
