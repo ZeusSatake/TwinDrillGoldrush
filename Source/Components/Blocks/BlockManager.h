@@ -30,7 +30,8 @@ namespace	BlockManager
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-			//共有する変数はここに追加する
+		//共有する変数はここに追加する
+		DG::Image::SP img;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public	BBlocks
@@ -58,14 +59,22 @@ namespace	BlockManager
 			//BCharaに含まれないモノのみここに追加する
 		bool DestroyBlock(const ML::Point pos, int power);
 		void InitArray();					//ブロックHPの初期化に使用
+
+		/*vector<ML::Vec2> DamegeBlockPos;
+		int interval = 10;*/
+
+
+
 	private:
 		BlockState  arr[160][160];//yx
 
-		void eventSearch(int y_, int x_);	//ブロックのイベント(特性)を呼び出す		
-		//名			num		破壊
-		void Stone(ML::Vec2 pos);			//石			.6		.可
-		void Bedrock(ML::Vec2 pos);			//岩盤		.7		.不可
+		void eventSearch(int y_, int x_);	//ブロックのイベント(特性)を呼び出す
+
+											//名			num		破壊
 		void collapseBlock(int x, int y);	//連鎖崩壊	.10		.可
-		void IronOre(ML::Vec2 pos);			//鉄鉱石		.11		.可
+		//void DamegeBlock(int x, int y);		//臭石		.8		.可
+
+		void EffectOnly(ML::Vec2 pos, int n);	//エフェクトのみのブロックに使用
+		void SoundOnly(ML::Vec2 pos);			//破壊音のみ(破壊不可ブロックなどに使用
 	};
 }

@@ -7,6 +7,9 @@
 
 #include	"../../Scene/Task_Map.h"
 #include    "../../Scene/Task_JewelryMap.h"
+#include	"../../Actors/Task_Player.h"
+#include	"../../Components/StateComponent.h"
+
 
 namespace	BlockManager
 {
@@ -15,12 +18,14 @@ namespace	BlockManager
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		this->img = DG::Image::Create("./data/image/effect/debugrect.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		this->img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -31,6 +36,7 @@ namespace	BlockManager
 		__super::Initialize(defGroupName, defName, true);
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
+		this->render2D_Priority[1] = 0.7f;
 
 		//★データ初期化
 
@@ -55,6 +61,13 @@ namespace	BlockManager
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		//臭石　中止
+		/*for (auto it = DamegeBlockPos.begin(); it != DamegeBlockPos.end(); ++it)
+		{
+			int Dx = (*it).x;
+			int Dy = (*it).y;
+			DamegeBlock(Dx, Dy);
+		}*/
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
@@ -72,104 +85,108 @@ namespace	BlockManager
 			{
 				int id = map->GetMapChip(y, x);
 				switch (id) {
-				case (int)Map::Object::ChipKind::Empty:		//空気ブロック
+				case (int)Map::Object::ChipKind::Empty:					//空気ブロック
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					break;
-				case (int)Map::Object::ChipKind::Soil:		//土
+				case (int)Map::Object::ChipKind::Soil:					//土
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
+					this->arr[y][x].event = 1;
 					break;
-				case (int)Map::Object::ChipKind::HardSoil:		//硬い土
+				case (int)Map::Object::ChipKind::HardSoil:				//硬い土
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
 					break;
-				case (int)Map::Object::ChipKind::MossySoil:		//苔むした土
+				case (int)Map::Object::ChipKind::MossySoil:				//苔むした土
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					break;
-				case (int)Map::Object::ChipKind::Stone:		//石
+				case (int)Map::Object::ChipKind::Stone:					//石
 					this->arr[y][x].MaxHP = 3;
 					this->arr[y][x].HP = 3;
 					this->arr[y][x].event = 6;
 					break;
-				case (int)Map::Object::ChipKind::BedRock:		//岩盤
+				case (int)Map::Object::ChipKind::BedRock:				//岩盤
 					this->arr[y][x].MaxHP = -1;
 					this->arr[y][x].HP = -1;
 					this->arr[y][x].event = 7;
+					break;	
+				case (int)Map::Object::ChipKind::MossyStone:			//臭石
+					//DamegeBlockPos.push_back(ML::Vec2(x,y));
 					break;
-				//====================鉱石====================
-				case (int)Map::Object::ChipKind::Coal:		//石炭
-					this->arr[y][x].MaxHP = 3;
-					this->arr[y][x].HP = 3;
-					this->arr[y][x].event = 9;
-					break;
-				case (int)Map::Object::ChipKind::CollapseStone:	//崩れる石
+				case (int)Map::Object::ChipKind::CollapseStone:			//崩れる石
 					this->arr[y][x].MaxHP = 1;
 					this->arr[y][x].HP = 1;
 					this->arr[y][x].event = 10;
 					break;
-				case (int)Map::Object::ChipKind::Iron:	//鉄鉱石
+				//====================鉱石====================
+				case (int)Map::Object::ChipKind::Coal:					//石炭
+					this->arr[y][x].MaxHP = 3;
+					this->arr[y][x].HP = 3;
+					this->arr[y][x].event = 9;
+					break;
+				case (int)Map::Object::ChipKind::Iron:					//鉄鉱石
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 11;
 					break;
-				case (int)Map::Object::ChipKind::Gold:	//金鉱石ぽいやつ
+				case (int)Map::Object::ChipKind::Gold:					//金鉱石ぽいやつ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case (int)Map::Object::ChipKind::HihiIroKane:	//ヒヒイロカネぽいやつ
+				case (int)Map::Object::ChipKind::HihiIroKane:			//ヒヒイロカネぽいやつ　白
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
 					break;
-				case (int)Map::Object::ChipKind::Damascus:	//ダマスカスぽいやつ
+				case (int)Map::Object::ChipKind::Damascus:				//ダマスカスぽいやつ 緑
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 14;
 					break;
-				case (int)Map::Object::ChipKind::Orichalcum:	//オリハルコンぽいやつ
+				case (int)Map::Object::ChipKind::Orichalcum:			//オリハルコンぽいやつ　水
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)Map::Object::ChipKind::Palladium:	//パラジウムぽいやつ
+				case (int)Map::Object::ChipKind::Palladium:				//パラジウムぽいやつ　橙
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 16;
 					break;
-				case (int)Map::Object::ChipKind::Adamantite:	//アダマンタイトぽいやつ
+				case (int)Map::Object::ChipKind::Adamantite:			//アダマンタイトぽいやつ　赤紫
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 17;
 					break;
 				//====================宝石====================
-				case (int)JewelryMap::Object::ChipKind::Diamond:	//ダイヤモンド
+				case (int)JewelryMap::Object::ChipKind::Diamond:		//ダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 18;
 					break;
 				case (int)JewelryMap::Object::ChipKind::BlackDiamond:	//ブラックダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 19;
 					break;
 				case (int)JewelryMap::Object::ChipKind::PinkDiamond:	//ピンクダイヤモンド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 20;
 					break;
-				case (int)JewelryMap::Object::ChipKind::Emerald:	//エメラルド
+				case (int)JewelryMap::Object::ChipKind::Emerald:		//エメラルド
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 21;
 					break;
-				case (int)JewelryMap::Object::ChipKind::Sapphire:	//サファイア
+				case (int)JewelryMap::Object::ChipKind::Sapphire:		//サファイア
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 15;
+					this->arr[y][x].event = 22;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Garnet:	//ガーネット
 					this->arr[y][x].MaxHP = 6;
@@ -230,38 +247,42 @@ namespace	BlockManager
 		auto pos = ML::Vec2(x_ * 16, y_ * 16);
 		switch (eventNum)
 		{
-		case (int)Map::Object::ChipKind::Empty:
-			break;
-		case (int)Map::Object::ChipKind::Stone:
-			Stone(pos);
+		case (int)Map::Object::ChipKind::HardSoil:
+			SoundOnly(pos);
 			break;
 		case (int)Map::Object::ChipKind::BedRock:
-			Bedrock(pos);
+			SoundOnly(pos);
 			break;
 		case (int)Map::Object::ChipKind::CollapseStone:
 			collapseBlock(x_, y_);
 			break;
-		case (int)Map::Object::ChipKind::Iron:
-			IronOre(pos);
-			break;
+		//======================
 		case (int)Map::Object::ChipKind::DiagonalBrick:
-			Stone(pos);
+			EffectOnly(pos, 6);
 			break;
+
+		//============エフェクトのみ======
 		default:
+			EffectOnly(pos, eventNum);
 			break;
 		}
 	}
 	//-------------------------------------------------------------------
 	//ブロック特性・”Task_ブロック名”は使わないようにするかも
-	void Object::Stone(ML::Vec2 pos)
+	//=========使いまわし用==========
+	void Object::EffectOnly(ML::Vec2 pos, int n)
 	{
-		ge->CreateEffect(11, pos, 6);
+		ge->CreateEffect(11, pos, n);
 		se::Play("crush");
 	}
-	void Object::Bedrock(ML::Vec2 pos)
+
+	void Object::SoundOnly(ML::Vec2 pos)
 	{
 		se::Play("repelled");
 	}
+
+	//==========================================
+	//連鎖崩壊ブロック
 	void Object::collapseBlock(int x,int y)
 	{
 		auto map = ge->GetTask<Map::Object>("本編", MapName);
@@ -296,12 +317,43 @@ namespace	BlockManager
 		ge->CreateEffect(11, ep, 6);
 		se::Play("crush");
 	}
-	void Object::IronOre(ML::Vec2 pos)
-	{
-		ge->CreateEffect(11, pos, 11);
-		se::Play("crush");
-	}
+	
+	//臭石 実装中止
+	//void Object::DamegeBlock(int x, int y)
+	//{
+	//	auto map = ge->GetTask<Map::Object>("本編", MapName);
 
+	//	ML::Point m[8] = {
+	//		{-1,-1},{ 0,-1},{+1,-1},
+	//		{-1, 0},		{+1, 0},
+	//		{-1,+1},{ 0,+1},{+1,+1},
+	//	};
+	//	for (int i = 0; i < 8; i++) {
+	//		m[i].x += x;
+	//		m[i].y += y;
+	//	}
+	//	for (int i = 0; i < 8; i++) {
+	//		//範囲外チェック
+	//		if (m[i].x < 0) { continue; }
+	//		if (m[i].y < 0) { continue; }
+	//		if (m[i].x >= map->sizeX) { continue; }
+	//		if (m[i].y >= map->sizeY) { continue; }
+
+	//		int id = map->GetMapChip(m[i].y, m[i].x);
+	//		if (id >= 0) { return; }
+
+	//		auto me = ML::Box2D(m[i].x * 16, m[i].y * 16, 16, 16);
+	//		auto target = ge->GetTask<player::Object>("キャラク", "プレイヤー");
+	//		if (target->CheckHit(me) && this->interval < 1)
+	//		{
+	//			this->interval = 60;
+	//		}
+	//		this->interval--;
+	//		auto src = ML::Box2D(0, 0, 32, 32);
+	//		this->res->img->Draw(me, src);
+	//	}
+	//}
+	
 
 	//-------------------------------------------------------------------
 	// 過去の遺産
