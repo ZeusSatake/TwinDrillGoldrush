@@ -60,14 +60,17 @@ namespace MartialFightScene
 		bool spawnableBoss_;
 
 		weak_ptr<EventEngine::Object> bossEvent_;
+		weak_ptr<EventEngine::Object> clearEvent_;
 
-		string debugMsg;
-		shared_ptr<SecondsTimerComponent> debugTimer;
+		//string debugMsg;
+		//shared_ptr<SecondsTimerComponent> debugTimer;
 	public:
 		void SetBoss(const shared_ptr<BossLady>& boss);
 
 		void DecreaseEnemyCount();
 
 		void SpawnBoss();
+
+		bool EndOfSpawnBossEvent();
 	};
 }
