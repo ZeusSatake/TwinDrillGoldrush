@@ -219,27 +219,22 @@ namespace MartialFightScene
 		{
 		case 0:
 			boss = Kumagai::Object::Create(true);
-			boss->SetPos(ML::Vec2(300, 300));
 			break;
 
 		case 1:
 			boss = Haraguchi::Object::Create(true);
-			boss->SetPos(ML::Vec2(300, 300));
 			break;
 
 		case 2:
 			boss = Kiyohara::Object::Create(true);
-			boss->SetPos(ML::Vec2(300, 300));
 			break;
 
 		case 3:
 			boss = Negishi::Object::Create(true);
-			boss->SetPos(ML::Vec2(300, 300));
 			break;
 
 		case 4:
 			boss = Satake::Object::Create(true);
-			boss->SetPos(ML::Vec2(300, 300));
 			break;
 
 		default:
