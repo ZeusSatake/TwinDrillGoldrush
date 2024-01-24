@@ -35,6 +35,7 @@ LadyNegishi::LadyNegishi()
 	angle_LR_ = Angle_LR::Left;
 	
 	SetPersonalName("ªŠİ");
+	render2D_Priority[1] = 0.2f;
 }
 
 void LadyNegishi::Think()

@@ -7,6 +7,7 @@ class LadySatake : public BossLady
 	bool isWarped_;
 	bool isExpandPrison_;
 	bool isCreatedTower_;
+	bool isFalling_;
 	bool patternSwitchFlag_;
 	int tackleCnt_;
 	int laserCnt_;
@@ -19,7 +20,7 @@ class LadySatake : public BossLady
 	ML::Vec2 swordPos_;
 	Tower* tower_;
 	ML::Vec2 containerSpawnPos_;
-
+	const ML::Vec2 startPos_;
 public:
 	enum AttackPattern
 	{
@@ -29,6 +30,7 @@ public:
 		ContainerAndPrison,
 		SlashAndTackle,
 		WeaponRain,
+		Falling,
 	};
 private:
 	AttackPattern attackPattern_;

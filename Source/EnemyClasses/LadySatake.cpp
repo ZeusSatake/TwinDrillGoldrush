@@ -12,6 +12,7 @@ LadySatake::LadySatake()
 	:BossLady()	
 	, isExpandPrison_(false)
 	, isCreatedTower_(false)
+	, isFalling_(false)
 	, patternSwitchFlag_(false)
 	, tackleCnt_(3)
 	, laserCnt_(5)
@@ -53,6 +54,7 @@ void LadySatake::Think()
 	case AIState::Idle:
 		if (WithinSight(GetTarget()))
 		{
+			//SetPos(Start);
 			patternSwitchFlag_ = true;
 			afterState = AIState::AttackStand;
 		}
@@ -83,16 +85,13 @@ void LadySatake::Think()
 			case AttackPattern::WeaponRain:
 				afterState = AIState::AttackStand;
 				break;
+			case AttackPattern::Falling:
+				afterState = AIState::AttackStand;
+				break;
 			}
 		}
 		break;
 	case AIState::Warp:
-		if (!moveCnt_->IsCounting())
-		{
-			afterState = AIState::AttackStand;
-		}
-		break;
-	case AIState::Fall:
 		if (!moveCnt_->IsCounting())
 		{
 			afterState = AIState::AttackStand;
@@ -113,8 +112,24 @@ void LadySatake::Think()
 		switch (afterState)
 		{
 		case AIState::AttackStand:
-			moveCnt_->SetCountFrame(60);
-			break;
+		{
+			switch (attackPattern_)
+			{
+			case AttackPattern::TowerAndBomb:
+				moveCnt_->SetCountFrame(120);
+				break;
+			case AttackPattern::SlashAndTackle:
+				moveCnt_->SetCountFrame(120);
+				break;
+			case AttackPattern::WeaponRain:
+				moveCnt_->SetCountFrame(10);
+				break;
+			default:
+				moveCnt_->SetCountFrame(60);
+				break;
+			}
+		}
+		break;
 		case AIState::Attack:
 		{
 			switch (attackPattern_)
@@ -128,12 +143,15 @@ void LadySatake::Think()
 			case AttackPattern::WeaponRain:
 				moveCnt_->SetCountFrame(30);
 				break;
+			case AttackPattern::Falling:
+				moveCnt_->SetCountFrame(150);
+				break;
 			default:
 				moveCnt_->SetCountFrame(60);
 				break;
 			}
 		}
-			break;
+		break;
 		case AIState::Fall:
 			moveCnt_->SetCountFrame(120);
 			break;
@@ -261,8 +279,10 @@ void LadySatake::Move()
 			break;
 		case AttackPattern::WeaponRain:
 			rainCount_ = 0;
-			attackPattern_ = AttackPattern::FishAndLaser;
+			attackPattern_ = AttackPattern::Falling;
 			break;
+		case AttackPattern::Falling:
+			attackPattern_ = AttackPattern::FishAndLaser;
 		}
 		if (isWarped_)
 		{
@@ -277,6 +297,11 @@ void LadySatake::UpDateFall()
 	if (!CheckFoot())
 	{
 		SetMoveVecY(GetStatus()->speed.GetFallSpeed());
+	}
+	else if (!moveCnt_->IsCounting())
+	{
+		EndAttack();
+		patternSwitchFlag_ = true;
 	}
 }
 
@@ -302,7 +327,7 @@ void LadySatake::UpDateAttackStand()
 		SetPos({ ge->playerPtr->GetPos().x, defaultFlyPosY_ });
 		containerSpawnPos_.x = ge->playerPtr->GetPos().x + 150;
 		containerSpawnPos_.y = 700;
-			break;
+		break;
 		case AttackPattern::ContainerAndPrison:
 			break;
 		case AttackPattern::SlashAndTackle:
@@ -339,6 +364,9 @@ void LadySatake::UpDateAttack()
 			break;
 		case AttackPattern::WeaponRain:
 			UpDateWeaponRain();
+			break;
+		case AttackPattern::Falling:
+			UpDateFall();
 			break;
 	}
 }
@@ -539,7 +567,7 @@ void LadySatake::UpDateWeaponRain()
 	}
 	SetPosX(ge->playerPtr->GetPos().x);
 
-	if (rainCount_%10==0)
+	if (rainCount_%10==9)
 	{
 		auto bomb00 = Bomb0::Object::Create(true);
 		bomb00->SetPosX(GetPos().x);

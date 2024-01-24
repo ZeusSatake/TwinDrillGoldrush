@@ -154,12 +154,11 @@ void Debtor::UpDateDead()
 
 bool Debtor::HitPlayer()
 {
-	ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-	plBox.Offset(GetTarget()->GetPos());
+	ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+	plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
 	if (CheckHit(plBox))
 	{
 		//ƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚Ìˆ—
-		if (static_cast<Player*>(GetTarget())->pState != StateComponent::State::Damage)
 		{
 			if (ge->playerPtr->pState == StateComponent::State::Attack)
 			{
@@ -167,11 +166,9 @@ bool Debtor::HitPlayer()
 			}
 			else
 			{
-				static_cast<Player*>(GetTarget())->GetStatus()->HP.TakeDamage(status_->attack.GetNow());
+				static_cast<Player*>(GetTarget())->TakeAttack(status_->attack.GetNow());
 			}
-			
 		}
-		
 		return true;
 	}
 	return false;

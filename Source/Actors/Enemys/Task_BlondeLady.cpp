@@ -57,6 +57,7 @@ namespace BlondeLady
 		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
 
 		SetTarget(ge->playerPtr.get());
+		this->render2D_Priority[1] = 0.2f;
 		SetPersonalName("‚¨ìA");//‰¼
 		//šƒ^ƒXƒN‚Ì¶¬
 		return  true;
