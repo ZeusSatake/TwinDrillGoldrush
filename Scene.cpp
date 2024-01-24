@@ -22,7 +22,7 @@ void Scene::AddSceneChangeButton(const shared_ptr<ToggleButton>& sceneChangeButt
 void Scene::CreateNextScene()
 {
 	if (ge->playerPtr != nullptr)
-		ge->playerPtr->HiddenPlayer();
+		ge->playerPtr->TransitionInitialize(nextScene_);
 	switch (nextScene_)
 	{
 	

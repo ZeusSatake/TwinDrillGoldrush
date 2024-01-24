@@ -167,6 +167,38 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,80,500,500 }, "UnHitTimer:" + to_string(this->unHitTimer_->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "hitbox : <Left>" + to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).x)+" <Top>"+ to_string(this->box_->getHitBase().OffsetCopy(this->GetPos()).y));
 	}
+
+	void Object::TransitionInitialize(Scene::Kind nextScene)
+	{
+		switch (nextScene)
+		{
+			case Scene::Kind::Base:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Mining:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::MartialFight:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::Shop:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Ending:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+		}
+	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
