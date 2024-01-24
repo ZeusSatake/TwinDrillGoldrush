@@ -188,20 +188,20 @@ namespace	BlockManager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 22;
 					break;
-				case (int)JewelryMap::Object::ChipKind::Garnet:			//ガーネット
-					this->arr[y][x].MaxHP = -1;
-					this->arr[y][x].HP = -1;
+				case (int)JewelryMap::Object::ChipKind::Garnet:	//ガーネット
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 23;
 					break;
-				case (int)JewelryMap::Object::ChipKind::Topaz:			//トパーズ
-					this->arr[y][x].MaxHP = -1;
-					this->arr[y][x].HP = -1;
-					this->arr[y][x].event = 24;
+				case (int)JewelryMap::Object::ChipKind::Topaz:	//トパーズ
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 23;
 					break;
-				case (int)JewelryMap::Object::ChipKind::Amethyst:		//アメジスト
-					this->arr[y][x].MaxHP = -1;
-					this->arr[y][x].HP = -1;
-					this->arr[y][x].event = 25;
+				case (int)JewelryMap::Object::ChipKind::Amethyst:	//アメジスト
+					this->arr[y][x].MaxHP = 6;
+					this->arr[y][x].HP = 6;
+					this->arr[y][x].event = 23;
 					break;
 				case (int)Map::Object::ChipKind::Brick:
 					this->arr[y][x].MaxHP = -1;
