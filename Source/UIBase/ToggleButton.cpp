@@ -169,7 +169,6 @@ void ToggleButton::UpDate()
 			ToggleEvent();
 		}
 	}
-
 	textColor_ = IsPressed() || !GetButtonState((int)ButtonState::RecieveInput) ?
 		ML::Color(0.5f, 1.0f, 0.0f, 0.0f) :
 		ML::Color(1.0f, 1.0f, 0.0f, 0.0f);

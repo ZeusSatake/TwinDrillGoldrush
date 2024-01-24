@@ -46,31 +46,38 @@ namespace BaseScene
 			XI::Mouse::MB mouseEnterButton = XI::Mouse::MB::LB;
 			XI::VGP		  gamePadEnterButton = cursor->GetEnterButton();
 
+			enum class ButtonKind
+			{
+				GoTitle,
+				GoShop,
+				GoMartialFight,
+				GoMining
+			};
 			std::array<SceneChangeButton::Object::SetInfo, 4> buttonInfos =
 			{
 				SceneChangeButton::Object::SetInfo{
-					"タイトルへ",
+					"タイトル",
 					this,
 					Scene::Kind::Title,
 					mouseEnterButton,
 					gamePadEnterButton,
 					cursor.get()
 				},
-				{	"ショップへ",
+				{	"ショップ",
 					this,
 					Scene::Kind::Shop,
 					mouseEnterButton,
 					gamePadEnterButton,
 					cursor.get()
 				},
-				{	"武闘会へ",
+				{	"闘技場",
 					this,
 					Scene::Kind::MartialFight,
 					mouseEnterButton,
 					gamePadEnterButton,
 					cursor.get()
 				},
-				{	"採掘場へ",
+				{	"採掘場",
 					this,
 					Scene::Kind::Mining,
 					mouseEnterButton,
@@ -79,21 +86,37 @@ namespace BaseScene
 				}
 			};
 
+			array<SceneChangeButton::Object::SP, buttonInfos.size()> buttons;
 			for (int i = 0; i < buttonInfos.size(); ++i)
 			{
 				const auto& buttonInfo = buttonInfos.at(i);
 
-				auto button = SceneChangeButton::Object::Create(true);
+				auto button = buttons.at(i) = SceneChangeButton::Object::Create(true);
 				button->Set(buttonInfo);
+
+				if (i > 0)
+				{
+					button->SetSize(ML::Point{ 200, 100 });
+					button->SetImage("./data/image/ui/" + buttonInfo.text + "遷移.png");
+				}
+
 				int buttonMargin = 10;
 				float startX = ge->screenCenterPos.x - (buttonInfos.size() * 0.5f) * (button->GetBox()->getHitBase().w + buttonMargin) + button->GetBox()->getHitBase().w * 0.5f;
 				button->SetPos(
 					ML::Vec2(
-					startX + ((button->GetBox()->getHitBase().w + buttonMargin) * i),
-					ge->screenCenterPos.y));
+						startX + ((button->GetBox()->getHitBase().w + buttonMargin) * i),
+						ge->screenCenterPos.y));
+
 				AddSceneChangeButton(button);
 				buttons_.push_back(button);
 			}
+
+			const auto& goTitleButtonSize = buttons.at((int)ButtonKind::GoTitle)->GetBox()->getHitBase();
+			buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2(goTitleButtonSize.w * 0.5f, goTitleButtonSize.h * 0.5f));
+
+			//buttons.at((int)ButtonKind::GoShop)->SetPos(ML::Vec2());
+			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
+			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
 		}
 		return  true;
 	}
