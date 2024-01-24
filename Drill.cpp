@@ -36,7 +36,12 @@ void Drill::SetDrawPos(ML::Vec2 pos)
 	this->drawPos = pos;
 }
 
-void Drill::SetMode(StateComponent::State state)
+void Drill::SetMode(Mode mode_)
+{
+	this->mode = mode_;
+}
+
+void Drill::UpdateMode(StateComponent::State state)
 {
 	if (state == StateComponent::State::Drill ||
 		state == StateComponent::State::DrillDash ||
@@ -272,4 +277,21 @@ void Drill::ResetDurability()
 ML::Vec2 Drill::GetAttackPos()
 {
 	return this->GetPos() + ML::Vec2{ (cos(GetNowAngle()) * 2.f), (sin(GetNowAngle()) * 2.f) };
+}
+
+void Drill::setAnim()
+{
+
+	this->animManager_->SetDefaultAnimId((int)Mode::Non);
+	ML::Color defColor{ 1,1,1,1 };
+	ML::Box2D drawSize {- 4, -4, 8, 8};
+	AnimInfo animTable[] =
+	{
+		{drawSize,ML::Box2D{0,0,0,0},defColor,1,1},
+		{drawSize,ML::Box2D{0,0,64,64},defColor,1,1},
+		{drawSize,ML::Box2D{64,0,64,64},defColor,1,1},
+	};
+	this->animManager_->AddAnim((int)Mode::Non, animTable[0]);
+	this->animManager_->AddAnim((int)Mode::Normal, animTable[1]);
+	this->animManager_->AddAnim((int)Mode::Drill, animTable[2]);
 }

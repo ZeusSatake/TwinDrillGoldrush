@@ -4,6 +4,8 @@
 #include "Drill.h"
 #include "Source/Components/HPBarComponent.h"
 
+#include "Source/Components/Animation/AnimManager.h"
+
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
@@ -22,13 +24,14 @@ Player::Player()
 	this->overheat->SetCountFrame(300);
 	this->unHitTimer_->SetCountFrame(120);
 
+	this->box_->setHitBase(ML::Box2D{ -8,-8,16,16 });
+
 	this->angle_LR_ = Angle_LR::Left;
 	
 	status_->HP.Initialize(1000);
 	status_->attack.Initialize(10,100);
 	status_->speed.Initialize(2.f, 2.f, 2.f);
 	status_->defence.Initialize(0, 100);
-
 
 
 	//HPバー設定
@@ -112,7 +115,7 @@ void Player::Think()
 		if (this->drill_->SpinAngle(0.3f)) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Damage:
-		if(this->unHitTimer_->GetCount()>30)pState = StateComponent::State::Idle;
+		if(this->state_->moveCnt_>30)pState = StateComponent::State::Idle;
 		break;
 	case StateComponent::State::KnockBack:
 		if (this->externalMoveVec == ML::Vec2{ 0,0 })
@@ -162,8 +165,7 @@ void Player::Move()
 	this->unHitTimer_->Update();
 	this->cooldown->Update();
 	this->overheat->Update();
-	this->drill_->SetMode(state_->GetNowState());
-
+	this->drill_->UpdateMode(state_->GetNowState());
 	
 
 	if (this->overheat->IsCounting())
@@ -382,13 +384,15 @@ HPBarComponent* Player::GetHPBar() const
 void Player::ResetState()
 {
 	this->state_->UpdateNowState(StateComponent::State::Idle);
-	this->drill_->SetMode(StateComponent::State::Idle);
+	this->pState = this->state_->GetNowState();
+	this->drill_->SetPos(this->GetPos());
+	this->drill_->SetMode(Drill::Mode::Normal);
 }
 
 void Player::HiddenPlayer()
 {
 	this->state_->UpdateNowState(StateComponent::State::Non);
-	this->drill_->SetMode(StateComponent::State::Non);
+	this->drill_->SetMode(Drill::Mode::Non);
 }
 
 void Player::UpdateStates(int hp_, float speed_, int attack_, int defence_)
@@ -397,4 +401,24 @@ void Player::UpdateStates(int hp_, float speed_, int attack_, int defence_)
 	this->status_->speed.Initialize(speed_, speed_, speed_);
 	this->status_->attack.Initialize(attack_, attack_);
 	this->status_->defence.Initialize(defence_, defence_);
+}
+
+void Player::SetAnim()
+{
+	this->animManager_->SetDefaultAnimId((int)StateComponent::State::Idle);
+	ML::Color defColor{ 1,1,1,1 };
+	ML::Box2D drawSize = this->box_->getHitBase();
+	AnimInfo animTable[] =
+	{
+		{drawSize,ML::Box2D{0,0,64,64},defColor,2,8},
+		{drawSize,ML::Box2D{0,64,64,64},defColor,6,4},
+		{drawSize,ML::Box2D{0,128,64,64},defColor,6,4},
+		{drawSize,ML::Box2D{0,192,64,64},defColor,5,4},
+		{drawSize,ML::Box2D{0,256,64,64},defColor,1,1},
+	};
+	this->animManager_->AddAnim((int)StateComponent::State::Idle, animTable[0]);
+	this->animManager_->AddAnim((int)StateComponent::State::Walk, animTable[1]);
+	this->animManager_->AddAnim((int)StateComponent::State::Dash, animTable[2]);
+	this->animManager_->AddAnim((int)StateComponent::State::Jump, animTable[3]);
+	this->animManager_->AddAnim((int)StateComponent::State::Fall, animTable[4]);
 }

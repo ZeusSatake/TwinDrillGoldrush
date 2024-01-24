@@ -59,7 +59,7 @@ namespace  GameScene
 		ge->GameOverFlag = false;
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
-		ge->playerPtr->ResetState();
+		//ge->playerPtr->ResetState();
 		auto hpBar = ge->playerPtr->GetHPBar();
 		hpBar->SetPos(hpBar->GetSize().x * 0.5f, ge->screenHeight - hpBar->GetSize().y * 0.5f);
 	
@@ -77,18 +77,13 @@ namespace  GameScene
 		auto save = Save::Object::Create(true);
 
 		//★タスクの生成
-		{
-			if (auto ev = EventEngine::Object::Create_Mutex())
-			{
-				ev->Set("./data/event/eventgamestart.txt");
-			}
-		}
+
 		{
 			//auto player = player::Object::Create(true);
 			auto camera = Camera::Object::Create(true);
 			camera->SetPos(ge->playerPtr->GetPos());
 			camera->target = ge->playerPtr;
-			ge->playerPtr->SetPos(ML::Vec2{ 50,480 });
+			//ge->playerPtr->SetPos(ML::Vec2{ 50,480 });
 		}
 		
 		{//背景タスク生成
@@ -112,7 +107,7 @@ namespace  GameScene
 			{
 				make_pair(Map::Object::ChipKind::Damascus, 2),
 				make_pair(Map::Object::ChipKind::Orichalcum, 3),
-				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 8),
 				make_pair(Map::Object::ChipKind::Adamantite, 3),
 				make_pair(Map::Object::ChipKind::Ladyanite,1)
 			};
@@ -131,6 +126,13 @@ namespace  GameScene
 			auto enemymap = EnemyMap::Object::Create(true);
 			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
 			enemymap->SetEnemy();
+		}
+
+		{
+			if (auto ev = EventEngine::Object::Create_Mutex())
+			{
+				ev->Set("./data/event/eventgamestart.txt");
+			}
 		}
 
 		{//拠点に戻るボタン(デバッグ用

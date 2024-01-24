@@ -9,6 +9,11 @@
 #include "Task_Ev_Image.h"
 #include "Task_Ev_FadeInOut.h"
 
+#include "../Actors/Task_Player.h"
+#include "../Actors/Task_Drill.h"
+#include "../Scene/GameScene.h"
+
+
 namespace  EventEngine
 {
 	Object::WP Object::instance;
@@ -39,8 +44,10 @@ namespace  EventEngine
 		//★タスクの生成
 
 		//イベント実行中に動くと困るものはすべて停止させる
-		ge->StopAll_G("プレイヤ");
+		ge->StopAll_GN(player::defGroupName, player::defName);
+		ge->StopAll_GN(drill::defGroupName, drill::defName);
 		ge->StopAll_G("敵");
+		ge->StopAll_G(GameScene::defGroupName);
 
 		return  true;
 	}
@@ -49,8 +56,10 @@ namespace  EventEngine
 	bool  Object::Finalize()
 	{
 		//イベント実行中に停止させていたタスクを実行状態に戻す
-		ge->StopAll_G("プレイヤ",false);
+		ge->StopAll_GN(player::defGroupName, player::defName, false);
+		ge->StopAll_GN(drill::defGroupName, drill::defName, false);
 		ge->StopAll_G("敵", false);
+		ge->StopAll_G(GameScene::defGroupName, false);
 		
 		//★データ＆タスク解放
 		if (this->evFile.is_open())

@@ -13,7 +13,7 @@ namespace  drill
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->img = DG::Image::Create("./data/image/preDrill.png");
+		this->img = DG::Image::Create("./data/image/DrillMap.png");
 		this->target = DG::Image::Create("./data/image/target.png");
 		this->debug = DG::Image::Create("./data/image/shot.png");
 		return true;
@@ -37,6 +37,7 @@ namespace  drill
 		this->res = Resource::Create();
 
 		//★データ初期化
+		this->setAnim();
 		this->box_->setHitBase(ML::Box2D{ -2,-2,4,4 });
 		//★タスクの生成
 
@@ -76,12 +77,18 @@ namespace  drill
 	{
 		if(this->GetMode()!=Mode::Non )
 		{
-			ML::Box2D draw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetDrawPos());
-			ML::Box2D src = ML::Box2D{ 0,0,64,64 };
-			this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
-			//スクロール対応
+			//ML::Box2D draw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetDrawPos());
+			//ML::Box2D src = ML::Box2D{ 0,0,64,64 };
+			//this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
+			////スクロール対応
+			//draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			//this->res->img->Draw(draw, src);
+			 AnimInfo animInfo = this->animManager_->Play((int)this->GetMode());
+			ML::Box2D Predraw = animInfo.GetDraw();
+			
+			ML::Box2D draw = Predraw.OffsetCopy(this->GetPos());//※座標は指定する必要あり
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			this->res->img->Draw(draw, src);
+			this->res->img->Draw(draw, animInfo.GetSrc());
 			//----------------------------------------------------
 			ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x * 16,(int)this->GetTargetPos().y * 16,16,16 };
 			tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);

@@ -14,7 +14,7 @@ namespace player
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->playerImg = DG::Image::Create("./data/image/prePlayer.png");
+		this->playerImg = DG::Image::Create("./data/image/PlayerMap.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -33,8 +33,9 @@ namespace player
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
+		this->SetAnim();
+
 		//★データ初期化
-		this->box_->setHitBase(ML::Box2D{ -4,-8,8,16 });
 		this->SetPos( ML::Vec2{ 0,0 });
 		this->movement_->SetSpeed(2.f, 5.f, 0.f);
 		gravity_->SetDirection(ML::Vec2::Down());
@@ -81,21 +82,31 @@ namespace player
 		//プレイヤキャラの描画
 		if(this->pState != StateComponent::State::Non)
 		{
-			ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
-			ML::Box2D src{ 0,0,32,64};
-			//スクロール対応
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			if (this->pState != StateComponent::State::Dead)
-			{
-				if (this->unHitTimer_->IsCounting())
-				{
-					if (this->unHitTimer_->GetCount() % 2 == 0)
-						this->res->playerImg->Draw(draw, src);
+			//ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
+			//ML::Box2D src{ 0,0,32,64};
+			////スクロール対応
+			//draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			//if (this->pState != StateComponent::State::Dead)
+			//{
+			//	if (this->unHitTimer_->IsCounting())
+			//	{
+			//		if (this->unHitTimer_->GetCount() % 2 == 0)
+			//			this->res->playerImg->Draw(draw, src);
 
-				}
-				else
-					this->res->playerImg->Draw(draw, src);
+			//	}
+			//	else
+			//		this->res->playerImg->Draw(draw, src);
+			//}
+			AnimInfo animInfo = this->animManager_->Play((int)this->state_->GetNowState());
+			ML::Box2D Predraw = animInfo.GetDraw();
+			if (this->angle_LR_ == Angle_LR::Right)
+			{
+				Predraw.x = -Predraw.x;
+				Predraw.w = -Predraw.w;
 			}
+			ML::Box2D draw = Predraw.OffsetCopy(this->GetPos());//※座標は指定する必要あり
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			this->res->playerImg->Draw(draw, animInfo.GetSrc());
 		}
 		DebugInfo();
 
@@ -169,6 +180,38 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 	}
+
+	void Object::SceneTransitionInitialize(Scene::Kind nextScene)
+	{
+		switch (nextScene)
+		{
+			case Scene::Kind::Base:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Mining:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::MartialFight:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::Shop:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Ending:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+		}
+	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
