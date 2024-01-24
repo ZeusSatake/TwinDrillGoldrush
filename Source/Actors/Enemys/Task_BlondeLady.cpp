@@ -4,6 +4,7 @@
 #include  "../../../MyPG.h"
 #include  "Task_BlondeLady.h"
 #include  "../../Actors/Task_Player.h"
+#include "../../Scene/MartialFightScene.h"
 
 namespace BlondeLady
 {
@@ -66,6 +67,11 @@ namespace BlondeLady
 	{
 		//★データ＆タスク解放
 
+		auto sc=ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (sc)
+		{
+			sc->DecreaseEnemyCount();
+		}
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
