@@ -112,7 +112,7 @@ namespace  GameScene
 			{
 				make_pair(Map::Object::ChipKind::Damascus, 2),
 				make_pair(Map::Object::ChipKind::Orichalcum, 3),
-				make_pair(Map::Object::ChipKind::HihiIroKane, 15),
+				make_pair(Map::Object::ChipKind::HihiIroKane, 8),
 				make_pair(Map::Object::ChipKind::Adamantite, 3),
 				make_pair(Map::Object::ChipKind::Ladyanite,1)
 			};

@@ -137,7 +137,7 @@ namespace	BlockManager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 12;
 					break;
-				case (int)Map::Object::ChipKind::HihiIroKane:			//ヒヒイロカネぽいやつ　白
+				case (int)Map::Object::ChipKind::Palladium:			//パラジウムぽいやつ　白
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 13;
@@ -152,7 +152,7 @@ namespace	BlockManager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 15;
 					break;
-				case (int)Map::Object::ChipKind::Palladium:				//パラジウムぽいやつ　橙
+				case (int)Map::Object::ChipKind::HihiIroKane:				//ヒヒイロカネぽいやつ　橙
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 16;
