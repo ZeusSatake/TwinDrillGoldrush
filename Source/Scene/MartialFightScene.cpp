@@ -9,6 +9,7 @@
 
 #include "../System/Task_Save.h"
 #include "../Actors/Task_Player.h"
+#include "../Actors/Enemys/Task_BlondeLady.h"
 #include  "Task_Map.h"
 #include  "Task_EnemyMap.h"
 #include  "../Actors/UI/SceneChangeButton.h"
@@ -68,6 +69,7 @@ namespace MartialFightScene
 			auto enemymap = EnemyMap::Object::Create(true);
 			enemymap->Load("MartialFight1Enemy");
 			enemymap->SetEnemy();
+			enemyCount_ = ge->GetTasks<BlondeLady::Object>(BlondeLady::defGroupName, BlondeLady::defName)->size();
 			//boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
 		}
 		{
@@ -149,6 +151,11 @@ namespace MartialFightScene
 		boss_ = boss;
 	}
 
+	void Object::DecreaseEnemyCount()
+	{
+		--enemyCount_;
+	}
+
 	//-------------------------------------------------------------------
 	//u‚Q‚c•`‰æv‚PƒtƒŒ[ƒ€–ˆ‚És‚¤ˆ—
 	void  Object::Render2D_AF()
@@ -158,6 +165,10 @@ namespace MartialFightScene
 		if (clear_)
 		{
 			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 50, 30, 500, 500), "ƒ{ƒX‚ð“|‚µ‚½‚í‚ËB", ML::Color(1, 1, 0, 0));
+		}
+
+		{
+			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_), ML::Color(1, 1, 0, 0));
 		}
 	}
 
