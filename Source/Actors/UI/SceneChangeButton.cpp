@@ -35,6 +35,7 @@ namespace SceneChangeButton
 
 		//★データ初期化
 		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
+		render2D_Priority[1] = 0.1f;
 		
 		SetEnterButton(XI::VGP::B1);
 		SetRecieveInputEnable(true);
@@ -50,7 +51,7 @@ namespace SceneChangeButton
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		image_.reset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -68,7 +69,19 @@ namespace SceneChangeButton
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, false);
+		//Drawtext(ge->debugFont, false);
+
+		if (image_ != nullptr)
+		{
+			const ML::Box2D& draw(box_->getHitBase());
+			const ML::Box2D	 src(0, 0, draw.w, draw.h);
+			image_->Draw(draw.OffsetCopy(GetPos()), src);
+
+			auto oDraw = draw.OffsetCopy(GetPos());
+			ge->debugFont->Draw(ML::Box2D(200, 200, 500, 500),
+				"draw x:" + to_string(oDraw.x) + " y:" + to_string(oDraw.y) + 
+				" w:" + to_string(oDraw.w) + " h:" + to_string(oDraw.h));
+		}
 	}
 	void Object::OnEvent()
 	{
@@ -89,7 +102,7 @@ namespace SceneChangeButton
 	void Object::Set(const SetInfo& setInfo)
 	{
 		Set(
-			setInfo.text,
+			setInfo.text + "へ",
 			setInfo.nowScene,
 			setInfo.nextScene,
 			setInfo.mouseEnterButton,
@@ -101,6 +114,19 @@ namespace SceneChangeButton
 	{
 		nowScene_ = nowScene;
 		nextScene_ = nextScene;
+	}
+
+	void Object::SetImage(const string& path)
+	{
+		if (image_ == nullptr)
+			image_ = DG::Image::Create(path);
+		else
+			image_->ReLoad(path);
+	}
+
+	void Object::SetSize(const ML::Point& size)
+	{
+		box_->setHitBase(ML::Box2D(size.x * 0.5f, size.y * -0.5f, size.x, size.y));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

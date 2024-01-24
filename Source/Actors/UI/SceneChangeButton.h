@@ -46,11 +46,10 @@ namespace SceneChangeButton
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 
-	private:
-
 		Scene* nowScene_;
 		Scene::Kind nextScene_;
 
+		DG::Image::SP image_;
 	public:
 		struct SetInfo
 		{
@@ -66,6 +65,8 @@ namespace SceneChangeButton
 		void Set(const SetInfo& setInfo);
 
 		void SetScene(Scene* nowScene, const Scene::Kind& nextScene);
+		void SetImage(const string& path);
+		void SetSize(const ML::Point& size);
 
 		void OnEvent() override;
 		void OffEvent() override;
