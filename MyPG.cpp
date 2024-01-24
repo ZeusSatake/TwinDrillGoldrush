@@ -244,7 +244,9 @@ namespace MyPG
 		case 11://粉砕エフェクト
 			for (int i = 0; i < 3; i++) {
 				if (auto e = Effect00::Object::Create(true)) {
-					e->filename = "data/image/effect/Effect_Blocks/crushEffect_" + to_string(id) + ".png";
+					string filePath = e->filename = "data/image/effect/Effect_Blocks/crushEffect_" + to_string(id) + ".png";
+					ifstream ifs(filePath);
+					if (!ifs) { e->filename = "data/image/effect/Effect_Blocks/crushEffect_" + to_string(0) + ".png";; }
 
 					e->resSizeX = e->resSizeY = 32;
 					e->drawSizeX = e->drawSizeY = 32;
