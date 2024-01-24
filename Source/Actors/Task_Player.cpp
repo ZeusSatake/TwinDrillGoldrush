@@ -170,7 +170,7 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 	}
 
-	void Object::TransitionInitialize(Scene::Kind nextScene)
+	void Object::SceneTransitionInitialize(Scene::Kind nextScene)
 	{
 		switch (nextScene)
 		{
