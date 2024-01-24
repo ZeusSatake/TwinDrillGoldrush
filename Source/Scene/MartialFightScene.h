@@ -50,10 +50,13 @@ namespace MartialFightScene
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 
+		int enemyCount_;
 		weak_ptr<BossLady> boss_;
 		shared_ptr<SecondsTimerComponent> transitionTimer_;
 		bool clear_;
 	public:
 		void SetBoss(const shared_ptr<BossLady>& boss);
+
+		void DecreaseEnemyCount();
 	};
 }
