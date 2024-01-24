@@ -99,11 +99,10 @@ namespace MartialFightScene
 			AddSceneChangeButton(gotoBaseButton);
 		}
 
-		AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
-		debugTimer->SetCountSeconds(0.8f);
-		debugTimer->Start();
-
-		debugMsg = "";
+		//AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
+		//debugTimer->SetCountSeconds(0.3f);
+		//debugTimer->Start();
+		//debugMsg = "";
 
 		return  true;
 	}
@@ -142,42 +141,47 @@ namespace MartialFightScene
 		Scene::UpDate();
 		UpdateComponents();
 
-		{//デバッグ用
-			debugMsg = spawnableBoss_ ?
-				"ボスイベント開始フラグ　ON" :
-				"ボスイベント開始フラグ　OFF";
+		//{//デバッグ用
+		//	debugMsg = spawnableBoss_ ?
+		//		"ボスイベント開始フラグ　ON" :
+		//		"ボスイベント開始フラグ　OFF";
 
-			if (debugTimer->IsCountEndFrame() && enemyCount_ > 0)
-			{
-				auto enemy = ge->GetTask<BlondeLady::Object>(BlondeLady::defGroupName);
-				enemy->Kill();
-				debugTimer->Start();
-			}
-		}
+		//	if (debugTimer->IsCountEndFrame() && enemyCount_ > 0)
+		//	{
+		//		auto enemy = ge->GetTask<BlondeLady::Object>(BlondeLady::defGroupName);
+		//		enemy->Kill();
+		//		debugTimer->Start();
+		//	}
+
+		//	auto inp = ge->in1->GetState();
+		//	if (inp.ST.down)
+		//		boss_.lock()->Kill();
+		//}
 		
 		SpawnBoss();
 
-		if (clear_)
+		if (enemyCount_ <= 0 &&
+			!boss_.lock()	 &&
+			!clear_)
 		{
-			if (auto ev = EventEngine::Object::Create_Mutex())
-			{
-				ev->Set("./data/event/eventmartialfightclear.txt");
-			}
+			clearEvent_ = EventEngine::Object::Create_Mutex();
+			clearEvent_.lock()->Set("./data/event/eventmartialfightclear.txt");
+			clear_ = true;
 		}
 
-		if (transitionTimer_->IsCountEndFrame())
+		if (clear_ && 
+			!clearEvent_.lock())
+		{
+			CreateNextScene();
+		}
+
+		/*if (transitionTimer_->IsCountEndFrame())
 		{
 			this->Kill();
 			return;
-		}
+		}*/
 
-		if (enemyCount_ <= 0 &&
-			!boss_.lock()	 && 
-			!transitionTimer_->IsActive())
-		{
-			transitionTimer_->Start();
-			clear_ = true;
-		}
+
 	}
 
 	void Object::SetBoss(const shared_ptr<BossLady>& boss)
@@ -207,7 +211,7 @@ namespace MartialFightScene
 			return;
 
 		//イベント再生中
-		if (bossEvent_.lock())
+		if (!EndOfSpawnBossEvent())
 			return;
 
 		shared_ptr<BossLady> boss;
@@ -246,6 +250,12 @@ namespace MartialFightScene
 		spawnableBoss_ = false;
 	}
 
+	bool Object::EndOfSpawnBossEvent()
+	{
+		return enemyCount_ <= 0 &&
+			   !bossEvent_.lock();
+	}
+
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
@@ -257,8 +267,8 @@ namespace MartialFightScene
 			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 50, 30, 500, 500), "ボスを倒したわね。", ML::Color(1, 1, 0, 0));
 		}
 
-		{
-			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_) + "\n" + debugMsg, ML::Color(1, 1, 0, 0));
+		{//デバッグ用
+			//ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_) + "\n" + debugMsg, ML::Color(1, 1, 0, 0));
 		}
 	}
 
