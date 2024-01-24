@@ -459,7 +459,7 @@ bool LadyNegishi::EndPrison()
 
 bool LadyNegishi::EndWire()
 {
-	if (attackPattern_ == AttackPattern::ExpandPrison)
+	if (attackPattern_ == AttackPattern::ExpandPrison||GetNowState()==AIState::Dead)
 	{
 		return true;
 	}
