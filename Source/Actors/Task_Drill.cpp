@@ -88,6 +88,7 @@ namespace  drill
 			
 			ML::Box2D draw = Predraw.OffsetCopy(this->GetPos());//※座標は指定する必要あり
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
 			this->res->img->Draw(draw, animInfo.GetSrc());
 			//----------------------------------------------------
 			ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x * 16,(int)this->GetTargetPos().y * 16,16,16 };
