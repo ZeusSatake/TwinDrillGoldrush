@@ -131,36 +131,6 @@ namespace  EnemyMap
 					enemy->SetPosY(y * chipSize);
 				}
 				break;
-				case 10:
-				{
-					auto enemy = Satake::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				break;
-				case 15:
-				{
-					auto enemy = Kumagai::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				break;
-				case 20:
-				{
-					auto enemy = Haraguchi::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-					scene->SetBoss(enemy);
-				}
-				break;
-				case 25:
-				{
-					auto enemy = Kiyohara::Object::Create(true);
-					enemy->SetPosX(x * chipSize);
-					enemy->SetPosY(y * chipSize);
-				}
 				}
 			}
 		}

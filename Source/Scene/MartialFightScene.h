@@ -9,6 +9,7 @@
 class SecondsTimerComponent;
 class BossLady;
 namespace Satake { class Object; }
+namespace EventEngine { class Object; }
 
 namespace MartialFightScene
 {
@@ -50,13 +51,23 @@ namespace MartialFightScene
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 
+		int nowStage_;
+
 		int enemyCount_;
 		weak_ptr<BossLady> boss_;
 		shared_ptr<SecondsTimerComponent> transitionTimer_;
 		bool clear_;
+		bool spawnableBoss_;
+
+		weak_ptr<EventEngine::Object> bossEvent_;
+
+		string debugMsg;
+		shared_ptr<SecondsTimerComponent> debugTimer;
 	public:
 		void SetBoss(const shared_ptr<BossLady>& boss);
 
 		void DecreaseEnemyCount();
+
+		void SpawnBoss();
 	};
 }

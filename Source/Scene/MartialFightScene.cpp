@@ -17,6 +17,12 @@
 #include "../Components/SecondsTimerComponent.h"
 #include "../Components/HPBarComponent.h"
 
+#include "../Actors/Enemys/Task_LadyKumagai.h"
+#include "../Actors/Enemys/Task_LadyHaraguchi.h"
+#include "../Actors/Enemys/Task_LadyKiyohara.h"
+#include "../Actors/Enemys/Task_LadyNegishi.h"
+#include "../Actors/Enemys/Task_LadySatake.h"
+
 #include "../Event/Task_EventEngine.h"
 
 namespace MartialFightScene
@@ -53,6 +59,7 @@ namespace MartialFightScene
 		//ge->playerPtr->ResetState();
 		auto hpBar = ge->playerPtr->GetHPBar();
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
+		spawnableBoss_ = false;
 
 		//★タスクの生成
 		{
@@ -61,6 +68,10 @@ namespace MartialFightScene
 				ev->Set("./data/event/eventmartialfightstart.txt");
 			}
 		}
+
+		auto save = Save::Object::Create(true);
+		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
+
 		{//武闘会
 			auto map = Map::Object::Create(true);
 			map->Load("MartialFight");
@@ -87,6 +98,12 @@ namespace MartialFightScene
 			gotoBaseButton->SetText("拠点へ");
 			AddSceneChangeButton(gotoBaseButton);
 		}
+
+		AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
+		debugTimer->SetCountSeconds(0.8f);
+		debugTimer->Start();
+
+		debugMsg = "";
 
 		return  true;
 	}
@@ -125,6 +142,21 @@ namespace MartialFightScene
 		Scene::UpDate();
 		UpdateComponents();
 
+		{//デバッグ用
+			debugMsg = spawnableBoss_ ?
+				"ボスイベント開始フラグ　ON" :
+				"ボスイベント開始フラグ　OFF";
+
+			if (debugTimer->IsCountEndFrame() && enemyCount_ > 0)
+			{
+				auto enemy = ge->GetTask<BlondeLady::Object>(BlondeLady::defGroupName);
+				enemy->Kill();
+				debugTimer->Start();
+			}
+		}
+		
+		SpawnBoss();
+
 		if (clear_)
 		{
 			if (auto ev = EventEngine::Object::Create_Mutex())
@@ -139,7 +171,9 @@ namespace MartialFightScene
 			return;
 		}
 
-		if (!boss_.lock() && !transitionTimer_->IsActive())
+		if (enemyCount_ <= 0 &&
+			!boss_.lock()	 && 
+			!transitionTimer_->IsActive())
 		{
 			transitionTimer_->Start();
 			clear_ = true;
@@ -153,7 +187,63 @@ namespace MartialFightScene
 
 	void Object::DecreaseEnemyCount()
 	{
+		if (enemyCount_ <= 0)
+			return;
+
 		--enemyCount_;
+
+		//雑魚敵いなくなったらイベント開始
+		if (enemyCount_ <= 0)
+		{
+			bossEvent_ = EventEngine::Object::Create_Mutex();
+			//ev->Set("./data/event/");
+			spawnableBoss_ = true;
+		}
+	}
+
+	void Object::SpawnBoss()
+	{
+		if (!spawnableBoss_)
+			return;
+
+		//イベント再生中
+		if (bossEvent_.lock())
+			return;
+
+		shared_ptr<BossLady> boss;
+		switch (nowStage_)
+		{
+		case 0:
+			boss = Kumagai::Object::Create(true);
+			boss->SetPos(ML::Vec2(300, 300));
+			break;
+
+		case 1:
+			boss = Haraguchi::Object::Create(true);
+			boss->SetPos(ML::Vec2(300, 300));
+			break;
+
+		case 2:
+			boss = Kiyohara::Object::Create(true);
+			boss->SetPos(ML::Vec2(300, 300));
+			break;
+
+		case 3:
+			boss = Negishi::Object::Create(true);
+			boss->SetPos(ML::Vec2(300, 300));
+			break;
+
+		case 4:
+			boss = Satake::Object::Create(true);
+			boss->SetPos(ML::Vec2(300, 300));
+			break;
+
+		default:
+			assert(!"設定されていない値です");
+			break;
+		}
+		SetBoss(boss);
+		spawnableBoss_ = false;
 	}
 
 	//-------------------------------------------------------------------
@@ -168,7 +258,7 @@ namespace MartialFightScene
 		}
 
 		{
-			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_), ML::Color(1, 1, 0, 0));
+			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_) + "\n" + debugMsg, ML::Color(1, 1, 0, 0));
 		}
 	}
 
