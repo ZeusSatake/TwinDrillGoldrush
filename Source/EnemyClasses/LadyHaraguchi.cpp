@@ -5,6 +5,8 @@
 
 LadyHaraguchi::LadyHaraguchi()
 	:BossLady()
+	, isCreatedTerrain_(false)
+	, isCreatedTower_(false)
 {
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
@@ -13,6 +15,7 @@ LadyHaraguchi::LadyHaraguchi()
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);
 	SetTarget(ge->playerPtr.get());
+	SetStartPos({ 2530.f,680.f });
 }
 
 void LadyHaraguchi::Think()
