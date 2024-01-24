@@ -196,12 +196,12 @@ namespace	BlockManager
 				case (int)JewelryMap::Object::ChipKind::Topaz:	//トパーズ
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 23;
+					this->arr[y][x].event = 24;
 					break;
 				case (int)JewelryMap::Object::ChipKind::Amethyst:	//アメジスト
 					this->arr[y][x].MaxHP = 6;
 					this->arr[y][x].HP = 6;
-					this->arr[y][x].event = 23;
+					this->arr[y][x].event = 25;
 					break;
 				case (int)Map::Object::ChipKind::Brick:
 					this->arr[y][x].MaxHP = -1;
