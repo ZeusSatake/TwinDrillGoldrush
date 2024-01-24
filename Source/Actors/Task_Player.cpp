@@ -169,6 +169,38 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 	}
+
+	void Object::TransitionInitialize(Scene::Kind nextScene)
+	{
+		switch (nextScene)
+		{
+			case Scene::Kind::Base:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Mining:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::MartialFight:
+				SetPos(ML::Vec2(50, 480));
+				ResetState();
+			break;
+
+			case Scene::Kind::Shop:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Kind::Ending:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+		}
+	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
