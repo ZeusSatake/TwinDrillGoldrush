@@ -4,6 +4,7 @@
 #include "../Actors/Task_SobaLaser.h"
 #include "../Actors/Task_Sobanomi.h"
 #include "../Actors/Task_SobaWire.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyNegishi::LadyNegishi()
 	:BossLady()
@@ -44,11 +45,14 @@ void LadyNegishi::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			patternSwitchFlag_ = true;
 			afterState = AttackStand;
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (!moveCnt_->IsCounting())

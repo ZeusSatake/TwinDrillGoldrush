@@ -1,6 +1,7 @@
 #include "LadyKiyohara.h"
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Bomb.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyKiyohara::LadyKiyohara()
 	:BossLady()
@@ -31,11 +32,14 @@ void LadyKiyohara::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			patternSwitchFlag_ = true;
 			afterState = AttackStand;
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (!moveCnt_->IsCounting())

@@ -2,6 +2,7 @@
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Tower.h"
 #include "../../Source/Scene/Task_Map.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyHaraguchi::LadyHaraguchi()
 	:BossLady()
@@ -24,7 +25,9 @@ void LadyHaraguchi::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			afterState = AIState::AttackStand;
 		}
@@ -37,6 +40,7 @@ void LadyHaraguchi::Think()
 				afterState = AIState::Damage;
 			}
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
