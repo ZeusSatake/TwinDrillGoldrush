@@ -35,6 +35,7 @@ LadyNegishi::LadyNegishi()
 	angle_LR_ = Angle_LR::Left;
 	
 	SetPersonalName("ç™ä›");
+	render2D_Priority[1] = 0.2f;
 }
 
 void LadyNegishi::Think()
@@ -458,7 +459,7 @@ bool LadyNegishi::EndPrison()
 
 bool LadyNegishi::EndWire()
 {
-	if (attackPattern_ == AttackPattern::ExpandPrison)
+	if (attackPattern_ == AttackPattern::ExpandPrison||GetNowState()==AIState::Dead)
 	{
 		return true;
 	}

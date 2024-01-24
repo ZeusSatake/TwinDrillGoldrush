@@ -48,7 +48,7 @@ namespace EtoHaiji
 		unHitTimer_->SetCountFrame(60);
 
 		SetTarget(ge->playerPtr.get());
-
+		this->render2D_Priority[1] = 0.2f;
 		
 		//šƒ^ƒXƒN‚Ì¶¬
 

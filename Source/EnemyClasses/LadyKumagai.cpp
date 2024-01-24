@@ -2,6 +2,7 @@
 #include "../../Source/Actors/Task_OrionContainer.h"
 #include "../../Source/Actors/Enemys/Task_Fish00.h"
 #include"../Actors/Task_Player.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyKumagai::LadyKumagai()
 	:BossLady()
@@ -15,6 +16,8 @@ LadyKumagai::LadyKumagai()
 	AddComponent(fishCD_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	fishCD_->SetCountFrame(180);
 	fishCD_->Start();
+
+	SetStartPos({ 2530.f,680.f });
 }
 
 void LadyKumagai::Think()
@@ -23,8 +26,11 @@ void LadyKumagai::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
+			SetPos(GetStartPos());
 			afterState = AttackStand;
 		}
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
@@ -36,6 +42,7 @@ void LadyKumagai::Think()
 				afterState = AIState::Damage;
 			}
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
