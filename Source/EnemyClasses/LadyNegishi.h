@@ -6,7 +6,6 @@ class LadyNegishi : public BossLady
 	bool isDestroyedWire_;
 	bool isCreateWire_;
 	bool patternSwitchFlag_;
-	int preHP_;
 	const float prisonDistance_;
 	int laserCnt_;
 	const float defaultHeight_;

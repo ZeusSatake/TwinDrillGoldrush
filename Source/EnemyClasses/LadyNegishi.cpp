@@ -23,7 +23,6 @@ LadyNegishi::LadyNegishi()
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(200);
-	preHP_ = GetStatus()->HP.GetNowHP();
 	GetStatus()->speed.Initialize(3.f, 5.f, 5.f);
 	GetStatus()->attack.Initialize(100, 100);
 
@@ -200,11 +199,7 @@ void LadyNegishi::Move()
 		}
 	}
 
-	if (preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
+	UpDateHP();
 
 	if (patternSwitchFlag_)
 	{

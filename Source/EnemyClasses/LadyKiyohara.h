@@ -7,7 +7,6 @@ class LadyKiyohara : public BossLady
 	ML::Vec2 toVec_;
 	const float defaultFlyPosY_;
 	int tackleCnt_;
-	int preHP_;
 	enum AttackPattern
 	{
 		Non,

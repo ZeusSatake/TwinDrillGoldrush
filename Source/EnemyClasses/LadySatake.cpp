@@ -18,7 +18,6 @@ LadySatake::LadySatake()
 	, tackleCnt_(3)
 	, laserCnt_(5)
 	, containerCnt_(5)
-	, preHP_(0)
 	, defaultFlyPosY_(400.f)
 	, attackPattern_(AttackPattern::Non)
 	, bombDistance_(50.f)
@@ -234,11 +233,7 @@ void LadySatake::Move()
 		}
 	}
 
-	if (preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
+	UpDateHP();
 
 	if (isHitBomb_)
 	{
