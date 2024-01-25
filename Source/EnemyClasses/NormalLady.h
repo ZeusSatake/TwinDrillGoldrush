@@ -5,6 +5,7 @@ class NormalLady : public Lady
 	const int standCnt_;//攻撃準備カウンタ
 	const int attackCnt_;//攻撃カウンタ
 	const float adjustRange_;//攻撃判定調整
+	ML::Vec2 attackPos_;
 protected:
 	shared_ptr<BoxCollisionComponent> fanEdge_;
 public:
@@ -26,6 +27,7 @@ public:
 	virtual void UpDateDead() override;
 
 	float GetAdjustRange() const;
-	bool test = false;
+
+	ML::Vec2 GetAttackPos() const { return attackPos_; }
 };
 

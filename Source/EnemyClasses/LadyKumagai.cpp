@@ -17,6 +17,27 @@ LadyKumagai::LadyKumagai()
 	fishCD_->SetCountFrame(180);
 	fishCD_->Start();
 
+	status_->HP.Initialize(1000);
+	status_->attack.Initialize(15, 100);
+	status_->defence.Initialize(0, 100);
+	status_->speed.Initialize(2.5f, 100.f, 10.f);
+	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
+	gravity_->SetDirection(ML::Vec2::Down());
+	gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
+	gravity_->SetAcceleration(ML::Gravity(32) * 10);
+
+	angle_LR_ = Angle_LR::Left;
+
+	SetPreState(AIState::Idle);
+	SetNowState(AIState::Idle);
+
+	SetFov(1000.f);
+
+	moveCnt_->SetCountFrame(0);
+	unHitTimer_->SetCountFrame(15);
+
+	SetTarget(ge->playerPtr.get());
+
 	SetStartPos({ 2530.f,680.f });
 }
 
@@ -79,6 +100,10 @@ void LadyKumagai::Think()
 	case AIState::Dead:
 		break;
 	}
+	if (GetStatus()->HP.GetNowHP() <= 0)
+	{
+		afterState = AIState::Dead;
+	}
 	//状態の更新と各状態ごとの行動カウンタを設定
 	if (UpDateState(afterState))
 	{
@@ -139,6 +164,29 @@ void LadyKumagai::Move()
 
 	est = GetMoveVec();
 	CheckMove(est);
+
+	//ダメージ処理
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		}
+	}
+
+	if (GetNowState() != AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
+
+	UpDateHP();
 }
 
 void LadyKumagai::UpDateAttackStand()

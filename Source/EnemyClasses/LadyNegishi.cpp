@@ -4,6 +4,7 @@
 #include "../Actors/Task_SobaLaser.h"
 #include "../Actors/Task_Sobanomi.h"
 #include "../Actors/Task_SobaWire.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyNegishi::LadyNegishi()
 	:BossLady()
@@ -22,7 +23,6 @@ LadyNegishi::LadyNegishi()
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(200);
-	preHP_ = GetStatus()->HP.GetNowHP();
 	GetStatus()->speed.Initialize(3.f, 5.f, 5.f);
 	GetStatus()->attack.Initialize(100, 100);
 
@@ -44,11 +44,14 @@ void LadyNegishi::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			patternSwitchFlag_ = true;
 			afterState = AttackStand;
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (!moveCnt_->IsCounting())
@@ -196,11 +199,7 @@ void LadyNegishi::Move()
 		}
 	}
 
-	if (preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
+	UpDateHP();
 
 	if (patternSwitchFlag_)
 	{

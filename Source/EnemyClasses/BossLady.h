@@ -4,6 +4,7 @@
 class BossLady : public Lady
 {
 	ML::Vec2 startPos_;
+	int preHP_;
 protected:
 	bool isHitBomb_;
 public:
@@ -15,4 +16,7 @@ public:
 
 	ML::Vec2 GetStartPos() { return startPos_; }
 	void SetStartPos(const ML::Vec2 startPos) { startPos_ = startPos; }
+
+	void UpDateHP();
+	void SetPreHP(int preHP) { preHP_ = preHP; }
 };

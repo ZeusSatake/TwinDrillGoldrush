@@ -1,6 +1,7 @@
 #include "LadyKiyohara.h"
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Bomb.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyKiyohara::LadyKiyohara()
 	:BossLady()
@@ -15,7 +16,6 @@ LadyKiyohara::LadyKiyohara()
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(250);
-	preHP_=GetStatus()->HP.GetNowHP();
 	GetStatus()->speed.Initialize(4.5f, 7.f, 5.f);
 	GetStatus()->attack.Initialize(100, 100);
 
@@ -23,6 +23,7 @@ LadyKiyohara::LadyKiyohara()
 	unHitTimer_->SetCountFrame(15);
 
 	SetTarget(ge->playerPtr.get());
+	SetStartPos({ ge->playerPtr->GetPos().x, defaultFlyPosY_ });
 }
 
 void LadyKiyohara::Think()
@@ -31,11 +32,15 @@ void LadyKiyohara::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))//イベント終了してから切り替え
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
+			SetPos(GetStartPos());
 			patternSwitchFlag_ = true;
 			afterState = AttackStand;
 		}
+	}
 		break;
 	case AIState::AttackStand:
 		if (!moveCnt_->IsCounting())
@@ -174,11 +179,7 @@ void LadyKiyohara::Move()
 		}
 	}
 
-	if(preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
+	UpDateHP();
 
 	if (patternSwitchFlag_)
 	{
@@ -235,7 +236,7 @@ void LadyKiyohara::UpDateAttackStand()
 	case AttackPattern::Non:
 		break;
 	case AttackPattern::DropBombs:
-		if (ge->playerPtr->GetPos().x < GetPos().x)
+		/*if (ge->playerPtr->GetPos().x < GetPos().x)
 		{
 			SetMoveVecX(-GetStatus()->speed.GetNow());
 		}
@@ -246,7 +247,8 @@ void LadyKiyohara::UpDateAttackStand()
 		else
 		{
 			SetMoveVecX(0);
-		}
+		}*/
+		SetPosX(ge->playerPtr->GetPos().x);
 		SetMoveVecY(0);
 
 		if (isHitBomb_)

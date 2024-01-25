@@ -2,6 +2,7 @@
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Tower.h"
 #include "../../Source/Scene/Task_Map.h"
+#include "../Scene/MartialFightScene.h"
 
 LadyHaraguchi::LadyHaraguchi()
 	:BossLady()
@@ -24,41 +25,18 @@ void LadyHaraguchi::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
+	{
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
+			SetPos(GetStartPos());
 			afterState = AIState::AttackStand;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
-			if (box_->CheckHit(plBox))
-			{
-				afterState = AIState::Damage;
-			}
-		}
+	}
 		break;
 	case AIState::AttackStand:
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
-			if (box_->CheckHit(plBox))
-			{
-				afterState = AIState::Damage;
-			}
-		}
 		break;
 	case AIState::Attack:
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
-			if (box_->CheckHit(plBox))
-			{
-				afterState = AIState::Damage;
-			}
-		}
 		break;
 	case AIState::Damage:
 		if (status_->HP.GetNowHP() <= 0)
@@ -73,6 +51,10 @@ void LadyHaraguchi::Think()
 	case AIState::Dead:
 
 		break;
+	}
+	if (GetStatus()->HP.GetNowHP() <= 0)
+	{
+		afterState = AIState::Dead;
 	}
 	//状態の更新と各状態ごとの行動カウンタを設定
 	if (UpDateState(afterState))
@@ -131,6 +113,29 @@ void LadyHaraguchi::Move()
 			UpDateDead();
 			break;
 	}
+
+	//ダメージ処理
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		}
+	}
+
+	if (GetNowState() != AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
+
+	UpDateHP();
 }
 
 void LadyHaraguchi::UpDateDamage()

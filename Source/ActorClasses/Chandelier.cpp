@@ -16,6 +16,11 @@ void Chandelier::Move()
 	SetPosY(GetPos().y + GetMoveVec().y);
 
 	HitPlayer();
+
+	if (OutOfScreen())
+	{
+		Kill();
+	}
 }
 
 void Chandelier::HitPlayer()

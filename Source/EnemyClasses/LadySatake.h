@@ -12,7 +12,6 @@ class LadySatake : public BossLady
 	int tackleCnt_;
 	int laserCnt_;
 	int containerCnt_;
-	int preHP_;	
 	const float defaultFlyPosY_;
 	const float bombDistance_;
 	const float prisonDistance_;

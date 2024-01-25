@@ -7,6 +7,7 @@
 #include "../Actors/Task_OrionContainer.h"
 #include "../Actors/Task_SobaPrison.h"
 #include "../Actors/Task_LongSword.h"
+#include "../Scene/MartialFightScene.h"
 
 LadySatake::LadySatake()
 	:BossLady()	
@@ -17,7 +18,6 @@ LadySatake::LadySatake()
 	, tackleCnt_(3)
 	, laserCnt_(5)
 	, containerCnt_(5)
-	, preHP_(0)
 	, defaultFlyPosY_(400.f)
 	, attackPattern_(AttackPattern::Non)
 	, bombDistance_(50.f)
@@ -52,9 +52,9 @@ void LadySatake::Think()
 	switch (afterState)
 	{
 	case AIState::Idle:
-		if (WithinSight(GetTarget()))
 		{
-			//SetPos(Start);
+		auto mfs = ge->GetTask<MartialFightScene::Object>(MartialFightScene::defGroupName, MartialFightScene::defName);
+		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 			patternSwitchFlag_ = true;
 			afterState = AIState::AttackStand;
 		}
@@ -233,11 +233,7 @@ void LadySatake::Move()
 		}
 	}
 
-	if (preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
+	UpDateHP();
 
 	if (isHitBomb_)
 	{

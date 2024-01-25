@@ -192,17 +192,22 @@ void NormalLady::UpDateAttack()
 		SetMoveVecX(0);
 		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
 		plBox.Offset(GetTarget()->GetPos());
+
+		
 		//¶‰E‚ÌŽaŒ‚”»’è‚ÌˆÊ’u‚ð’²®
 		if (angle_LR_ == Angle_LR::Left)
 		{
-			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x - adjustRange_, GetTarget()->GetPos().y);
+			attackPos_ = { GetPos().x - adjustRange_, GetPos().y };
 		}
 		else
 		{
-			fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x + adjustRange_, GetTarget()->GetPos().y);
+			attackPos_ = { GetPos().x + adjustRange_, GetPos().y };
+			//fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x + adjustRange_, GetTarget()->GetPos().y);
 		}
+		ML::Box2D fanBox = fanEdge_->getHitBase();
+		fanBox.Offset(attackPos_);
 
-		if (fanEdge_->CheckHit(plBox))
+		if (fanBox.Hit(plBox))
 		{
 			static_cast<Player*>(GetTarget())->TakeAttack(status_->attack.GetNow());
 		}
@@ -228,7 +233,7 @@ void NormalLady::UpDateDamage()
 {
 	if (!unHitTimer_->IsCounting())
 	{
-		status_->HP.TakeDamage(15);
+		status_->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
 		unHitTimer_->Start();
 	}
 	if (moveCnt_->IsCounting())
