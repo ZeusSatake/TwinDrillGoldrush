@@ -102,6 +102,15 @@ namespace MartialFightScene
 										this,
 										"./data/event/eventmartialfightclear.txt",//ここでゲームオーバー時のイベントを変更
 										0.8f));
+		gameOverEvent_->SetPred(
+			function<bool(void)>
+			(
+				[]()
+				{
+					return !ge->playerPtr->GetStatus()->HP.IsAlive();
+				}
+			)
+		);
 
 		//AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
 		//debugTimer->SetCountSeconds(0.3f);

@@ -79,6 +79,16 @@ namespace  GameScene
 										this,
 										"./data/event/eventgamestart.txt",//ここでゲームオーバー時のイベントを設定
 										0.8f));
+		gameOverEvent_->SetPred(
+			function<bool(void)>
+			(
+				[this]()
+				{
+					return !ge->playerPtr->GetStatus()->HP.IsAlive() ||
+						limitTimer_->WasCountEnd();
+				}
+			)
+		);
 
 		auto save = Save::Object::Create(true);
 

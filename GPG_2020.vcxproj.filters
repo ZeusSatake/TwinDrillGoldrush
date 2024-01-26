@@ -426,6 +426,9 @@
     <ClCompile Include="Source\Actors\Task_LongSword.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Components\GameOverEventComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -771,6 +774,9 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\Task_LongSword.h">
       <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Components\GameOverEventComponent.h">
+      <Filter>MyPG\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
