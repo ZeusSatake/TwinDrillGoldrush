@@ -17,7 +17,8 @@ GameOverEventComponent::GameOverEventComponent(Scene* owner, const std::string& 
 	Component((Actor*)owner),
 	gameOver_(false),
 	eventPath_(eventPath),
-	waitTimer_(make_shared<SecondsTimerComponent>(owner))
+	waitTimer_(make_shared<SecondsTimerComponent>(owner)),
+	predicate_(nullptr)
 {
 	waitTimer_->SetCountSeconds(waitTime);
 }
@@ -26,7 +27,11 @@ void GameOverEventComponent::Update()
 {
 	waitTimer_->Update();
 
-	CheckGameOver();
+	if (predicate_ == nullptr)
+		assert(!"ゲームオーバー条件が設定されていません。");
+	gameOver_ = predicate_();
+
+	//CheckGameOver();
 	if (gameOver_)
 		ReadyGameOverEvent();
 
@@ -45,14 +50,18 @@ void GameOverEventComponent::SetEventPath(const std::string& eventPath)
 {
 	eventPath_ = eventPath;
 }
-
-void GameOverEventComponent::CheckGameOver()
+void GameOverEventComponent::SetPred(const std::function<bool(void)>& predicate)
 {
-	if (ge->playerPtr->GetStatus()->HP.IsAlive())
-		return;
-
-	gameOver_ = true;
+	predicate_ = predicate;
 }
+
+//void GameOverEventComponent::CheckGameOver()
+//{
+//	if (ge->playerPtr->GetStatus()->HP.IsAlive())
+//		return;
+//
+//	gameOver_ = true;
+//}
 
 void GameOverEventComponent::ReadyGameOverEvent()
 {
