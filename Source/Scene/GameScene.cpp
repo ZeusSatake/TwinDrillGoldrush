@@ -183,8 +183,6 @@ namespace  GameScene
 		UpdateComponents();
 
 		auto inp = ge->in1->GetState();
-		if (inp.ST.down)
-			ge->playerPtr->GetStatus()->HP.TakeDamage(1000000);
 		if (inp.SE.down) {
 			this->Kill();
 		}
