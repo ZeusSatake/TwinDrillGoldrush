@@ -14,7 +14,8 @@ SecondsTimerComponent::SecondsTimerComponent(GameObject* owner, const float coun
 	nowCount_(0.0f),
 	countSeconds_(countFrame),
 	isActive_(false),
-	isCountEndFrame_(false)
+	isCountEndFrame_(false),
+	wasCountEnd_(false)
 {
 	SetActive();
 };
@@ -33,6 +34,10 @@ bool SecondsTimerComponent::IsActive() const
 bool SecondsTimerComponent::IsCountEndFrame() const
 {
 	return isCountEndFrame_;
+}
+bool SecondsTimerComponent::WasCountEnd() const
+{
+	return wasCountEnd_;
 }
 
 //==============================================================
@@ -53,6 +58,7 @@ void SecondsTimerComponent::Start()
 
 	nowCount_ = countSeconds_;
 	isActive_ = true;
+	wasCountEnd_ = false;
 }
 
 void SecondsTimerComponent::Update()
@@ -60,6 +66,7 @@ void SecondsTimerComponent::Update()
 	if (!isActive_)
 	{
 		isCountEndFrame_ = false;
+		wasCountEnd_ = true;
 		return;
 	}
 
