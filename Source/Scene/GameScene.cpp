@@ -8,6 +8,7 @@
 #include  "../../sound.h"
 #include  "../Components/SecondsTimerComponent.h"
 #include  "../Components/HPBarComponent.h"
+#include  "../Components/GameOverEventComponent.h"
 
 #include  "EndingScene.h"
 
@@ -73,6 +74,11 @@ namespace  GameScene
 		AddComponent(limitTimer_ = make_shared<SecondsTimerComponent>(this));
 		limitTimer_->SetCountSeconds(60.0f * 3.0f);
 		limitTimer_->Start();
+
+		AddComponent(gameOverEvent_ = make_shared<GameOverEventComponent>(
+										this,
+										"./data/event/eventgamestart.txt",//ここでゲームオーバー時のイベントを設定
+										0.8f));
 
 		auto save = Save::Object::Create(true);
 
@@ -160,6 +166,7 @@ namespace  GameScene
 
 		ge->debugRectReset();
 
+		RemoveAllComponent();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -176,12 +183,14 @@ namespace  GameScene
 		UpdateComponents();
 
 		auto inp = ge->in1->GetState();
+		if (inp.ST.down)
+			ge->playerPtr->GetStatus()->HP.TakeDamage(1000000);
 		if (inp.SE.down) {
 			this->Kill();
 		}
-		if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
-			this->Kill();
-		}
+		//if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
+		//	this->Kill();
+		//}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
