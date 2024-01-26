@@ -66,7 +66,7 @@ void GameOverEventComponent::ReadyGameOverEvent()
 void GameOverEventComponent::StartGameOverEvent()
 {
 	event_ = EventEngine::Object::Create_Mutex();
-	event_.lock()->Set("./data/event/eventmartialfightclear.txt");
+	event_.lock()->Set(eventPath_);
 }
 
 bool GameOverEventComponent::IsEndOfGameOverEvent() const
