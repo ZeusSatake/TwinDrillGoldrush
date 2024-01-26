@@ -49,17 +49,18 @@ namespace MartialFightScene
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
-		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
-		transitionTimer_->SetCountSeconds(3.0f);
-
 		clear_ = false;
 
 		//★データ初期化
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
+		SetNextScene(Scene::Base);
 		//ge->playerPtr->ResetState();
 		auto hpBar = ge->playerPtr->GetHPBar();
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 		spawnableBoss_ = false;
+
+		AddComponent(gameOverEventStartTimer_ = make_shared<SecondsTimerComponent>(this));
+		gameOverEventStartTimer_->SetCountSeconds(0.8f);
 
 		//★タスクの生成
 		{
@@ -86,7 +87,7 @@ namespace MartialFightScene
 		{
 			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
 			auto camera = Camera::Object::Create(true);
-			camera->horizontalScroll=true;
+			camera->horizontalScroll = true;
 			camera->SetPos(ge->playerPtr->GetPos());
 			camera->target = ge->playerPtr;
 		}
@@ -141,7 +142,7 @@ namespace MartialFightScene
 		Scene::UpDate();
 		UpdateComponents();
 
-		//{//デバッグ用
+		{//デバッグ用
 		//	debugMsg = spawnableBoss_ ?
 		//		"ボスイベント開始フラグ　ON" :
 		//		"ボスイベント開始フラグ　OFF";
@@ -153,15 +154,18 @@ namespace MartialFightScene
 		//		debugTimer->Start();
 		//	}
 
-		//	auto inp = ge->in1->GetState();
-		//	if (inp.ST.down)
-		//		boss_.lock()->Kill();
-		//}
-		
+			auto inp = ge->in1->GetState();
+			//	if (inp.ST.down)
+			//		boss_.lock()->Kill();
+			// 
+			if (inp.ST.down)
+				ge->playerPtr->GetStatus()->HP.TakeDamage(10000000);
+		}
+
 		SpawnBoss();
 
 		if (enemyCount_ <= 0 &&
-			!boss_.lock()	 &&
+			!boss_.lock() &&
 			!clear_)
 		{
 			clearEvent_ = EventEngine::Object::Create_Mutex();
@@ -169,19 +173,66 @@ namespace MartialFightScene
 			clear_ = true;
 		}
 
-		if (clear_ && 
-			!clearEvent_.lock())
+		CheckGameOver();
+		if (gameOver_)
+			ReadyGameOverEvent();
+
+		if (gameOverEventStartTimer_->IsActive() &&
+			gameOverEventStartTimer_->GetCount() <= 0.4f)
 		{
-			CreateNextScene();
+			int a = 10;
 		}
 
-		/*if (transitionTimer_->IsCountEndFrame())
-		{
-			this->Kill();
+		if (gameOverEventStartTimer_->IsCountEndFrame())
+			StartGameOverEvent();
+
+
+		if (IsEndOfGameOverEvent())
+			Kill();
+		if (IsEndOfClearEvent())
+			Kill();
+	}
+
+	void Object::CheckGameOver()
+	{
+		if (ge->playerPtr->GetStatus()->HP.IsAlive())
 			return;
-		}*/
 
+		gameOver_ = true;
+	}
 
+	void Object::ReadyGameOverEvent()
+	{
+		if (gameOverEventStartTimer_->IsActive())
+			return;
+		if (gameOverEventStartTimer_->WasCountEnd())
+			return;
+		gameOverEventStartTimer_->Start();
+	}
+
+	void Object::StartGameOverEvent()
+	{
+		gameOverEvent_ = EventEngine::Object::Create_Mutex();
+		gameOverEvent_.lock()->Set("./data/event/eventmartialfightclear.txt");
+	}
+
+	bool Object::IsEndOfGameOverEvent()
+	{
+		if (!gameOver_)
+			return false;
+		if (!gameOverEventStartTimer_->WasCountEnd())
+			return false;
+		if (gameOverEvent_.lock())
+			return false;
+
+		return true;
+	}
+
+	bool Object::IsEndOfClearEvent()
+	{
+		return 
+			clear_ &&
+			!clearEvent_.lock();
 	}
 
 	void Object::SetBoss(const shared_ptr<BossLady>& boss)
@@ -248,7 +299,7 @@ namespace MartialFightScene
 	bool Object::EndOfSpawnBossEvent()
 	{
 		return enemyCount_ <= 0 &&
-			   !bossEvent_.lock();
+			!bossEvent_.lock();
 	}
 
 	//-------------------------------------------------------------------
@@ -263,7 +314,12 @@ namespace MartialFightScene
 		}
 
 		{//デバッグ用
-			//ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_) + "\n" + debugMsg, ML::Color(1, 1, 0, 0));
+			string param =
+				//to_string(enemyCount_) + "\n" + debugMsg,
+				//"生存:" + to_string(ge->playerPtr->GetStatus()->HP.IsAlive()),
+				"ゲームオーバーイベントタイマー " + to_string(gameOverEventStartTimer_->GetCount()) + "秒" + "\n";
+
+			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), param, ML::Color(1, 1, 0, 0));			
 		}
 	}
 
@@ -279,7 +335,7 @@ namespace MartialFightScene
 			ob->me = ob;
 			if (flagGameEnginePushBack_) {
 				ge->PushBack(ob);//ゲームエンジンに登録
-				
+
 			}
 			if (!ob->B_Initialize()) {
 				ob->Kill();//イニシャライズに失敗したらKill

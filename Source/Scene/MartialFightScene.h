@@ -55,15 +55,24 @@ namespace MartialFightScene
 
 		int enemyCount_;
 		weak_ptr<BossLady> boss_;
-		shared_ptr<SecondsTimerComponent> transitionTimer_;
 		bool clear_;
+		bool gameOver_;
 		bool spawnableBoss_;
 
 		weak_ptr<EventEngine::Object> bossEvent_;
 		weak_ptr<EventEngine::Object> clearEvent_;
+		weak_ptr<EventEngine::Object> gameOverEvent_;
 
+		shared_ptr<SecondsTimerComponent> gameOverEventStartTimer_;
 		//string debugMsg;
 		//shared_ptr<SecondsTimerComponent> debugTimer;
+
+		void CheckGameOver();
+		void ReadyGameOverEvent();
+		void StartGameOverEvent();
+		bool IsEndOfGameOverEvent();
+
+		bool IsEndOfClearEvent();
 	public:
 		void SetBoss(const shared_ptr<BossLady>& boss);
 

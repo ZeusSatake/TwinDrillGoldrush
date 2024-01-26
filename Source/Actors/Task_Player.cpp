@@ -188,6 +188,7 @@ namespace player
 		{
 			case Scene::Kind::Base:
 				SetPos(ML::Vec2(-500, -500));
+				status_->HP.TakeHeal(status_->HP.GetMaxHP());
 				HiddenPlayer();
 			break;
 

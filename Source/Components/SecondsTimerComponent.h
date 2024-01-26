@@ -10,6 +10,7 @@ class SecondsTimerComponent : public Component
 	float countSeconds_;	//カウントする秒数
 	bool isActive_;			//カウント中
 	bool isCountEndFrame_;	//カウント終了フレーム
+	bool wasCountEnd_;		//カウント終了後
 	//カウント中か判定
 	void SetActive();
 public:
@@ -24,6 +25,8 @@ public:
 	bool IsActive() const;
 	//カウント終了フレームのみtrue
 	bool IsCountEndFrame() const;
+	//カウント終了後のみtrue
+	bool WasCountEnd() const;
 
 	//タイマー起動
 	void Start();
