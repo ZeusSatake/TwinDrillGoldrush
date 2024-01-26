@@ -57,17 +57,20 @@ void SecondsTimerComponent::Start()
 
 void SecondsTimerComponent::Update()
 {
-	SetActive();
-
-	if (IsActive() == false)
+	if (!isActive_)
+	{
+		isCountEndFrame_ = false;
 		return;
+	}
 
 	nowCount_ -= 1.0f / REFRESHRATE;
+
+	isCountEndFrame_ = nowCount_ <= 0.0f;
+
+	SetActive();
 }
 void SecondsTimerComponent::SetActive()
 {
-	isCountEndFrame_ = isActive_ && nowCount_ <= 0.0f;
-
 	isActive_ = nowCount_ > 0.0f;
 
 	if (!isActive_ && nowCount_ < 0.0f)
