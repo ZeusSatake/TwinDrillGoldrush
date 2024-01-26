@@ -16,6 +16,7 @@ class SecondsTimerComponent : public Component
 public:
 	SecondsTimerComponent(class GameObject* owner);
 	SecondsTimerComponent(class GameObject* ownerint, const float countSeconds);
+	virtual ~SecondsTimerComponent() {};
 
 	void SetCountSeconds(const float countSeconds);
 
