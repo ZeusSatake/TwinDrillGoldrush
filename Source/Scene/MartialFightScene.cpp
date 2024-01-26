@@ -53,6 +53,7 @@ namespace MartialFightScene
 
 		//šƒf[ƒ^‰Šú‰»
 		ge->camera2D = ML::Box2D(0, 0, (int)ge->screenWidth, (int)ge->screenHeight);
+		SetNextScene(Scene::Base);
 		//ge->playerPtr->ResetState();
 		auto hpBar = ge->playerPtr->GetHPBar();
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
