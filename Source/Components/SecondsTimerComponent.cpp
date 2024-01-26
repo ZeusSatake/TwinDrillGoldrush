@@ -66,13 +66,16 @@ void SecondsTimerComponent::Update()
 	if (!isActive_)
 	{
 		isCountEndFrame_ = false;
-		wasCountEnd_ = true;
 		return;
 	}
 
 	nowCount_ -= 1.0f / REFRESHRATE;
 
-	isCountEndFrame_ = nowCount_ <= 0.0f;
+	if (nowCount_ <= 0.0f)
+	{
+		isCountEndFrame_ = true;
+		wasCountEnd_ = true;
+	}
 
 	SetActive();
 }
