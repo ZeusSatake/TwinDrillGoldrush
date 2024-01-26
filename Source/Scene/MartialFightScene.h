@@ -7,6 +7,7 @@
 #include "../../Scene.h"
 
 class SecondsTimerComponent;
+class GameOverEventComponent;
 class BossLady;
 namespace Satake { class Object; }
 namespace EventEngine { class Object; }
@@ -56,21 +57,14 @@ namespace MartialFightScene
 		int enemyCount_;
 		weak_ptr<BossLady> boss_;
 		bool clear_;
-		bool gameOver_;
 		bool spawnableBoss_;
 
 		weak_ptr<EventEngine::Object> bossEvent_;
 		weak_ptr<EventEngine::Object> clearEvent_;
-		weak_ptr<EventEngine::Object> gameOverEvent_;
 
-		shared_ptr<SecondsTimerComponent> gameOverEventStartTimer_;
+		shared_ptr<GameOverEventComponent> gameOverEvent_;
 		//string debugMsg;
 		//shared_ptr<SecondsTimerComponent> debugTimer;
-
-		void CheckGameOver();
-		void ReadyGameOverEvent();
-		void StartGameOverEvent();
-		bool IsEndOfGameOverEvent();
 
 		bool IsEndOfClearEvent();
 	public:

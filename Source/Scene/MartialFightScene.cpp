@@ -16,6 +16,7 @@
 
 #include "../Components/SecondsTimerComponent.h"
 #include "../Components/HPBarComponent.h"
+#include "../Components/GameOverEventComponent.h"
 
 #include "../Actors/Enemys/Task_LadyKumagai.h"
 #include "../Actors/Enemys/Task_LadyHaraguchi.h"
@@ -59,9 +60,6 @@ namespace MartialFightScene
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 		spawnableBoss_ = false;
 
-		AddComponent(gameOverEventStartTimer_ = make_shared<SecondsTimerComponent>(this));
-		gameOverEventStartTimer_->SetCountSeconds(0.8f);
-
 		//★タスクの生成
 		{
 			if (auto ev = EventEngine::Object::Create_Mutex())
@@ -99,6 +97,11 @@ namespace MartialFightScene
 			gotoBaseButton->SetText("拠点へ");
 			AddSceneChangeButton(gotoBaseButton);
 		}
+		
+		AddComponent(gameOverEvent_ = make_shared<GameOverEventComponent>(
+										this,
+										"./data/event/eventmartialfightclear.txt",//ここでゲームオーバー時のイベントを変更
+										0.8f));
 
 		//AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
 		//debugTimer->SetCountSeconds(0.3f);
@@ -127,6 +130,8 @@ namespace MartialFightScene
 		ge->KillAll_G("キャラクタ");
 		ge->KillAll_G("敵");
 		ge->KillAll_G("オブジェクト");
+
+		RemoveAllComponent();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -173,59 +178,8 @@ namespace MartialFightScene
 			clear_ = true;
 		}
 
-		CheckGameOver();
-		if (gameOver_)
-			ReadyGameOverEvent();
-
-		if (gameOverEventStartTimer_->IsActive() &&
-			gameOverEventStartTimer_->GetCount() <= 0.4f)
-		{
-			int a = 10;
-		}
-
-		if (gameOverEventStartTimer_->IsCountEndFrame())
-			StartGameOverEvent();
-
-
-		if (IsEndOfGameOverEvent())
-			Kill();
 		if (IsEndOfClearEvent())
 			Kill();
-	}
-
-	void Object::CheckGameOver()
-	{
-		if (ge->playerPtr->GetStatus()->HP.IsAlive())
-			return;
-
-		gameOver_ = true;
-	}
-
-	void Object::ReadyGameOverEvent()
-	{
-		if (gameOverEventStartTimer_->IsActive())
-			return;
-		if (gameOverEventStartTimer_->WasCountEnd())
-			return;
-		gameOverEventStartTimer_->Start();
-	}
-
-	void Object::StartGameOverEvent()
-	{
-		gameOverEvent_ = EventEngine::Object::Create_Mutex();
-		gameOverEvent_.lock()->Set("./data/event/eventmartialfightclear.txt");
-	}
-
-	bool Object::IsEndOfGameOverEvent()
-	{
-		if (!gameOver_)
-			return false;
-		if (!gameOverEventStartTimer_->WasCountEnd())
-			return false;
-		if (gameOverEvent_.lock())
-			return false;
-
-		return true;
 	}
 
 	bool Object::IsEndOfClearEvent()
@@ -314,12 +268,11 @@ namespace MartialFightScene
 		}
 
 		{//デバッグ用
-			string param =
+			//string param =
 				//to_string(enemyCount_) + "\n" + debugMsg,
-				//"生存:" + to_string(ge->playerPtr->GetStatus()->HP.IsAlive()),
-				"ゲームオーバーイベントタイマー " + to_string(gameOverEventStartTimer_->GetCount()) + "秒" + "\n";
+				//"生存:" + to_string(ge->playerPtr->GetStatus()->HP.IsAlive());
 
-			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), param, ML::Color(1, 1, 0, 0));			
+			//ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), param, ML::Color(1, 1, 0, 0));			
 		}
 	}
 

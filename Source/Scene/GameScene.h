@@ -7,6 +7,7 @@
 #include "../../Scene.h"
 
 class SecondsTimerComponent;
+class GameOverEventComponent;
 
 namespace  GameScene
 {
@@ -49,6 +50,7 @@ namespace  GameScene
 		bool  Finalize();	//「終了」タスク消滅時に１回だけ行う処理
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		shared_ptr<SecondsTimerComponent> limitTimer_;
+		shared_ptr<GameOverEventComponent> gameOverEvent_;
 
 	public:
 		//追加したい変数・メソッドはここに追加する
