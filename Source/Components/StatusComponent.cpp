@@ -229,6 +229,7 @@ void StatusComponent::Health::Initialize(const int max)
 	max_= max;
     now_ = max;
 	//SetMaxHP(max, Health::MaxLifeSetMode::MaxHeal);
+	UpdateIsAlive();
 }
 
 bool StatusComponent::Health::IsAlive() const
