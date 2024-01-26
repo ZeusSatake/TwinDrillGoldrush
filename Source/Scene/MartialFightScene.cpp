@@ -159,12 +159,12 @@ namespace MartialFightScene
 		//		debugTimer->Start();
 		//	}
 
-			auto inp = ge->in1->GetState();
+			//auto inp = ge->in1->GetState();
 			//	if (inp.ST.down)
 			//		boss_.lock()->Kill();
 			// 
-			if (inp.ST.down)
-				ge->playerPtr->GetStatus()->HP.TakeDamage(10000000);
+			//if (inp.ST.down)
+			//	ge->playerPtr->GetStatus()->HP.TakeDamage(10000000);
 		}
 
 		SpawnBoss();
