@@ -176,6 +176,12 @@ namespace MartialFightScene
 		if (gameOver_)
 			ReadyGameOverEvent();
 
+		if (gameOverEventStartTimer_->IsActive() &&
+			gameOverEventStartTimer_->GetCount() <= 0.4f)
+		{
+			int a = 10;
+		}
+
 		if (gameOverEventStartTimer_->IsCountEndFrame())
 			StartGameOverEvent();
 
@@ -196,6 +202,8 @@ namespace MartialFightScene
 
 	void Object::ReadyGameOverEvent()
 	{
+		if (gameOverEventStartTimer_->IsActive())
+			return;
 		if (gameOverEventStartTimer_->WasCountEnd())
 			return;
 		gameOverEventStartTimer_->Start();
@@ -305,8 +313,12 @@ namespace MartialFightScene
 		}
 
 		{//デバッグ用
-			//ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), to_string(enemyCount_) + "\n" + debugMsg, ML::Color(1, 1, 0, 0));
-			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), "生存:" + to_string(ge->playerPtr->GetStatus()->HP.IsAlive()));
+			string param =
+				//to_string(enemyCount_) + "\n" + debugMsg,
+				//"生存:" + to_string(ge->playerPtr->GetStatus()->HP.IsAlive()),
+				"ゲームオーバーイベントタイマー " + to_string(gameOverEventStartTimer_->GetCount()) + "秒" + "\n";
+
+			ge->debugFont->Draw(ML::Box2D(100, 100, 500, 500), param, ML::Color(1, 1, 0, 0));			
 		}
 	}
 
