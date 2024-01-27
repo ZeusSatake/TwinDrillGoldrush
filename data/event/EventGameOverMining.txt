@@ -1,8 +1,8 @@
 evimg>PL_A,./data/image/butler.png,R
-msg>’Êí˜g,180,—¬Î‚¨ì—l‚Å‚·B
+msg>’Êí˜g,0,‚¨‚¨A‚¨ì—lBÂ–±ŽÒ‚É•‰‚¯‚Ä‚µ‚Ü‚¤‚Æ‚Íî‚¯‚È‚¢B
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
-msg>’Êí˜g,0,‚±‚Ì’ö“x‚±‚È‚¹‚È‚¯‚ê‚Î•“¬‰ï‚ÅŸ‚Ä‚Ü‚¹‚ñ‚í````I
+msg>’Êí˜g,0,‚­ƒbI¸i‚µ‚Ü‚·‚ícI
 evimg>PL_A,off
 msg>’Êí˜g,0,off
 end>

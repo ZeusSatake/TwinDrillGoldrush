@@ -1,0 +1,11 @@
+evimg>PL_A,./data/image/shoggoth.png,R
+msg>’Êí˜g,0,ƒeƒPƒŠƒŠ`I
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,—~’£‚è‚·‚¬‚½‚æ‚¤‚Å‚·‚ÈB*’·‹‚·‚é‚ÆƒVƒ‡ƒSƒX–k“‡‚ÉP‚í‚ê‚Ä‚µ‚Ü‚¤‚æ‚¤‚Å‚·‚¼B
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,‚ÂAŽŸ‚±‚»‚ÍcI
+evimg>PL_A,off
+msg>’Êí˜g,0,off
+end>

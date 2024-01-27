@@ -5,7 +5,7 @@ evimg>PL_A,./data/image/Lady.png,R
 msg>通常枠,0,おやおや、他のお嬢様達を始末する手間が省けましたわ。
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
-msg>通常枠,0！？
+msg>通常枠,0,！？
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,R
 msg>通常枠,0,申し遅れました。私、株式会社オリオン海商の熊谷と申します。

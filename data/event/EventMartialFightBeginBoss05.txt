@@ -1,0 +1,27 @@
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,c‘å‘Ì4”N‚Ô‚è‚Å‚·‚í‚ËB
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,R
+msg>’Êí˜g,0,H
+msg>’Êí˜g,0,‚í‚½‚­‚µ’B‚Ç‚±‚©‚Å‰ï‚Á‚½‚Ì‚Å‚µ‚å‚¤‚©H
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,Šo‚¦‚Ä‚È‚¢‚Æ‚ÍŒ¾‚í‚¹‚Ü‚¹‚ñ‚í‚æIƒfƒrƒ…[í‚Å‹M—‚ÉŽS”s‚ð‹i‚µ‚½‚¨ì—l‚Å‚·‚íI
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,R
+msg>’Êí˜g,0,cH‚»‚ñ‚È‘O‚Ì‚±‚ÆŠo‚¦‚Ä‚¢‚Ü‚¹‚ñ‚íc
+msg>’Êí˜g,0,‚»‚ñ‚È‚±‚Æ‚æ‚èc
+msg>’Êí˜g,0,\‚µ’x‚ê‚Ü‚µ‚½BŽ„AŠ”Ž®‰ïŽÐƒ[ƒEƒXƒR[ƒ|ƒŒ[ƒVƒ‡ƒ“‚Ì²’|‚Æ\‚µ‚Ü‚·B*•¾ŽÐ‚Í‘¼ŽÐ‚ðŽP‰º‚É‚µ‚Ä‰ïŽÐ‚Æ‚µ‚Ä‚Ì‹K–Í‚ðŠg‘å‚µ‚Ä‚«‚Ü‚µ‚½B*Ú‚µ‚¢Ž–‹Æ“à—e‚Í•¾ŽÐƒz[ƒ€ƒy[ƒW‚ð‚²ŽQÆ‚­‚¾‚³‚¢B
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,‹M—’ö‚Ì‚¨ì—l‚Å‚à‚»‚Ìƒeƒ“ƒvƒŒ[ƒg‚©‚ç‚Í“¦‚ê‚ç‚ê‚È‚¢‚æ‚¤‚Å‚·‚í‚Ëc
+evimg>PL_A,off
+msg>’Êí˜g,0,(‚±‚Ì“ú–¼ŽhŒðŠ·‚ÌÅ‘¬‹L˜^‚ªXV‚³‚ê‚½)
+evimg>PL_A,./data/image/Lady.png,R
+msg>’Êí˜g,0,—DŸ‚ð‘j‚Þ‚Ì‚Å‚ ‚ê‚Î—eŽÍ‚Í‚µ‚Ü‚¹‚ñ‚íc
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,‚ ‚Ì“ú‚ÌáJ‚ð°‚ç‚µ‚Ä‚â‚è‚Ü‚·‚í```III
+msg>’Êí˜g,0,off
+evimg>PL_A,off
+end>
