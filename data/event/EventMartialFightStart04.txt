@@ -1,0 +1,14 @@
+msg>’Êí˜g,0,‘O‰ñ‚Ì•“¬‰ï‚©‚çˆê”Nc
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,¡‰ñ‚Í‘S‘‘å‰ï‚Å‚·‚¼A‚¨ì—lB*‘S‘‚Ì‹­‹‚½‚¿‚ªW‚¤‘å‰ï‚Æ‚¢‚¤‚±‚Æ‚ÅAŒµ‚µ‚¢í‚¢‚ð‹­‚¢‚ç‚ê‚é‚±‚Æ‚Å‚µ‚å‚¤B
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,ŒŒÕ‚è‚Éã‚°‚Ä‚â‚è‚Ü‚·‚í```I
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,¡‰ñ‚Í‚ ‚ÌƒJƒ‹ƒƒX»–Ë‚ÌªŠÝ‚¨ì—l‚ªŽQí‚µ‚Ä‚¢‚é‚æ‚¤‚Å‚·‚ÈB*ªŠÝ‚¨ì—l‚Í‹¼”ž‚ð—p‚¢‚½A•Ï‘¥“I‚ÈUŒ‚‚ª“¾ˆÓ‚Æ‚Ì‚±‚Æ‚Å‚·‚¼B*UŒ‚‚Å‚«‚éØ‚ÁŠ|‚¯‚ðŒ©‹É‚ß‚Ä‚­‚¾‚³‚¢B
+msg>’Êí˜g,0,‚»‚ê‚Å‚ÍŒ’“¬‚ð‹F‚è‚Ü‚·B
+
+msg>’Êí˜g,0,off
+evimg>PL_A,off
+end>

@@ -1,0 +1,14 @@
+msg>通常枠,0,前回の武闘会から半年…
+evimg>PL_A,./data/image/butler.png,R
+msg>通常枠,0,今回は地方大会ですぞ、お嬢様。*県大会とは比較にならないレベルになっていますな。
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>通常枠,0,有象無象を蹴散らしてやりますわよ～！
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>通常枠,0,今回はあのフェニックス航空の清原お嬢様が参戦しているようです。*清原お嬢様は空中戦が得意という話ですが、お嬢様は空を飛べないので確実に攻撃を与えられるタイミングを見極めましょうぞ。
+msg>通常枠,0,それでは健闘を祈ります。
+
+msg>通常枠,0,off
+evimg>PL_A,off
+end>

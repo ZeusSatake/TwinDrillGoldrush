@@ -1,0 +1,21 @@
+msg>’Êí˜g,0,‘S‘‘å‰ï‚©‚ç“ñ”Nc
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,¡‰ñ‚Í¢ŠE‘å‰ï‚Å‚·‚Èc‚¨ì—lc*¢ŠEˆê‚Ì‚¨ì—l‚ªŒˆ‚Ü‚é‘å‰ï‚Æ‚¢‚¤‚±‚Æ‚ÅA‚©‚Â‚Ä‚È‚¢‚Ù‚Ç‚ÌƒŒƒxƒ‹‚Ì‚‚³‚ðŽf‚¦‚Ü‚·B
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,Šj‚ðH‚ç‚Á‚Ä‚à‘Ï‚¦”²‚¢‚ÄŒ©‚¹‚Ü‚·‚í```I
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,¡‰ñ‚Í‚È‚ñ‚Æ‚¨ì—l‚Ìˆö‰‚Ì‘ŠŽè‚Å‚ ‚éƒ[ƒEƒXƒR[ƒ|ƒŒ[ƒVƒ‡ƒ“‚Ì²’|‚¨ì—l‚ªŽQí‚µ‚Ä‚¢‚é‚æ‚¤‚Å‚·‚¼cI
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,cI
+msg>’Êí˜g,0,ˆâœ‚àŽc‚³‚¸‚ÉÁ‚µ”ò‚Î‚µ‚Ü‚·‚ícI
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,ˆÈ‘Oí‚Á‚½Žž‚æ‚è‚àŠi’i‚É‹­‚­‚È‚Á‚Ä‚¢‚éã‚ÉAí“¬ƒXƒ^ƒCƒ‹‚à‘å•‚É•Ï‚í‚Á‚Ä‚¢‚é‚æ‚¤‚Å‚·‚ÈB*¡‚Ü‚Å‚ÌŒoŒ±‚ðŠˆ‚©‚µ‚Äí‚¦‚Î‚«‚Á‚ÆŸ—˜‚Å‚«‚é‚Å‚µ‚å‚¤B
+msg>’Êí˜g,0,‚»‚ê‚Å‚ÍŒ’“¬‚ð‹F‚è‚Ü‚·cI
+
+msg>’Êí˜g,0,off
+evimg>PL_A,off
+end>

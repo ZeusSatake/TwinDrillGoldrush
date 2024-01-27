@@ -1,5 +1,0 @@
-evimg>PL_A,./data/image/Lady.png,R
-msg>’Êí˜g,180,‹­‚³‚ª‘«‚è‚È‚©‚Á‚½‚Ì‚ËB*‚à‚Á‚Æ’b˜B‚µ‚È‚¯‚ê‚Î‚È‚ç‚È‚©‚Á‚½‚Ì‚©‚à‚µ‚ê‚È‚¢‚íB
-msg>’Êí˜g,0,off
-evimg>PL_A,off
-end>

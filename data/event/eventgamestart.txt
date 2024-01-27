@@ -1,5 +1,5 @@
 evimg>PL_A,./data/image/butler.png,R
-msg>通常枠,180,今回の目標は「%」だよ。
+msg>通常枠,0,お嬢様、今回の目標は「%」ですぞ。
 msg>通常枠,0,off
 evimg>PL_A,off
 end>

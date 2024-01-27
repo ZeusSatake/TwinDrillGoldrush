@@ -1,0 +1,24 @@
+evimg>PL_A,./data/image/Lady.png,R
+msg>’Êí˜g,0,Î¹ÞªªªªªªªªªI
+msg>’Êí˜g,0,‚Ü‚³‚©‚í‚½‚­‚µ‚Ì”š’e“Š‰ºUŒ‚‚ª•Ô‚³‚ê‚é‚È‚ñ‚Äc
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,Ž©•ª‚Ìgˆê‚Â‚Åí‚¤‚»‚ÌŽpc*ŽÐ–¼‚É’p‚¶‚ÊƒJƒbƒR—Ç‚³‚Å‚µ‚½‚í‚æ```I
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,R
+msg>’Êí˜g,0,‚¨–J‚ß‚É—a‚©‚èŒõ‰h‚Å‚·‚íc
+msg>’Êí˜g,0,‹M—‚à—§”h‚ÈƒhƒŠƒ‹‚Å‚µ‚½‚í‚æc
+msg>’Êí˜g,0,ƒOƒnƒbI
+evimg>PL_A,off
+evimg>PL_A,./data/image/Lady.png,L
+msg>’Êí˜g,0,ƒtƒbc’n•û‘å‰ï‚Æ‚à‚È‚é‚Æœ‚Ì‚ ‚é•û‚ªo‚Ä‚«‚Ü‚·‚í‚Ëc*ŽŸ‚Ìí‚¢‚àŠy‚µ‚Ý‚Å‚·‚í```I
+msg>’Êí˜g,0,ƒI[ƒbƒzƒbƒzƒbƒzƒbƒzƒbƒzI*ƒI[ƒbƒzƒbƒzƒbƒzƒbƒzƒbƒzI
+evimg>PL_A,off
+msg>’Êí˜g,0,‚±‚¤‚µ‚Ä‰ä‚ç‚ª‚¨ì—l‚Í’n•û‘å‰ï‚Å‚àŒ©Ž–—DŸ‚ð‰Ê‚½‚µ‚½B
+msg>’Êí˜g,0,‚¢‚æ‚¢‚æŽŸ‚Í‘S‘‘å‰ïB
+msg>’Êí˜g,0,‚µ‚©‚µAoêŽÒ‚Ì’†‚É‰…“G‚Å‚ ‚éƒ[ƒEƒXƒR[ƒ|ƒŒ[ƒVƒ‡ƒ“‚Ì²’|‚¨ì—l‚Ì–¼‘O‚Í–³‚­c
+msg>’Êí˜g,0,ŽŸ‚Ì‘å‰ï‚É”õ‚¦‚ÄÄ‚Ñ“´ŒA‚ÅŽ©•ª‚ð‚‚ß‚é‚½‚ß‚ÌCs‚É—ã‚Þ‚Ì‚Å‚ ‚Á‚½B
+msg>’Êí˜g,0,ToBeContinuec
+msg>’Êí˜g,0,off
+
+end>
