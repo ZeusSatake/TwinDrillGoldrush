@@ -62,28 +62,17 @@ namespace Satake
 	void  Object::Render2D_AF()
 	{
 		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D draw = box_->getHitBase();
+			ML::Box2D src = ML::Box2D(0, 0, 32, 58);
+			if (angle_LR_ == Angle_LR::Right)
+			{
+				draw.x = -draw.x;
+				draw.w = -draw.w;
+			}
 			//ƒXƒNƒ[ƒ‹‘Î‰ž
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
+			draw.Offset(GetPos());
 			res->img->Draw(draw, src);
-		}
-		if (IsAttacking())
-		{
-			ML::Box2D draw;
-			if (angle_LR_ == Angle_LR::Left)
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			else
-			{
-				draw = swordEdge_->getHitBase().OffsetCopy(ML::Vec2(GetPos().x, GetPos().y));
-			}
-			ML::Box2D src = ML::Box2D(0, 0, 16, 64);
-
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			res->fanImg->Draw(draw, src);
 		}
 	}
 

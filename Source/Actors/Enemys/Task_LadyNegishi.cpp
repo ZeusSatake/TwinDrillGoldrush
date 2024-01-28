@@ -11,7 +11,7 @@ namespace Negishi
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
+		img = DG::Image::Create("./data/image/LadyNegishi.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -60,11 +60,16 @@ namespace Negishi
 	void  Object::Render2D_AF()
 	{
 		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D draw = box_->getHitBase();
+			ML::Box2D src = ML::Box2D(0, 0, 27, 58);
+			if (angle_LR_ == Angle_LR::Right)
+			{
+				draw.x = -draw.x;
+				draw.w = -draw.w;
+			}
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
+			draw.Offset(GetPos());
 			res->img->Draw(draw, src);
 
 		}

@@ -211,6 +211,7 @@
     <ClCompile Include="Source\EnemyClasses\BossLady.cpp" />
     <ClCompile Include="Source\EnemyClasses\Debtor.cpp" />
     <ClCompile Include="Source\EnemyClasses\Fish.cpp" />
+    <ClCompile Include="Source\EnemyClasses\KakugariLady.cpp" />
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadyHaraguchi.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadyKiyohara.cpp" />
@@ -330,6 +331,7 @@
     <ClInclude Include="Source\EnemyClasses\BossLady.h" />
     <ClInclude Include="Source\EnemyClasses\Debtor.h" />
     <ClInclude Include="Source\EnemyClasses\Fish.h" />
+    <ClInclude Include="Source\EnemyClasses\KakugariLady.h" />
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
     <ClInclude Include="Source\EnemyClasses\LadyHaraguchi.h" />
     <ClInclude Include="Source\EnemyClasses\LadyKiyohara.h" />

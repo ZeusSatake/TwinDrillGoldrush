@@ -17,6 +17,7 @@ LadyHaraguchi::LadyHaraguchi()
 	unHitTimer_->SetCountFrame(15);
 	SetTarget(ge->playerPtr.get());
 	SetStartPos({ 2530.f,680.f });
+	ge->playerPtr->SetPosX(500);
 }
 
 void LadyHaraguchi::Think()
