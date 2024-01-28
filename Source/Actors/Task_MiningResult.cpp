@@ -188,6 +188,13 @@ namespace MiningResult
 		wallet.Recieve(totalSellingPrice_);
 		save->SetValue(Save::Object::ValueKind::HaveMoney, wallet.GetBalance());
 
+		if (clear_)
+		{
+			const int nowProgress = save->GetValue<int>(Save::Object::ValueKind::MiningProgress);
+			if (nowProgress < 4)
+				save->SetValue(Save::Object::ValueKind::MiningProgress, nowProgress + 1);
+		}
+		
 		save->Kill();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {

@@ -49,6 +49,7 @@ namespace Save
 		enum class ValueKind
 		{
 			StageNo,
+			MiningProgress,
 			DrillLevel,
 			DefenceLevel,
 			SpeedLevel,
