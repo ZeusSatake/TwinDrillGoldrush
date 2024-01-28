@@ -3,11 +3,13 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "Task_MiningResult.h"
+#include  "../../Scene.h"
+
 #include  "../Components/Money/PriceTagComponent.h"
 #include  "../Components/Money/WalletComponent.h"
 #include  "../Components/SecondsTimerComponent.h"
 #include  "../System/Task_Save.h"
-#include  "../../Scene.h"
+#include  "../Event/Task_EventEngine.h"
 
 namespace MiningResult
 {
@@ -168,6 +170,7 @@ namespace MiningResult
 
 		auto save = Save::Object::Create(true);
 		initialHaveMoney_ = save->GetValue<int>(Save::Object::ValueKind::HaveMoney);
+		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
 		save->Kill();
 
 		return  true;
@@ -199,21 +202,24 @@ namespace MiningResult
 	{
 		UpdateComponents();
 
-		clear_ = getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_;
-
-		if (clear_ /*&&
-			transitionTimer_->IsActive() == false*/)
+		if (getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_ &&
+			!clear_ &&
+			!clearEvent_.lock())
 		{
-			//transitionTimer_->Start();
+			clear_ = true;
+			clearEvent_ = EventEngine::Object::Create_Mutex();
+			clearEvent_.lock()->Set("./data/event/EventGameClear0" + to_string(nowStage_ + 1) + ".txt");
+		}
+
+		if (clear_ &&
+			!clearEvent_.lock())
+		{
 			CalcTotalSellingPrice();
 
 			const auto& inp = ge->in1->GetState();
-			if (inp.ST.down)
-				Kill();
+			if (inp.SE.down)
+				nowScene_->Kill();
 		}
-
-		if (transitionTimer_->IsCountEndFrame())
-			nowScene_->Kill();
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

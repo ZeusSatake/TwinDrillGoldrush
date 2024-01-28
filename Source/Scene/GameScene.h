@@ -51,6 +51,7 @@ namespace  GameScene
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		shared_ptr<SecondsTimerComponent> limitTimer_;
 		shared_ptr<GameOverEventComponent> gameOverEvent_;
+		int nowStage_;
 
 	public:
 		//追加したい変数・メソッドはここに追加する
