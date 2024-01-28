@@ -15,6 +15,7 @@ class Player :public Character
 	ML::Vec2 externalMoveVec;
 	ML::Box2D AttackBox;
 	float jumpPow;
+	bool extCheckFoot;
 
 protected:
 	class shared_ptr<ControllerInputComponent> controller_;
@@ -29,14 +30,28 @@ public:
 
 	StateComponent::State pState;
 
+private:
+	int hpTable[5] = { 1000,1500,1700,2000,2300 };
+	int defenceTable[5] = { 1,3,5,7,9 };
+	int attackTable[5] = { 3,5,10,15,20 };
+	float speedTable[5] = {1.5f,1.7f,2.0f,2.3f,2.5f};
 
+	int drillAttack[5] = { 1,1,2,2,3 };
+
+
+public:
 	
-
 	void Think()override;
 	void Move()override;
 
 	//α版に間に合わせるための接地判定
 	bool CheckFoot();
+
+	void SetExtCheckFoot(bool check_);
+	bool GetExtCheckFoot();
+	void ExtCheckFoot(ML::Box2D target_);
+	
+
 	bool CheckHead();
 	//void CheckMove(ML::Vec2& e_);
 	void Dash(ML::Vec2 e_);
@@ -56,7 +71,7 @@ public:
 	void SetDrillDurability(int durability_);
 	int  GetDrilldurability();
 
-	void UpdateStates(int hp_,float speed_,int attack_,int defence_);//プレイヤーのステータスを一括でアップデートするメソッド
+	void UpdateStates();//プレイヤーのステータスを一括でアップデートするメソッド
 
 	int GetDrillAttack();
 	ML::Box2D GetAttackBox();
@@ -66,6 +81,7 @@ public:
 	HPBarComponent* GetHPBar() const;
     
 	void CollisionJudge(ML::Box2D hitBox_ , ML::Vec2 pos_);//外部のオブジェクトにめり込まないようにするメソッド
+
 
 	void SetAnim();
 

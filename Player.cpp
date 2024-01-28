@@ -5,12 +5,15 @@
 #include "Source/Components/HPBarComponent.h"
 
 #include "Source/Components/Animation/AnimManager.h"
+#include  "../System/Task_Save.h"
+
 
 Player::Player()
 	:
 	moveVec(ML::Vec2{ 0,0 }),
 	externalMoveVec(ML::Vec2{0,0}),
-	jumpPow(-60.f)
+	jumpPow(-60.f),
+	extCheckFoot(false)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -62,6 +65,19 @@ bool Player::CheckFoot()
 	return false;
 }
 
+void Player::ExtCheckFoot(ML::Box2D target_)
+{
+	ML::Box2D footBox{
+		this->box_->getHitBase().x,
+			this->box_->getHitBase().y + this->box_->getHitBase().h,
+			this->box_->getHitBase().w,
+			1
+	}; 
+	ML::Box2D me = footBox.OffsetCopy(this->GetPos());
+		this->SetExtCheckFoot(me.Hit(target_));
+	
+}
+
 bool Player::CheckHead()
 {
 	ML::Box2D headBox{
@@ -103,7 +119,7 @@ void Player::Think()
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
 		if (inp.Trigger.L2.down) { pState = StateComponent::State::SpinAttack; }
 		if (inp.L1.down) { pState = StateComponent::State::Attack; }
-		if (!CheckFoot() && !CheckHead()) { pState = StateComponent::State::Fall; }
+		if (!CheckFoot() && !CheckHead() &&!extCheckFoot) { pState = StateComponent::State::Fall; }
 		break;
 	case StateComponent::State::Attack:
 		if (this->state_->moveCnt_ > 30
@@ -127,12 +143,12 @@ void Player::Think()
 		break;
 	case StateComponent::State::Jump:
 		if (GetMoveVec().y > 0 || CheckHead()
-			|| !CheckFoot()) {
+			|| !CheckFoot()||!extCheckFoot) {
 			pState = StateComponent::State::Fall;
 		}
 		break;
 	case StateComponent::State::Fall:
-		if (CheckFoot()) { pState = StateComponent::State::Idle; }
+		if (CheckFoot()||extCheckFoot) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Dash:
 		if (inp.LStick.volume == 0 || this->state_->moveCnt_ >= 30) { pState = StateComponent::State::Idle; }
@@ -174,9 +190,9 @@ void Player::Move()
 		this->drill_->ResetDurability();
 	}
 
-	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot())
+	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot()||!extCheckFoot)
 	{
-		this->moveVec.y = min(this->moveVec.y + ((ML::Gravity(15) + (this->state_->moveCnt_ / 10)) * 5), 35.f);
+		this->moveVec.y = min(this->moveVec.y + ((ML::Gravity(10) + (this->state_->moveCnt_ / 10)) * 3), 35.f);
 	}
 	else
 	{
@@ -214,7 +230,7 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::KnockBack:
-		this->moveVec.x = externalMoveVec.x;
+		//this->moveVec.x = externalMoveVec.x;
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -266,9 +282,15 @@ void Player::Move()
 		this->angle_LR_ = Angle_LR::Right;
 	}
     //this->CheckHitMap(this->preVec);
-	externalMoveVec.y = 0;
-	CheckMove(externalMoveVec);
+	//externalMoveVec.y = 0;
+	
+	if (externalMoveVec.x !=0)
+	{
+		moveVec.x = moveVec.x * 0.05;
+	}
+
 	CheckMove(moveVec);
+	CheckMove(externalMoveVec);
 }
 
 void Player::CollisionJudge(ML::Box2D hitBox_ ,ML::Vec2 pos_)
@@ -349,7 +371,7 @@ void Player::SetPlayerState(StateComponent::State state)
 void Player::SetExternalVec(ML::Vec2 moveVec_)
 {
 	this->externalMoveVec = moveVec_;
-	this->state_->UpdateNowState(StateComponent::State::KnockBack);
+	//this->state_->UpdateNowState(StateComponent::State::KnockBack);
 }
 
 int Player::GetDrillAttack()
@@ -398,12 +420,9 @@ void Player::HiddenPlayer()
 	this->drill_->SetMode(Drill::Mode::Non);
 }
 
-void Player::UpdateStates(int hp_, float speed_, int attack_, int defence_)
+void Player::UpdateStates()
 {
-	this->status_->HP.Initialize(hp_);
-	this->status_->speed.Initialize(speed_, speed_, speed_);
-	this->status_->attack.Initialize(attack_, attack_);
-	this->status_->defence.Initialize(defence_, defence_);
+	
 }
 
 void Player::SetAnim()
@@ -424,4 +443,14 @@ void Player::SetAnim()
 	this->animManager_->AddAnim((int)StateComponent::State::Dash, animTable[2]);
 	this->animManager_->AddAnim((int)StateComponent::State::Jump, animTable[3]);
 	this->animManager_->AddAnim((int)StateComponent::State::Fall, animTable[4]);
+}
+
+void Player::SetExtCheckFoot(bool Check_)
+{
+	this->extCheckFoot = Check_;
+}
+
+bool Player::GetExtCheckFoot()
+{
+	return this->extCheckFoot;
 }

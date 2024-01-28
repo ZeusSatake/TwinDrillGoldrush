@@ -180,6 +180,8 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetExternalVec().x) + " " + to_string(this->GetExternalVec().y));
+		if(this->GetExtCheckFoot())
+		ge->debugFont->Draw(ML::Box2D{1000, 180, 500, 500}, "CheckFoot");
 	}
 
 	void Object::SceneTransitionInitialize(Scene::Kind nextScene)

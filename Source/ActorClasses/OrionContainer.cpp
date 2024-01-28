@@ -35,16 +35,16 @@ void OrionContainer::HitFoward()
 {
 	ML::Box2D foward = ML::Box2D
 	{
-		box_->getHitBase().x,
-		box_->getHitBase().y - 1,
-		1,
+		box_->getHitBase().x-1,
+		box_->getHitBase().y,
+		10,
 		box_->getHitBase().h
 	};
 	foward.Offset(GetPos());
 
 	if (ge->playerPtr->CheckHit(foward))
 	{
-		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, GetPos().x });
+		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, 0 });
 	}
 }
 
@@ -55,12 +55,17 @@ void OrionContainer::HitTop()
 		box_->getHitBase().x,
 		box_->getHitBase().y - 1,
 		box_->getHitBase().w,
-		1
+		5
 	};
 	foward.Offset(GetPos());
 
 	if (ge->playerPtr->CheckHit(foward))
 	{
-		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, GetPos().x });
+		ge->playerPtr->SetExternalVec(ML::Vec2{ -movementAmount_, 0 });
+		ge->playerPtr->SetExtCheckFoot(true);
+	}
+	else
+	{
+		ge->playerPtr->SetExtCheckFoot(false);
 	}
 }
