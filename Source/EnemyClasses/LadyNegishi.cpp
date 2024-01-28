@@ -14,7 +14,7 @@ LadyNegishi::LadyNegishi()
 	, attackPattern_(AttackPattern::Non)
 	, prisonDistance_(100.f)
 	, laserCnt_(10)
-	, defaultHeight_(620.f)
+	, defaultHeight_(450.f)
 	, defaultFlyPosY_(670.f)
 {
 	AddComponent(rainTimer_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
@@ -36,6 +36,7 @@ LadyNegishi::LadyNegishi()
 	
 	SetPersonalName("根岸");
 	render2D_Priority[1] = 0.2f;
+	SetStartPos({2500,defaultHeight_});
 }
 
 void LadyNegishi::Think()
@@ -49,6 +50,7 @@ void LadyNegishi::Think()
 		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			patternSwitchFlag_ = true;
+			SetPos(GetStartPos());
 			afterState = AttackStand;
 		}
 	}

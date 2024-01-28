@@ -118,6 +118,9 @@ void LadyKumagai::Think()
 		case AIState::Damage:
 			moveCnt_->SetCountFrame(30);
 			break;
+		case AIState::Dead:
+			moveCnt_->SetCountFrame(90);
+			break;
 		default:
 			moveCnt_->SetCountFrame(0);
 			break;
@@ -210,7 +213,10 @@ void LadyKumagai::UpDateDamage()
 
 void LadyKumagai::UpDateDead()
 {
-	Kill();
+	if (!moveCnt_->IsCounting())
+	{
+		Kill();
+	}
 }
 
 void LadyKumagai::CreateContainer()

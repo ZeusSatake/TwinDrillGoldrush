@@ -70,6 +70,9 @@ void LadyHaraguchi::Think()
 		case AIState::Damage:
 			moveCnt_->SetCountFrame(30);
 			break;
+		case AIState::Dead:
+			moveCnt_->SetCountFrame(90);
+			break;
 		default:
 			moveCnt_->SetCountFrame(0);
 			break;
@@ -149,7 +152,10 @@ void LadyHaraguchi::UpDateDamage()
 
 void LadyHaraguchi::UpDateDead()
 {
-	Kill();
+	if (!moveCnt_->IsCounting())
+	{
+		Kill();
+	}
 }
 
 void LadyHaraguchi::CreateTower()

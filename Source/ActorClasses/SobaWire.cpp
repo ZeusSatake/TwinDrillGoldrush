@@ -8,7 +8,7 @@ SobaWire::SobaWire()
 	{
 		weakPoint_.push_back(shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
 		AddComponent(weakPoint_[i]);
-		weakPoint_[i]->setHitBase(ML::Box2D{ 0, 0, 32, 64 });
+		weakPoint_[i]->setHitBase(ML::Box2D{ 0, 0, 32, 16 });
 	}
 	
 
