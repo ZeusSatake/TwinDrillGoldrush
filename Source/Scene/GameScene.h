@@ -50,7 +50,8 @@ namespace  GameScene
 		bool  Finalize();	//「終了」タスク消滅時に１回だけ行う処理
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 		shared_ptr<SecondsTimerComponent> limitTimer_;
-		shared_ptr<GameOverEventComponent> gameOverEvent_;
+		shared_ptr<GameOverEventComponent> deathEvent_;
+		shared_ptr<GameOverEventComponent> timeOverEvent_;
 		int nowStage_;
 
 	public:

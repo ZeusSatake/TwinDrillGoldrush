@@ -130,10 +130,6 @@ namespace MartialFightScene
 		{
 			auto save = Save::Object::Create(true);
 			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::StageNo);
-			
-			//次のステージへ
-			//if (nowStage < 3)
-			//	save->SetValue(Save::Object::ValueKind::StageNo, nowStage + 1);
 
 			//次のステージへ
 			if (nowStage < 4)
