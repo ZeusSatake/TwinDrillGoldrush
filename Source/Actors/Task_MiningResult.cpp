@@ -191,7 +191,7 @@ namespace MiningResult
 		if (clear_)
 		{
 			const int nowProgress = save->GetValue<int>(Save::Object::ValueKind::MiningProgress);
-			if (nowProgress < 4)
+			if (nowProgress < 5)
 				save->SetValue(Save::Object::ValueKind::MiningProgress, nowProgress + 1);
 		}
 		
