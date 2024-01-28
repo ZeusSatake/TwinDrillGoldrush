@@ -74,6 +74,9 @@
     <Filter Include="MyPG\ActorClasses">
       <UniqueIdentifier>{a7274b03-b2e4-412e-88ec-85c8572961ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Scene\Opening">
+      <UniqueIdentifier>{b7866e2f-4d4a-4280-8f44-e4008b021c5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -426,9 +429,11 @@
     <ClCompile Include="Source\Actors\Task_LongSword.cpp">
       <Filter>MyPG\Task\Actors</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Components\GameOverEventComponent.cpp" />
-    <ClCompile Include="Source\EnemyClasses\KakugariLady.cpp">
-      <Filter>MyPG\EnemyClasses</Filter>
+    <ClCompile Include="Source\Components\GameOverEventComponent.cpp">
+      <Filter>MyPG\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\OpeningScene.cpp">
+      <Filter>MyPG\Task\Scene\Opening</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -776,9 +781,11 @@
     <ClInclude Include="Source\Actors\Task_LongSword.h">
       <Filter>MyPG\Task\Actors</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Components\GameOverEventComponent.h" />
-    <ClInclude Include="Source\EnemyClasses\KakugariLady.h">
-      <Filter>MyPG\EnemyClasses</Filter>
+    <ClInclude Include="Source\Components\GameOverEventComponent.h">
+      <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\OpeningScene.h">
+      <Filter>MyPG\Task\Scene\Opening</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

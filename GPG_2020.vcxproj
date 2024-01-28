@@ -230,6 +230,7 @@
     <ClCompile Include="Source\Scene\EndingScene.cpp" />
     <ClCompile Include="Source\Scene\GameScene.cpp" />
     <ClCompile Include="Source\Scene\MartialFightScene.cpp" />
+    <ClCompile Include="Source\Scene\OpeningScene.cpp" />
     <ClCompile Include="Source\Scene\ShopScene.cpp" />
     <ClCompile Include="Source\Scene\Task_EnemyMap.cpp" />
     <ClCompile Include="Source\Scene\Task_JewelryMap.cpp" />
@@ -349,6 +350,7 @@
     <ClInclude Include="Source\Scene\EndingScene.h" />
     <ClInclude Include="Source\Scene\GameScene.h" />
     <ClInclude Include="Source\Scene\MartialFightScene.h" />
+    <ClInclude Include="Source\Scene\OpeningScene.h" />
     <ClInclude Include="Source\Scene\ShopScene.h" />
     <ClInclude Include="Source\Scene\Task_EnemyMap.h" />
     <ClInclude Include="Source\Scene\Task_JewelryMap.h" />

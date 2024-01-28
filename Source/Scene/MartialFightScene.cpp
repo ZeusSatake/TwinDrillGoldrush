@@ -61,12 +61,7 @@ namespace MartialFightScene
 		spawnableBoss_ = false;
 
 		//★タスクの生成
-		{
-			if (auto ev = EventEngine::Object::Create_Mutex())
-			{
-				ev->Set("./data/event/eventmartialfightstart.txt");
-			}
-		}
+
 
 		auto save = Save::Object::Create(true);
 		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
@@ -90,23 +85,39 @@ namespace MartialFightScene
 			camera->target = ge->playerPtr;
 		}
 		{//拠点に戻るボタン(デバッグ用
-			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-			gotoBaseButton->SetEnterButton(XI::VGP::ST);
-			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("拠点へ");
-			AddSceneChangeButton(gotoBaseButton);
+			//auto gotoBaseButton = SceneChangeButton::Object::Create(true);
+			//gotoBaseButton->SetEnterButton(XI::VGP::ST);
+			//gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+			//gotoBaseButton->SetScene(this, Scene::Kind::Base);
+			//gotoBaseButton->SetText("拠点へ");
+			//AddSceneChangeButton(gotoBaseButton);
 		}
 		
 		AddComponent(gameOverEvent_ = make_shared<GameOverEventComponent>(
 										this,
-										"./data/event/eventmartialfightclear.txt",//ここでゲームオーバー時のイベントを変更
+										"./data/event/EventGameOverMartialFight.txt",//ここでゲームオーバー時のイベントを変更
 										0.8f));
+		gameOverEvent_->SetPred(
+			function<bool(void)>
+			(
+				[]()
+				{
+					return !ge->playerPtr->GetStatus()->HP.IsAlive();
+				}
+			)
+		);
 
 		//AddComponent(debugTimer = make_shared<SecondsTimerComponent>(this));
 		//debugTimer->SetCountSeconds(0.3f);
 		//debugTimer->Start();
 		//debugMsg = "";
+
+		{
+			if (auto ev = EventEngine::Object::Create_Mutex())
+			{
+				ev->Set("./data/event/EventMartialFightStart0" + to_string(nowStage_ + 1/*ファイル名は1からのため*/) + ".txt");
+			}
+		}
 
 		return  true;
 	}
@@ -119,9 +130,14 @@ namespace MartialFightScene
 		{
 			auto save = Save::Object::Create(true);
 			const int nowStage = save->GetValue<int>(Save::Object::ValueKind::StageNo);
+
 			//次のステージへ
-			if (nowStage < 3)
+			if (nowStage < 4)
 				save->SetValue(Save::Object::ValueKind::StageNo, nowStage + 1);
+			//エンディングへ
+			else
+				SetNextScene(Scene::Ending);
+
 			save->Kill();
 		}
 
@@ -159,12 +175,23 @@ namespace MartialFightScene
 		//		debugTimer->Start();
 		//	}
 
-			auto inp = ge->in1->GetState();
-			//	if (inp.ST.down)
-			//		boss_.lock()->Kill();
-			// 
-			if (inp.ST.down)
-				ge->playerPtr->GetStatus()->HP.TakeDamage(10000000);
+			//auto inp = ge->in1->GetState();
+			
+			//プレイヤ死
+			//if (inp.ST.down)
+			//	ge->playerPtr->GetStatus()->HP.TakeDamage(10000000);
+
+			//雑魚敵全死
+			//if (inp.ST.down)
+			//{
+			//	auto enemys = ge->GetTasks<BlondeLady::Object>(BlondeLady::defGroupName);
+			//	for (auto& enemy : *enemys)
+			//		enemy->Kill();
+			//}
+			
+			//ボス死
+			//if (inp.SE.down)
+			//	boss_.lock()->Kill();
 		}
 
 		SpawnBoss();
@@ -174,7 +201,7 @@ namespace MartialFightScene
 			!clear_)
 		{
 			clearEvent_ = EventEngine::Object::Create_Mutex();
-			clearEvent_.lock()->Set("./data/event/eventmartialfightclear.txt");
+			clearEvent_.lock()->Set("./data/event/EventMartialFightClear0" + to_string(nowStage_ + 1/*ファイル名は1からのため*/) + ".txt");
 			clear_ = true;
 		}
 
@@ -205,7 +232,7 @@ namespace MartialFightScene
 		if (enemyCount_ <= 0)
 		{
 			bossEvent_ = EventEngine::Object::Create_Mutex();
-			//ev->Set("./data/event/");
+			bossEvent_.lock()->Set("./data/event/EventMartialFightBeginBoss0" + to_string(nowStage_ + 1/*ファイル名は1からのため*/) + ".txt");
 			spawnableBoss_ = true;
 		}
 	}

@@ -11,6 +11,7 @@
 
 #include  "../Actors/UI/Task_BuyButton.h"
 #include  "../System/Task_Save.h"
+#include  "../Event/Task_EventEngine.h"
 
 namespace ShopScene
 {
@@ -144,6 +145,13 @@ namespace ShopScene
 			levelButtons.at((int)levelButtonKind::Drill)->SetPos(ML::Vec2(ge->screenCenterPos.x, 150));
 			levelButtons.at((int)levelButtonKind::Dress)->SetPos(ML::Vec2(280, ge->screenCenterPos.y + 120));
 			levelButtons.at((int)levelButtonKind::Speed)->SetPos(ML::Vec2(ge->screenWidth - 280, ge->screenCenterPos.y + 120));
+		}
+
+		if (save_->GetValue<int>(Save::Object::ValueKind::EndOfShopTutorial) == 0)
+		{
+			auto ev = EventEngine::Object::Create_Mutex();
+			ev->Set("./data/event/EventShopTutorial.txt");
+			save_->SetValue(Save::Object::ValueKind::EndOfShopTutorial, 1.0f);
 		}
 
 		return  true;

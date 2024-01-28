@@ -7,6 +7,8 @@
 #include  "../System/Task_DrawNumFont.h"
 #include  "../../Scene.h"
 
+namespace EventEngine { class Object; }
+
 namespace  EndingScene
 {
 	//タスクに割り当てるグループ名と固有名
@@ -50,6 +52,9 @@ namespace  EndingScene
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	private:
+
+		weak_ptr<EventEngine::Object> endingEvent_;
+
 		int frameCount;
 		DrawNumFont::Object::SP drawScore;
 		int rank;

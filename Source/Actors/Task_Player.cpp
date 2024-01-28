@@ -180,34 +180,41 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetExternalVec().x) + " " + to_string(this->GetExternalVec().y));
+		if(this->GetExtCheckFoot())
+		ge->debugFont->Draw(ML::Box2D{1000, 180, 500, 500}, "CheckFoot");
 	}
 
 	void Object::SceneTransitionInitialize(Scene::Kind nextScene)
 	{
 		switch (nextScene)
 		{
-			case Scene::Kind::Base:
+			case Scene::Base:
 				SetPos(ML::Vec2(-500, -500));
 				status_->HP.TakeHeal(status_->HP.GetMaxHP());
 				HiddenPlayer();
 			break;
 
-			case Scene::Kind::Mining:
+			case Scene::Mining:
 				SetPos(ML::Vec2(50, 480));
 				ResetState();
 			break;
 
-			case Scene::Kind::MartialFight:
+			case Scene::MartialFight:
 				SetPos(ML::Vec2(50, 480));
 				ResetState();
 			break;
 
-			case Scene::Kind::Shop:
+			case Scene::Shop:
 				SetPos(ML::Vec2(-500, -500));
 				HiddenPlayer();
 			break;
 
-			case Scene::Kind::Ending:
+			case Scene::Ending:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Opening:
 				SetPos(ML::Vec2(-500, -500));
 				HiddenPlayer();
 			break;

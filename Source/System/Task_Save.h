@@ -49,10 +49,14 @@ namespace Save
 		enum class ValueKind
 		{
 			StageNo,
+			MiningProgress,
 			DrillLevel,
 			DefenceLevel,
 			SpeedLevel,
 			HaveMoney,
+			EndOfOpening,
+			EndOfShopTutorial,
+			EndOfBaseTutorial,
 
 			//===============í«â¡Ç∑ÇÈèÍçáÇÕÇ±Ç±ÇÊÇËè„==============
 			End

@@ -1,19 +1,19 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//ゲーム本編
+//
 //-------------------------------------------------------------------
 #include "../../GameEngine_Ver3_83.h"
 #include "../../Scene.h"
 
-class SecondsTimerComponent;
-class GameOverEventComponent;
+namespace EventEngine { class Object; }
+namespace Save { class Object; }
 
-namespace  GameScene
+namespace OpeningScene
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("Scene");	//グループ名
-	const  string  defName("Game");	//タスク名
+	const  string  defName("Opening");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -27,12 +27,12 @@ namespace  GameScene
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//共有する変数はここに追加する
-		DG::Image::SP	img;
+		
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  Scene
+	class  Object : public Scene
 	{
-		//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
+	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
 		virtual  ~Object();
 		typedef  shared_ptr<Object>		SP;
@@ -45,19 +45,13 @@ namespace  GameScene
 		bool  B_Initialize();
 		bool  B_Finalize();
 		bool  Initialize();	//「初期化」タスク生成時に１回だけ行う処理
-		void  UpDate()			override;	//「実行」１フレーム毎に行う処理
-		void  Render2D_AF()		override;	//「2D描画」１フレーム毎に行う処理
-		bool  Finalize();	//「終了」タスク消滅時に１回だけ行う処理
-		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		shared_ptr<SecondsTimerComponent> limitTimer_;
-		shared_ptr<GameOverEventComponent> deathEvent_;
-		shared_ptr<GameOverEventComponent> timeOverEvent_;
-		int nowStage_;
-
+		void  UpDate()			override;//「実行」１フレーム毎に行う処理
+		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
+		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
+	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
+		shared_ptr<Save::Object> save_;
+		weak_ptr<EventEngine::Object> openingEvent_;
 	public:
 		//追加したい変数・メソッドはここに追加する
-		DG::Font::SP TestFont;
-		MyPG::MyGameEngine::FontImageInfo fontImg;
-		
 	};
 }

@@ -25,11 +25,15 @@ namespace Save
 		
 	const std::string Object::valueKindStrings[] =
 	{
-				"ステージ番号",	 //MiningStageNo
-				"ドリルレベル",		 //DrillLevel
-				"防御レベル",		 //DefenceLevel
-				"速さレベル",		 //SpeedLevel
-				"所持金",			 //HaveMoney
+				"ステージ番号",					//StageNo
+				"採掘場進行度",					//MiningProgress
+				"ドリルレベル",					//DrillLevel
+				"防御レベル",					//DefenceLevel
+				"速さレベル",					//SpeedLevel
+				"所持金",						//HaveMoney
+				"オープニング終了",				//EndOfOpening
+				"ショップチュートリアル終了",		//EndOfShopTutorial
+				"拠点チュートリアル終了",			//EndOfBaseTutorial
 	};
 
 	const std::string Object::stringKindStrings[] =

@@ -7,6 +7,8 @@
 
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_Cursor.h"
+#include  "../System/Task_Save.h"
+#include  "../Event/Task_EventEngine.h"
 
 namespace BaseScene
 {
@@ -37,6 +39,7 @@ namespace BaseScene
 		render2D_Priority[1] = 0.0f;
 
 		//★タスクの生成
+		auto save = Save::Object::Create(true);
 
 		{//シーン遷移ボタン, カーソル作成
 			auto cursor = Cursor::Object::Create(true);
@@ -117,7 +120,21 @@ namespace BaseScene
 			//buttons.at((int)ButtonKind::GoShop)->SetPos(ML::Vec2());
 			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
 			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
+
+			//採掘場の進行度が武闘会の番号以下の場合は武闘会に行けない
+			if (save->GetValue<int>(Save::Object::ValueKind::MiningProgress) <= save->GetValue<int>(Save::Object::ValueKind::StageNo))
+				buttons_.at((int)ButtonKind::GoMartialFight)->SetRecieveInputEnable(false);
 		}
+		
+		if (save->GetValue<int>(Save::Object::ValueKind::EndOfBaseTutorial) == 0)
+		{
+			auto ev = EventEngine::Object::Create_Mutex();
+			ev->Set("./data/event/EventBaseTutorial.txt");
+			save->SetValue(Save::Object::ValueKind::EndOfBaseTutorial, 1.0f);
+		}
+
+		save->Kill();
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
