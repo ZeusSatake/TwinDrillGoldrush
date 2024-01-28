@@ -9,6 +9,7 @@
 
 #include  "../System/Task_FlashDraw.h"
 #include  "../System/Task_BackGround.h"
+#include  "../Event/Task_EventEngine.h"
 
 namespace  EndingScene
 {
@@ -45,14 +46,14 @@ namespace  EndingScene
 
 		//★タスクの生成
 		{//画像フォント(スコア
-			int digit = 4;
-			ML::Box2D draw(0, 0, 48, 64);
-			ML::Box2D src(0, 0, 24, 32);
-			ML::Vec2 pos = ge->screenCenterPos;
-			pos.x -= draw.w * 0.5f * digit;
-			pos.y -= draw.h * 0.5f - 50;
-			drawScore = DrawNumFont::Object::Create(true);
-			drawScore->SetUp("./data/image/notext.png", src, draw, digit, pos);
+			//int digit = 4;
+			//ML::Box2D draw(0, 0, 48, 64);
+			//ML::Box2D src(0, 0, 24, 32);
+			//ML::Vec2 pos = ge->screenCenterPos;
+			//pos.x -= draw.w * 0.5f * digit;
+			//pos.y -= draw.h * 0.5f - 50;
+			//drawScore = DrawNumFont::Object::Create(true);
+			//drawScore->SetUp("./data/image/notext.png", src, draw, digit, pos);
 		}
 
 		{//背景タスク生成
@@ -66,6 +67,11 @@ namespace  EndingScene
 
 			auto backGround = BackGround::Object::Create(true);
 			backGround->SetUp("./data/image/back.png", imgSize, drawSize);
+		}
+
+		{
+			endingEvent_ = EventEngine::Object::Create_Mutex();
+			endingEvent_.lock()->Set("./data/event/Ending.txt");
 		}
 		
 		return  true;
@@ -99,6 +105,9 @@ namespace  EndingScene
 			this->Kill();
 		}
 
+		if (endingEvent_.lock())
+			Kill();
+
 		++frameCount;
 	}
 	//-------------------------------------------------------------------
@@ -108,26 +117,26 @@ namespace  EndingScene
 		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "End");
 
 		{//リザルト
-			ML::Box2D draw(0, 0, 512, 124);
-			draw.x = (int)ge->screenCenterPos.x - 140;
-			draw.y = (int)ge->screenCenterPos.y - 150;
-			ML::Box2D src(0, 0, 256, 64);
-			this->res->resultImg->Draw(draw, src);
+			//ML::Box2D draw(0, 0, 512, 124);
+			//draw.x = (int)ge->screenCenterPos.x - 140;
+			//draw.y = (int)ge->screenCenterPos.y - 150;
+			//ML::Box2D src(0, 0, 256, 64);
+			//this->res->resultImg->Draw(draw, src);
 		}
 		
-		drawScore->SetDrawValue(ge->score);
+		//drawScore->SetDrawValue(ge->score);
 
 		//PressStartKey
-		if (frameCount == 60) {
-			auto PressStartKey = FlashDraw::Object::Create(true);
-			MyPG::MyGameEngine::DrawInfo drawInfo{
-				DG::Image::Create("./data/image/click.png"),
-				ML::Box2D(-143, -32, 286, 64),
-				ML::Box2D(0, 0, 286, 64),
-				ML::Vec2(ge->screenCenterPos.x, ge->screenHeight - 160.0f)
-			};
-			PressStartKey->SetUp(drawInfo, 30, 0.3f);
-		}
+		//if (frameCount == 60) {
+		//	auto PressStartKey = FlashDraw::Object::Create(true);
+		//	MyPG::MyGameEngine::DrawInfo drawInfo{
+		//		DG::Image::Create("./data/image/click.png"),
+		//		ML::Box2D(-143, -32, 286, 64),
+		//		ML::Box2D(0, 0, 286, 64),
+		//		ML::Vec2(ge->screenCenterPos.x, ge->screenHeight - 160.0f)
+		//	};
+		//	PressStartKey->SetUp(drawInfo, 30, 0.3f);
+		//}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
