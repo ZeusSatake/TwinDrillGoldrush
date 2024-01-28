@@ -75,20 +75,37 @@ namespace  GameScene
 		limitTimer_->SetCountSeconds(60.0f * 3.0f);
 		limitTimer_->Start();
 
-		AddComponent(gameOverEvent_ = make_shared<GameOverEventComponent>(
-										this,
-										"./data/event/EventGameOverMining.txt",//ここでゲームオーバー時のイベントを設定
-										0.8f));
-		gameOverEvent_->SetPred(
-			function<bool(void)>
-			(
-				[this]()
-				{
-					return !ge->playerPtr->GetStatus()->HP.IsAlive() ||
-						limitTimer_->WasCountEnd();
-				}
-			)
-		);
+		{//プレイヤ死亡時のイベント
+			AddComponent(deathEvent_ = make_shared<GameOverEventComponent>(
+				this,
+				"./data/event/EventGameOverMining.txt",//ここでゲームオーバー時のイベントを設定
+				0.8f));
+			deathEvent_->SetPred(
+				function<bool(void)>
+				(
+					[]()
+					{
+						return !ge->playerPtr->GetStatus()->HP.IsAlive();
+					}
+				)
+			);
+		}
+		
+		{//時間切れ時のイベント
+			AddComponent(timeOverEvent_ = make_shared<GameOverEventComponent>(
+				this,
+				"./data/event/EventTimeOverMining.txt",//ここでゲームオーバー時のイベントを設定
+				0.8f));
+			timeOverEvent_->SetPred(
+				function<bool(void)>
+				(
+					[this]()
+					{
+						return limitTimer_->WasCountEnd();
+					}
+				)
+			);
+		}
 
 		auto save = Save::Object::Create(true);
 		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
@@ -177,6 +194,9 @@ namespace  GameScene
 
 		ge->debugRectReset();
 
+		deathEvent_.reset();
+		timeOverEvent_.reset();
+		
 		RemoveAllComponent();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
@@ -192,14 +212,6 @@ namespace  GameScene
 	{
 		Scene::UpDate();
 		UpdateComponents();
-
-		{
-			//auto inp = ge->in1->GetState();
-
-			//プレイヤ死
-			//if (inp.SE.down)
-			//	ge->playerPtr->GetStatus()->HP.TakeDamage(100000);
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
