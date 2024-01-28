@@ -7,6 +7,8 @@
 
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_Cursor.h"
+#include  "../System/Task_Save.h"
+#include  "../Event/Task_EventEngine.h"
 
 namespace BaseScene
 {
@@ -118,6 +120,16 @@ namespace BaseScene
 			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
 			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
 		}
+
+		auto save = Save::Object::Create(true);
+		if (save->GetValue<int>(Save::Object::ValueKind::EndOfBaseTutorial) == 0)
+		{
+			auto ev = EventEngine::Object::Create_Mutex();
+			ev->Set("./data/event/EventBaseTutorial.txt");
+			save->SetValue(Save::Object::ValueKind::EndOfBaseTutorial, 1.0f);
+		}
+		save->Kill();
+
 		return  true;
 	}
 	//-------------------------------------------------------------------

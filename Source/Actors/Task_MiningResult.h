@@ -8,9 +8,10 @@
 #include "../Scene/Task_Map.h"
 #include "../Scene/Task_JewelryMap.h"
 
-class PriceTagComponent;
 class Scene;
+class PriceTagComponent;
 class SecondsTimerComponent;
+namespace EventEngine { class Object; }
 
 namespace MiningResult
 {
@@ -57,9 +58,11 @@ namespace MiningResult
 
 
 		Scene* nowScene_;
+		int nowStage_;
 
 		bool clear_;
 		shared_ptr<SecondsTimerComponent> transitionTimer_;
+		weak_ptr<EventEngine::Object> clearEvent_;
 
 		int initialHaveMoney_;
 

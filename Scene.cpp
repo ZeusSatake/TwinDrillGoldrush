@@ -7,6 +7,7 @@
 #include "Source/Scene/ShopScene.h"
 #include "Source/Scene/BaseScene.h"
 #include "Source/Scene/MartialFightScene.h"
+#include "Source/Scene/OpeningScene.h"
 #include "Source/Actors/Task_Player.h"
 
 void Scene::SetNextScene(const Kind nextScene)
@@ -48,6 +49,10 @@ void Scene::CreateNextScene()
 
 	case Kind::Ending:
 		EndingScene::Object::Create(true);
+		break;
+
+	case Kind::Opening:
+		OpeningScene::Object::Create(true);
 		break;
 
 	default:

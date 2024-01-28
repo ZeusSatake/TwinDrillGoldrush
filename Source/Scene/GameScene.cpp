@@ -77,7 +77,7 @@ namespace  GameScene
 
 		AddComponent(gameOverEvent_ = make_shared<GameOverEventComponent>(
 										this,
-										"./data/event/eventgamestart.txt",//ここでゲームオーバー時のイベントを設定
+										"./data/event/EventGameOverMining.txt",//ここでゲームオーバー時のイベントを設定
 										0.8f));
 		gameOverEvent_->SetPred(
 			function<bool(void)>
@@ -91,6 +91,7 @@ namespace  GameScene
 		);
 
 		auto save = Save::Object::Create(true);
+		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
 
 		//★タスクの生成
 
@@ -132,22 +133,22 @@ namespace  GameScene
 		}
 		{//石 鉱石
 			auto map = Map::Object::Create(true);
-			map->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Stone");
+			map->Load("Map" + to_string(nowStage_ + 1) + "Stone");
 		}
 		{//宝石
 			auto mapJewelry = JewelryMap::Object::Create(true);
-			mapJewelry->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Jewelry");
+			mapJewelry->Load("Map" + to_string(nowStage_ + 1) + "Jewelry");
 		}
 		{//敵
 			auto enemymap = EnemyMap::Object::Create(true);
-			enemymap->Load("Map" + to_string(save->GetValue<int>(Save::Object::ValueKind::StageNo) + 1) + "Enemy");
+			enemymap->Load("Map" + to_string(nowStage_ + 1) + "Enemy");
 			enemymap->SetEnemy();
 		}
 
 		{
 			if (auto ev = EventEngine::Object::Create_Mutex())
 			{
-				ev->Set("./data/event/eventgamestart.txt");
+				ev->Set("./data/event/EventGameStart0" + to_string(nowStage_ + 1) + ".txt");
 			}
 		}
 
@@ -192,13 +193,13 @@ namespace  GameScene
 		Scene::UpDate();
 		UpdateComponents();
 
-		auto inp = ge->in1->GetState();
-		if (inp.SE.down) {
-			this->Kill();
+		{
+			//auto inp = ge->in1->GetState();
+
+			//プレイヤ死
+			//if (inp.SE.down)
+			//	ge->playerPtr->GetStatus()->HP.TakeDamage(100000);
 		}
-		//if (ge->GameOverFlag || limitTimer_->IsCountEndFrame()) {
-		//	this->Kill();
-		//}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

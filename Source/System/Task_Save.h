@@ -53,6 +53,9 @@ namespace Save
 			DefenceLevel,
 			SpeedLevel,
 			HaveMoney,
+			EndOfOpening,
+			EndOfShopTutorial,
+			EndOfBaseTutorial,
 
 			//===============’Ç‰Á‚·‚éê‡‚Í‚±‚±‚æ‚èã==============
 			End

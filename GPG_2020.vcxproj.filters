@@ -74,6 +74,9 @@
     <Filter Include="MyPG\ActorClasses">
       <UniqueIdentifier>{a7274b03-b2e4-412e-88ec-85c8572961ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MyPG\Task\Scene\Opening">
+      <UniqueIdentifier>{b7866e2f-4d4a-4280-8f44-e4008b021c5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine_Ver3_83.cpp">
@@ -429,6 +432,9 @@
     <ClCompile Include="Source\Components\GameOverEventComponent.cpp">
       <Filter>MyPG\Components</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Scene\OpeningScene.cpp">
+      <Filter>MyPG\Task\Scene\Opening</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -777,6 +783,9 @@
     </ClInclude>
     <ClInclude Include="Source\Components\GameOverEventComponent.h">
       <Filter>MyPG\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\OpeningScene.h">
+      <Filter>MyPG\Task\Scene\Opening</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
