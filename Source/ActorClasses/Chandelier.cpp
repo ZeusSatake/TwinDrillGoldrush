@@ -17,7 +17,7 @@ void Chandelier::Move()
 
 	HitPlayer();
 
-	if (OutOfScreen())
+	if (GetPos().y>ge->screen2DHeight)
 	{
 		Kill();
 	}

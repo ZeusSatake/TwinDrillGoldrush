@@ -12,7 +12,7 @@ namespace Kumagai
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/LadySatake.png");
+		img = DG::Image::Create("./data/image/LadyKumagai.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -63,14 +63,12 @@ namespace Kumagai
 	{
 		{
 			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D src = ML::Box2D(0, 0, 27, 58);
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 
 			res->img->Draw(draw, src);
 		}
-
-		ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
