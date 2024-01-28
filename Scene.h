@@ -16,7 +16,8 @@ public:
 		Shop,
 		Mining,
 		MartialFight,
-		Ending
+		Ending,
+		Opening
 	};
 private:
 	Kind nextScene_;

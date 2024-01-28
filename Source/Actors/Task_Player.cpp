@@ -186,28 +186,33 @@ namespace player
 	{
 		switch (nextScene)
 		{
-			case Scene::Kind::Base:
+			case Scene::Base:
 				SetPos(ML::Vec2(-500, -500));
 				status_->HP.TakeHeal(status_->HP.GetMaxHP());
 				HiddenPlayer();
 			break;
 
-			case Scene::Kind::Mining:
+			case Scene::Mining:
 				SetPos(ML::Vec2(50, 480));
 				ResetState();
 			break;
 
-			case Scene::Kind::MartialFight:
+			case Scene::MartialFight:
 				SetPos(ML::Vec2(50, 480));
 				ResetState();
 			break;
 
-			case Scene::Kind::Shop:
+			case Scene::Shop:
 				SetPos(ML::Vec2(-500, -500));
 				HiddenPlayer();
 			break;
 
-			case Scene::Kind::Ending:
+			case Scene::Ending:
+				SetPos(ML::Vec2(-500, -500));
+				HiddenPlayer();
+			break;
+
+			case Scene::Opening:
 				SetPos(ML::Vec2(-500, -500));
 				HiddenPlayer();
 			break;
