@@ -211,7 +211,6 @@
     <ClCompile Include="Source\EnemyClasses\BossLady.cpp" />
     <ClCompile Include="Source\EnemyClasses\Debtor.cpp" />
     <ClCompile Include="Source\EnemyClasses\Fish.cpp" />
-    <ClCompile Include="Source\EnemyClasses\KakugariLady.cpp" />
     <ClCompile Include="Source\EnemyClasses\Lady.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadyHaraguchi.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadyKiyohara.cpp" />
@@ -219,6 +218,7 @@
     <ClCompile Include="Source\EnemyClasses\LadyNegishi.cpp" />
     <ClCompile Include="Source\EnemyClasses\LadySatake.cpp" />
     <ClCompile Include="Source\EnemyClasses\NormalLady.cpp" />
+    <ClCompile Include="Source\EnemyClasses\RegentLady.cpp" />
     <ClCompile Include="Source\Event\Task_EventEngine.cpp" />
     <ClCompile Include="Source\Event\Task_EventEngine_System.cpp" />
     <ClCompile Include="Source\Event\Task_Ev_FadeInOut.cpp" />
@@ -332,7 +332,6 @@
     <ClInclude Include="Source\EnemyClasses\BossLady.h" />
     <ClInclude Include="Source\EnemyClasses\Debtor.h" />
     <ClInclude Include="Source\EnemyClasses\Fish.h" />
-    <ClInclude Include="Source\EnemyClasses\KakugariLady.h" />
     <ClInclude Include="Source\EnemyClasses\Lady.h" />
     <ClInclude Include="Source\EnemyClasses\LadyHaraguchi.h" />
     <ClInclude Include="Source\EnemyClasses\LadyKiyohara.h" />
@@ -340,6 +339,7 @@
     <ClInclude Include="Source\EnemyClasses\LadyNegishi.h" />
     <ClInclude Include="Source\EnemyClasses\LadySatake.h" />
     <ClInclude Include="Source\EnemyClasses\NormalLady.h" />
+    <ClInclude Include="Source\EnemyClasses\RegentLady.h" />
     <ClInclude Include="Source\Event\Task_EventEngine.h" />
     <ClInclude Include="Source\Event\Task_Ev_FadeInOut.h" />
     <ClInclude Include="Source\Event\Task_Ev_Image.h" />

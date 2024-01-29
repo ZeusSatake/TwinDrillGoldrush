@@ -435,6 +435,9 @@
     <ClCompile Include="Source\Scene\OpeningScene.cpp">
       <Filter>MyPG\Task\Scene\Opening</Filter>
     </ClCompile>
+    <ClCompile Include="Source\EnemyClasses\RegentLady.cpp">
+      <Filter>MyPG\EnemyClasses</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -786,6 +789,9 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\OpeningScene.h">
       <Filter>MyPG\Task\Scene\Opening</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EnemyClasses\RegentLady.h">
+      <Filter>MyPG\EnemyClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

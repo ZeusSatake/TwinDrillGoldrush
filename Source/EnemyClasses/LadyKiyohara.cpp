@@ -15,15 +15,16 @@ LadyKiyohara::LadyKiyohara()
 {
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
-	GetStatus()->HP.Initialize(250);
+	GetStatus()->HP.Initialize(200);
 	GetStatus()->speed.Initialize(4.5f, 7.f, 5.f);
-	GetStatus()->attack.Initialize(100, 100);
+	GetStatus()->attack.Initialize(20, 100);
 
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);
 
 	SetTarget(ge->playerPtr.get());
 	SetStartPos({ ge->playerPtr->GetPos().x, defaultFlyPosY_ });
+	this->render2D_Priority[1] = 0.2f;
 }
 
 void LadyKiyohara::Think()
@@ -236,18 +237,6 @@ void LadyKiyohara::UpDateAttackStand()
 	case AttackPattern::Non:
 		break;
 	case AttackPattern::DropBombs:
-		/*if (ge->playerPtr->GetPos().x < GetPos().x)
-		{
-			SetMoveVecX(-GetStatus()->speed.GetNow());
-		}
-		else if(ge->playerPtr->GetPos().x>GetPos().x)
-		{
-			SetMoveVecX(GetStatus()->speed.GetNow());
-		}
-		else
-		{
-			SetMoveVecX(0);
-		}*/
 		SetPosX(ge->playerPtr->GetPos().x);
 		SetMoveVecY(0);
 

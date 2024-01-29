@@ -1,4 +1,4 @@
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,ｿｲﾔｧｧｧｧｧｧｧｧ！
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
@@ -6,11 +6,11 @@ msg>通常枠,0,ﾃﾔｧｧｧｧｧｧｧｧｧ！
 evimg>PL_A,off
 msg>通常枠,0,両者の戦いは三日三晩続いた。
 msg>通常枠,0,激戦の末近くにいたワールドワイドお嬢様達は全滅していた。
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,グハッ！
 evimg>PL_A,off
 msg>通常枠,0,先に膝をついたのは佐竹お嬢様だった。
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,まさかわたくしが敗れるとは…
 msg>通常枠,0,これが悔しいという感情…
 evimg>PL_A,off
@@ -22,7 +22,7 @@ msg>通常枠,0,だから今回の結果だけで貴女より優っているとは思いませんわ！
 msg>通常枠,0,いつか必ずわたくしを倒しに来てくださいまし～～～！
 msg>通常枠,0,オーッホッホッホッホッホ！*オーッホッホッホッホッホ！
 evimg>PL_A,off
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,…
 msg>通常枠,0,くっやし～！
 msg>通常枠,0,…ですわ！

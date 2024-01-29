@@ -18,12 +18,12 @@ evimg>PL_A,./data/image/butler.png,R
 msg>通常枠,0,…
 evimg>PL_A,off
 msg>通常枠,0,フランス・ベルサイユ宮殿
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,4年ぶりですわね…あの時のリベンジを果たさせてもらいますわ！
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,受けて立ちますわよ～～～！！！
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>通常枠,0,オーッホッホッホッホッホ！オーッホッホッホッホッホ！オーッホッホッホッホッホ！
 evimg>PL_A,off
 msg>通常枠,0,fin.

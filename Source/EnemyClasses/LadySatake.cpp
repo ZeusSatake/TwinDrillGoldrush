@@ -28,8 +28,8 @@ LadySatake::LadySatake()
 
 	SetFov(1000.f);
 
-	status_->HP.Initialize(100);
-	status_->attack.Initialize(50, 100);
+	status_->HP.Initialize(200);
+	status_->attack.Initialize(20, 100);
 	status_->defence.Initialize(0, 100);
 	status_->speed.Initialize(3.5f, 12.f, 5.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
@@ -563,7 +563,7 @@ void LadySatake::UpDateWeaponRain()
 	}
 	SetPosX(ge->playerPtr->GetPos().x);
 
-	if (rainCount_%10==9)
+	if (rainCount_%20==19)
 	{
 		auto bomb00 = Bomb0::Object::Create(true);
 		bomb00->SetPosX(GetPos().x);

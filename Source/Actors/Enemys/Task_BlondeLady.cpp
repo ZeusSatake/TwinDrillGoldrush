@@ -35,21 +35,17 @@ namespace BlondeLady
 		this->res = Resource::Create();
 
 		//★データ初期化
-		status_->HP.Initialize(30);
-		status_->attack.Initialize(30, 100);
-		status_->defence.Initialize(0, 100);
-		status_->speed.Initialize(2.5f, 100.f,10.f);
-		box_->setHitBase(ML::Box2D{ -8,-16,16,32 });
+		
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32)*10);
 
-		angle_LR_ = Angle_LR::Right;
+		angle_LR_ = Angle_LR::Left;
 
 		SetPreState(AIState::Idle);
 		SetNowState(AIState::Idle);
 
-		SetFov(200.f);
+		SetFov(1000.f);
 		SetRange(30.f);
 
 		moveCnt_->SetCountFrame(0);
@@ -94,12 +90,18 @@ namespace BlondeLady
 	void  Object::Render2D_AF()
 	{
 		{
-			ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-			ML::Box2D src = ML::Box2D(0, 0, 500, 615);
+			ML::Box2D draw = box_->getHitBase();
+			ML::Box2D src = ML::Box2D(0, 0, 16, 16);
+			if (angle_LR_ == Angle_LR::Right)
+			{
+				draw.x = -draw.x;
+				draw.w = -draw.w;
+			}
 			//スクロール対応
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-
+			draw.Offset(GetPos());
 			res->img->Draw(draw, src);
+
 		}
 		if(IsAttacking())
 		{
@@ -117,17 +119,6 @@ namespace BlondeLady
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			res->fanImg->Draw(draw, src);
 		}
-
-		if (IsAttacking())
-		{
-			ge->debugFont->Draw(ML::Box2D(500, 700, 500, 500), "攻撃中");
-		}
-		
-
-		
-
-
-		//ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(moveCnt_->GetCount()));
 	}
 	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

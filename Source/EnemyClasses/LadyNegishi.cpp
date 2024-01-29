@@ -24,7 +24,7 @@ LadyNegishi::LadyNegishi()
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
 	GetStatus()->HP.Initialize(200);
 	GetStatus()->speed.Initialize(3.f, 5.f, 5.f);
-	GetStatus()->attack.Initialize(100, 100);
+	GetStatus()->attack.Initialize(10, 100);
 
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);

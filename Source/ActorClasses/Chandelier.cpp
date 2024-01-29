@@ -4,7 +4,7 @@
 Chandelier::Chandelier()
 	:Actor()
 	, movementAmount_(2.5f)
-	, damage_(100)
+	, damage_(20)
 {
 
 }
