@@ -6,6 +6,7 @@ class NormalLady : public Lady
 	const int attackCnt_;//UŒ‚ƒJƒEƒ“ƒ^
 	const float adjustRange_;//UŒ‚”»’è’²®
 	ML::Vec2 attackPos_;
+	int coolTime_;
 protected:
 	shared_ptr<BoxCollisionComponent> fanEdge_;
 public:

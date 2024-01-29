@@ -1,11 +1,11 @@
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyKiyohara.png,R
 msg>通常枠,0,ﾎｹﾞｪｪｪｪｪｪｪｪｪ！
 msg>通常枠,0,まさかわたくしの爆弾投下攻撃が返されるなんて…
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,自分の身一つで戦うその姿…*社名に恥じぬカッコ良さでしたわよ～～～！
 evimg>PL_A,off
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyKiyohara.png,R
 msg>通常枠,0,お褒めに預かり光栄ですわ…
 msg>通常枠,0,貴女も立派なドリルでしたわよ…
 msg>通常枠,0,グハッ！

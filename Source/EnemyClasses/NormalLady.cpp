@@ -1,5 +1,6 @@
 #include "NormalLady.h"
 #include "../Actors/Task_Player.h"
+#include "../System/Task_Save.h"
 NormalLady::NormalLady()
 	:Lady()
 	, standCnt_(60)
@@ -7,8 +8,48 @@ NormalLady::NormalLady()
 	, adjustRange_(30.f)
 {
 	AddComponent(fanEdge_=shared_ptr<BoxCollisionComponent>(new BoxCollisionComponent(this)));
-	movement_->SetConsiderationCollition(true);
-	gravity_->SetConsiderationCollition(true);
+
+	auto save = ge->GetTask<Save::Object>(Save::defGroupName, Save::defName);
+	switch (save->GetValue<int>(Save::Object::ValueKind::StageNo))
+	{
+	case 1:
+		coolTime_ = 60;
+		GetStatus()->HP.Initialize(30);
+		GetStatus()->attack.Initialize(30, 100);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 2:
+		coolTime_ = 50;
+		GetStatus()->HP.Initialize(50);
+		GetStatus()->attack.Initialize(50, 100);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 3:
+		coolTime_ = 50;
+		GetStatus()->HP.Initialize(70);
+		GetStatus()->attack.Initialize(70, 100);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 4:
+		coolTime_ = 45;
+		GetStatus()->HP.Initialize(100);
+		GetStatus()->attack.Initialize(100, 100);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 5:
+		coolTime_ = 40;
+		GetStatus()->HP.Initialize(150);
+		GetStatus()->attack.Initialize(150, 100);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	}
+	SetTarget(ge->playerPtr.get());
+	box_->setHitBase(ML::Box2D{ -16, -16, 32, 32 });
 }
 
 void NormalLady::Think()
@@ -42,7 +83,6 @@ void NormalLady::Think()
 			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
 			if (box_->CheckHit(plBox))
 			{
-				ge->debugFont->Draw(ML::Box2D{ 100,100,500,500 }, "true");
 				EndAttack();
 				afterState = AIState::Damage;
 			}
@@ -202,7 +242,6 @@ void NormalLady::UpDateAttack()
 		else
 		{
 			attackPos_ = { GetPos().x + adjustRange_, GetPos().y };
-			//fanEdge_->getHitBase().Offset(GetTarget()->GetPos().x + adjustRange_, GetTarget()->GetPos().y);
 		}
 		ML::Box2D fanBox = fanEdge_->getHitBase();
 		fanBox.Offset(attackPos_);
@@ -245,8 +284,11 @@ void NormalLady::UpDateDamage()
 
 void NormalLady::UpDateDead()
 {
-	//‰¼‚Å‚·‚®Ž€‚Ê‚æ‚¤‚É
-	this->Kill();
+	
+	if (!moveCnt_->IsCounting())
+	{
+		this->Kill();
+	}
 }
 
 float NormalLady::GetAdjustRange() const

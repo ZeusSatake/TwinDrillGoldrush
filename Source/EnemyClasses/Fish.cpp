@@ -6,9 +6,7 @@ Fish::Fish()
 	,movementAmount_(3.f)
 	,limitRange_(750)
 {
-
-	//GetStatus()->HP.SetMaxHP(10,StatusComponent::Health::MaxLifeSetMode::MaxHeal);
-	//GetStatus()->attack.SetMax(10);
+	GetStatus()->attack.Initialize(10, 100);
 	SetTarget(ge->playerPtr.get());
 }
 

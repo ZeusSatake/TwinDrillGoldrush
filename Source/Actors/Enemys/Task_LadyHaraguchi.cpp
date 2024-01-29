@@ -40,7 +40,8 @@ namespace Haraguchi
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		ge->KillAll_G("オブジェクト");
+		ge->KillAll_G("敵");
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成

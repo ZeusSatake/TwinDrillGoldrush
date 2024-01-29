@@ -4,7 +4,7 @@
 SobaPrison::SobaPrison()
 	:Actor()
 	, state_(State::Notice)
-	, damage_(50)
+	, damage_(25)
 	, countFlag_(false)
 {
 	AddComponent(expandTimer_ = shared_ptr<TimerComponent>(new TimerComponent(this)));

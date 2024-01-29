@@ -1,11 +1,11 @@
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyNegishi.png,R
 msg>通常枠,0,ｷｨｨｨｨｨｨｨｨｨｨ！
 msg>通常枠,0,まさか麺が切られるなんて…
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,中々の技巧派でしたわね…*まさか蕎麦に身体を斬られるとは思いませんでしたわ～～～！
 evimg>PL_A,off
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyNegishi.png,R
 msg>通常枠,0,カルロス製麺の蕎麦で口の中を切ったという事例もありますわよ…
 msg>通常枠,0,海外では頻繁に訴訟を起こされているため、意外と儲かっていませんわ～～～！
 msg>通常枠,0,グハッ！

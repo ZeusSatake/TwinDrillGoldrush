@@ -10,7 +10,7 @@ Tower::Tower()
 	, stopCnt_(90)
 	, nowState_(TowerState::Idle)
 	, startPosY_(ge->screen2DHeight - 10)
-	, damage_(250)
+	, damage_(40)
 	, isfellChandelier_(false)
 {
 	AddComponent(moveCount_ = shared_ptr<TimerComponent>(new TimerComponent(this)));

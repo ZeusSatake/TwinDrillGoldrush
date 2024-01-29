@@ -6,7 +6,7 @@ evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,核を食らっても耐え抜いて見せますわ～～～！
 evimg>PL_A,off
 evimg>PL_A,./data/image/butler.png,R
-msg>通常枠,0,今回はなんとお嬢様の因縁の相手であるゼウスコーポレーションの佐竹お嬢様が参戦しているようですぞ…！
+msg>通常枠,0,今回はなんとお嬢様の因縁の相手であるゼウスコーポレーションの佐竹お嬢様が参戦しているよう*ですぞ…！
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,…！

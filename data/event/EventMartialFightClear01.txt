@@ -1,11 +1,11 @@
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyKumagai.png,R
 msg>捠忢榞,0,反创创创创创创床両
 msg>捠忢榞,0,攕杒偺枴乧撿杒偺壊鍄乧娔撀偺僈僉乧
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
 msg>捠忢榞,0,側傫偺娭楢惈傕側偄塁傪摜傑側偄偱偔偩偝偄傑偟乣両
 evimg>PL_A,off
-evimg>PL_A,./data/image/Lady.png,R
+evimg>PL_A,./data/image/EventLadyKumagai.png,R
 msg>捠忢榞,0,傢偨偔偟偵彑偭偨偐傜偲偄偭偰偄偄婥偵側傜側偄偙偲偱偡傢乧両*巹偑攕傟偰傕戞擇戞嶰偺偍忟條偑婱彈傪僊僢僞僊僞偺僘僢僞僘僞偵偟偰*僌僢僠儑僌僠儑偺儁僢僠儑儁僠儑偵偡傞偵堘偄側偄偱偡傢乧
 msg>捠忢榞,0,僌僴僢乧両
 evimg>PL_A,off
