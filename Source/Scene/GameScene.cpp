@@ -60,7 +60,7 @@ namespace  GameScene
 		//★データ初期化
 		this->render2D_Priority[1] = 0.0f;
 		ge->debugRectLoad();
-
+		bgm::LoadFile("game", "./data/sound/game.mp3");
 		ge->GameOverFlag = false;
 		ge->GameClearFlag = false;
 		ge->gameScreenWidth = ge->screenWidth;
@@ -223,6 +223,7 @@ namespace  GameScene
 	{
 		Scene::UpDate();
 		UpdateComponents();
+		bgm::Play("game");
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

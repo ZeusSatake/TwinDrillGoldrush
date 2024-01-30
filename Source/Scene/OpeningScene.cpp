@@ -3,7 +3,7 @@
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
 #include  "OpeningScene.h"
-
+#include  "../../sound.h"
 #include  "../Event/Task_EventEngine.h"
 #include  "../System/Task_Save.h"
 
@@ -40,7 +40,7 @@ namespace OpeningScene
 		openingEvent_.lock()->Set("./data/event/Opening.txt");
 
 		SetNextScene(Base);
-		
+		bgm::LoadFile("opening", "./data/sound/opening.mp3");
 		//★タスクの生成
 
 		return  true;
@@ -65,6 +65,7 @@ namespace OpeningScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		bgm::Play("opening");
 		if (!openingEvent_.lock())
 			Kill();
 	}
