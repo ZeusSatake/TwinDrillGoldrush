@@ -46,9 +46,11 @@ Player::Player()
 	ML::Point hpBarSize{ 350, 60 };
 	hpBar_->SetDrawSize(hpBarSize.x, hpBarSize.y);
 	hpBar_->SetPos(hpBarSize.x * 0.5f, ge->screenHeight - hpBarSize.y * 0.5f);
+	
+	hpBar_->SetImg("./data/image/ui/hpBar/GUISprite_x4.png");
+	hpBar_->SetBackSrc  (ML::Box2D(320, 192, 256, 64));
+	hpBar_->SetInsideSrc(ML::Box2D(320, 128, 256, 64));
 }
-
-
 
 bool Player::CheckFoot()
 {

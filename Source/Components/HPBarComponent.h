@@ -26,6 +26,8 @@ public:
 	void SetDrawSize(const int width, const int height);
 	void SetPos(const ML::Vec2& pos);
 	void SetPos(const float x, const float y);
+	void SetBackSrc(const ML::Box2D& backSrc);
+	void SetInsideSrc(const ML::Box2D& insideSrc);
 
 	void SetSupportScroll(const bool isSupportScroll);
 	void SetVisible(const bool visible);

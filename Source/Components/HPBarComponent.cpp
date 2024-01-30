@@ -59,6 +59,14 @@ void HPBarComponent::SetVisible(const bool visible)
 {
 	bar_->SetVisible(visible);
 }
+void HPBarComponent::SetBackSrc(const ML::Box2D& backSrc)
+{
+	bar_->SetBackSrc(backSrc);
+}
+void HPBarComponent::SetInsideSrc(const ML::Box2D& insideSrc)
+{
+	bar_->SetInsideSrc(insideSrc);
+}
 
 ML::Point HPBarComponent::GetSize() const
 {

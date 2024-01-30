@@ -53,6 +53,9 @@ namespace DrawGauge
 		bool isSupportScroll_;
 		bool isVisible_;
 
+		ML::Box2D backSrc_;
+		ML::Box2D insideSrc_;
+
 		ML::Vec2 pos_;
 		ML::Point size_;
 	public:
@@ -68,6 +71,9 @@ namespace DrawGauge
 		void SetDrawSize(const int width, const int height);
 		void SetPos(const ML::Vec2& pos);
 		void SetPos(const float x, const float y);
+
+		void SetBackSrc(const ML::Box2D& backSrc);
+		void SetInsideSrc(const ML::Box2D& insideSrc);
 
 		void SetSupportScroll(const bool isSupportScroll);
 		void SetVisible(const bool visible);
