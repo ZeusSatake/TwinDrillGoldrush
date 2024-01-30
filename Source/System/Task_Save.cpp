@@ -33,6 +33,21 @@ namespace Save
 				"オープニング終了",				//EndOfOpening
 				"ショップチュートリアル終了",		//EndOfShopTutorial
 				"拠点チュートリアル終了",			//EndOfBaseTutorial
+				"ドリルレベル1",//DrillLevel1,
+				"ドリルレベル2",//DrillLevel2,
+				"ドリルレベル3",//DrillLevel3,
+				"ドリルレベル4",//DrillLevel4,
+				"ドリルレベル5",//DrillLevel5,
+				"ドレスレベル1",//DefenceLevel1,
+				"ドレスレベル2",//DefenceLevel2,
+				"ドレスレベル3",//DefenceLevel3,
+				"ドレスレベル4",//DefenceLevel4,
+				"ドレスレベル5",//DefenceLevel5,
+				"靴レベル1",//SpeedLevel1,
+				"靴レベル2",//SpeedLevel2,
+				"靴レベル3",//SpeedLevel3,
+				"靴レベル4",//SpeedLevel4,
+				"靴レベル5",//SpeedLevel5,
 	};
 
 	const std::string Object::stringKindStrings[] =
