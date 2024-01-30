@@ -148,6 +148,10 @@ namespace BuyButton
 	{
 		return buyerWallet_.lock();
 	}
+	const shared_ptr<const PriceTagComponent> Object::GetPriceTag() const
+	{
+		return priceTag_;
+	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド

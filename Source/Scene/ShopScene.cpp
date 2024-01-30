@@ -26,12 +26,14 @@ namespace ShopScene
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		//priceTagImage = DG::Image::Create("");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		priceTagImage.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -213,7 +215,7 @@ namespace ShopScene
 
 		for (const auto& button : buttons_)
 		{
-			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->GetPos()));
+			ge->debugRect(button.lock()->GetBox()->getHitBase().OffsetCopy(button.lock()->GetPos()));
 		}
 	}
 	//-------------------------------------------------------------------
@@ -231,6 +233,12 @@ namespace ShopScene
 				"速度　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
 			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 350, 200, 500, 500), param);
 		}
+
+		//値札表示
+		//for (const auto& button : buttons_)
+		//{
+		//	ge->debugFont->Draw(ML::Box2D(button.lock()->GetPos().x, button.lock()->GetPos().y, 300, 300), to_string(button.lock()->GetPriceTag()->GetPrice()));
+		//}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
