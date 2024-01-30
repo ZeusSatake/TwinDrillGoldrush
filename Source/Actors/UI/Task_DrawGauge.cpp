@@ -17,7 +17,6 @@ namespace DrawGauge
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		img.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -44,7 +43,7 @@ namespace DrawGauge
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		img.reset();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -64,7 +63,7 @@ namespace DrawGauge
 		if (isVisible_ == false)
 			return;
 
-		if (res->img == nullptr)
+		if (img == nullptr)
 			assert(!"ゲージのimgがnullptrです");
 		
 		//背景
@@ -74,7 +73,7 @@ namespace DrawGauge
 		//スクロール対応
 		if (isSupportScroll_)
 			backDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		res->img->Draw(backDraw.OffsetCopy(pos_), backSrc_);
+		img->Draw(backDraw.OffsetCopy(pos_), backSrc_);
 		
 		//中身
 		ML::Box2D insideDraw(backDraw);
@@ -83,7 +82,7 @@ namespace DrawGauge
 		auto insideSrc = insideSrc_;
 		insideSrc.w = insideSrc_.w * gaugeValue_.GetNormalizeValue();
 
-		res->img->Draw(insideDraw.OffsetCopy(pos_), insideSrc);
+		img->Draw(insideDraw.OffsetCopy(pos_), insideSrc);
 	}
 
 	//===================================================================
@@ -126,11 +125,11 @@ namespace DrawGauge
 	}
 	void Object::SetImg(const string& path)
 	{
-		if (res->img != nullptr) {
-			res->img->ReLoad(path);
+		if (img != nullptr) {
+			img->ReLoad(path);
 		}
 		else {
-			res->img = DG::Image::Create(path);
+			img = DG::Image::Create(path);
 		}
 	}
 	void Object::SetSupportScroll(const bool isSupportScroll)
