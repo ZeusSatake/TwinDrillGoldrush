@@ -53,6 +53,7 @@ namespace Haraguchi
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		Enemy::UpDate();
 		Think();
 		Move();
 	}

@@ -63,6 +63,7 @@ namespace BlondeLady
 	{
 		moveCnt_->Update();
 		unHitTimer_->Update();
+		Enemy::UpDate();
 		Think();
 		Move();
 	}
