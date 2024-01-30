@@ -180,7 +180,9 @@
     <ClCompile Include="Source\Actors\Enemys\Task_RegentLady.cpp" />
     <ClCompile Include="Source\Actors\Task_Bomb.cpp" />
     <ClCompile Include="Source\Actors\Task_Chandelier.cpp" />
+    <ClCompile Include="Source\Actors\Task_DevilSword.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
+    <ClCompile Include="Source\Actors\Task_KingSword.cpp" />
     <ClCompile Include="Source\Actors\Task_LongSword.cpp" />
     <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
     <ClCompile Include="Source\Actors\Task_OrionContainer.cpp" />
@@ -306,7 +308,9 @@
     <ClInclude Include="Source\Actors\Enemys\Task_RegentLady.h" />
     <ClInclude Include="Source\Actors\Task_Bomb.h" />
     <ClInclude Include="Source\Actors\Task_Chandelier.h" />
+    <ClInclude Include="Source\Actors\Task_DevilSword.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
+    <ClInclude Include="Source\Actors\Task_KingSword.h" />
     <ClInclude Include="Source\Actors\Task_LongSword.h" />
     <ClInclude Include="Source\Actors\Task_MiningResult.h" />
     <ClInclude Include="Source\Actors\Task_OrionContainer.h" />

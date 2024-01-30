@@ -4,7 +4,7 @@
 FallObject::FallObject()
 	:Actor()
 	, movementAmount_(1.5f)
-	, damage_(50)
+	, damage_(20)
 {
 
 }
