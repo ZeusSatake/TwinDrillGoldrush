@@ -42,7 +42,7 @@ namespace Container
 	{
 		//★データ＆タスク解放
 
-
+		RemoveAllComponent();
 		if (!ge->QuitFlag() && this->nextTaskCreate) 
 		{
 			//★引き継ぎタスクの生成

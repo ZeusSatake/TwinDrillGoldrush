@@ -162,6 +162,7 @@
     <ClCompile Include="Source\ActorClasses\Chandelier.cpp" />
     <ClCompile Include="Source\ActorClasses\FallObject.cpp" />
     <ClCompile Include="Source\ActorClasses\OrionContainer.cpp" />
+    <ClCompile Include="Source\ActorClasses\Regent.cpp" />
     <ClCompile Include="Source\ActorClasses\SobaLaser.cpp" />
     <ClCompile Include="Source\ActorClasses\Sobanomi.cpp" />
     <ClCompile Include="Source\ActorClasses\SobaPrison.cpp" />
@@ -175,6 +176,8 @@
     <ClCompile Include="Source\Actors\Enemys\Task_LadyKumagai.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadyNegishi.cpp" />
     <ClCompile Include="Source\Actors\Enemys\Task_LadySatake.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_OfficeWorker.cpp" />
+    <ClCompile Include="Source\Actors\Enemys\Task_RegentLady.cpp" />
     <ClCompile Include="Source\Actors\Task_Bomb.cpp" />
     <ClCompile Include="Source\Actors\Task_Chandelier.cpp" />
     <ClCompile Include="Source\Actors\Task_Drill.cpp" />
@@ -182,6 +185,7 @@
     <ClCompile Include="Source\Actors\Task_MiningResult.cpp" />
     <ClCompile Include="Source\Actors\Task_OrionContainer.cpp" />
     <ClCompile Include="Source\Actors\Task_Player.cpp" />
+    <ClCompile Include="Source\Actors\Task_Regent.cpp" />
     <ClCompile Include="Source\Actors\Task_SobaLaser.cpp" />
     <ClCompile Include="Source\Actors\Task_Sobanomi.cpp" />
     <ClCompile Include="Source\Actors\Task_SobaPrison.cpp" />
@@ -284,6 +288,7 @@
     <ClInclude Include="Source\ActorClasses\Chandelier.h" />
     <ClInclude Include="Source\ActorClasses\FallObject.h" />
     <ClInclude Include="Source\ActorClasses\OrionContainer.h" />
+    <ClInclude Include="Source\ActorClasses\Regent.h" />
     <ClInclude Include="Source\ActorClasses\SobaLaser.h" />
     <ClInclude Include="Source\ActorClasses\Sobanomi.h" />
     <ClInclude Include="Source\ActorClasses\SobaPrison.h" />
@@ -297,12 +302,15 @@
     <ClInclude Include="Source\Actors\Enemys\Task_LadyKumagai.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadyNegishi.h" />
     <ClInclude Include="Source\Actors\Enemys\Task_LadySatake.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_OfficeWorker.h" />
+    <ClInclude Include="Source\Actors\Enemys\Task_RegentLady.h" />
     <ClInclude Include="Source\Actors\Task_Bomb.h" />
     <ClInclude Include="Source\Actors\Task_Chandelier.h" />
     <ClInclude Include="Source\Actors\Task_Drill.h" />
     <ClInclude Include="Source\Actors\Task_LongSword.h" />
     <ClInclude Include="Source\Actors\Task_MiningResult.h" />
     <ClInclude Include="Source\Actors\Task_OrionContainer.h" />
+    <ClInclude Include="Source\Actors\Task_Regent.h" />
     <ClInclude Include="Source\Actors\Task_SobaLaser.h" />
     <ClInclude Include="Source\Actors\Task_Sobanomi.h" />
     <ClInclude Include="Source\Actors\Task_SobaPrison.h" />

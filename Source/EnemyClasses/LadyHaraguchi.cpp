@@ -1,12 +1,11 @@
 #include "LadyHaraguchi.h"
 #include "../Actors/Task_Player.h"
 #include "../Actors/Task_Tower.h"
-#include "../../Source/Scene/Task_Map.h"
 #include "../Scene/MartialFightScene.h"
+#include "../Actors/Enemys/Task_OfficeWorker.h"
 
 LadyHaraguchi::LadyHaraguchi()
 	:BossLady()
-	, isCreatedTerrain_(false)
 	, isCreatedTower_(false)
 {
 	SetFov(1000.f);
@@ -32,6 +31,7 @@ void LadyHaraguchi::Think()
 		if (mfs->EndOfSpawnBossEvent())//イベント終了してから切り替え
 		{
 			SetPos(GetStartPos());
+			SpawnOfficeWorker();
 			afterState = AIState::AttackStand;
 		}
 	}
@@ -95,11 +95,6 @@ void LadyHaraguchi::Move()
 		{
 			CreateTower();
 			isCreatedTower_ = true;
-		}
-		if (!isCreatedTerrain_)
-		{
-			CreateTerrain();
-			isCreatedTerrain_ = true;
 		}
 	}
 	//状態に応じた行動
@@ -166,8 +161,12 @@ void LadyHaraguchi::CreateTower()
 	tw->SetPosX(ge->playerPtr->GetPos().x);
 }
 
-void LadyHaraguchi::CreateTerrain()
+void LadyHaraguchi::SpawnOfficeWorker()
 {
-	auto mapEX = Map::Object::Create(true);
-	mapEX->Load("MartialFightEX");
+	for (int i = 0; i < 5; ++i)
+	{
+		auto ow = OfficeWorker::Object::Create(true);
+		ow->SetPosX(1500+i*100);
+		ow->SetPosY(600);
+	}
 }

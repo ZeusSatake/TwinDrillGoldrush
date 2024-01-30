@@ -31,7 +31,7 @@ namespace SobaLaser0
 		this->res = Resource::Create();
 
 		//★データ初期化
-		box_->setHitBase(ML::Box2D(-32, -32, 64, 64));
+		
 		//★タスクの生成
 
 		return  true;
@@ -42,7 +42,7 @@ namespace SobaLaser0
 	{
 		//★データ＆タスク解放
 
-
+		RemoveAllComponent();
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}

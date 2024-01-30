@@ -50,6 +50,7 @@ namespace BlondeLady
 		{
 			sc->DecreaseEnemyCount();
 		}
+		RemoveAllComponent();
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -61,8 +62,6 @@ namespace BlondeLady
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		moveCnt_->Update();
-		unHitTimer_->Update();
 		Enemy::UpDate();
 		Think();
 		Move();

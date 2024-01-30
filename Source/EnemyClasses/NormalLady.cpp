@@ -15,35 +15,35 @@ NormalLady::NormalLady()
 	case 0:
 		coolTime_ = 60;
 		GetStatus()->HP.Initialize(30);
-		GetStatus()->attack.Initialize(30, 100);
+		GetStatus()->attack.Initialize(15, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	case 1:
 		coolTime_ = 50;
 		GetStatus()->HP.Initialize(50);
-		GetStatus()->attack.Initialize(50, 100);
+		GetStatus()->attack.Initialize(18, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	case 2:
 		coolTime_ = 50;
 		GetStatus()->HP.Initialize(70);
-		GetStatus()->attack.Initialize(70, 100);
+		GetStatus()->attack.Initialize(20, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	case 3:
 		coolTime_ = 45;
 		GetStatus()->HP.Initialize(100);
-		GetStatus()->attack.Initialize(100, 100);
+		GetStatus()->attack.Initialize(23, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	case 4:
 		coolTime_ = 40;
 		GetStatus()->HP.Initialize(150);
-		GetStatus()->attack.Initialize(150, 100);
+		GetStatus()->attack.Initialize(25, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
@@ -65,7 +65,7 @@ NormalLady::NormalLady()
 	fanEdge_->setHitBase(ML::Box2D{ -4, -16, 8, 32 });
 
 	SetTarget(ge->playerPtr.get());
-	this->render2D_Priority[1] = 0.2f;
+	this->render2D_Priority[1] = 0.3f;
 	SetPersonalName("‚¨ìA");//‰¼
 	box_->setHitBase(ML::Box2D{ -16, -16, 32, 32 });
 }
@@ -113,7 +113,7 @@ void NormalLady::Think()
 		switch (afterState)
 		{
 		case AIState::AttackStand:
-			moveCnt_->SetCountFrame(standCnt_);
+			moveCnt_->SetCountFrame(coolTime_);
 			break;
 		case AIState::Attack:
 			moveCnt_->SetCountFrame(attackCnt_);
@@ -128,10 +128,12 @@ void NormalLady::Think()
 
 void NormalLady::Move()
 {
+	moveCnt_->Update();
+	unHitTimer_->Update();
 	ML::Vec2 est;
 
 	//d—Í‰Á‘¬
-	if (!CheckFoot() || GetGravity()->GetVelocity().y)
+	if (!CheckFoot())
 	{
 
 		gravity_->Accel();

@@ -441,6 +441,18 @@
     <ClCompile Include="Source\Actors\UI\Task_UIBanner.cpp">
       <Filter>MyPG\Task\Actors\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ActorClasses\Regent.cpp">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_RegentLady.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Task_Regent.cpp">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Actors\Enemys\Task_OfficeWorker.cpp">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngine_Ver3_83.h">
@@ -798,6 +810,18 @@
     </ClInclude>
     <ClInclude Include="Source\Actors\UI\Task_UIBanner.h">
       <Filter>MyPG\Task\Actors\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ActorClasses\Regent.h">
+      <Filter>MyPG\ActorClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_RegentLady.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Task_Regent.h">
+      <Filter>MyPG\Task\Actors</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Actors\Enemys\Task_OfficeWorker.h">
+      <Filter>MyPG\Task\Actors\Enemys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
