@@ -51,7 +51,7 @@ namespace  TitleScene
 		ge->stage = 1;
 
 		ge->playerPtr->HiddenPlayer();
-
+		bgm::LoadFile("title", "./data/sound/title.mp3");
 		//デバッグ用フォントの準備
 		this->TestFont = DG::Font::Create("ＭＳ ゴシック", 30, 30);
 
@@ -134,7 +134,7 @@ namespace  TitleScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
-
+		bgm::Play("title");
 		auto inp = ge->in1->GetState();
 		if (inp.SE.down)
 		{

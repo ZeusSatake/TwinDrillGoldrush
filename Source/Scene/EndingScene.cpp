@@ -43,7 +43,7 @@ namespace  EndingScene
 
 		//★データ初期化
 		frameCount = 0;
-
+		bgm::LoadFile("ending", "./data/sound/ending.mp3");
 		//★タスクの生成
 		{//画像フォント(スコア
 			//int digit = 4;
@@ -95,6 +95,7 @@ namespace  EndingScene
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
+		bgm::Play("ending");
 		auto inp = ge->in1->GetState();
 
 		if (inp.SE.down) {
