@@ -8,6 +8,7 @@
 
 namespace DrawGauge { class Object; }
 class HPBarComponent;//includeすると循環参照が起こるため前方宣言
+namespace Save { class Object; }
 
 class Player :public Character
 {
@@ -23,6 +24,7 @@ protected:
 	class shared_ptr<TimerComponent> cooldown,overheat;
 	class shared_ptr<StatusComponent>status_;
 	shared_ptr<HPBarComponent> hpBar_;
+	shared_ptr<Save::Object> save_;
 public:
 	Player();
 	virtual ~Player() {}; 

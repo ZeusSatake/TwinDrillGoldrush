@@ -121,7 +121,7 @@ namespace  GameScene
 		}
 		
 		{//背景タスク生成
-			ML::Point imgSize = { 960, 500 };
+			ML::Point imgSize = { 2048, 1448 };
 			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
 			int sprit = 1;
 			auto back = BackGround::Object::Create(true);

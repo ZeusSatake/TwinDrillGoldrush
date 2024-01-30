@@ -5,7 +5,8 @@
 #include "Source/Components/HPBarComponent.h"
 
 #include "Source/Components/Animation/AnimManager.h"
-#include  "../System/Task_Save.h"
+
+#include "Source/System/Task_Save.h"
 
 
 Player::Player()
@@ -22,6 +23,8 @@ Player::Player()
 	AddComponent(status_ = shared_ptr<StatusComponent>(new StatusComponent(this)));
 
 	AddComponent(hpBar_ = shared_ptr<HPBarComponent>(new HPBarComponent(this)));
+
+	save_ = Save::Object::Create(true);
 
 	this->cooldown->SetCountFrame(30);
 	this->overheat->SetCountFrame(300);
@@ -422,7 +425,8 @@ void Player::HiddenPlayer()
 
 void Player::UpdateStates()
 {
-	
+	//save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel);
+
 }
 
 void Player::SetAnim()

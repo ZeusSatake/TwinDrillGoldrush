@@ -57,6 +57,21 @@ namespace Save
 			EndOfOpening,
 			EndOfShopTutorial,
 			EndOfBaseTutorial,
+			DrillLevel1,
+			DrillLevel2,
+			DrillLevel3,
+			DrillLevel4,
+			DrillLevel5,
+			DefenceLevel1,
+			DefenceLevel2,
+			DefenceLevel3,
+			DefenceLevel4,
+			DefenceLevel5,
+			SpeedLevel1,
+			SpeedLevel2,
+			SpeedLevel3,
+			SpeedLevel4,
+			SpeedLevel5,
 
 			//===============í«â¡Ç∑ÇÈèÍçáÇÕÇ±Ç±ÇÊÇËè„==============
 			End
