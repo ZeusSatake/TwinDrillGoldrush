@@ -11,7 +11,6 @@ namespace DrawGauge
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		img = DG::Image::Create("./data/image/bar.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -70,22 +69,19 @@ namespace DrawGauge
 		
 		//背景
 		ML::Box2D backDraw(-(size_.x / 2), -(size_.y / 2), size_.x, size_.y);
-		ML::Box2D backSrc(0, 0, 96, 32);
+		//ML::Box2D backSrc(0, 0, 96, 32);
 
 		//スクロール対応
 		if (isSupportScroll_)
 			backDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		res->img->Draw(backDraw.OffsetCopy(pos_), backSrc);
+		res->img->Draw(backDraw.OffsetCopy(pos_), backSrc_);
 		
 		//中身
 		ML::Box2D insideDraw(backDraw);
 		insideDraw.w *= gaugeValue_.GetNormalizeValue();
 		
-		ML::Box2D insideSrc = ML::Box2D(0, 32, 96, 32);
-		insideSrc.w *= gaugeValue_.GetNormalizeValue();
-		//最大溜めは青
-		if (isMaxCharge)
-			insideSrc.y = 64;
+		auto insideSrc = insideSrc_;
+		insideSrc.w = insideSrc_.w * gaugeValue_.GetNormalizeValue();
 
 		res->img->Draw(insideDraw.OffsetCopy(pos_), insideSrc);
 	}
@@ -144,6 +140,14 @@ namespace DrawGauge
 	void Object::SetVisible(const bool visible)
 	{
 		isVisible_ = visible;
+	}
+	void Object::SetBackSrc(const ML::Box2D& backSrc)
+	{
+		backSrc_ = backSrc;
+	}
+	void Object::SetInsideSrc(const ML::Box2D& insideSrc)
+	{
+		insideSrc_ = insideSrc;
 	}
 	//===================================================================
 	//ゲッター

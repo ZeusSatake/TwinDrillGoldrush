@@ -1,30 +1,27 @@
 //-------------------------------------------------------------------
 //
 //-------------------------------------------------------------------
-#include  "../../MyPG.h"
-#include  "Task_Drill.h"
-#include "Task_Player.h"
-#include "../../Source/Scene/Task_Map.h"
+#include  "../../../MyPG.h"
+#include  "Task_UIBanner.h"
 
-namespace  drill
+#include  "../../Components/HPBarComponent.h"
+#include  "../../Actors/Task_Player.h"
+
+namespace UIBanner
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		this->img = DG::Image::Create("./data/image/DrillMap.png");
-		this->target = DG::Image::Create("./data/image/target.png");
-		this->debug = DG::Image::Create("./data/image/shot.png");
+		backImage = DG::Image::Create("./data/image/backGround/uiBanner/Newstuff 1.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		this->img.reset();
-		this->target.reset();
-		this->debug.reset();
+		backImage.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -37,8 +34,14 @@ namespace  drill
 		this->res = Resource::Create();
 
 		//★データ初期化
-		this->setAnim();
-		this->box_->setHitBase(ML::Box2D{ -2,-2,4,4 });
+		render2D_Priority[1] = 0.7f;
+		SetBackGroundAlpha(1.0f);
+		SetMargin(37);
+		
+		//HPバー表示位置
+		NormalizeHPBarPos();
+		ge->playerPtr->GetHPBar()->SetSupportScroll(false);
+		
 		//★タスクの生成
 
 		return  true;
@@ -60,44 +63,63 @@ namespace  drill
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		this->plPos = ge->playerPtr->GetPos();
-		this->SetAngle(this->UpdateDrillAngle());
-		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 16.f), (sin(GetNowAngle()) * 16.f) });
-		this->SetDrawPos( this->GetPos() + this->GetMoveVec()+this->GetAnimMove());//この時点で見かけ上のドリルの描画を決定する
-		
-		
-		this->DrillCheckMove(this->GetMoveVec()*this->GetLenght());//ターゲット用の矩形判定
 
-		this->dState = this->state_->GetNowState();
-		this->UpdateTargetPos(this->ChangeBrockPos());
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		if(this->GetMode()!=Mode::Non )
-		{
-			//ML::Box2D draw = ML::Box2D{ -4,-4,8,8 }.OffsetCopy(this->GetDrawPos());
-			//ML::Box2D src = ML::Box2D{ 0,0,64,64 };
-			//this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
-			////スクロール対応
-			//draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			//this->res->img->Draw(draw, src);
-			 AnimInfo animInfo = this->animManager_->Play((int)this->GetMode());
-			ML::Box2D Predraw = animInfo.GetDraw();
-			
-			ML::Box2D draw = Predraw.OffsetCopy(this->GetPos());//※座標は指定する必要あり
-			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
-			this->res->img->Draw(draw, animInfo.GetSrc());
-			//----------------------------------------------------
-			ML::Box2D tDraw = ML::Box2D{ (int)this->GetTargetPos().x * 16,(int)this->GetTargetPos().y * 16,16,16 };
-			tDraw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			ML::Box2D tSrc = ML::Box2D{ 0,0,128,128 };
-			if (this->GetMode() == Drill::Mode::Drill)
-				this->res->target->Draw(tDraw, tSrc);
-		}
+		ML::Box2D src(40, 112, 192, 192);
+		res->backImage->Draw(drawSize_.OffsetCopy(GetPos()), src, ML::Color(alpha_, 1, 1, 1));
 	}
+
+	void Object::NormalizeHPBarPos()
+	{
+		auto hpBar = ge->playerPtr->GetHPBar();
+		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f + GetPos().x + margin_, hpBar->GetSize().y * 0.5f + GetPos().y + margin_));
+	}
+
+	void Object::SetDrawSize(const ML::Box2D& drawSize)
+	{
+		drawSize_ = drawSize;
+		ge->playerPtr->GetHPBar()->SetDrawSize(drawSize_.w * 0.8f, drawSize_.h * 0.2f);
+	}
+
+	void Object::SetBackGroundAlpha(const float alpha)
+	{
+		alpha_ = alpha;
+	}
+
+	void Object::SetMargin(const float margin)
+	{
+		margin_ = margin;
+		NormalizeHPBarPos();
+	}
+	
+	void Object::SetDrawArea(DrawArea drawArea)
+	{
+		switch (drawArea)
+		{
+		case DrawArea::LeftTop:
+			SetPos(ML::Vec2(0, 0));
+			break;
+
+		case DrawArea::RightTop:
+			SetPos(ML::Vec2(ge->screenWidth - drawSize_.w, 0));
+			break;
+
+		case DrawArea::RightBottom:
+			SetPos(ML::Vec2(ge->screenWidth - drawSize_.w, ge->screenHeight - drawSize_.h));
+			break;
+
+		case DrawArea::LeftBottom:
+			SetPos(ML::Vec2(0, ge->screenHeight - drawSize_.h));
+			break;
+		}
+
+		NormalizeHPBarPos();
+	}
+
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 	//以下は基本的に変更不要なメソッド
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

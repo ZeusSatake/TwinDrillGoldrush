@@ -34,21 +34,17 @@ Player::Player()
 
 	this->angle_LR_ = Angle_LR::Left;
 	
-	status_->HP.Initialize(1000);
-	status_->attack.Initialize(100,100);
-	status_->speed.Initialize(2.f, 2.f, 2.f);
-	status_->defence.Initialize(0, 100);
-
-
 	//HPバー設定
 	hpBar_->SetVisible(true);
 	hpBar_->SetSupportScroll(false);
 	ML::Point hpBarSize{ 350, 60 };
 	hpBar_->SetDrawSize(hpBarSize.x, hpBarSize.y);
 	hpBar_->SetPos(hpBarSize.x * 0.5f, ge->screenHeight - hpBarSize.y * 0.5f);
+	
+	hpBar_->SetImg("./data/image/ui/hpBar/GUISprite_x4.png");
+	hpBar_->SetBackSrc  (ML::Box2D(320, 192, 256, 64));
+	hpBar_->SetInsideSrc(ML::Box2D(320, 128, 256, 64));
 }
-
-
 
 bool Player::CheckFoot()
 {
@@ -149,6 +145,8 @@ void Player::Think()
 			|| !CheckFoot()||!extCheckFoot) {
 			pState = StateComponent::State::Fall;
 		}
+		if (inp.L1.down) { pState = StateComponent::State::Attack; }
+
 		break;
 	case StateComponent::State::Fall:
 		if (CheckFoot()||extCheckFoot) { pState = StateComponent::State::Idle; }
@@ -233,7 +231,6 @@ void Player::Move()
 
 		break;
 	case StateComponent::State::KnockBack:
-		//this->moveVec.x = externalMoveVec.x;
 		break;
 	case StateComponent::State::Dead:
 		break;
@@ -292,6 +289,8 @@ void Player::Move()
 		moveVec.x = moveVec.x * 0.05;
 	}
 
+	this->drill_->SetCanRotate(true);
+
 	CheckMove(moveVec);
 	CheckMove(externalMoveVec);
 }
@@ -317,7 +316,6 @@ void Player::CollisionJudge(ML::Box2D hitBox_ ,ML::Vec2 pos_)
 
 	if(CheckHit(hitBox_.OffsetCopy(pos_)))
 	{
-	    //this->state_->UpdateNowState(StateComponent::State::KnockBack);
 		if (ext.left - 1 < me.right) { this->externalMoveVec.x = -1; }
 		if (ext.bottom > me.top) { this->externalMoveVec.y = 1; }
 		if (ext.right > me.left) { this->externalMoveVec.x = 1; }
@@ -374,7 +372,6 @@ void Player::SetPlayerState(StateComponent::State state)
 void Player::SetExternalVec(ML::Vec2 moveVec_)
 {
 	this->externalMoveVec = moveVec_;
-	//this->state_->UpdateNowState(StateComponent::State::KnockBack);
 }
 
 int Player::GetDrillAttack()
@@ -425,10 +422,24 @@ void Player::HiddenPlayer()
 
 void Player::UpdateStates()
 {
-	//save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel);
+	Save::Object::ValueKind	kind;
+	save_->ReadData();
 
+	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DrillLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DrillLevel) - 1);
+	int drillPower = save_->GetValue<int>(kind);
+	this->status_->attack.Initialize(drillPower * 10, drillPower * 10);
+	this->drill_->SetAttack(drillPower);
+
+	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DefenceLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)-1);
+	int dressPower = save_->GetValue<int>(kind);
+	this->status_->defence.Initialize(dressPower,dressPower);
+	this->status_->HP.Initialize(100 + dressPower * 10);
+
+	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::SpeedLevel1 + save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel) - 1);
+	float speedPower = save_->GetValue<float>(kind);
+	this->status_->speed.Initialize(speedPower, speedPower, 2.f);
+	
 }
-
 void Player::SetAnim()
 {
 	this->animManager_->SetDefaultAnimId((int)StateComponent::State::Idle);

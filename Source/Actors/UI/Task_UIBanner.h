@@ -1,16 +1,16 @@
 #pragma warning(disable:4996)
 #pragma once
 //-------------------------------------------------------------------
-//ゲージ
+//バナー
 //-------------------------------------------------------------------
 #include "../../../GameEngine_Ver3_83.h"
-#include "../../../GameObject.h"
+#include "../../../Actor.h"
 
-namespace DrawGauge
+namespace UIBanner
 {
 	//タスクに割り当てるグループ名と固有名
 	const  string  defGroupName("UI");	//グループ名
-	const  string  defName("HPBar");	//タスク名
+	const  string  defName("Banner");	//タスク名
 	//-------------------------------------------------------------------
 	class  Resource : public BResource
 	{
@@ -24,10 +24,10 @@ namespace DrawGauge
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//共有する変数はここに追加する
-		DG::Image::SP img;
+		DG::Image::SP backImage;
 	};
 	//-------------------------------------------------------------------
-	class  Object : public  GameObject
+	class  Object : public  Actor
 	{
 	//変更不可◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆
 	public:
@@ -46,39 +46,24 @@ namespace DrawGauge
 		void  Render2D_AF()		override;//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-	private:
-		ML::Percentage gaugeValue_;
 
-		bool isMaxCharge;
-		bool isSupportScroll_;
-		bool isVisible_;
+		ML::Box2D drawSize_;
+		float alpha_;
+		float margin_;
 
-		ML::Box2D backSrc_;
-		ML::Box2D insideSrc_;
-
-		ML::Vec2 pos_;
-		ML::Point size_;
+		void NormalizeHPBarPos();
 	public:
+		void SetDrawSize(const ML::Box2D& drawSize);
+		void SetBackGroundAlpha(const float alpha);
+		void SetMargin(const float margin);
 
-		void Set(const int max, const string& path);
-		void Set(const ML::Percentage& value);
-
-		void SetMax(const int max);
-		void SetMin(const int min);
-		int Getmax() const;
-
-		void SetImg(const string& path);
-		void SetDrawSize(const int width, const int height);
-		void SetPos(const ML::Vec2& pos);
-		void SetPos(const float x, const float y);
-
-		void SetBackSrc(const ML::Box2D& backSrc);
-		void SetInsideSrc(const ML::Box2D& insideSrc);
-
-		void SetSupportScroll(const bool isSupportScroll);
-		void SetVisible(const bool visible);
-
-		bool IsMax() const;
-		ML::Point GetSize() const;
+		enum class DrawArea
+		{
+			LeftTop,
+			RightTop,
+			RightBottom,
+			LeftBottom
+		};
+		void SetDrawArea(DrawArea drawArea);
 	};
 }

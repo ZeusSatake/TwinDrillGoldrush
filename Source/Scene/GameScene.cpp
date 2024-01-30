@@ -6,28 +6,32 @@
 
 #include  "../../randomLib.h"
 #include  "../../sound.h"
+
+#include  "EndingScene.h"
+#include "../../Camera.h"
+
 #include  "../Components/SecondsTimerComponent.h"
 #include  "../Components/HPBarComponent.h"
 #include  "../Components/GameOverEventComponent.h"
 
-#include  "EndingScene.h"
-
-#include  "../System/Task_BackGround.h"
+#include  "Task_EnemyMap.h"
 #include  "Task_Map.h"
 #include  "Task_JewelryMap.h"
-#include  "../Actors/Task_MiningResult.h"
 
-#include  "Task_EnemyMap.h"
+#include  "../Actors/Task_MiningResult.h"
+#include  "../Actors/Task_Player.h"
+#include  "../Actors/Task_MiningResult.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
-#include  "../Actors/Task_MiningResult.h"
+#include  "../Actors/UI/Task_UIBanner.h"
 
-#include "../Actors/Task_Player.h"
-#include "../../Camera.h"
-#include "../System/Task_Save.h"
-#include "../Actors/Enemys/Task_BlondeLady.h"
+#include  "../Actors/Enemys/Task_BlondeLady.h"
 
-#include "../Event/Task_EventEngine.h"
+#include  "../System/Task_BackGround.h"
+#include  "../System/Task_Save.h"
+
+#include  "../Event/Task_EventEngine.h"
+
 
 namespace  GameScene
 {
@@ -178,6 +182,12 @@ namespace  GameScene
 			AddSceneChangeButton(gotoBaseButton);
 		}
 
+		{//UIバナー
+			auto banner = UIBanner::Object::Create(true);
+			banner->SetDrawSize(ML::Box2D(0, 0, 256, 256));
+			banner->SetDrawArea(UIBanner::Object::DrawArea::LeftTop);
+		}
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -188,6 +198,7 @@ namespace  GameScene
 
 		ge->KillAll_G(Map::defGroupName);
 		ge->KillAll_G(BackGround::defGroupName);
+		ge->KillAll_GN(UIBanner::defGroupName, UIBanner::defName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(MiningResult::defGroupName, MiningResult::defName);
 		ge->KillAll_G(BlondeLady::defGroupName);
