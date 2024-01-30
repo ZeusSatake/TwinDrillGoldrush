@@ -7,6 +7,7 @@
 #include "../../Scene.h"
 
 namespace Save { class Object; }
+namespace BuyButton { class Object; }
 class WalletComponent;
 class PriceTagComponent;
 
@@ -28,6 +29,7 @@ namespace ShopScene
 		static   WP  instance;
 		static  Resource::SP  Create();
 
+		DG::Image::SP priceTagImage;
 	};
 	//-------------------------------------------------------------------
 	class  Object : public Scene
@@ -51,7 +53,8 @@ namespace ShopScene
 
 		shared_ptr<Save::Object> save_;
 
-		vector<shared_ptr<ToggleButton>> buttons_;
+		//vector<shared_ptr<ToggleButton>> buttons_;
+		vector<weak_ptr<BuyButton::Object>> buttons_;
 
 		static int drill_MaxLevel;
 		static int defence_MaxLevel;
