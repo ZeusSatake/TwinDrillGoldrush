@@ -224,7 +224,7 @@ namespace MiningResult
 			CalcTotalSellingPrice();
 
 			const auto& inp = ge->in1->GetState();
-			if (inp.SE.down)
+			if (inp.ST.down)
 				nowScene_->Kill();
 		}
 	}
@@ -295,7 +295,7 @@ namespace MiningResult
 
 			param += "\n";
 
-			param += "       Press A Key\n";
+			param += "          Press Start\n";
 
 			ge->debugFont->Draw
 			(
