@@ -4,6 +4,7 @@
 #include  "../../MyPG.h"
 #include  "BaseScene.h"
 #include  <array>
+#include  "../../sound.h"
 
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_Cursor.h"
@@ -38,7 +39,7 @@ namespace BaseScene
 		//★データ初期化
 		ge->debugRectLoad();
 		render2D_Priority[1] = 0.0f;
-
+		bgm::LoadFile("base", "./data/sound/base.mp3");
 		//★タスクの生成
 		auto save = Save::Object::Create(true);
 
@@ -205,7 +206,7 @@ namespace BaseScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
-
+		bgm::Play("base");
 		for (auto& button : buttons_)
 		{
 			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->GetPos()));

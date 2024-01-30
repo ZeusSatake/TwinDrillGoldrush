@@ -2,6 +2,7 @@
 //
 //-------------------------------------------------------------------
 #include  "../../MyPG.h"
+#include  "../../sound.h"
 #include  "MartialFightScene.h"
 
 #include "../../Camera.h"
@@ -59,7 +60,7 @@ namespace MartialFightScene
 		auto hpBar = ge->playerPtr->GetHPBar();
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 		spawnableBoss_ = false;
-
+		bgm::LoadFile("martialfight", "./data/sound/martialfight.mp3");
 		//★タスクの生成
 
 
@@ -162,7 +163,7 @@ namespace MartialFightScene
 	{
 		Scene::UpDate();
 		UpdateComponents();
-
+		bgm::Play("martialfight");
 		{//デバッグ用
 		//	debugMsg = spawnableBoss_ ?
 		//		"ボスイベント開始フラグ　ON" :

@@ -5,6 +5,7 @@
 #include  "../../MyPG.h"
 #include  "ShopScene.h"
 #include  "../Actors/UI/SceneChangeButton.h"
+#include  "../../sound.h"
 
 #include  "../Components/Money/WalletComponent.h"
 #include  "../Components/Money/PriceTagComponent.h"
@@ -43,7 +44,7 @@ namespace ShopScene
 
 		//★データ初期化
 		ge->debugRectLoad();
-
+		bgm::LoadFile("shop", "./data/sound/shop.mp3");
 		//★タスクの生成
 
 		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
@@ -205,7 +206,7 @@ namespace ShopScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
-
+		bgm::Play("shop");
 		for (const auto& button : buttons_)
 		{
 			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->GetPos()));
