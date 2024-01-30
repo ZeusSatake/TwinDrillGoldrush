@@ -50,6 +50,9 @@ namespace BuyButton
 		void  Render2D_AF()	override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 
+		DG::Image::SP image_;
+		ML::Box2D	  imageSize_;
+
 		shared_ptr<PriceTagComponent> priceTag_;
 		weak_ptr<WalletComponent> buyerWallet_;
 		std::function<void()> buyEffect_;
@@ -58,6 +61,10 @@ namespace BuyButton
 
 		void OnEvent() override;
 	public:
+		void SetImage(const string& path);
+		void SetDrawSize(const ML::Point& size);
+		void SetImageSize(const ML::Point& size);
+
 		void SetPriceTag(const string& name, const int price);
 		void SetBuyerWallet(const shared_ptr<WalletComponent>& wallet);
 		void SetBuyEffect(const std::function<void()>& buyEffect);

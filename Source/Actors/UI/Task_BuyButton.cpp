@@ -84,6 +84,12 @@ namespace BuyButton
 			ML::Box2D(GetPos().x, GetPos().y, 500, 500),
 			priceTag_->GetName() + "F" + to_string(priceTag_->GetPrice())
 		);
+
+		if (image_ != nullptr)
+		{
+			const ML::Box2D& draw(box_->getHitBase());
+			image_->Draw(draw.OffsetCopy(GetPos()), imageSize_);
+		}
 	}
 
 	void Object::OnEvent()
@@ -93,6 +99,24 @@ namespace BuyButton
 			for (int i = 0; i < buyAmount_; ++i)
 				buyEffect_();
 		}
+	}
+
+	void Object::SetImage(const string& path)
+	{
+		if (image_ == nullptr)
+			image_ = DG::Image::Create(path);
+		else
+			image_->ReLoad(path);
+	}
+
+	void Object::SetDrawSize(const ML::Point& size)
+	{
+		box_->setHitBase(ML::Box2D(size.x * -0.5f, size.y * -0.5f, size.x, size.y));
+	}
+
+	void Object::SetImageSize(const ML::Point& size)
+	{
+		imageSize_ = ML::Box2D(0, 0, size.x, size.y);
 	}
 
 	void Object::SetPriceTag(const string& name, const int price)
