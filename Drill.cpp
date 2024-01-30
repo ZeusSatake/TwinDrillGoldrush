@@ -16,6 +16,7 @@ Drill::Drill()
 	maxDurability(30),
 	Length(1.f),
 	moveVec(ML::Vec2{0,0}),
+	animMove(ML::Vec2{0,0}),
 	canRotate(true)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
@@ -107,6 +108,11 @@ void Drill::SetCanRotate(bool check)
 int Drill::GetAttack()
 {
 	return this->attack;
+}
+
+void Drill::SetAttack(int attack_)
+{
+	this->attack = attack_;
 }
 
 float Drill::GetNowAngle()
@@ -283,6 +289,7 @@ void Drill::setAnim()
 {
 
 	this->animManager_->SetDefaultAnimId((int)Mode::Non);
+	
 	ML::Color defColor{ 1,1,1,1 };
 	ML::Box2D drawSize {- 4, -4, 8, 8};
 	AnimInfo animTable[] =
@@ -294,4 +301,14 @@ void Drill::setAnim()
 	this->animManager_->AddAnim((int)Mode::Non, animTable[0]);
 	this->animManager_->AddAnim((int)Mode::Normal, animTable[1]);
 	this->animManager_->AddAnim((int)Mode::Drill, animTable[2]);
+}
+
+void Drill::SetAnimMove(ML::Vec2 move_)
+{
+	this->animMove = move_;
+}
+
+ML::Vec2 Drill::GetAnimMove()
+{
+	return this->animMove;
 }

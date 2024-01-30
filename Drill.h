@@ -13,6 +13,7 @@ class Drill :public Character
 	float preAngle;   //1フレーム前の角度
 	bool  canRotate;  //回転を許可するかどうか
 	ML::Vec2 drawPos;
+	ML::Vec2 animMove;
 	ML::Vec2 targetPos;
 public:
 	enum class Mode{Normal,Drill,Non};
@@ -56,6 +57,7 @@ public:
 	ML::Vec2 ChangeBrockPos();
 
 	int GetAttack();
+	void SetAttack(int attack_);
 	float GetLenght();
 	float GetNowAngle();
 	float UpdateDrillAngle();
@@ -80,6 +82,9 @@ public:
 	void DrillCheckMove(ML::Vec2 e_);
 
 	void setAnim();
+
+	void SetAnimMove(ML::Vec2 move_);
+	ML::Vec2 GetAnimMove();
 
 	StateComponent::State dState;
 };
