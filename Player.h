@@ -5,6 +5,7 @@
 #include "Source/Components/TimerComponent.h"
 #include "Source/Actors/Task_Drill.h"
 #include "Source/Components/StatusComponent.h"
+#include "PlayerState.h"
 
 namespace DrawGauge { class Object; }
 class HPBarComponent;//includeすると循環参照が起こるため前方宣言
@@ -23,6 +24,8 @@ protected:
 	class shared_ptr<StateComponent> state_;
 	class shared_ptr<TimerComponent> cooldown,overheat;
 	class shared_ptr<StatusComponent>status_;
+	class shared_ptr <PlayerState>playerState;
+
 	shared_ptr<HPBarComponent> hpBar_;
 	shared_ptr<Save::Object> save_;
 public:
@@ -83,7 +86,6 @@ public:
 	HPBarComponent* GetHPBar() const;
     
 	void CollisionJudge(ML::Box2D hitBox_ , ML::Vec2 pos_);//外部のオブジェクトにめり込まないようにするメソッド
-
 
 	void SetAnim();
 

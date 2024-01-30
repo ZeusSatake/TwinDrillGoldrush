@@ -63,7 +63,7 @@ namespace  drill
 		this->plPos = ge->playerPtr->GetPos();
 		this->SetAngle(this->UpdateDrillAngle());
 		this->SetMoveVec(ML::Vec2{ (cos(GetNowAngle()) * 16.f), (sin(GetNowAngle()) * 16.f) });
-		this->SetDrawPos( this->GetPos() + this->GetMoveVec());//この時点で見かけ上のドリルの描画を決定する
+		this->SetDrawPos( this->GetPos() + this->GetMoveVec()+this->GetAnimMove());//この時点で見かけ上のドリルの描画を決定する
 		
 		
 		this->DrillCheckMove(this->GetMoveVec()*this->GetLenght());//ターゲット用の矩形判定
