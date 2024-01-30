@@ -3,6 +3,7 @@
 #include "../../Source/Actors/Enemys/Task_Fish00.h"
 #include"../Actors/Task_Player.h"
 #include "../Scene/MartialFightScene.h"
+#include "../Components/HPBarComponent.h"
 
 LadyKumagai::LadyKumagai()
 	:BossLady()
@@ -16,6 +17,8 @@ LadyKumagai::LadyKumagai()
 	AddComponent(fishCD_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	fishCD_->SetCountFrame(180);
 	fishCD_->Start();
+
+	
 
 	status_->HP.Initialize(150);
 	status_->attack.Initialize(15, 100);
@@ -41,6 +44,12 @@ LadyKumagai::LadyKumagai()
 	SetStartPos({ 2530.f,680.f });
 
 	this->render2D_Priority[1] = 0.2f;
+
+	hpBar_->SetVisible(true);
+	hpBar_->SetSupportScroll(true);
+	ML::Point hpBarSize{ 60, 10 };
+	hpBar_->SetDrawSize(hpBarSize.x, hpBarSize.y);
+	hpBar_->SetPos({ GetPos().x ,GetPos().y + 60 });
 }
 
 void LadyKumagai::Think()
@@ -173,8 +182,8 @@ void LadyKumagai::Move()
 	//ƒ_ƒ[ƒWˆ—
 	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 	{
-		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-		plBox.Offset(GetTarget()->GetPos());
+		ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+		plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
 		if (box_->CheckHit(plBox))
 		{
 			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());

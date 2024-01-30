@@ -36,25 +36,6 @@ namespace BlondeLady
 
 		//★データ初期化
 		
-		gravity_->SetDirection(ML::Vec2::Down());
-		gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
-		gravity_->SetAcceleration(ML::Gravity(32)*10);
-
-		angle_LR_ = Angle_LR::Left;
-
-		SetPreState(AIState::Idle);
-		SetNowState(AIState::Idle);
-
-		SetFov(1000.f);
-		SetRange(30.f);
-
-		moveCnt_->SetCountFrame(0);
-		unHitTimer_->SetCountFrame(90);
-		fanEdge_->setHitBase(ML::Box2D{ -4,-16,8,32 });
-
-		SetTarget(ge->playerPtr.get());
-		this->render2D_Priority[1] = 0.2f;
-		SetPersonalName("お嬢A");//仮
 		//★タスクの生成
 		return  true;
 	}
@@ -82,6 +63,7 @@ namespace BlondeLady
 	{
 		moveCnt_->Update();
 		unHitTimer_->Update();
+		Enemy::UpDate();
 		Think();
 		Move();
 	}

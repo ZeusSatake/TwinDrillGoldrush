@@ -6,15 +6,6 @@ BossLady::BossLady()
 {
 }
 
-void BossLady::UpDateHP()
-{
-	if (preHP_ != GetStatus()->HP.GetNowHP())
-	{
-		preHP_ = GetStatus()->HP.GetNowHP();
-		unHitTimer_->Start();
-	}
-}
-
 void BossLady::HitBomb()
 {
 	isHitBomb_ = true;

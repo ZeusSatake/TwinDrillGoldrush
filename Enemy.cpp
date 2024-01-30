@@ -15,6 +15,9 @@ Enemy::Enemy()
 	hpBar_->SetVisible(true);
 	hpBar_->SetSupportScroll(true);
 	hpBar_->SetDrawSize(30, 6);
+	hpBar_->SetImg("./data/image/ui/hpBar/GUISprite.png");
+	hpBar_->SetBackSrc(ML::Box2D(80, 48, 64, 16));
+	hpBar_->SetInsideSrc(ML::Box2D(80, 32, 64, 16));
 }
 
 bool Enemy::WithinRange(class Actor* target)
@@ -106,4 +109,13 @@ void Enemy::UpDate()
 	hpBar_->SetPos(GetPos().x, GetPos().y + footDistance);
 
 	hpBar_->Update();
+}
+
+void Enemy::UpDateHP()
+{
+	if (preHP_ != GetStatus()->HP.GetNowHP())
+	{
+		preHP_ = GetStatus()->HP.GetNowHP();
+		unHitTimer_->Start();
+	}
 }

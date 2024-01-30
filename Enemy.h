@@ -10,6 +10,7 @@ class Enemy : public NPC
 	float range_;//射程
 	bool attackFlag_;//攻撃フラグ
 	int attackPattern_;//攻撃パターン
+	int preHP_;//前フレームのHP
 protected:
 	shared_ptr<TimerComponent> moveCnt_;
 	shared_ptr<StatusComponent> status_;
@@ -66,5 +67,8 @@ public:
 	StatusComponent* GetStatus()const;
 
 	void UpDate() override;
+
+	void UpDateHP();
+	void SetPreHP(int preHP) { preHP_ = preHP; }
 };
 
