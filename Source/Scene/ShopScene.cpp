@@ -4,15 +4,17 @@
 #include  <array>
 #include  "../../MyPG.h"
 #include  "ShopScene.h"
-#include  "../Actors/UI/SceneChangeButton.h"
 
 #include  "../Components/Money/WalletComponent.h"
 #include  "../Components/Money/PriceTagComponent.h"
 
+#include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_BuyButton.h"
-#include  "../System/Task_Save.h"
+#include  "../Actors/UI/Task_Cursor.h"
 #include  "../Event/Task_EventEngine.h"
 #include  "../System/Task_BackGround.h"
+#include  "../System/Task_Save.h"
+
 
 namespace ShopScene
 {
@@ -45,6 +47,10 @@ namespace ShopScene
 		ge->debugRectLoad();
 
 		//šƒ^ƒXƒN‚Ì¶¬
+
+		auto cursor = Cursor::Object::Create(true);
+		cursor->SetPos(ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y + 80));
+		cursor->SetEnterButton(XI::VGP::B1);
 
 		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
 		gotoBaseButton->SetEnterButton(XI::VGP::ST);
@@ -104,8 +110,7 @@ namespace ShopScene
 			{
 				auto& button = levelButtons[i] = BuyButton::Object::Create(true);
 				auto& info = levelButtonInfos[i];
-				//button->SetPosX(300 + button->GetBox()->getHitBase().w * i);
-				//button->SetPosY(ge->screenCenterPos.y);
+				button->SetEnterButton(cursor->GetEnterButton());
 				button->SetImage(info.imagePath);
 				button->SetDrawSize(ML::Point{384, 384});
 				button->SetImageSize(ML::Point{ 384, 384 });
