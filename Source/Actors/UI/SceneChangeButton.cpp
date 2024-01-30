@@ -77,10 +77,10 @@ namespace SceneChangeButton
 			const ML::Box2D	 src(0, 0, draw.w, draw.h);
 			image_->Draw(draw.OffsetCopy(GetPos()), src);
 
-			auto oDraw = draw.OffsetCopy(GetPos());
-			ge->debugFont->Draw(ML::Box2D(200, 200, 500, 500),
-				"draw x:" + to_string(oDraw.x) + " y:" + to_string(oDraw.y) + 
-				" w:" + to_string(oDraw.w) + " h:" + to_string(oDraw.h));
+			//auto oDraw = draw.OffsetCopy(GetPos());
+			//ge->debugFont->Draw(ML::Box2D(200, 200, 500, 500),
+			//	"draw x:" + to_string(oDraw.x) + " y:" + to_string(oDraw.y) + 
+			//	" w:" + to_string(oDraw.w) + " h:" + to_string(oDraw.h));
 		}
 	}
 	void Object::OnEvent()

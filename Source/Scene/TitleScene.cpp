@@ -96,11 +96,21 @@ namespace  TitleScene
 			SetNextScene(Scene::Base);
 
 		//★タスクの生成
-		auto backGound = BackGround::Object::Create(true);
-		backGound->SetUp(
-			"./data/image/titleback.png",
-			ML::Point{ 1920, 1200 },
-			ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
+		{
+			//タイトル画面候補
+			string candidates[] =
+			{
+				"./data/image/backGround/title/mountain_evening01.png",
+				"./data/image/backGround/title/mountain_evening04.png",
+				"./data/image/backGround/title/mountain_evening05.png"
+			};
+
+			auto backGound = BackGround::Object::Create(true);
+			backGound->SetUp(
+				candidates[2],
+				ML::Point{ 1344, 896 },
+				ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
+		}
 
 		return  true;
 	}

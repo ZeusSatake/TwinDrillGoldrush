@@ -12,6 +12,7 @@
 #include  "../Actors/UI/Task_BuyButton.h"
 #include  "../System/Task_Save.h"
 #include  "../Event/Task_EventEngine.h"
+#include  "../System/Task_BackGround.h"
 
 namespace ShopScene
 {
@@ -62,6 +63,7 @@ namespace ShopScene
 			struct LevelButtonInfo
 			{
 				string name;
+				string imagePath;
 				int price;
 				Save::Object::ValueKind kind;
 				int max;
@@ -77,19 +79,22 @@ namespace ShopScene
 			LevelButtonInfo levelButtonInfos[levelButtons.size()] =
 			{
 				{
-					"ドリル強化",
+					"採掘力強化",
+					"./data/image/ui/buyButton/育毛剤.png",
 					125,
 					Save::Object::ValueKind::DrillLevel,
 					5
 				},
 				{
-					"服",
+					"防御力強化",
+					"./data/image/ui/buyButton/ドレス.png",
 					520,
 					Save::Object::ValueKind::DefenceLevel,
 					5
 				},
 				{
 					"速度強化",
+					"./data/image/ui/buyButton/靴.png",
 					330,
 					Save::Object::ValueKind::SpeedLevel,
 					5
@@ -101,6 +106,9 @@ namespace ShopScene
 				auto& info = levelButtonInfos[i];
 				//button->SetPosX(300 + button->GetBox()->getHitBase().w * i);
 				//button->SetPosY(ge->screenCenterPos.y);
+				button->SetImage(info.imagePath);
+				button->SetDrawSize(ML::Point{384, 384});
+				button->SetImageSize(ML::Point{ 384, 384 });
 				button->SetMouse(ge->mouse);
 				button->SetEnterButton(XI::Mouse::MB::LB);
 				button->SetResetTime(1.0f);
@@ -142,9 +150,15 @@ namespace ShopScene
 			}
 
 			//位置調整
-			levelButtons.at((int)levelButtonKind::Drill)->SetPos(ML::Vec2(ge->screenCenterPos.x, 150));
-			levelButtons.at((int)levelButtonKind::Dress)->SetPos(ML::Vec2(280, ge->screenCenterPos.y + 120));
-			levelButtons.at((int)levelButtonKind::Speed)->SetPos(ML::Vec2(ge->screenWidth - 280, ge->screenCenterPos.y + 120));
+			ML::Point buttonSize{ levelButtons.at(0)->GetBox()->getHitBase().w, levelButtons.at(0)->GetBox()->getHitBase().h };
+			ML::Point buttonHalfSize{ buttonSize.x * 0.5f, buttonSize.y * 0.5f };
+			int margin = 30;
+			for (int i = 0; i < levelButtons.size(); ++i)
+			{
+				int xMargin = margin + margin * i;
+				int xPadding = buttonHalfSize.x + buttonSize.x * i;
+				levelButtons.at(i)->SetPos(ML::Vec2(xPadding + xMargin, buttonHalfSize.y + 170));
+			}
 		}
 
 		if (save_->GetValue<int>(Save::Object::ValueKind::EndOfShopTutorial) == 0)
@@ -152,6 +166,18 @@ namespace ShopScene
 			auto ev = EventEngine::Object::Create_Mutex();
 			ev->Set("./data/event/EventShopTutorial.txt");
 			save_->SetValue(Save::Object::ValueKind::EndOfShopTutorial, 1.0f);
+		}
+
+		{//背景タスク生成
+			ML::Point imgSize = { 640, 516 };
+			ML::Point drawSize = { (int)ge->screenWidth, (int)ge->screenHeight };
+			int sprit = 1;
+			auto back = BackGround::Object::Create(true);
+			back->SetUp("./data/image/backGround/shop/shopBackGround.png",
+				imgSize,
+				drawSize,
+				BackGround::Object::RenderSize::FullScreen,
+				sprit);
 		}
 
 		return  true;
@@ -162,6 +188,7 @@ namespace ShopScene
 	{
 		//★データ＆タスク解放
 		ge->debugRectReset();
+		ge->KillAll_GN(BackGround::defGroupName, BackGround::defName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
 		save_->Kill();

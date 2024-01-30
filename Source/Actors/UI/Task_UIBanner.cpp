@@ -2,27 +2,26 @@
 //
 //-------------------------------------------------------------------
 #include  "../../../MyPG.h"
-#include  "Task_BuyButton.h"
-#include  "../../Components/Money/PriceTagComponent.h"
-#include  "../Task_Player.h"
-#include  "../../Components/Money/WalletComponent.h"
+#include  "Task_UIBanner.h"
 
-//デバッグ用
-#include  "../../Components/SecondsTimerComponent.h"
+#include  "../../Components/HPBarComponent.h"
+#include  "../../Actors/Task_Player.h"
 
-namespace BuyButton
+namespace UIBanner
 {
 	Resource::WP  Resource::instance;
 	//-------------------------------------------------------------------
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		backImage = DG::Image::Create("./data/image/backGround/uiBanner/Newstuff 1.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		backImage.reset();
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -34,19 +33,15 @@ namespace BuyButton
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
-		//★データ初期化		
-		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
+		//★データ初期化
+		render2D_Priority[1] = 0.7f;
+		SetBackGroundAlpha(1.0f);
+		SetMargin(37);
 		
-		buyAmount_ = 1;
-		SetEnterButton(XI::VGP::B1);
-		SetRecieveInputEnable(true);
-		SetSelected(false);
-		SetMouse(ge->mouse);
-		SetResetTime(5.0f);
+		//HPバー表示位置
+		NormalizeHPBarPos();
+		ge->playerPtr->GetHPBar()->SetSupportScroll(false);
 		
-		AddComponent(priceTag_ = make_shared<PriceTagComponent>(this));
-		priceTag_->Set("未設定", 0);
-
 		//★タスクの生成
 
 		return  true;
@@ -56,7 +51,7 @@ namespace BuyButton
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		priceTag_.reset();
+
 
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -68,85 +63,61 @@ namespace BuyButton
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		if (buyerWallet_.lock()->GetBalance() < priceTag_->CalcTotalPrice(buyAmount_))
-		{
-			SetEnable(false);
-		}
-		PushButton::UpDate();
+
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		Drawtext(ge->debugFont, true);
+		ML::Box2D src(40, 112, 192, 192);
+		res->backImage->Draw(drawSize_.OffsetCopy(GetPos()), src, ML::Color(alpha_, 1, 1, 1));
+	}
 
-		ge->debugFont->Draw(
-			ML::Box2D(GetPos().x, GetPos().y, 500, 500),
-			priceTag_->GetName() + "：" + to_string(priceTag_->GetPrice())
-		);
+	void Object::NormalizeHPBarPos()
+	{
+		auto hpBar = ge->playerPtr->GetHPBar();
+		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f + GetPos().x + margin_, hpBar->GetSize().y * 0.5f + GetPos().y + margin_));
+	}
 
-		if (image_ != nullptr)
+	void Object::SetDrawSize(const ML::Box2D& drawSize)
+	{
+		drawSize_ = drawSize;
+		ge->playerPtr->GetHPBar()->SetDrawSize(drawSize_.w * 0.8f, drawSize_.h * 0.2f);
+	}
+
+	void Object::SetBackGroundAlpha(const float alpha)
+	{
+		alpha_ = alpha;
+	}
+
+	void Object::SetMargin(const float margin)
+	{
+		margin_ = margin;
+		NormalizeHPBarPos();
+	}
+	
+	void Object::SetDrawArea(DrawArea drawArea)
+	{
+		switch (drawArea)
 		{
-			const ML::Box2D& draw(box_->getHitBase());
-			image_->Draw(draw.OffsetCopy(GetPos()), imageSize_);
+		case DrawArea::LeftTop:
+			SetPos(ML::Vec2(0, 0));
+			break;
+
+		case DrawArea::RightTop:
+			SetPos(ML::Vec2(ge->screenWidth - drawSize_.w, 0));
+			break;
+
+		case DrawArea::RightBottom:
+			SetPos(ML::Vec2(ge->screenWidth - drawSize_.w, ge->screenHeight - drawSize_.h));
+			break;
+
+		case DrawArea::LeftBottom:
+			SetPos(ML::Vec2(0, ge->screenHeight - drawSize_.h));
+			break;
 		}
-	}
 
-	void Object::OnEvent()
-	{
-		if (buyerWallet_.lock()->Payment(priceTag_->CalcTotalPrice(buyAmount_)))
-		{
-			for (int i = 0; i < buyAmount_; ++i)
-				buyEffect_();
-		}
-	}
-
-	void Object::SetImage(const string& path)
-	{
-		if (image_ == nullptr)
-			image_ = DG::Image::Create(path);
-		else
-			image_->ReLoad(path);
-	}
-
-	void Object::SetDrawSize(const ML::Point& size)
-	{
-		box_->setHitBase(ML::Box2D(size.x * -0.5f, size.y * -0.5f, size.x, size.y));
-	}
-
-	void Object::SetImageSize(const ML::Point& size)
-	{
-		imageSize_ = ML::Box2D(0, 0, size.x, size.y);
-	}
-
-	void Object::SetPriceTag(const string& name, const int price)
-	{
-		priceTag_->Set(name, price);
-	}
-	void Object::SetBuyerWallet(const shared_ptr<WalletComponent>& wallet)
-	{
-		buyerWallet_ = wallet;
-	}
-	void Object::SetBuyEffect(const std::function<void()>& buyEffect)
-	{
-		buyEffect_ = buyEffect;
-	}
-	void Object::SetProduct(const string & name, const int price, const std::function<void()>& buyEffect)
-	{
-		SetPriceTag(name, price);
-		SetBuyEffect(buyEffect);
-	}
-	void Object::SetBuyAmount(const int amount)
-	{
-		if (amount <= 0)
-		{
-			assert(!"購入個数は0以下にしないでください。");
-		}
-		buyAmount_ = amount;
-	}
-	const shared_ptr<const WalletComponent> Object::GetBuyerWallet() const
-	{
-		return buyerWallet_.lock();
+		NormalizeHPBarPos();
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★

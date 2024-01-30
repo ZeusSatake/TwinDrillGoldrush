@@ -7,8 +7,9 @@
 
 #include  "../Actors/UI/SceneChangeButton.h"
 #include  "../Actors/UI/Task_Cursor.h"
-#include  "../System/Task_Save.h"
 #include  "../Event/Task_EventEngine.h"
+#include  "../System/Task_Save.h"
+#include  "../System/Task_BackGround.h"
 
 namespace BaseScene
 {
@@ -125,7 +126,7 @@ namespace BaseScene
 			if (save->GetValue<int>(Save::Object::ValueKind::MiningProgress) <= save->GetValue<int>(Save::Object::ValueKind::StageNo))
 				buttons_.at((int)ButtonKind::GoMartialFight)->SetRecieveInputEnable(false);
 		}
-		
+
 		if (save->GetValue<int>(Save::Object::ValueKind::EndOfBaseTutorial) == 0)
 		{
 			auto ev = EventEngine::Object::Create_Mutex();
@@ -134,6 +135,52 @@ namespace BaseScene
 		}
 
 		save->Kill();
+
+		{
+			//‹’“_”wŒiŒó•â
+			struct Info
+			{
+				string path;
+				ML::Point size;
+			};
+
+			Info candidates[] =
+			{
+				Info
+				{
+					"./data/image/backGround/base/1.jpg",
+					ML::Point{736, 736}
+				},
+				{
+					"./data/image/backGround/base/2.jpg",
+					ML::Point{736, 427}
+				},
+				{
+				"./data/image/backGround/base/3.jpg",
+				ML::Point{736, 460}
+				},
+				{
+				"./data/image/backGround/base/4.jpg",
+				ML::Point{736, 414}
+				},
+				{
+				"./data/image/backGround/base/5.jpg",
+				ML::Point{736, 491}
+				},
+				{
+				"./data/image/backGround/base/6.jpg",
+				ML::Point{736, 446}
+				}
+			};
+
+			int reference = 5;// 0(”ä—¦‚ª‡‚¦‚Î) 1 4 5
+
+			auto backGound = BackGround::Object::Create(true);
+			backGound->SetUp(
+				candidates[reference].path,
+				candidates[reference].size,
+				ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
+		}
 
 		return  true;
 	}
