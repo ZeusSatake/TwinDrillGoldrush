@@ -6,6 +6,8 @@ Debtor::Debtor()
 {
 	movement_->SetConsiderationCollition(true);
 	gravity_->SetConsiderationCollition(true);
+
+	
 }
 
 void Debtor::Think()
@@ -18,28 +20,14 @@ void Debtor::Think()
 			afterState = AIState::Patrol;
 		break;
 	case Patrol:
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-			plBox.Offset(GetTarget()->GetPos());
-			if (box_->CheckHit(plBox))
-			{
-				afterState = AIState::Damage;
-			}
-		}
 		break;
 	case Damage:
-		if (status_->HP.GetNowHP() <= 0)
-		{
-			afterState = AIState::Dead;
-		}
-		else if (!moveCnt_->IsCounting())
-		{
-			afterState = AIState::Patrol;
-		}
 		break;
 	}
-
+	if (status_->HP.GetNowHP() <= 0)
+	{
+		afterState = AIState::Dead;
+	}
 
 	//状態の更新と各状態ごとの行動カウンタを設定
 	if (UpDateState(afterState))
@@ -59,9 +47,10 @@ void Debtor::Think()
 
 void Debtor::Move()
 {
-	ML::Vec2 est;
+	moveCnt_->Update();
+	unHitTimer_->Update();
 
-	HitPlayer();
+	ML::Vec2 est;
 
 	//重力加速
 	if (!CheckFoot() || GetGravity()->GetVelocity().y)
@@ -97,6 +86,9 @@ void Debtor::Move()
 
 	est = GetMoveVec();
 	CheckMove(est);
+
+	HitPlayer();
+	UpDateHP();
 }
 
 void Debtor::UpDatePatrol()
@@ -136,11 +128,6 @@ void Debtor::UpDateDodge()
 
 void Debtor::UpDateDamage()
 {
-	if (!unHitTimer_->IsCounting())
-	{
-		status_->HP.TakeDamage(status_->attack.GetNow());
-		unHitTimer_->Start();
-	}
 	if (moveCnt_->IsCounting())
 	{
 		AIMove_->KnockBack();
@@ -152,24 +139,26 @@ void Debtor::UpDateDead()
 	this->Kill();
 }
 
-bool Debtor::HitPlayer()
+void Debtor::HitPlayer()
 {
-	ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
-	plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
-	if (CheckHit(plBox))
+	//ダメージ処理
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 	{
-		//プレイヤーに当たった時の処理
+		ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+		plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
+		if (box_->CheckHit(plBox))
 		{
-			if (ge->playerPtr->pState == StateComponent::State::Attack)
-			{
-				status_->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
-			}
-			else
-			{
-				static_cast<Player*>(GetTarget())->TakeAttack(status_->attack.GetNow());
-			}
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
 		}
-		return true;
 	}
-	return false;
+
+	if (GetNowState() != AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
 }

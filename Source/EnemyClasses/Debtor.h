@@ -26,6 +26,6 @@ public:
 
 	
 
-	bool HitPlayer();
+	void HitPlayer();
 };
 

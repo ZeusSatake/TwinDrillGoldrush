@@ -122,8 +122,8 @@ void LadyHaraguchi::Move()
 	//ƒ_ƒ[ƒWˆ—
 	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
 	{
-		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
-		plBox.Offset(GetTarget()->GetPos());
+		ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+		plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
 		if (box_->CheckHit(plBox))
 		{
 			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());

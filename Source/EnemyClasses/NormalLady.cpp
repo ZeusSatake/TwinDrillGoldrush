@@ -12,35 +12,35 @@ NormalLady::NormalLady()
 	auto save = ge->GetTask<Save::Object>(Save::defGroupName, Save::defName);
 	switch (save->GetValue<int>(Save::Object::ValueKind::StageNo))
 	{
-	case 1:
+	case 0:
 		coolTime_ = 60;
 		GetStatus()->HP.Initialize(30);
 		GetStatus()->attack.Initialize(30, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
-	case 2:
+	case 1:
 		coolTime_ = 50;
 		GetStatus()->HP.Initialize(50);
 		GetStatus()->attack.Initialize(50, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
-	case 3:
+	case 2:
 		coolTime_ = 50;
 		GetStatus()->HP.Initialize(70);
 		GetStatus()->attack.Initialize(70, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
-	case 4:
+	case 3:
 		coolTime_ = 45;
 		GetStatus()->HP.Initialize(100);
 		GetStatus()->attack.Initialize(100, 100);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
-	case 5:
+	case 4:
 		coolTime_ = 40;
 		GetStatus()->HP.Initialize(150);
 		GetStatus()->attack.Initialize(150, 100);
@@ -48,7 +48,25 @@ NormalLady::NormalLady()
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	}
+	gravity_->SetDirection(ML::Vec2::Down());
+	gravity_->SetSpeed(0.0f, status_->speed.GetFallSpeed(), 0.5f);
+	gravity_->SetAcceleration(ML::Gravity(32) * 10);
+
+	angle_LR_ = Angle_LR::Left;
+
+	SetPreState(AIState::Idle);
+	SetNowState(AIState::Idle);
+
+	SetFov(1000.f);
+	SetRange(30.f);
+
+	moveCnt_->SetCountFrame(0);
+	unHitTimer_->SetCountFrame(30);
+	fanEdge_->setHitBase(ML::Box2D{ -4, -16, 8, 32 });
+
 	SetTarget(ge->playerPtr.get());
+	this->render2D_Priority[1] = 0.2f;
+	SetPersonalName("お嬢A");//仮
 	box_->setHitBase(ML::Box2D{ -16, -16, 32, 32 });
 }
 
@@ -63,71 +81,31 @@ void NormalLady::Think()
 		{
 			afterState = AIState::Approach;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
-			if (box_->CheckHit(plBox))
-			{
-				EndAttack();
-				afterState = AIState::Damage;
-			}
-		}
 		break;
 	case AIState::Approach:
 		if (WithinRange(GetTarget()))
 		{
 			afterState = AIState::AttackStand;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
-			if (box_->CheckHit(plBox))
-			{
-				EndAttack();
-				afterState = AIState::Damage;
-			}
-		}		break;
+		
 	case AIState::AttackStand:
 		if (IsAttacking())
 		{
 			afterState = AIState::Attack;
 		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
-			if (box_->CheckHit(plBox))
-			{
-				EndAttack();
-				afterState = AIState::Damage;
-			}
-		}		break;
+		break;
 	case AIState::Attack:
 		if (!IsAttacking())
-		{
-			afterState = AIState::Approach;
-		}
-		if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
-		{
-			ML::Box2D plBox = static_cast<Player*>(GetTarget())->GetAttackBox();
-			if (box_->CheckHit(plBox))
-			{
-				EndAttack();
-				afterState = AIState::Damage;
-			}
-		}
-		break;
-	case AIState::Damage:
-		if (status_->HP.GetNowHP() <= 0)
-		{
-			afterState = AIState::Dead;
-		}
-		else if(!moveCnt_->IsCounting())
 		{
 			afterState = AIState::Approach;
 		}
 		break;
 	case AIState::Dead:
 		break;
+	}
+	if (status_->HP.GetNowHP() <= 0)
+	{
+		afterState = AIState::Dead;
 	}
 	//状態の更新と各状態ごとの行動カウンタを設定
 	if (UpDateState(afterState))
@@ -139,9 +117,6 @@ void NormalLady::Think()
 			break;
 		case AIState::Attack:
 			moveCnt_->SetCountFrame(attackCnt_);
-			break;
-		case AIState::Damage:
-			moveCnt_->SetCountFrame(30);
 			break;
 		default:
 			moveCnt_->SetCountFrame(0);
@@ -192,6 +167,27 @@ void NormalLady::Move()
 
 	est = GetMoveVec();
 	CheckMove(est);
+
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+	{
+		ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+		plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
+		if (box_->CheckHit(plBox))
+		{
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		}
+	}
+
+	if (GetNowState() != AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
+	UpDateHP();
 }
 
 void NormalLady::UpDatePatrol()

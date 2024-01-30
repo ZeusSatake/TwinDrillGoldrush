@@ -107,3 +107,12 @@ void Enemy::UpDate()
 
 	hpBar_->Update();
 }
+
+void Enemy::UpDateHP()
+{
+	if (preHP_ != GetStatus()->HP.GetNowHP())
+	{
+		preHP_ = GetStatus()->HP.GetNowHP();
+		unHitTimer_->Start();
+	}
+}

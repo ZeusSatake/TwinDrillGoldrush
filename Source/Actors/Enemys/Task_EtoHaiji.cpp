@@ -79,18 +79,19 @@ namespace EtoHaiji
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D draw = box_->getHitBase().OffsetCopy(GetPos());
-		ML::Box2D src;
-		if (angle_LR_ == Angle_LR::Left)
-		src=ML::Box2D(0, 0, 960, 895);
-		else
 		{
-			src = ML::Box2D(960, 0, 960, 895);
+			ML::Box2D draw = box_->getHitBase();
+			ML::Box2D src = ML::Box2D(0, 0, 48, 64);
+			if (angle_LR_ == Angle_LR::Right)
+			{
+				draw.x = -draw.x;
+				draw.w = -draw.w;
+			}
+			//スクロール対応
+			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
+			draw.Offset(GetPos());
+			res->img->Draw(draw, src);
 		}
-		//スクロール対応
-		draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-		
-		res->img->Draw(draw, src);
 	}
 	//-------------------------------------------------------------------
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
