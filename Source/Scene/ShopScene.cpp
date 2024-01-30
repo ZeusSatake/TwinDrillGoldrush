@@ -4,7 +4,7 @@
 #include  <array>
 #include  "../../MyPG.h"
 #include  "ShopScene.h"
-
+#include  "../../sound.h"
 #include  "../Components/Money/WalletComponent.h"
 #include  "../Components/Money/PriceTagComponent.h"
 
@@ -47,7 +47,7 @@ namespace ShopScene
 
 		//★データ初期化
 		ge->debugRectLoad();
-
+		bgm::LoadFile("shop", "./data/sound/shop.mp3");
 		//★タスクの生成
 
 		auto cursor = Cursor::Object::Create(true);
@@ -212,7 +212,7 @@ namespace ShopScene
 	void  Object::UpDate()
 	{
 		Scene::UpDate();
-
+		bgm::Play("shop");
 		for (const auto& button : buttons_)
 		{
 			ge->debugRect(button.lock()->GetBox()->getHitBase().OffsetCopy(button.lock()->GetPos()));
