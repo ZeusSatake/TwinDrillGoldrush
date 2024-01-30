@@ -3,7 +3,6 @@
 class LadyHaraguchi : public BossLady
 {
 	bool isCreatedTower_;
-	bool isCreatedTerrain_;
 public:
 	LadyHaraguchi();
 	virtual ~LadyHaraguchi() {};
@@ -14,7 +13,7 @@ public:
 	void UpDateDamage() override;
 	void UpDateDead() override;
 
-	void CreateTerrain();
 	void CreateTower();
+	void SpawnOfficeWorker();
 };
 

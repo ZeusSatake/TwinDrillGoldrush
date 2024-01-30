@@ -42,6 +42,8 @@ namespace Tower0
 		//★データ＆タスク解放
 		ge->KillAll_G("シャンデリア");
 
+		RemoveAllComponent();
+
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}

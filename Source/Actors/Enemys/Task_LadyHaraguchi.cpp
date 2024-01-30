@@ -43,6 +43,7 @@ namespace Haraguchi
 		ge->KillAll_G("オブジェクト");
 		ge->KillAll_G("敵");
 
+		RemoveAllComponent();
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}
@@ -68,8 +69,6 @@ namespace Haraguchi
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 
 			res->img->Draw(draw, src);
-
-			ge->debugFont->Draw(ML::Box2D(1000, 300, 700, 700), to_string(GetStatus()->HP.GetNowHP()));
 		}
 	}
 

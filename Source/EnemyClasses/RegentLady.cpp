@@ -2,6 +2,7 @@
 
 #include "../Actors/Task_Player.h"
 #include "../System/Task_Save.h"
+#include "../Actors/Task_Regent.h"
 
 RegentLady::RegentLady()
 	:Lady()
@@ -10,44 +11,51 @@ RegentLady::RegentLady()
 	auto save = ge->GetTask<Save::Object>(Save::defGroupName, Save::defName);
 	switch (save->GetValue<int>(Save::Object::ValueKind::StageNo))
 	{
-	case 1:
-		coolTime_ = 60;
+	case 0:
+		SetRange(200.f);
+		coolTime_ = 120;
 		GetStatus()->HP.Initialize(30);
-		GetStatus()->attack.Initialize(5,5);
+		GetStatus()->attack.Initialize(10,10);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 1:
+		SetRange(220.f);
+		coolTime_ = 110;
+		GetStatus()->HP.Initialize(50);
+		GetStatus()->attack.Initialize(13, 13);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	case 2:
-		coolTime_ = 50;
-		GetStatus()->HP.Initialize(50);
-		GetStatus()->attack.Initialize(7, 7);
-		GetStatus()->defence.Initialize(0, 100);
-		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
-		break;
-	case 3:
-		coolTime_ = 50;
+		SetRange(250.f);
+		coolTime_ = 100;
 		GetStatus()->HP.Initialize(70);
-		GetStatus()->attack.Initialize(10, 10);
-		GetStatus()->defence.Initialize(0, 100);
-		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
-		break;
-	case 4:
-		coolTime_ = 45;
-		GetStatus()->HP.Initialize(100);
 		GetStatus()->attack.Initialize(15, 15);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
-	case 5:
-		coolTime_ = 40;
+	case 3:
+		SetRange(280.f);
+		coolTime_ = 85;
+		GetStatus()->HP.Initialize(100);
+		GetStatus()->attack.Initialize(18, 18);
+		GetStatus()->defence.Initialize(0, 100);
+		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
+		break;
+	case 4:
+		SetRange(300.f);
+		coolTime_ = 70;
 		GetStatus()->HP.Initialize(150);
 		GetStatus()->attack.Initialize(20, 20);
 		GetStatus()->defence.Initialize(0, 100);
 		GetStatus()->speed.Initialize(2.5f, 100.f, 10.f);
 		break;
 	}
+	SetFov(1000.f);
 	box_->setHitBase({-16,-16,32,32});
 	SetTarget(ge->playerPtr.get());
+	this->render2D_Priority[1] = 0.2f;
 }
 
 void RegentLady::Think()
@@ -106,6 +114,8 @@ void RegentLady::Think()
 
 void RegentLady::Move()
 {
+	moveCnt_->Update();
+	unHitTimer_->Update();
 	ML::Vec2 est;
 	switch (GetNowState())
 	{
@@ -126,6 +136,27 @@ void RegentLady::Move()
 	}
 	est=GetMoveVec();
 	CheckMove(est);
+
+	if (ge->playerPtr->pState == StateComponent::State::Attack && !unHitTimer_->IsCounting())
+	{
+		ML::Box2D plBox = ge->playerPtr->drill_->GetBox()->getHitBase();
+		plBox.Offset(ge->playerPtr->drill_->GetAttackPos());
+		if (box_->CheckHit(plBox))
+		{
+			GetStatus()->HP.TakeDamage(ge->playerPtr->GetStatus()->attack.GetNow());
+		}
+	}
+
+	if (GetNowState() != AIState::Dead)
+	{
+		ML::Box2D plBox = GetTarget()->GetBox()->getHitBase();
+		plBox.Offset(GetTarget()->GetPos());
+		if (box_->CheckHit(plBox))
+		{
+			ge->playerPtr->TakeAttack(GetStatus()->attack.GetNow());
+		}
+	}
+	UpDateHP();
 }
 
 void RegentLady::UpDateApproach()
@@ -135,16 +166,31 @@ void RegentLady::UpDateApproach()
 
 void RegentLady::UpDateAttackStand()
 {
+	SetMoveVecX(0);
+	if (!moveCnt_->IsCounting())
+	{
+		BeginAttack();
+	}
 }
 
 void RegentLady::UpDateAttack()
 {
 	//ƒŠ[ƒ[ƒ“ƒg‚ð”ò‚Î‚·
+	auto rs = RegentShot::Object::Create(true);
+	rs->angle_LR_ = angle_LR_;
+	rs->SetDamage(GetStatus()->attack.GetNow());
+	rs->SetPos(GetPos());
+	rs->SetMovementAmount(3.f);
 
+	EndAttack();
 }
 
 void RegentLady::UpDateDead()
 {
+	if (!moveCnt_->IsCounting())
+	{
+		Kill();
+	}
 }
 
 

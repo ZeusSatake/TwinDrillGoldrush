@@ -45,6 +45,7 @@ namespace Satake
 		ge->KillAll_G("オブジェクト");
 		ge->KillAll_G("敵");
 
+		RemoveAllComponent();
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 		}

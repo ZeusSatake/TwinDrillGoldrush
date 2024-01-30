@@ -5,7 +5,7 @@ evimg>PL_A,./data/image/Lady.png,L
 msg>通常枠,0,この程度こなせなければ武闘会で勝てませんわ～～～～！
 evimg>PL_A,off
 evimg>PL_A,./data/image/butler.png,R
-msg>通常枠,0,鉱石や宝石類は自信を高めるための費用に充てましょう。
+msg>通常枠,0,鉱石や宝石類は自身を高めるための費用に充てましょう。
 msg>通常枠,0,ここを出たらショップに行ってみましょうぞ。
 evimg>PL_A,off
 msg>通常枠,0,off

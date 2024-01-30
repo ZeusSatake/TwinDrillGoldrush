@@ -10,6 +10,7 @@
 #include "../System/Task_Save.h"
 #include "../Actors/Task_Player.h"
 #include "../Actors/Enemys/Task_BlondeLady.h"
+#include "../Actors/Enemys/Task_RegentLady.h"
 #include  "Task_Map.h"
 #include  "Task_EnemyMap.h"
 #include  "../Actors/UI/SceneChangeButton.h"
@@ -75,7 +76,7 @@ namespace MartialFightScene
 			enemymap->Load("MartialFight1Enemy");
 			enemymap->SetEnemy();
 			enemyCount_ = ge->GetTasks<BlondeLady::Object>(BlondeLady::defGroupName, BlondeLady::defName)->size();
-			//boss_ = ge->GetTask<Satake::Object>(Satake::defGroupName, Satake::defName);
+			enemyCount_+=ge->GetTasks<RegentLady0::Object>(RegentLady0::defGroupName, RegentLady0::defName)->size();
 		}
 		{
 			ge->playerPtr->SetPos(ML::Vec2{ 50,450 });
