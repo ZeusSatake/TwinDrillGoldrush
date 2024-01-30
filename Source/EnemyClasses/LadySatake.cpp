@@ -7,6 +7,8 @@
 #include "../Actors/Task_OrionContainer.h"
 #include "../Actors/Task_SobaPrison.h"
 #include "../Actors/Task_LongSword.h"
+#include "../Actors/Task_KingSword.h"
+#include "../Actors/Task_DevilSword.h"
 #include "../Scene/MartialFightScene.h"
 
 LadySatake::LadySatake()
@@ -144,7 +146,7 @@ void LadySatake::Think()
 				moveCnt_->SetCountFrame(30);
 				break;
 			case AttackPattern::Falling:
-				moveCnt_->SetCountFrame(150);
+				moveCnt_->SetCountFrame(240);
 				break;
 			default:
 				moveCnt_->SetCountFrame(60);
@@ -572,13 +574,34 @@ void LadySatake::UpDateWeaponRain()
 		++rainCount_;
 		EndAttack();
 	}
-	else
+	else if (rainCount_ % 5 == 4)
 	{
-		auto fo = LongSword::Object::Create(true);
+		auto ks=KingSword::Object::Create(true);
 
 		int randRange = rand() % 360;
-		fo->SetPosX(GetPos().x - 180 + randRange);
-		fo->SetPosY(ge->playerPtr->GetPos().y - 250);
+
+		ks->SetPosX(GetPos().x - 180 + randRange);
+		ks->SetPosY(ge->playerPtr->GetPos().y - 250);
+		++rainCount_;
+		EndAttack();
+	}
+	else if (rainCount_ % 8 == 7)
+	{
+		auto ds = DevilSword::Object::Create(true);
+
+		int randRange = rand() % 360;
+		ds->SetPosX(GetPos().x - 180 + randRange);
+		ds->SetPosY(ge->playerPtr->GetPos().y - 250);
+		++rainCount_;
+		EndAttack();
+	}
+	else
+	{
+		auto ls = LongSword::Object::Create(true);
+
+		int randRange = rand() % 360;
+		ls->SetPosX(GetPos().x - 180 + randRange);
+		ls->SetPosY(ge->playerPtr->GetPos().y - 250);
 		++rainCount_;
 		EndAttack();
 	}
