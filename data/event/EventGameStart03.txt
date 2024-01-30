@@ -1,5 +1,8 @@
 evimg>PL_A,./data/image/butler.png,R
-msg>’Êí˜g,0,‚¨ì—lA¡‰ñ‚Ì–Ú•W‚Íu%v‚Å‚·‚¼B
+msg>’Êí˜g,0,‚¨ì—lA¡‰ñ‚Ì–Ú•W‚ÍuƒqƒqƒCƒƒJƒlv‚Å‚·‚¼B
+msg>’Êí˜g,0,“ú–{‚É“`‚í‚é“`à‚ÌzÎ‚Å‚·‚ÈB
+msg>’Êí˜g,0,ŽÀ‚Í‰Æ•ó‚Å‚ ‚éuŠ£ƒpƒ“Š£‚©‚µ‹@v‚É‚àŽg‚í‚ê‚Ä‚¨‚è‚Ü‚·‚¼B
+msg>’Êí˜g,0,‚»‚ê‚Å‚ÍA‚²Œ’“¬‚ð‹F‚è‚Ü‚·B
 msg>’Êí˜g,0,off
 evimg>PL_A,off
 end>

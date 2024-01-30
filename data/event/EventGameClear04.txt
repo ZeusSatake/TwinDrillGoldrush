@@ -1,8 +1,14 @@
 evimg>PL_A,./data/image/butler.png,R
-msg>’Êí˜g,180,—¬Î‚¨ì—l‚Å‚·B
+msg>’Êí˜g,0,—¬Î‚¨ì—l‚Å‚·B
 evimg>PL_A,off
 evimg>PL_A,./data/image/Lady.png,L
-msg>’Êí˜g,0,‚±‚Ì’ö“x‚±‚È‚¹‚È‚¯‚ê‚Î•“¬‰ï‚ÅŸ‚Ä‚Ü‚¹‚ñ‚í````I
+msg>’Êí˜g,0,‚»‚ê‚Ù‚Ç‚Å‚à‚ ‚è‚Ü‚·‚í```III
+evimg>PL_A,off
+evimg>PL_A,./data/image/butler.png,R
+msg>’Êí˜g,0,‚¨ì—l‚ç‚µ‚¢˜ü–‚³‚Å‚·‚ÈB
+msg>’Êí˜g,0,‚»‚ÌˆÓ‹C‚Å‚·‚¼B
+msg>’Êí˜g,0,ŽŸ‚É‘_‚¤‚±‚Æ‚É‚È‚é‚Ì‚Í‘¶Ý‚·‚é‚©‚à‹^‚í‚µ‚¢“`à‚ÌzÎuƒŒƒfƒBƒAƒ“ƒ^ƒCƒgv‚Å‚·‚ÈB
+msg>’Êí˜g,0,‚Ð‚Æ‚Ü‚¸‘S‘‘å‰ï‚ð§‚µ‚ÄA¢ŠE‘å‰ï‚Ö‚Ì•à‚ði‚ß‚Ü‚µ‚å‚¤B
 evimg>PL_A,off
 msg>’Êí˜g,0,off
 end>
