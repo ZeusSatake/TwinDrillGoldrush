@@ -24,7 +24,7 @@ namespace DrawGauge
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//共有する変数はここに追加する
-		DG::Image::SP img;
+		
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  GameObject
@@ -47,6 +47,7 @@ namespace DrawGauge
 		bool  Finalize();		//「終了」タスク消滅時に１回だけ行う処理
 	//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
 	private:
+		DG::Image::SP img;
 		ML::Percentage gaugeValue_;
 
 		bool isMaxCharge;
