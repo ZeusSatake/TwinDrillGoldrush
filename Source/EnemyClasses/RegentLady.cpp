@@ -55,7 +55,7 @@ RegentLady::RegentLady()
 	SetFov(1000.f);
 	box_->setHitBase({-16,-16,32,32});
 	SetTarget(ge->playerPtr.get());
-	this->render2D_Priority[1] = 0.2f;
+	unHitTimer_->SetCountFrame(15);
 }
 
 void RegentLady::Think()

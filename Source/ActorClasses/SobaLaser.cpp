@@ -5,7 +5,7 @@ SobaLaser::SobaLaser()
 	:Actor()
 	,countFlag_(false)
 	,initFlag_(false)
-	,damage_(10)
+	,damage_(30)
 {
 	AddComponent(suviveTimer_ = shared_ptr<TimerComponent>(new TimerComponent(this)));
 	suviveTimer_->SetCountFrame(180);

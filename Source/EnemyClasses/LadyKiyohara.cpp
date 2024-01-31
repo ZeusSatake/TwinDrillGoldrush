@@ -15,16 +15,15 @@ LadyKiyohara::LadyKiyohara()
 {
 	SetFov(1000.f);
 	box_->setHitBase(ML::Box2D{ -8, -16, 16, 32 });
-	GetStatus()->HP.Initialize(200);
+	GetStatus()->HP.Initialize(100);
 	GetStatus()->speed.Initialize(4.5f, 7.f, 5.f);
-	GetStatus()->attack.Initialize(20, 100);
+	GetStatus()->attack.Initialize(15, 100);
 
 	moveCnt_->SetCountFrame(0);
 	unHitTimer_->SetCountFrame(15);
 
 	SetTarget(ge->playerPtr.get());
 	SetStartPos({ ge->playerPtr->GetPos().x, defaultFlyPosY_ });
-	this->render2D_Priority[1] = 0.2f;
 }
 
 void LadyKiyohara::Think()
@@ -104,7 +103,7 @@ void LadyKiyohara::Think()
 		case AIState::AttackStand:
 			if (attackPattern_ == TackleAttack)
 			{
-				moveCnt_->SetCountFrame(60);
+				moveCnt_->SetCountFrame(90);
 			}
 			else
 			{
