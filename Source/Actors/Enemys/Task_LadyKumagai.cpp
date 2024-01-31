@@ -31,7 +31,7 @@ namespace Kumagai
 		this->res = Resource::Create();
 
 		//★データ初期化
-		
+		this->render2D_Priority[1] = 0.2f;
 		//★タスクの生成
 
 		return  true;
