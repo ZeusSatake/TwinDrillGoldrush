@@ -73,11 +73,6 @@ namespace  JewelryMap
 	//「更新」１フレーム毎に行う処理
 	void  Object::UpDate()
 	{
-		auto ms = ge->mouse->GetState();
-		auto pos = ML::Vec2(ms.pos.x, ms.pos.y);
-		if (ms.RB.down) {
-			this->Search(pos);
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理

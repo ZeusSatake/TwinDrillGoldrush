@@ -43,13 +43,14 @@ namespace  GameScene
 		this->img[0] = DG::Image::Create("./data/image/ui/Bkani.png");
 		this->img[1] = DG::Image::Create("./data/image/ui/LBkani.png");
 		this->img[2] = DG::Image::Create("./data/image/ui/RBkani.png");
+		this->img[3] = DG::Image::Create("./data/image/ui/LTkani.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			this->img[i].reset();
 		}
 		return true;
@@ -246,7 +247,7 @@ namespace  GameScene
 
 		
 		auto src = ML::Box2D(0, 0, 385, 52);
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			auto draw = ML::Box2D(20, 100 + 28 * i, 212, 28);
 			this->res->img[i]->Draw(draw, src);
 		}
