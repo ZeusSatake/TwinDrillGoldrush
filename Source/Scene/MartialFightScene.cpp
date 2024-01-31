@@ -27,6 +27,8 @@
 
 #include "../Event/Task_EventEngine.h"
 
+#include  "../System/Task_BackGround.h"
+
 namespace MartialFightScene
 {
 	Resource::WP  Resource::instance;
@@ -121,6 +123,12 @@ namespace MartialFightScene
 				ev->Set("./data/event/EventMartialFightStart0" + to_string(nowStage_ + 1/*ƒtƒ@ƒCƒ‹–¼‚Í1‚©‚ç‚Ì‚½‚ß*/) + ".txt");
 			}
 		}
+
+		auto backGound = BackGround::Object::Create(true);
+		backGound->SetUp(
+			"./data/image/backGround/MartialFight/•‘“¥‰ï”wŒi.png",
+			ML::Point{ 2048,1152 },
+			ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
 
 		return  true;
 	}
