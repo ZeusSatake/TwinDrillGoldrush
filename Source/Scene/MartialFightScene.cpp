@@ -317,8 +317,6 @@ namespace MartialFightScene
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "武闘会");
-
 		if (clear_)
 		{
 			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 50, 30, 500, 500), "ボスを倒したわね。", ML::Color(1, 1, 0, 0));
