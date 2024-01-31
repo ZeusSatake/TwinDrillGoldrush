@@ -38,7 +38,7 @@ namespace player
 		//★データ初期化
 		this->render2D_Priority[0] = 0.2f;
 		this->SetPos( ML::Vec2{ 0,0 });
-		this->movement_->SetSpeed(2.f, 5.f, 0.f);
+		this->movement_->SetSpeed(2.f, 2.f, 0.f);
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);
@@ -94,7 +94,7 @@ namespace player
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, animInfo.GetSrc());
 		}
-		DebugInfo();
+		//DebugInfo();
 
 	}
 	void Object::DebugInfo()
@@ -165,7 +165,7 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "countdown:" + to_string(this->cooldown->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
-		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetExternalVec().x) + " " + to_string(this->GetExternalVec().y));
+		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetMoveVec().x) + " " + to_string(this->GetMoveVec().y));
 	}
 
 	void Object::SceneTransitionInitialize(Scene::Kind nextScene)

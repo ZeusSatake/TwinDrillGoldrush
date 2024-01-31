@@ -159,7 +159,7 @@ void Player::Think()
 
 		break;
 	case StateComponent::State::Dash:
-		if (inp.LStick.volume == 0 ||inp.B1.off) { pState = StateComponent::State::Idle; }
+		if (inp.B1.off) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Drill:
 		if (inp.L1.down) { pState = StateComponent::State::Mining; }
@@ -441,9 +441,9 @@ void Player::UpdateStates()
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DrillLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DrillLevel) - 1);
 	int drillPower = save_->GetValue<int>(kind);
-	this->status_->attack.Initialize(drillPower * 10, drillPower * 10);
+	this->status_->attack.Initialize(drillPower , drillPower );
 	this->drill_->SetAttack(drillPower);
-	this->drill_->InitDurability(drillPower*60);
+	this->drill_->InitDurability(drillPower*6);
 	
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DefenceLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)-1);

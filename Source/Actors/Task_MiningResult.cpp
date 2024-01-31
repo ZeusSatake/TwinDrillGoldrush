@@ -130,10 +130,10 @@ namespace MiningResult
 			orePriceTags_.at(OreKind::Gold)->SetPrice(50);
 			orePriceTags_.at(OreKind::Palladium)->SetPrice(70);
 			orePriceTags_.at(OreKind::Damascus)->SetPrice(100);
-			orePriceTags_.at(OreKind::Orichalcum)->SetPrice(120);
-			orePriceTags_.at(OreKind::HihiIroKane)->SetPrice(140);
-			orePriceTags_.at(OreKind::Adamantite)->SetPrice(160);
-			orePriceTags_.at(OreKind::Ladyanite)->SetPrice(200);
+			orePriceTags_.at(OreKind::Orichalcum)->SetPrice(100);
+			orePriceTags_.at(OreKind::HihiIroKane)->SetPrice(100);
+			orePriceTags_.at(OreKind::Adamantite)->SetPrice(100);
+			orePriceTags_.at(OreKind::Ladyanite)->SetPrice(2000);
 
 			//==================•óÎ==================
 			//‰Šú‰»
@@ -145,14 +145,14 @@ namespace MiningResult
 				jewelryPriceTags_.at(jewelry)->Set(SellableJewelryName(jewelry), 0);//‰¼‚Å0
 			}
 			//’l’iÝ’è(’l‚Í‰¼
-			jewelryPriceTags_.at(JewelryKind::Diamond)->SetPrice(35);
-			jewelryPriceTags_.at(JewelryKind::BlackDiamond)->SetPrice(55);
-			jewelryPriceTags_.at(JewelryKind::PinkDiamond)->SetPrice(75);
-			jewelryPriceTags_.at(JewelryKind::Emerald)->SetPrice(105);
-			jewelryPriceTags_.at(JewelryKind::Sapphire)->SetPrice(125);
-			jewelryPriceTags_.at(JewelryKind::Garnet)->SetPrice(145);
-			jewelryPriceTags_.at(JewelryKind::Topaz)->SetPrice(165);
-			jewelryPriceTags_.at(JewelryKind::Amethyst)->SetPrice(185);
+			jewelryPriceTags_.at(JewelryKind::Diamond)->SetPrice(500);
+			jewelryPriceTags_.at(JewelryKind::BlackDiamond)->SetPrice(750);
+			jewelryPriceTags_.at(JewelryKind::PinkDiamond)->SetPrice(1000);
+			jewelryPriceTags_.at(JewelryKind::Emerald)->SetPrice(250);
+			jewelryPriceTags_.at(JewelryKind::Sapphire)->SetPrice(300);
+			jewelryPriceTags_.at(JewelryKind::Garnet)->SetPrice(200);
+			jewelryPriceTags_.at(JewelryKind::Topaz)->SetPrice(180);
+			jewelryPriceTags_.at(JewelryKind::Amethyst)->SetPrice(150);
 		}
 
 		for (int i = 0; i < size(sellableOres_); ++i)
