@@ -63,6 +63,7 @@ namespace MiningResult
 		bool clear_;
 		shared_ptr<SecondsTimerComponent> transitionTimer_;
 		weak_ptr<EventEngine::Object> clearEvent_;
+		weak_ptr<SecondsTimerComponent> limitTimer_;
 
 		int initialHaveMoney_;
 
