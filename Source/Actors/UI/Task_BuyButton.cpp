@@ -34,8 +34,8 @@ namespace BuyButton
 		//リソースクラス生成orリソース共有
 		this->res = Resource::Create();
 
-		//★データ初期化		
-		render2D_Priority[1] = 0.7f;
+		//★データ初期化
+		render2D_Priority[1] = 0.8f;
 		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
 		
 		buyAmount_ = 1;

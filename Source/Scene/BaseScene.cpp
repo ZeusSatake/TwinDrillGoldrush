@@ -118,9 +118,9 @@ namespace BaseScene
 			const auto& goTitleButtonSize = buttons.at((int)ButtonKind::GoTitle)->GetBox()->getHitBase();
 			buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2(goTitleButtonSize.w * 0.5f, goTitleButtonSize.h * 0.5f));
 
-			//buttons.at((int)ButtonKind::GoShop)->SetPos(ML::Vec2());
-			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
-			//buttons.at((int)ButtonKind::GoTitle)->SetPos(ML::Vec2());
+			buttons.at((int)ButtonKind::GoShop)->SetPos(ML::Vec2(ge->screenCenterPos.x * 0.5f, ge->screenCenterPos.y));
+			buttons.at((int)ButtonKind::GoMartialFight)->SetPos(ML::Vec2(ge->screenCenterPos));
+			buttons.at((int)ButtonKind::GoMining)->SetPos(ML::Vec2(ge->screenCenterPos.x * 1.5f, ge->screenCenterPos.y));
 
 			//採掘場の進行度が武闘会の番号以下の場合は武闘会に行けない
 			if (save->GetValue<int>(Save::Object::ValueKind::MiningProgress) <= save->GetValue<int>(Save::Object::ValueKind::StageNo))

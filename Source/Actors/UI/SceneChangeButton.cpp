@@ -126,7 +126,7 @@ namespace SceneChangeButton
 
 	void Object::SetSize(const ML::Point& size)
 	{
-		box_->setHitBase(ML::Box2D(size.x * 0.5f, size.y * -0.5f, size.x, size.y));
+		box_->setHitBase(ML::Box2D(size.x * -0.5f, size.y * -0.5f, size.x, size.y));
 	}
 
 	//šššššššššššššššššššššššššššššššššššššššššš
