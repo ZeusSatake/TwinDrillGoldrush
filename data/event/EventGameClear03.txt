@@ -6,5 +6,6 @@ msg>’Êí˜g,0,‰æ—³“_áË‚ðŒ‡‚«‚Ü‚·‚í```III
 evimg>PL_A,off
 evimg>PL_A,./data/image/butler.png,R
 msg>’Êí˜g,0,ƒQ[ƒ€ƒI[ƒo[‚ÌŽž‚ÉƒMƒŠŒ¾‚í‚È‚¢ƒZƒŠƒt‚Å‚·‚¼B‚»‚êB
+evimg>PL_A,off
 msg>’Êí˜g,0,off
 end>
