@@ -35,6 +35,7 @@ namespace BuyButton
 		this->res = Resource::Create();
 
 		//šƒf[ƒ^‰Šú‰»		
+		render2D_Priority[1] = 0.7f;
 		box_->setHitBase(ML::Box2D(-100, -50, 200, 100));
 		
 		buyAmount_ = 1;
