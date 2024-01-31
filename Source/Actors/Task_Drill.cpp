@@ -86,10 +86,12 @@ namespace  drill
 			 AnimInfo animInfo = this->animManager_->Play((int)this->GetMode());
 			ML::Box2D Predraw = animInfo.GetDraw();
 			ML::Box2D presrc = animInfo.GetSrc();
-			if (this->GetCheckOverHeat())presrc.x = 64;
-			else presrc.x = 0;
+			presrc.x = this->srcX;
 
-			ML::Box2D draw = Predraw.OffsetCopy(this->GetPos());//※座標は指定する必要あり
+			ML::Box2D draw = Predraw.OffsetCopy(this->GetDrawPos());//※座標は指定する必要あり
+			
+
+
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->img->Rotation(this->UpdateDrillAngle(), ML::Vec2{ 4, 4 });
 			this->res->img->Draw(draw, presrc);

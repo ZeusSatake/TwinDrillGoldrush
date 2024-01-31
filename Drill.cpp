@@ -289,6 +289,7 @@ float Drill::GetNowDurabilityPercent()
 void Drill::ResetDurability()
 {
 	this->durability = this->maxDurability;
+	this->srcX = 0;
 }
 
 ML::Vec2 Drill::GetAttackPos()
