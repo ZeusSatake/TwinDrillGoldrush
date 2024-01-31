@@ -135,7 +135,7 @@ namespace  TitleScene
 		Scene::UpDate();
 		bgm::Play("title");
 		auto inp = ge->in1->GetState();
-		if (inp.SE.down)
+		if (inp.ST.down)
 		{
 			Kill();
 		}
