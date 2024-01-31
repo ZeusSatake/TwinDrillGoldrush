@@ -162,6 +162,11 @@ namespace	BlockManager
 					this->arr[y][x].HP = 6;
 					this->arr[y][x].event = 17;
 					break;
+				case (int)Map::Object::ChipKind::Ladyanite:				//レディアント
+					this->arr[y][x].MaxHP = 12;
+					this->arr[y][x].HP = 12;
+					this->arr[y][x].event = 28;
+					break;
 				//====================宝石====================
 				case (int)JewelryMap::Object::ChipKind::Diamond:		//ダイヤモンド
 					this->arr[y][x].MaxHP = 6;
