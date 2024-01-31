@@ -82,17 +82,17 @@ namespace Save
 		{
 			if (i < (int)ValueKind::End)
 			{
-				float value = 0.0f;
+				float value;
 
-				switch ((ValueKind)i)
+				switch (i)
 				{
-				case ValueKind::DrillLevel:
+				case (int)ValueKind::DrillLevel:
 					value = 1.0f;
 					break;
-				case ValueKind::DefenceLevel:
+				case (int)ValueKind::DefenceLevel:
 					value = 1.0f;
 					break;
-				case ValueKind::SpeedLevel:
+				case (int)ValueKind::SpeedLevel:
 					value = 1.0f;
 					break;
 

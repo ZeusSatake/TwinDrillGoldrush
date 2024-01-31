@@ -36,7 +36,6 @@ namespace BaseScene
 		this->res = Resource::Create();
 
 		//★データ初期化
-		ge->debugRectLoad();
 		render2D_Priority[1] = 0.0f;
 		bgm::LoadFile("base", "./data/sound/base.mp3");
 		//★タスクの生成
@@ -191,7 +190,6 @@ namespace BaseScene
 		//★データ＆タスク解放
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(Cursor::defGroupName, Cursor::defName);
-		ge->debugRectReset();
 		bgm::Stop("base");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
@@ -206,17 +204,11 @@ namespace BaseScene
 	{
 		Scene::UpDate();
 		bgm::Play("base");
-		for (auto& button : buttons_)
-		{
-			ge->debugRect(button->GetBox()->getHitBase().OffsetCopy(button->GetPos()));
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "拠点");
-		ge->debugRectDraw();
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
