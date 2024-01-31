@@ -10,6 +10,10 @@
 #include  "../Components/SecondsTimerComponent.h"
 #include  "../System/Task_Save.h"
 #include  "../Event/Task_EventEngine.h"
+#include "../Actors/Task_Player.h"
+#include "../Actors/Task_Drill.h"
+#include "../Scene/GameScene.h"
+#include "../Components/HPBarComponent.h"
 
 namespace MiningResult
 {
@@ -173,6 +177,8 @@ namespace MiningResult
 		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
 		save->Kill();
 
+		limitTimer_ = ge->GetTask<GameScene::Object>(GameScene::defGroupName)->limitTimer_;
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -180,7 +186,9 @@ namespace MiningResult
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-
+		ge->StopAll_GN(player::defGroupName, player::defName, false);
+		ge->StopAll_GN(drill::defGroupName, drill::defName, false);
+		ge->StopAll_G("敵", false);
 		//仮でタスク終了時
 		auto save = Save::Object::Create(true);
 		WalletComponent wallet = WalletComponent(this);
@@ -209,6 +217,14 @@ namespace MiningResult
 	{
 		UpdateComponents();
 
+		if (clear_)
+		{
+			ge->playerPtr->GetHPBar()->SetVisible(false);
+			ge->StopAll_GN(player::defGroupName, player::defName);
+			ge->StopAll_GN(drill::defGroupName, drill::defName);
+			ge->StopAll_G("敵");
+			limitTimer_.lock()->Stop();
+		}
 		if (getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_ &&
 			!clear_ &&
 			!clearEvent_.lock())
