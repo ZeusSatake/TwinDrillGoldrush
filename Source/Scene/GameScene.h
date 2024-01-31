@@ -27,7 +27,7 @@ namespace  GameScene
 		static   WP  instance;
 		static  Resource::SP  Create();
 		//‹¤—L‚·‚é•Ï”‚Í‚±‚±‚É’Ç‰Á‚·‚é
-		DG::Image::SP	img[3];
+		DG::Image::SP	img[4];
 	};
 	//-------------------------------------------------------------------
 	class  Object : public  Scene
