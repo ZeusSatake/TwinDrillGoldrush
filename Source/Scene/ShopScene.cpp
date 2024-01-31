@@ -219,6 +219,7 @@ namespace ShopScene
 		ge->KillAll_GN(BackGround::defGroupName, BackGround::defName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
+		ge->KillAll_GN(UIBanner::defGroupName, UIBanner::defName);
 		save_->Kill();
 		bgm::Stop("shop");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
