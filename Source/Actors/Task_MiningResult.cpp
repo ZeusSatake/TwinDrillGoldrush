@@ -170,7 +170,7 @@ namespace MiningResult
 
 		//★タスクの生成
 		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
-		transitionTimer_->SetCountSeconds(20.0f);
+		transitionTimer_->SetCountSeconds(3.0f);
 
 		auto save = Save::Object::Create(true);
 		initialHaveMoney_ = save->GetValue<int>(Save::Object::ValueKind::HaveMoney);
@@ -186,9 +186,7 @@ namespace MiningResult
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->StopAll_GN(player::defGroupName, player::defName, false);
-		ge->StopAll_GN(drill::defGroupName, drill::defName, false);
-		ge->StopAll_G("敵", false);
+
 		//仮でタスク終了時
 		auto save = Save::Object::Create(true);
 		WalletComponent wallet = WalletComponent(this);
@@ -219,9 +217,9 @@ namespace MiningResult
 
 		if (clear_)
 		{
-			ge->playerPtr->GetHPBar()->SetVisible(false);
-			ge->StopAll_GN(player::defGroupName, player::defName);
-			ge->StopAll_GN(drill::defGroupName, drill::defName);
+			//ge->playerPtr->GetHPBar()->SetVisible(false);
+			//ge->StopAll_GN(player::defGroupName, player::defName);
+			//ge->StopAll_GN(drill::defGroupName, drill::defName);
 			ge->StopAll_G("敵");
 			limitTimer_.lock()->Stop();
 		}
@@ -240,8 +238,14 @@ namespace MiningResult
 			CalcTotalSellingPrice();
 
 			const auto& inp = ge->in1->GetState();
-			if (inp.ST.down)
+			if (inp.ST.down/* && !transitionTimer_->IsActive()*/)
+			{
 				nowScene_->Kill();
+				//transitionTimer_->Start();
+				//ge->StopAll_GN(player::defGroupName, player::defName, false);
+				//ge->StopAll_GN(drill::defGroupName, drill::defName, false);
+				ge->StopAll_G("敵", false);
+			}				
 		}
 	}
 	//-------------------------------------------------------------------
@@ -354,11 +358,15 @@ namespace MiningResult
 
 	void Object::CountUpOre(const OreKind oreKind)
 	{
+		if (clear_)
+			return;
 		if (IsSellableOre(oreKind))
 			++getOreCount_.at(oreKind);
 	}
 	void Object::CountUpJewelry(const JewelryKind jewelryKind)
 	{
+		if (clear_)
+			return;
 		if (IsSellableJewelry(jewelryKind))
 			++getJewelryCount_.at(jewelryKind);
 	}
