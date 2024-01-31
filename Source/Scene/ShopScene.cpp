@@ -199,6 +199,7 @@ namespace ShopScene
 	{
 		//★データ＆タスク解放
 		ge->debugRectReset();
+		ge->KillAll_GN(Cursor::defGroupName, Cursor::defName);
 		ge->KillAll_GN(BackGround::defGroupName, BackGround::defName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
