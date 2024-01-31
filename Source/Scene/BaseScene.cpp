@@ -192,7 +192,7 @@ namespace BaseScene
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(Cursor::defGroupName, Cursor::defName);
 		ge->debugRectReset();
-
+		bgm::Stop("base");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//šˆø‚«Œp‚¬ƒ^ƒXƒN‚Ì¶¬
 			CreateNextScene();

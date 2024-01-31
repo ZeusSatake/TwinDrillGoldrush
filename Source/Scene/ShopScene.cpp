@@ -199,7 +199,7 @@ namespace ShopScene
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_GN(BuyButton::defGroupName, BuyButton::defName);
 		save_->Kill();
-
+		bgm::Stop("shop");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//šˆø‚«Œp‚¬ƒ^ƒXƒN‚Ì¶¬
 			CreateNextScene();
