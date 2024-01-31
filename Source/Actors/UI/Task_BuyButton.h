@@ -71,6 +71,6 @@ namespace BuyButton
 		void SetProduct(const string& name, const int price, const std::function<void()>& buyEffect);
 		void SetBuyAmount(const int amount);
 		const shared_ptr<const WalletComponent> GetBuyerWallet() const;
-		const shared_ptr<const PriceTagComponent> GetPriceTag() const;
+		const shared_ptr<PriceTagComponent> GetPriceTag();
 	};
 }

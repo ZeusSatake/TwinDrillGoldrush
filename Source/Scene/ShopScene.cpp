@@ -73,7 +73,7 @@ namespace ShopScene
 			{
 				string name;
 				string imagePath;
-				int price;
+				array<int, 5> prices;
 				Save::Object::ValueKind kind;
 				int max;
 			};
@@ -90,21 +90,21 @@ namespace ShopScene
 				{
 					"採掘力強化",
 					"./data/image/ui/buyButton/育毛剤.png",
-					125,
+					{ 250, 500, 1000, 1750, 2500 },
 					Save::Object::ValueKind::DrillLevel,
 					5
 				},
 				{
 					"防御力強化",
 					"./data/image/ui/buyButton/ドレス.png",
-					520,
+					{ 300, 600, 1200, 2000, 2750 },
 					Save::Object::ValueKind::DefenceLevel,
 					5
 				},
 				{
 					"速度強化",
 					"./data/image/ui/buyButton/靴.png",
-					330,
+					{ 250, 500, 1000, 1750, 2500 },
 					Save::Object::ValueKind::SpeedLevel,
 					5
 				}
@@ -125,10 +125,11 @@ namespace ShopScene
 				button->SetResetTime(1.0f);
 				button->SetBuyAmount(1);
 				button->SetBuyerWallet(wallet);
+				
 				button->SetProduct
 				(
 					info.name,
-					info.price,
+					info.prices.at(save_->GetValue<int>(info.kind) - 1),
 					[this, button, info](void)
 					{
 						save_->SetValue(Save::Object::ValueKind::HaveMoney, button->GetBuyerWallet()->GetBalance());
@@ -142,6 +143,7 @@ namespace ShopScene
 						int nextLevel = nowLevel + 1;
 
 						save_->SetValue(info.kind, nextLevel);
+						button->GetPriceTag()->SetPrice(info.prices.at(save_->GetValue<int>(info.kind) - 1));
 
 						//マックスになったときに入力受付を終了
 						if (nextLevel >= drill_MaxLevel)
