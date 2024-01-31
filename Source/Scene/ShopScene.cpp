@@ -47,7 +47,6 @@ namespace ShopScene
 
 		//★データ初期化
 		render2D_Priority[1] = 0.0f;
-		ge->debugRectLoad();
 		bgm::LoadFile("shop", "./data/sound/shop.mp3");
 		//★タスクの生成
 
@@ -56,10 +55,17 @@ namespace ShopScene
 		cursor->SetEnterButton(XI::VGP::B1);
 
 		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-		gotoBaseButton->SetEnterButton(XI::VGP::ST);
-		gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-		gotoBaseButton->SetScene(this, Scene::Kind::Base);
-		gotoBaseButton->SetText("拠点へ");
+		{
+			gotoBaseButton->SetEnterButton(XI::VGP::ST);
+			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
+			gotoBaseButton->SetScene(this, Scene::Kind::Base);
+			gotoBaseButton->SetText("拠点へ");
+			gotoBaseButton->SetImage("./data/image/ui/拠点遷移.png");
+			ML::Point size{ 200, 100 };
+			gotoBaseButton->SetSize(ML::Point{ 200, 100 });
+			gotoBaseButton->SetPos(ML::Vec2(size.x * 0.5f, size.y * 0.5f));
+		}
+		
 		AddSceneChangeButton(gotoBaseButton);
 
 		save_ = Save::Object::Create(true);
@@ -200,7 +206,6 @@ namespace ShopScene
 	bool  Object::Finalize()
 	{
 		//★データ＆タスク解放
-		ge->debugRectReset();
 		ge->KillAll_GN(Cursor::defGroupName, Cursor::defName);
 		ge->KillAll_GN(BackGround::defGroupName, BackGround::defName);
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
@@ -220,18 +225,11 @@ namespace ShopScene
 	{
 		Scene::UpDate();
 		bgm::Play("shop");
-		for (const auto& button : buttons_)
-		{
-			ge->debugRect(button.lock()->GetBox()->getHitBase().OffsetCopy(button.lock()->GetPos()));
-		}
 	}
 	//-------------------------------------------------------------------
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugRectDraw();
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "ショップ");
-
 		{
 			string param =
 				"プレイヤの所持金：" + to_string(wallet->GetBalance()) + "\n" + 
