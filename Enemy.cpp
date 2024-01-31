@@ -18,6 +18,8 @@ Enemy::Enemy()
 	hpBar_->SetImg("./data/image/ui/hpBar/GUISprite.png");
 	hpBar_->SetBackSrc(ML::Box2D(80, 48, 64, 16));
 	hpBar_->SetInsideSrc(ML::Box2D(80, 32, 64, 16));
+
+	this->render2D_Priority[1] = 0.9f;
 }
 
 bool Enemy::WithinRange(class Actor* target)

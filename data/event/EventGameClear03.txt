@@ -8,4 +8,5 @@ evimg>PL_A,./data/image/butler.png,R
 msg>通常枠,0,ゲームオーバーの時にギリ言わないセリフですぞ。それ。
 evimg>PL_A,off
 msg>通常枠,0,off
+evimg>PL_A,off
 end>

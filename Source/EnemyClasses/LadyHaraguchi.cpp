@@ -17,7 +17,6 @@ LadyHaraguchi::LadyHaraguchi()
 	SetTarget(ge->playerPtr.get());
 	SetStartPos({ 2530.f,680.f });
 	ge->playerPtr->SetPosX(500);
-	this->render2D_Priority[1] = 0.2f;
 }
 
 void LadyHaraguchi::Think()
