@@ -4,7 +4,7 @@
 Sobanomi::Sobanomi()
 	:Actor()
 	, fallSpeed_(2.5f)
-	, damage_(15)
+	, damage_(20)
 {
 	box_->setHitBase(ML::Box2D{ -8, -8, 16, 16 });
 }

@@ -61,11 +61,10 @@ NormalLady::NormalLady()
 	SetRange(30.f);
 
 	moveCnt_->SetCountFrame(0);
-	unHitTimer_->SetCountFrame(30);
+	unHitTimer_->SetCountFrame(15);
 	fanEdge_->setHitBase(ML::Box2D{ -4, -16, 8, 32 });
 
 	SetTarget(ge->playerPtr.get());
-	this->render2D_Priority[1] = 0.3f;
 	SetPersonalName("‚¨ìA");//‰¼
 	box_->setHitBase(ML::Box2D{ -16, -16, 32, 32 });
 }
@@ -87,7 +86,7 @@ void NormalLady::Think()
 		{
 			afterState = AIState::AttackStand;
 		}
-		
+		break;
 	case AIState::AttackStand:
 		if (IsAttacking())
 		{

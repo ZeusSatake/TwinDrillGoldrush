@@ -83,21 +83,6 @@ namespace player
 		//プレイヤキャラの描画
 		if(this->pState != StateComponent::State::Non)
 		{
-			//ML::Box2D draw = this->box_->getHitBase().OffsetCopy(this->GetPos());
-			//ML::Box2D src{ 0,0,32,64};
-			////スクロール対応
-			//draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
-			//if (this->pState != StateComponent::State::Dead)
-			//{
-			//	if (this->unHitTimer_->IsCounting())
-			//	{
-			//		if (this->unHitTimer_->GetCount() % 2 == 0)
-			//			this->res->playerImg->Draw(draw, src);
-
-			//	}
-			//	else
-			//		this->res->playerImg->Draw(draw, src);
-			//}
 			AnimInfo animInfo = this->animManager_->Play((int)this->state_->GetNowState());
 			ML::Box2D Predraw = animInfo.GetDraw();
 			if (this->angle_LR_ == Angle_LR::Right)

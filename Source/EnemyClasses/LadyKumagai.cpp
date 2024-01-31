@@ -20,7 +20,7 @@ LadyKumagai::LadyKumagai()
 
 	
 
-	status_->HP.Initialize(150);
+	status_->HP.Initialize(100);
 	status_->attack.Initialize(15, 100);
 	status_->defence.Initialize(0, 100);
 	status_->speed.Initialize(2.5f, 100.f, 10.f);
@@ -42,8 +42,6 @@ LadyKumagai::LadyKumagai()
 	SetTarget(ge->playerPtr.get());
 
 	SetStartPos({ 2530.f,680.f });
-
-	this->render2D_Priority[1] = 0.2f;
 
 	hpBar_->SetVisible(true);
 	hpBar_->SetSupportScroll(true);

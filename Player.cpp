@@ -27,8 +27,8 @@ Player::Player()
 	save_ = Save::Object::Create(true);
 
 	this->cooldown->SetCountFrame(30);
-	this->overheat->SetCountFrame(300);
-	this->unHitTimer_->SetCountFrame(120);
+	this->overheat->SetCountFrame(180);
+	this->unHitTimer_->SetCountFrame(150);
 
 	this->box_->setHitBase(ML::Box2D{ -8,-8,16,16 });
 
@@ -106,6 +106,7 @@ void Player::Think()
 
 		break;
 	case StateComponent::State::Idle:
+
 		if (inp.LStick.volume != 0) { pState = StateComponent::State::Walk; }
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
@@ -116,7 +117,6 @@ void Player::Think()
 		if (inp.R1.down) { pState = StateComponent::State::Jump; }
 		if (inp.B1.down) { pState = StateComponent::State::Dash; }
 		if (inp.B2.down) { pState = StateComponent::State::Drill; }
-		if (inp.Trigger.L2.down) { pState = StateComponent::State::SpinAttack; }
 		if (inp.L1.down) { pState = StateComponent::State::Attack; }
 		if (!CheckFoot() && !CheckHead() &&!extCheckFoot) { pState = StateComponent::State::Fall; }
 		break;
@@ -126,11 +126,16 @@ void Player::Think()
 			pState = StateComponent::State::Idle;
 		}
 		break;
-	case StateComponent::State::SpinAttack:
-		if (this->drill_->SpinAngle(0.3f)) { pState = StateComponent::State::Idle; }
-		break;
 	case StateComponent::State::Damage:
-		if(this->state_->moveCnt_>30)pState = StateComponent::State::Idle;
+		if (this->state_->moveCnt_ > 30)
+		{
+			if (this->state_->GetInitState() == StateComponent::State::Drill||
+				this->state_->GetInitState() == StateComponent::State::Mining ||
+				this->state_->GetInitState() == StateComponent::State:: DrillDash)
+				pState = StateComponent::State::Drill;
+			else pState = StateComponent::State::Idle;
+
+		}
 		break;
 	case StateComponent::State::KnockBack:
 		if (this->externalMoveVec == ML::Vec2{ 0,0 }||this->state_->moveCnt_ >60)
@@ -150,6 +155,8 @@ void Player::Think()
 		break;
 	case StateComponent::State::Fall:
 		if (CheckFoot()||extCheckFoot) { pState = StateComponent::State::Idle; }
+		if (inp.L1.down) { pState = StateComponent::State::Attack; }
+
 		break;
 	case StateComponent::State::Dash:
 		if (inp.LStick.volume == 0 || this->state_->moveCnt_ >= 30) { pState = StateComponent::State::Idle; }
@@ -166,6 +173,9 @@ void Player::Think()
 		if (inp.L1.off) { pState = StateComponent::State::Drill; }
 		break;
 	case StateComponent::State::Appeal:
+		break;
+	default:
+		pState = StateComponent::State::Idle;
 		break;
 	}	
 	if (this->status_->HP.GetNowHP()<=0)
@@ -189,6 +199,7 @@ void Player::Move()
 	{
 		if(this->overheat->GetCount()<=1)
 		this->drill_->ResetDurability();
+		this->drill_->SetCheckOverHeat(false);
 	}
 
 	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot()||!extCheckFoot)
@@ -222,13 +233,18 @@ void Player::Move()
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		this->HitAttack();
 		break;
-	case StateComponent::State::SpinAttack:
-		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
-
-		break;
 	case StateComponent::State::Damage:
-		
-
+		if (this->state_->moveCnt_ == 0)
+		{
+			if (this->angle_LR_ == Angle_LR::Left)
+			{
+				this->moveVec = ML::Vec2{ 3,-2 };
+			}
+			else
+			{
+				this->moveVec = ML::Vec2{ -3,-2 };
+			}
+		}
 		break;
 	case StateComponent::State::KnockBack:
 		break;
@@ -248,6 +264,7 @@ void Player::Move()
 	case StateComponent::State::DrillDash:
 		if (this->state_->moveCnt_ == 0)this->drill_->SetCanRotate(false);
 		moveVec = this->drill_->DrillAngleVec() * 5;
+		if (this->UpdateDrilldurability())
 		this->drill_->Mining();
 		if (this->state_->moveCnt_ >= 29)this->drill_->SetCanRotate(true);
 		break;
@@ -281,8 +298,7 @@ void Player::Move()
 	{
 		this->angle_LR_ = Angle_LR::Right;
 	}
-    //this->CheckHitMap(this->preVec);
-	//externalMoveVec.y = 0;
+   
 	
 	if (externalMoveVec.x !=0)
 	{
@@ -333,6 +349,8 @@ bool Player::UpdateDrilldurability()
 	if (this->drill_->GetDurability() <= 0)
 		{
 			this->overheat->Start();
+			this->drill_->SetCheckOverHeat(true);
+
 		}
 		return true;
 	}
@@ -357,6 +375,7 @@ void Player::TakeAttack(int damage_)
 	{
 		this->status_->HP.TakeDamage(damage);
 		this->unHitTimer_->Start();
+		this->state_->SetInitState(this->pState);
 		this->state_->UpdateNowState(StateComponent::State::Damage);
 	}
 }
@@ -426,6 +445,8 @@ void Player::UpdateStates()
 	int drillPower = save_->GetValue<int>(kind);
 	this->status_->attack.Initialize(drillPower * 10, drillPower * 10);
 	this->drill_->SetAttack(drillPower);
+	this->drill_->InitDurability(drillPower*60);
+	this->overheat->SetCountFrame( 180 / drillPower);
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DefenceLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)-1);
 	int dressPower = save_->GetValue<int>(kind);
@@ -442,14 +463,16 @@ void Player::SetAnim()
 	this->animManager_->SetDefaultAnimId((int)StateComponent::State::Idle);
 	ML::Color defColor{ 1,1,1,1 };
 	ML::Box2D drawSize = this->box_->getHitBase();
+	int ImageSize = 64;
 	AnimInfo animTable[] =
 	{
-		{drawSize,ML::Box2D{0,0,64,64},defColor,2,8},
-		{drawSize,ML::Box2D{0,64,64,64},defColor,6,4},
-		{drawSize,ML::Box2D{0,128,64,64},defColor,6,4},
-		{drawSize,ML::Box2D{0,192,64,64},defColor,5,4},
-		{drawSize,ML::Box2D{0,256,64,64},defColor,1,1},
+		{drawSize,ML::Box2D{0,0,ImageSize,ImageSize},defColor,2,8},
+		{drawSize,ML::Box2D{0,64,ImageSize,ImageSize},defColor,6,4},
+		{drawSize,ML::Box2D{0,128,ImageSize,ImageSize},defColor,6,4},
+		{drawSize,ML::Box2D{0,192,ImageSize,ImageSize},defColor,5,4},
+		{drawSize,ML::Box2D{0,256,ImageSize,ImageSize},defColor,1,1},
 	};
+
 	this->animManager_->AddAnim((int)StateComponent::State::Idle, animTable[0]);
 	this->animManager_->AddAnim((int)StateComponent::State::Walk, animTable[1]);
 	this->animManager_->AddAnim((int)StateComponent::State::Dash, animTable[2]);
