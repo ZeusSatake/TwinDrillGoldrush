@@ -180,15 +180,6 @@ namespace  GameScene
 			}
 		}
 
-		{//拠点に戻るボタン(デバッグ用
-			auto gotoBaseButton = SceneChangeButton::Object::Create(true);
-			gotoBaseButton->SetEnterButton(XI::VGP::ST);
-			gotoBaseButton->SetEnterButton(XI::Mouse::MB::LB);
-			gotoBaseButton->SetScene(this, Scene::Kind::Base);
-			gotoBaseButton->SetText("拠点へ");
-			AddSceneChangeButton(gotoBaseButton);
-		}
-
 		{//UIバナー
 			auto banner = UIBanner::Object::Create(true);
 			banner->SetDrawSize(ML::Box2D(0, 0, 256, 256));
