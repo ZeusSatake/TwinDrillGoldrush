@@ -159,7 +159,7 @@ void Player::Think()
 
 		break;
 	case StateComponent::State::Dash:
-		if (inp.LStick.volume == 0 ||inp.B1.off) { pState = StateComponent::State::Idle; }
+		if (inp.B1.off) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Drill:
 		if (inp.L1.down) { pState = StateComponent::State::Mining; }

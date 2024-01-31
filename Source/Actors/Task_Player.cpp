@@ -94,7 +94,7 @@ namespace player
 			draw.Offset(-ge->camera2D.x, -ge->camera2D.y);
 			this->res->playerImg->Draw(draw, animInfo.GetSrc());
 		}
-		DebugInfo();
+		//DebugInfo();
 
 	}
 	void Object::DebugInfo()
@@ -165,7 +165,7 @@ namespace player
 		ge->debugFont->Draw(ML::Box2D{ 1000,100,500,500 }, "countdown:" + to_string(this->cooldown->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,120,500,500 }, "overheat:" + to_string(this->overheat->GetCount()));
 		ge->debugFont->Draw(ML::Box2D{ 1000,140,500,500 }, "durability:" + to_string(this->drill_->GetDurability())+" "+to_string(this->drill_->GetMaxDurability()));
-		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetExternalVec().x) + " " + to_string(this->GetExternalVec().y));
+		ge->debugFont->Draw(ML::Box2D{ 1000,160,500,500 }, "external" + to_string(this->GetMoveVec().x) + " " + to_string(this->GetMoveVec().y));
 	}
 
 	void Object::SceneTransitionInitialize(Scene::Kind nextScene)
