@@ -195,17 +195,6 @@ void Drill::Mining()
 	
 }
 
-void Drill::Mining(ML::Vec2 pos)
-{
-	if (auto map = ge->GetTask<Map::Object>("本編", "マップ"))
-	{
-		map->Search(pos);
-	}
-	if (auto map = ge->GetTask<JewelryMap::Object>("本編", "宝石マップ"))
-	{
-		map->Search(pos);
-	}
-}
 
 
 void Drill::SearchBrocks(ML::Vec2 pos)

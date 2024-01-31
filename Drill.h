@@ -77,7 +77,6 @@ public:
 	void ResetDurability();
 
 	void Mining();
-	void Mining(ML::Vec2 pos);
 
 
 
