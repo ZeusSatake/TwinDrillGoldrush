@@ -31,6 +31,7 @@ public:
 
 	//タイマー起動
 	void Start();
+	void Stop();
 
 	void Update() override;
 };

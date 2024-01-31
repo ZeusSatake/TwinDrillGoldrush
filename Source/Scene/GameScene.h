@@ -49,13 +49,14 @@ namespace  GameScene
 		void  Render2D_AF()		override;	//「2D描画」１フレーム毎に行う処理
 		bool  Finalize();	//「終了」タスク消滅時に１回だけ行う処理
 		//変更可◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇◇
-		shared_ptr<SecondsTimerComponent> limitTimer_;
+		
 		shared_ptr<GameOverEventComponent> deathEvent_;
 		shared_ptr<GameOverEventComponent> timeOverEvent_;
 		int nowStage_;
 
 	public:
 		//追加したい変数・メソッドはここに追加する
+		shared_ptr<SecondsTimerComponent> limitTimer_;
 		DG::Font::SP TestFont;
 		MyPG::MyGameEngine::FontImageInfo fontImg;
 		

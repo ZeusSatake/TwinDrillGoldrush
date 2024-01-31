@@ -61,6 +61,11 @@ void SecondsTimerComponent::Start()
 	wasCountEnd_ = false;
 }
 
+void SecondsTimerComponent::Stop()
+{
+	isActive_ = false;
+}
+
 void SecondsTimerComponent::Update()
 {
 	if (!isActive_)

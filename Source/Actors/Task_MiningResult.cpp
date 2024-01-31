@@ -10,6 +10,10 @@
 #include  "../Components/SecondsTimerComponent.h"
 #include  "../System/Task_Save.h"
 #include  "../Event/Task_EventEngine.h"
+#include "../Actors/Task_Player.h"
+#include "../Actors/Task_Drill.h"
+#include "../Scene/GameScene.h"
+#include "../Components/HPBarComponent.h"
 
 namespace MiningResult
 {
@@ -166,12 +170,14 @@ namespace MiningResult
 
 		//ÅöÉ^ÉXÉNÇÃê∂ê¨
 		AddComponent(transitionTimer_ = make_shared<SecondsTimerComponent>(this));
-		transitionTimer_->SetCountSeconds(20.0f);
+		transitionTimer_->SetCountSeconds(3.0f);
 
 		auto save = Save::Object::Create(true);
 		initialHaveMoney_ = save->GetValue<int>(Save::Object::ValueKind::HaveMoney);
 		nowStage_ = save->GetValue<int>(Save::Object::ValueKind::StageNo);
 		save->Kill();
+
+		limitTimer_ = ge->GetTask<GameScene::Object>(GameScene::defGroupName)->limitTimer_;
 
 		return  true;
 	}
@@ -209,6 +215,14 @@ namespace MiningResult
 	{
 		UpdateComponents();
 
+		if (clear_)
+		{
+			//ge->playerPtr->GetHPBar()->SetVisible(false);
+			//ge->StopAll_GN(player::defGroupName, player::defName);
+			//ge->StopAll_GN(drill::defGroupName, drill::defName);
+			ge->StopAll_G("ìG");
+			limitTimer_.lock()->Stop();
+		}
 		if (getOreCount_.at(targetOreKind_) == needTargetDestroyAmount_ &&
 			!clear_ &&
 			!clearEvent_.lock())
@@ -224,8 +238,14 @@ namespace MiningResult
 			CalcTotalSellingPrice();
 
 			const auto& inp = ge->in1->GetState();
-			if (inp.ST.down)
+			if (inp.ST.down/* && !transitionTimer_->IsActive()*/)
+			{
 				nowScene_->Kill();
+				//transitionTimer_->Start();
+				//ge->StopAll_GN(player::defGroupName, player::defName, false);
+				//ge->StopAll_GN(drill::defGroupName, drill::defName, false);
+				ge->StopAll_G("ìG", false);
+			}				
 		}
 	}
 	//-------------------------------------------------------------------
@@ -338,11 +358,15 @@ namespace MiningResult
 
 	void Object::CountUpOre(const OreKind oreKind)
 	{
+		if (clear_)
+			return;
 		if (IsSellableOre(oreKind))
 			++getOreCount_.at(oreKind);
 	}
 	void Object::CountUpJewelry(const JewelryKind jewelryKind)
 	{
+		if (clear_)
+			return;
 		if (IsSellableJewelry(jewelryKind))
 			++getJewelryCount_.at(jewelryKind);
 	}
