@@ -13,7 +13,7 @@ namespace Cursor
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		image_ = DG::Image::Create("./data/image/preDrill.png");
+		image_ = DG::Image::Create("./data/image/ui/cursor/preDrill.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -34,7 +34,6 @@ namespace Cursor
 
 		//★データ初期化
 		this->SetPos(ge->screenCenterPos);
-		res->image_->Rotation(3.83972f, ML::Vec2(-32, -32));
 
 		AddComponent(movement_ = make_shared<Movement>(this));
 		//パラメータの設定
@@ -77,7 +76,7 @@ namespace Cursor
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ML::Box2D src(0, 0, 64, 64);
+		ML::Box2D src(24, 24, 64, 64);
 		res->image_->Draw(box_->getHitBase().OffsetCopy(this->GetPos()), src);
 	}
 
