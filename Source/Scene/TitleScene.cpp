@@ -98,16 +98,14 @@ namespace  TitleScene
 		//★タスクの生成
 		{
 			//タイトル画面候補
-			string candidates[] =
+			string candidates =
 			{
-				"./data/image/backGround/title/mountain_evening01.png",
-				"./data/image/backGround/title/mountain_evening04.png",
-				"./data/image/backGround/title/mountain_evening05.png"
+				"./data/image/backGround/title/タイトル.png"
 			};
 
 			auto backGound = BackGround::Object::Create(true);
 			backGound->SetUp(
-				candidates[2],
+				candidates,
 				ML::Point{ 1344, 896 },
 				ML::Point{ (int)ge->screenWidth, (int)ge->screenHeight });
 		}
