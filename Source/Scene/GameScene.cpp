@@ -209,7 +209,7 @@ namespace  GameScene
 		timeOverEvent_.reset();
 		
 		RemoveAllComponent();
-
+		bgm::Stop("game");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 			CreateNextScene();

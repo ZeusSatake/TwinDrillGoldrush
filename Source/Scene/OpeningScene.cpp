@@ -53,7 +53,7 @@ namespace OpeningScene
 		save_ = Save::Object::Create(true);
 		save_->SetValue(Save::Object::ValueKind::EndOfOpening, 1.0f);
 		save_->Kill();
-
+		bgm::Stop("opening");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//šˆø‚«Œp‚¬ƒ^ƒXƒN‚Ì¶¬
 			CreateNextScene();
