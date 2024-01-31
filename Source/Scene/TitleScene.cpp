@@ -123,6 +123,7 @@ namespace  TitleScene
 		//bgm::Stop("bgm1");
 		ge->KillAll_G("ƒVƒXƒeƒ€");
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
+		bgm::Stop("title");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			CreateNextScene();
 		}
