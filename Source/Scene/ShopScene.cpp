@@ -15,6 +15,7 @@
 #include  "../System/Task_BackGround.h"
 #include  "../System/Task_Save.h"
 
+#include  "../Actors/UI/Task_UIBanner.h"
 
 namespace ShopScene
 {
@@ -199,6 +200,12 @@ namespace ShopScene
 				sprit);
 		}
 
+		{//UIバナー
+			auto banner = UIBanner::Object::Create(true);
+			banner->SetDrawSize(ML::Box2D(0, 0, 256, 128));
+			banner->SetDrawArea(UIBanner::Object::DrawArea::RightTop);
+		}
+
 		return  true;
 	}
 	//-------------------------------------------------------------------
@@ -232,11 +239,11 @@ namespace ShopScene
 	{
 		{
 			string param =
-				"プレイヤの所持金：" + to_string(wallet->GetBalance()) + "\n" + 
-				"ドリル：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DrillLevel)) + "\n" + 
-				"防御　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)) + "\n" + 
-				"速度　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
-			ge->debugFont->Draw(ML::Box2D(ge->screenCenterPos.x - 350, 200, 500, 500), param);
+				"所持金：" + to_string(wallet->GetBalance()) + "G\n" + 
+				"ドリルLv：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DrillLevel)) + "\n" + 
+				"ドレスLv：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)) + "\n" + 
+				"靴Lv  　：" + to_string(save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel));
+			ge->debugFont->Draw(ML::Box2D(ge->screenWidth - 200, 30, 500, 500), param, ML::Color(1, 0, 0, 0));
 		}
 
 		//値札表示
