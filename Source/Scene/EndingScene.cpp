@@ -115,7 +115,6 @@ namespace  EndingScene
 	//「２Ｄ描画」１フレーム毎に行う処理
 	void  Object::Render2D_AF()
 	{
-		ge->debugFont->Draw(ML::Box2D(500, 500, 500, 500), "End");
 
 		{//リザルト
 			//ML::Box2D draw(0, 0, 512, 124);
