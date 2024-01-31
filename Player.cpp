@@ -288,9 +288,7 @@ void Player::Move()
 	{
 		moveVec.x = moveVec.x * 0.05;
 	}
-
 	this->drill_->SetCanRotate(true);
-
 	CheckMove(moveVec);
 	CheckMove(externalMoveVec);
 }
@@ -332,7 +330,7 @@ bool Player::UpdateDrilldurability()
 	else
 	{
 		this->drill_->SetDurability(this->drill_->GetDurability() - 1);
-		if (this->drill_->GetDurability() <= 0)
+	if (this->drill_->GetDurability() <= 0)
 		{
 			this->overheat->Start();
 		}
@@ -415,8 +413,7 @@ void Player::ResetState()
 }
 
 void Player::HiddenPlayer()
-{
-	this->state_->UpdateNowState(StateComponent::State::Non);
+{	this->state_->UpdateNowState(StateComponent::State::Non);
 	this->drill_->SetMode(Drill::Mode::Non);
 }
 
@@ -459,7 +456,6 @@ void Player::SetAnim()
 	this->animManager_->AddAnim((int)StateComponent::State::Jump, animTable[3]);
 	this->animManager_->AddAnim((int)StateComponent::State::Fall, animTable[4]);
 }
-
 void Player::SetExtCheckFoot(bool Check_)
 {
 	this->extCheckFoot = Check_;
