@@ -83,7 +83,7 @@ namespace  EndingScene
 		//★データ＆タスク解放
 		ge->KillAll_G("背景");
 		ge->KillAll_G("システム");
-
+		bgm::Stop("ending");
 		if (!ge->QuitFlag() && this->nextTaskCreate) {
 			//★引き継ぎタスクの生成
 			auto  nextTask = TitleScene::Object::Create(true);

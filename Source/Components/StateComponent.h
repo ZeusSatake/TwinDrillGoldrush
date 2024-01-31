@@ -28,11 +28,14 @@ public:
 private:
 	State nowState;
 	State preState;
+	State InitState;
 public:
 	StateComponent(class Actor* actor);
 	void UpdateNowState(State state); //ステータスの更新
 	void InitializeState(State state);//ステータスの初期化
 	void InitializeState();
 	State GetNowState();              //nowStateのゲッター
-
+	State GetPreState();
+	State GetInitState();
+	void SetInitState(State state);
 };

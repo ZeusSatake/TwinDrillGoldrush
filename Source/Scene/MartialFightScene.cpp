@@ -61,6 +61,8 @@ namespace MartialFightScene
 		hpBar->SetPos(ML::Vec2(hpBar->GetSize().x * 0.5f, hpBar->GetSize().y * 0.5f));
 		spawnableBoss_ = false;
 		bgm::LoadFile("martialfight", "./data/sound/martialfight.mp3");
+		bgm::LoadFile("boss", "./data/sound/NormalBoss01.mp3");
+		bgm::LoadFile("lastboss", "./data/sound/LastBoss.mp3");
 		//★タスクの生成
 
 
@@ -141,7 +143,9 @@ namespace MartialFightScene
 
 			save->Kill();
 		}
-
+		bgm::Stop("martialfight");
+		bgm::Stop("boss");
+		bgm::Stop("lastboss");
 		ge->KillAll_G("本編");
 		ge->KillAll_GN(SceneChangeButton::defGroupName, SceneChangeButton::defName);
 		ge->KillAll_G("キャラクタ");
@@ -163,7 +167,24 @@ namespace MartialFightScene
 	{
 		Scene::UpDate();
 		UpdateComponents();
-		bgm::Play("martialfight");
+		
+		if (enemyCount_ <= 0)
+		{
+			if (nowStage_ == 4)
+			{
+				bgm::Stop("martialfight");
+				bgm::Play("lastboss");
+			}
+			else
+			{
+				bgm::Stop("martialfight");
+				bgm::Play("boss");
+			}
+		}
+		else
+		{
+			bgm::Play("martialfight");
+		}
 		{//デバッグ用
 		//	debugMsg = spawnableBoss_ ?
 		//		"ボスイベント開始フラグ　ON" :
