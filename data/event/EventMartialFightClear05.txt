@@ -14,7 +14,7 @@ evimg>PL_A,./data/image/EventLadySatake.png,R
 msg>’สํg,0,Üณฉํฝญตช”s๊้ฦอc
 msg>’สํg,0,ฑ๊ช๗ตขฦขคด๎c
 evimg>PL_A,off
-evimg>PL_A,./data/image/butler.png,L
+evimg>PL_A,./data/image/Lady.png,L
 msg>’สํg,0,–ณ“GฬM—ฦตฤอ฿ฤฬ”s–kฬๆคลทํหc
 msg>’สํg,0,ํฝญตอM—ษยฝ฿ษธมฦค่r๐dหฤซÜตฝํc
 msg>’สํg,0,ลเAM—พมฤฉ•ชฬภ—อษจฺ๊ฤค่r๐‘ำมฤซฝํฏลอ ่Üน๑ํๆหH
