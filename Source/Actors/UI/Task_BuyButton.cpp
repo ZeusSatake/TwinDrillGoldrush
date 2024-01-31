@@ -149,7 +149,7 @@ namespace BuyButton
 	{
 		return buyerWallet_.lock();
 	}
-	const shared_ptr<const PriceTagComponent> Object::GetPriceTag() const
+	const shared_ptr<PriceTagComponent> Object::GetPriceTag()
 	{
 		return priceTag_;
 	}

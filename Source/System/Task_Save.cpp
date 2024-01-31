@@ -82,7 +82,25 @@ namespace Save
 		{
 			if (i < (int)ValueKind::End)
 			{
-				AddValueDatum((ValueKind)i, 0.0f);
+				float value = 0.0f;
+
+				switch ((ValueKind)i)
+				{
+				case ValueKind::DrillLevel:
+					value = 1.0f;
+					break;
+				case ValueKind::DefenceLevel:
+					value = 1.0f;
+					break;
+				case ValueKind::SpeedLevel:
+					value = 1.0f;
+					break;
+
+				default:
+					value = 0.0f;
+					break;
+				}
+				AddValueDatum((ValueKind)i, value);
 			}
 			else
 			{
