@@ -31,3 +31,18 @@ StateComponent::State StateComponent::GetNowState()
 {
 	return this->nowState;
 }
+
+StateComponent::State StateComponent::GetPreState()
+{
+	return this->preState;
+}
+
+void StateComponent::SetInitState(State state)
+{
+	this->InitState = state;
+}
+
+StateComponent::State StateComponent::GetInitState()
+{
+	return this->InitState;
+}

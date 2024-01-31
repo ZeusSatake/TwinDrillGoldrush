@@ -12,6 +12,7 @@ class Drill :public Character
 	float Length;
 	float preAngle;   //1フレーム前の角度
 	bool  canRotate;  //回転を許可するかどうか
+	bool CheckOverHeat;
 	ML::Vec2 drawPos;
 	ML::Vec2 animMove;
 	ML::Vec2 targetPos;
@@ -36,6 +37,7 @@ public:
 	ML::Vec2 moveVec;
 	ML::Vec2 plPos;
 
+	
 
 	void SetAngle(float angle);
 	void SetDrawPos(ML::Vec2 pos);
@@ -44,6 +46,9 @@ public:
 
 	bool SpinAngle(float angle);
 	void SetCanRotate(bool check);
+
+	void SetCheckOverHeat(bool check);
+	bool GetCheckOverHeat();
 
 	void SetMode(Mode mode_);
 	void UpdateMode(StateComponent::State state);

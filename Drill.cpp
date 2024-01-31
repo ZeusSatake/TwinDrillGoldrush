@@ -17,7 +17,8 @@ Drill::Drill()
 	Length(1.f),
 	moveVec(ML::Vec2{0,0}),
 	animMove(ML::Vec2{0,0}),
-	canRotate(true)
+	canRotate(true),
+	CheckOverHeat(false)
 {
 	AddComponent(controller_ = shared_ptr<ControllerInputComponent>(new ControllerInputComponent(this)));
 	AddComponent(state_ = shared_ptr<StateComponent>(new StateComponent(this)));
@@ -82,6 +83,16 @@ ML::Vec2 Drill::GetDrawPos()
 ML::Vec2 Drill::GetTargetPos()
 {
 	return this->targetPos;
+}
+
+void Drill::SetCheckOverHeat(bool check)
+{
+	this->CheckOverHeat = check;
+}
+
+bool Drill::GetCheckOverHeat()
+{
+	return this->CheckOverHeat;
 }
 
 bool Drill::SpinAngle(float angle)
@@ -292,15 +303,16 @@ void Drill::setAnim()
 	
 	ML::Color defColor{ 1,1,1,1 };
 	ML::Box2D drawSize {- 4, -4, 8, 8};
+	int srcX = 0;
 	AnimInfo animTable[] =
 	{
-		{drawSize,ML::Box2D{0,0,0,0},defColor,1,1},
-		{drawSize,ML::Box2D{0,0,64,64},defColor,1,1},
-		{drawSize,ML::Box2D{64,0,64,64},defColor,1,1},
+		{drawSize,ML::Box2D{srcX,0,0,0},defColor,1,1},
+		{drawSize,ML::Box2D{srcX,0,64,64},defColor,1,1},
 	};
 	this->animManager_->AddAnim((int)Mode::Non, animTable[0]);
 	this->animManager_->AddAnim((int)Mode::Normal, animTable[1]);
-	this->animManager_->AddAnim((int)Mode::Drill, animTable[2]);
+	this->animManager_->AddAnim((int)Mode::Drill, animTable[1]);
+
 }
 
 void Drill::SetAnimMove(ML::Vec2 move_)
