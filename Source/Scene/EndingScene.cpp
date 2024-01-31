@@ -58,8 +58,8 @@ namespace  EndingScene
 
 		{//”wŒiƒ^ƒXƒN¶¬
 			ML::Point imgSize;
-			imgSize.x = 800;
-			imgSize.y = 600;
+			imgSize.x = 1344;
+			imgSize.y = 896;
 
 			ML::Point drawSize;
 			drawSize.x = (int)ge->screenWidth;
