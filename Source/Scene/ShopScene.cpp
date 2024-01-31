@@ -26,7 +26,7 @@ namespace ShopScene
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
-		//priceTagImage = DG::Image::Create("");
+		priceTagImage = DG::Image::Create("./data/image/ui/priceTag/bookmark.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -46,6 +46,7 @@ namespace ShopScene
 		this->res = Resource::Create();
 
 		//★データ初期化
+		render2D_Priority[1] = 0.0f;
 		ge->debugRectLoad();
 		bgm::LoadFile("shop", "./data/sound/shop.mp3");
 		//★タスクの生成
@@ -112,12 +113,15 @@ namespace ShopScene
 			{
 				auto& button = levelButtons[i] = BuyButton::Object::Create(true);
 				auto& info = levelButtonInfos[i];
-				button->SetEnterButton(cursor->GetEnterButton());
 				button->SetImage(info.imagePath);
 				button->SetDrawSize(ML::Point{384, 384});
 				button->SetImageSize(ML::Point{ 384, 384 });
+
 				button->SetMouse(ge->mouse);
 				button->SetEnterButton(XI::Mouse::MB::LB);
+				button->SetSelector(cursor.get());
+				button->SetEnterButton(cursor->GetEnterButton());
+
 				button->SetResetTime(1.0f);
 				button->SetBuyAmount(1);
 				button->SetBuyerWallet(wallet);
@@ -235,10 +239,20 @@ namespace ShopScene
 		}
 
 		//値札表示
-		//for (const auto& button : buttons_)
-		//{
-		//	ge->debugFont->Draw(ML::Box2D(button.lock()->GetPos().x, button.lock()->GetPos().y, 300, 300), to_string(button.lock()->GetPriceTag()->GetPrice()));
-		//}
+		for (const auto& button : buttons_)
+		{
+			const auto buttonSP = button.lock();
+			ML::Box2D src(0, 0, 401, 170);
+			ML::Box2D draw(-80, -35, 160, 70);
+
+			ML::Vec2 pos(buttonSP->GetPos().x - buttonSP->GetBox()->getHitBase().w * 0.3f, buttonSP->GetPos().y - buttonSP->GetBox()->getHitBase().h * 0.075f);
+			
+			res->priceTagImage->Draw(draw.OffsetCopy(pos), src);
+			ge->debugFont->Draw(
+				ML::Box2D(pos.x, pos.y - (ge->debugFont->GetHeight() * 1.5f), 300, 300),
+				to_string(button.lock()->GetPriceTag()->GetPrice()) + "G",
+				ML::Color(1, 0, 0, 0));
+		}
 	}
 
 	//★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
