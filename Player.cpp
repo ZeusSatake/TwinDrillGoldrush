@@ -159,7 +159,7 @@ void Player::Think()
 
 		break;
 	case StateComponent::State::Dash:
-		if (inp.LStick.volume == 0 || this->state_->moveCnt_ >= 30) { pState = StateComponent::State::Idle; }
+		if (inp.LStick.volume == 0 ||inp.B1.off) { pState = StateComponent::State::Idle; }
 		break;
 	case StateComponent::State::Drill:
 		if (inp.L1.down) { pState = StateComponent::State::Mining; }
@@ -197,9 +197,10 @@ void Player::Move()
 
 	if (this->overheat->IsCounting())
 	{
+		this->drill_->srcX = 64;
 		if(this->overheat->GetCount()<=1)
 		this->drill_->ResetDurability();
-		this->drill_->SetCheckOverHeat(false);
+		
 	}
 
 	if (this->moveVec.y <= 0 || !CheckHead() || !CheckFoot()||!extCheckFoot)
@@ -258,8 +259,7 @@ void Player::Move()
 		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
 		break;
 	case StateComponent::State::Dash:
-		this->status_->speed.SetMax(5.0f);
-		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax();
+		moveVec.x = controller_->GetLStickVec().x * this->status_->speed.GetMax()*1.5f;
 		break;
 	case StateComponent::State::DrillDash:
 		if (this->state_->moveCnt_ == 0)this->drill_->SetCanRotate(false);
@@ -349,8 +349,6 @@ bool Player::UpdateDrilldurability()
 	if (this->drill_->GetDurability() <= 0)
 		{
 			this->overheat->Start();
-			this->drill_->SetCheckOverHeat(true);
-
 		}
 		return true;
 	}
@@ -446,12 +444,11 @@ void Player::UpdateStates()
 	this->status_->attack.Initialize(drillPower * 10, drillPower * 10);
 	this->drill_->SetAttack(drillPower);
 	this->drill_->InitDurability(drillPower*60);
-	this->overheat->SetCountFrame( 180 / drillPower);
+	
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DefenceLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)-1);
 	int dressPower = save_->GetValue<int>(kind);
-	this->status_->defence.Initialize(dressPower,dressPower);
-	this->status_->HP.Initialize(100 + dressPower * 10);
+	this->status_->HP.Initialize(dressPower);
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::SpeedLevel1 + save_->GetValue<int>(Save::Object::ValueKind::SpeedLevel) - 1);
 	float speedPower = save_->GetValue<float>(kind);
