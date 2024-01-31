@@ -38,7 +38,7 @@ namespace player
 		//★データ初期化
 		this->render2D_Priority[0] = 0.2f;
 		this->SetPos( ML::Vec2{ 0,0 });
-		this->movement_->SetSpeed(2.f, 5.f, 0.f);
+		this->movement_->SetSpeed(2.f, 2.f, 0.f);
 		gravity_->SetDirection(ML::Vec2::Down());
 		gravity_->SetSpeed(0.0f, 10, 0.5f);
 		gravity_->SetAcceleration(ML::Gravity(32) * 10);

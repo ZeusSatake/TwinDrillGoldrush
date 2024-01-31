@@ -441,9 +441,9 @@ void Player::UpdateStates()
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DrillLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DrillLevel) - 1);
 	int drillPower = save_->GetValue<int>(kind);
-	this->status_->attack.Initialize(drillPower * 10, drillPower * 10);
+	this->status_->attack.Initialize(drillPower , drillPower );
 	this->drill_->SetAttack(drillPower);
-	this->drill_->InitDurability(drillPower*60);
+	this->drill_->InitDurability(drillPower*6);
 	
 
 	kind = Save::Object::ValueKind((int)Save::Object::ValueKind::DefenceLevel1 + save_->GetValue<int>(Save::Object::ValueKind::DefenceLevel)-1);
