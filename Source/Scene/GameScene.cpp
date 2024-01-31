@@ -40,12 +40,18 @@ namespace  GameScene
 	//リソースの初期化
 	bool  Resource::Initialize()
 	{
+		this->img[0] = DG::Image::Create("./data/image/ui/Bkani.png");
+		this->img[1] = DG::Image::Create("./data/image/ui/LBkani.png");
+		this->img[2] = DG::Image::Create("./data/image/ui/RBkani.png");
 		return true;
 	}
 	//-------------------------------------------------------------------
 	//リソースの解放
 	bool  Resource::Finalize()
 	{
+		for (int i = 0; i < 3; i++) {
+			this->img[i].reset();
+		}
 		return true;
 	}
 	//-------------------------------------------------------------------
@@ -237,6 +243,13 @@ namespace  GameScene
 			to_string((int)limitTimer_->GetCount() / 60) + "\:" + to_string((int)limitTimer_->GetCount() % 60),
 			ML::Color{ 1, 1, 0, 0 }
 		);
+
+		
+		auto src = ML::Box2D(0, 0, 385, 52);
+		for (int i = 0; i < 3; i++) {
+			auto draw = ML::Box2D(20, 100 + 28 * i, 212, 28);
+			this->res->img[i]->Draw(draw, src);
+		}
 
 		/*ge->debugFont->Draw
 		(
