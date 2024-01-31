@@ -53,7 +53,7 @@ namespace ShopScene
 
 		auto cursor = Cursor::Object::Create(true);
 		cursor->SetPos(ML::Vec2(ge->screenCenterPos.x, ge->screenCenterPos.y + 80));
-		cursor->SetEnterButton(XI::VGP::B1);
+		cursor->SetEnterButton(XI::VGP::ST);
 
 		auto gotoBaseButton = SceneChangeButton::Object::Create(true);
 		{
@@ -65,6 +65,8 @@ namespace ShopScene
 			ML::Point size{ 200, 100 };
 			gotoBaseButton->SetSize(ML::Point{ 200, 100 });
 			gotoBaseButton->SetPos(ML::Vec2(size.x * 0.5f, size.y * 0.5f));
+			gotoBaseButton->SetSelector(cursor.get());
+			gotoBaseButton->SetEnterButton(cursor->GetEnterButton());
 		}
 		
 		AddSceneChangeButton(gotoBaseButton);
